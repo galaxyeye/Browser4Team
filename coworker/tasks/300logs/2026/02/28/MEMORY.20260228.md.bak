@@ -1,0 +1,50 @@
+# MEMORY.20260228.md
+## Daily Memory - 2026-02-28
+
+### Tasks Executed
+- **MCP Documentation Optimization**: 
+  - Refined `WebDriver` KDoc to serve as efficient MCP tool descriptions (concise first paragraph, `#mcp` tagging).
+  - Updated `SourceCodeToToolCallSpec` logic to prioritize `#mcp` tagged paragraphs or default to the first paragraph for tool descriptions.
+  - Implemented full KDoc extraction into `ToolSpec.help` while keeping `ToolSpec.description` concise.
+  - Applied `@mcp` annotations to `WebDriver` methods for explicit tool exposure.
+- **SDK Development**: 
+  - Successfully built and tested `browser4-nodejs` SDK. Added comprehensive test suite (197 tests) covering all core classes (`PulsarClient`, `PulsarSession`, `WebDriver`, etc.) and fixed a crash in `createSession`.
+- **Documentation & Scripts**: 
+  - Refined `coworker/README.md` to accurately reflect the 9-stage task pipeline and correct script paths.
+  - Created `bin/monitor.sh` and `bin/monitor.ps1` to automatically dispatch tasks from GitHub issues (assigned to @galaxyeye) and specific URLs.
+- **Coworker Automation**: 
+  - Attempted to implement `#auto-approve` logic for immediate task promotion to the "approved" folder.
+
+### Execution Quality Review
+- **What worked well**: 
+  - The iterative refinement of the MCP tool specification logic was highly effective. Separating "concise description" (for LLM context context) from "full help" (for user reference) optimizes token usage without losing detail.
+  - The Node.js SDK build and test generation was robust, catching a runtime bug (`typeof null`) immediately.
+- **What was inefficient**: 
+  - The `coworker-auto-approve-support` task failed due to script argument errors, indicating a lack of robust argument parsing or testing in the PowerShell environment before execution.
+
+### Issues Encountered
+- **Script Failure**: The `coworker-auto-approve-support` task exited with code 1 due to a "too many arguments" error in PowerShell.
+- **Argument Parsing**: The failure suggests that the script modification for moving files based on tags didn't correctly handle file paths or command arguments in the PowerShell context.
+
+### Root Cause Analysis
+- **Auto-approve Failure**: The error "too many arguments" typically occurs in PowerShell/Bash when path variables containing spaces are not quoted, or when a command receives unexpected input from a pipe/wildcard expansion. The logic added to handle the `#auto-approve` tag likely broke the existing argument passing structure of the coworker script.
+
+### Process Improvement Insight
+- **Script Validation**: For infrastructure scripts like `coworker.ps1`, strictly validate argument parsing with a "dry run" or dedicated test harness before applying logic changes. Simple syntax checks are insufficient for shell scripts handling file movements.
+
+### Tasks Executed (Continued)
+- **Fix Coworker Memory Generator**: 
+  - Fixed `coworker-daily-memory-generator.ps1` which was failing due to improper argument passing to `gh copilot`.
+  - Updated the script to use `Start-Process` with a properly escaped `ArgumentList`, resolving the `error: unknown option '---#'` caused by special characters in the prompt.
+
+### Execution Quality Review (Continued)
+- **Problem Solving**: Quickly identified the root cause (shell argument parsing) by comparing the failing script with a known working pattern in `coworker.ps1`. The fix was applied surgically and verified successfully.
+
+### Issues Encountered (Continued)
+- **gh copilot Argument Parsing**: The `gh copilot` command (or the shell invoking it) was misinterpreting the prompt content as flags when passed directly via `&`.
+
+### Root Cause Analysis (Continued)
+- **Shell Argument Parsing**: Passing complex strings with special characters/newlines as arguments in PowerShell requires careful escaping or using `Start-Process -ArgumentList` to avoid parsing errors.
+
+### Process Improvement Insight (Continued)
+- **Robust Argument Handling**: Whenever invoking external tools (like `gh`) from PowerShell with complex or multi-line arguments, prefer `Start-Process -ArgumentList` over direct invocation to ensure predictable argument parsing.
