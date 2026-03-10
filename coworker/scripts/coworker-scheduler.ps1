@@ -13,7 +13,7 @@ $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
 
 # Import common utility script
 $utilScriptPath = Join-Path $PSScriptRoot 'Util.ps1'
-. $configScriptPath
+. $utilScriptPath
 
 Fix-Encoding-UTF8
 
