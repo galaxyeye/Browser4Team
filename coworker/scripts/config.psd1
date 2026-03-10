@@ -3,7 +3,7 @@
         WorkspaceRoot        = '..\..'
         CoworkerRoot         = '..'
         TasksRoot            = '..\tasks'
-        TargetRepositoryRoot = 'D:\workspace\Browser4\Browser4-4.6'
+        TargetRepositoryRoot = '..\..\Browser4'
     }
 
     Scheduler = @{
@@ -14,7 +14,7 @@
         'gh'
         'copilot'
         '--model'
-        'gpt-5.4'
+        'gpt-5.3'
         '--no-ask-user'
         '--log-level'
         'info'

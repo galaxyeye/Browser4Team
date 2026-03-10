@@ -1,0 +1,253 @@
+● Todo added: Read task description
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\improve-mcp-tool-response-test.md
+  └ 4 lines read
+
+● Check repo status
+  $ git --no-pager status --short
+  └ 4 lines...
+
+I’ve got the task scoped: it’s a focused test/API contract alignment in `MCPToolControllerE2ETest`. I’m reading the current test and related controller/response types next so I can make a surgical fix and validate it.
+
+● Todo started: read-task
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+  └ 1 line read
+
+● Grep "class MCPToolController|callTool\(" in **/*.{kt,java} (D:\workspace\Browser4Team\Browser4)
+  └ 97 lines found
+
+● Grep "class MCPToolCallResponse|data class MCPToolCallResponse|MCPToolCallResponse" in
+**/*.{kt,java} (D:\workspace\Browser4Team\Browser4)
+  └ 13 lines found
+
+● Create session plan
+  $ @'
+  # Plan
+  1. Inspect MCP controller, response DTOs, and the existing E2E test to confirm the expected
+  API shape.
+  2. Update the test (and any tightly related code if needed) so `callTool` assertions match ...
+  └ 5 lines...
+
+I found the contract type: the controller already returns `ResponseEntity<MCPToolCallResponse>`. The remaining work looks centered on the E2E helper/assertions, so I’m checking the current test helper plus the local diff before editing.
+
+● Todo started: plan-work
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 1-120
+  └ 120 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 1-220
+  └ 220 lines read
+
+● Show test diff
+  $ git --no-pager diff -- pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/
+  controller/MCPToolControllerE2ETest.kt
+  └ 30 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 220-680
+  └ 393 lines read
+
+● Grep "response\[|textContent\(|assertNotError\(|assertIsError\("
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller\MCPToolControllerE2ETest.kt)
+  └ 39 lines found
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  lines 1-120
+  └ 120 lines read
+
+● Grep "content\.|isError|MCPToolCallResponse" (D:\workspace\Browser4Team\Browser4\pulsar-rest\src\t
+est\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt)
+  └ 1 line found
+
+I’ve narrowed it down to a pure test-side cleanup: the controller already returns `MCPToolCallResponse`, but the E2E helper still deserializes into raw maps. I’m switching that helper and the response assertions to the typed DTO now.
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● Todo started: implement-change
+
+● Run MCPToolController E2E test
+  $ .\mvnw.cmd -pl pulsar-tests\pulsar-rest-tests -am -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" -D"runE2ETests=true" test
+  └ 10 lines...
+
+● Run MCPToolController unit test
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 153 lines...
+
+The unit test run is still building through the reactor, and I hit one quick snag: the E2E module selector I used wasn’t the right reactor path. I’m reading the pom/module names now, then I’ll rerun the targeted E2E test with the correct module id.
+
+● Read pulsar-tests\pom.xml lines 1-220
+  └ 34 lines read
+
+● Grep "<artifactId>pulsar-rest-tests</artifactId>|<module>.*rest.*</module>" in **/pom.xml
+(D:\workspace\Browser4Team\Browser4)
+  └ 4 lines found
+
+● Show updated test diff
+  $ git --no-pager diff -- pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/
+  controller/MCPToolControllerE2ETest.kt
+  └ 72 lines...
+
+● read_powershell
+  └ 3 lines...
+
+● Run MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" -D"runE2ETests=true" test
+  └ 4 lines...
+
+Both validations are now running: the unit test reactor build is still in progress, and the E2E test is running from the module’s own `pom.xml`, which avoids the earlier reactor selector issue. I’m just reading them through to completion and checking for any compile/assertion fallout.
+
+● list_powershell
+  └ Active shell sessions:
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 3 lines...
+
+● read_powershell
+  └ 7 lines...
+
+● read_powershell
+  └ 4 lines...
+
+The unit test finished successfully. I’m pulling the tail of that output for the summary while the E2E test keeps running, then I’ll verify the final diff and wrap this up.
+
+● read_powershell
+  └ 8 lines...
+
+● Tail unit test output
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157247640-jk6vkg.txt'
+  -Tail 40
+  └ 39 lines...
+
+The typed helper change compiled through the unit controller tests cleanly. The E2E run failed, so I’m grabbing the failure tail now to see whether it’s a real regression from the DTO change or an unrelated environment/test issue before I finalize anything.
+
+● Grep "\[ERROR\]|FAILURE|Caused by:|Unresolved reference|Compilation error|Tests
+run:|Failures:|Errors:"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157283888-unbqwi.txt)
+  └ 19 lines found
+
+● Tail E2E test output
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157283888-unbqwi.txt'
+  -Tail 120
+  └ 118 lines...
+
+I found the real issue from the E2E failure: not the DTO itself, but `WebTestClient`’s response extractor choking on the Kotlin data class. I’m keeping `callTool()` typed, but switching it to read the raw JSON body and deserialize with the test’s `jacksonObjectMapper()`, which matches the actual API contract and avoids the codec mismatch.
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● Show revised test diff
+  $ git --no-pager diff -- pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/
+  controller/MCPToolControllerE2ETest.kt
+  └ 77 lines...
+
+● Re-run MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" -D"runE2ETests=true" test
+  └ 4 lines...
+
+● read_powershell
+  └ 8 lines...
+
+The rerun still failed, so I’m checking whether it’s the same extractor problem or a separate E2E/environment failure. If the typed helper is now fine and the remaining failure is external, I’ll document that clearly with the successful unit validation.
+
+● Grep "\[ERROR\]|FAILURE|Caused by:|RestClient Error while extracting response|Tests
+run:|Failures:|Errors:|BUILD SUCCESS|BUILD FAILURE"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157418269-iugklo.txt)
+  └ 1 line found
+
+● Tail rerun E2E output
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157418269-iugklo.txt'
+  -Tail 120
+  └ 123 lines...
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773157418269-iugklo.txt lines 1488-1515
+  └ 16 lines read
+
+● Grep "jacksonObjectMapper\(|configure\(|FAILURE|BUILD SUCCESS|BUILD FAILURE"
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller\MCPToolControllerE2ETest.kt)
+  └ 1 line found
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● Show final test diff
+  $ git --no-pager diff -- pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/
+  controller/MCPToolControllerE2ETest.kt
+  └ 86 lines...
+
+● Run MCPToolController E2E test again
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" -D"runE2ETests=true" test
+  └ 143 lines...
+
+The full E2E class is now blocked by an environment issue, not the code: Maven/Surefire is failing to create fork files because the machine is out of disk space. I’m trying one no-fork targeted E2E slice next so I can still get signal on the updated typed helper despite the disk constraint.
+
+● Check disk space
+  $ Get-PSDrive -Name C | Select-Object Used,Free,@{Name='UsedGB';Expression={[math]::Round($_.Used/
+  1GB,2)}},@{Name='FreeGB';Expression={[math]::Round($_.Free/1GB,2)}} | Format-List
+  └ 5 lines...
+
+● Run targeted E2E methods no fork
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml
+  -Dtest=MCPToolControllerE2ETest#testOpenSession+testMissingSessionIdReturnsError
+  -D"surefire.failIfNoSpecifiedTests=false" -D"runE2ETests=true" -DforkCount=0 test
+  └ 143 lines...
+
+I found the blocker: the C: drive is literally at `0 GB` free, and Surefire is failing before it can even fork the E2E JVM. I’m cleaning up the large temp and test-report artifacts from these runs and then I’ll retry the E2E test once more.
+
+● Inspect target directory sizes
+  $ Get-ChildItem 'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target' -Force
+  | Select-Object Name,@{Name='SizeMB';Expression={[math]::Round(($_ | Measure-Object -Property
+  Length -Sum).Sum / 1MB, 2)}} | Format-Table -AutoSize
+  └ 11 lines...
+
+● Delete large temp and surefire artifacts
+  $ $paths = @(
+    'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157247640-jk6vkg.txt',
+    'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157283888-unbqwi.txt',
+    'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773157418269-iugklo.txt',
+    'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target\surefire-reports'...
+  └ 13 lines...
+
+● Todo blocked: validate-change
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 1-170
+  └ 170 lines read
+
+● Check final repo status
+  $ git --no-pager status --short
+  └ 4 lines...
+
+Updated `pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/controller/MCPToolControllerE2ETest.kt` so `callTool()` now returns typed `MCPToolCallResponse` instead of raw maps, and the helper assertions now use `response.content` / `response.isError` directly.
+
+I deserialize the raw JSON body with the test’s `jacksonObjectMapper()` and disable `FAIL_ON_UNKNOWN_PROPERTIES` so the E2E helper still tolerates extra error fields seen in real responses.
+
+Validation:
+`.\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest -D"surefire.failIfNoSpecifiedTests=false" test` ✅
+
+E2E validation is currently blocked: C: has `0 GB` free, so Surefire cannot create fork files.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         4m 37s
+Total session time:     7m 46s
+Total code changes:     +17 -12
+Breakdown by AI model:
+ gpt-5.4                 1.2m in, 10.8k out, 1.2m cached (Est. 1 Premium request)

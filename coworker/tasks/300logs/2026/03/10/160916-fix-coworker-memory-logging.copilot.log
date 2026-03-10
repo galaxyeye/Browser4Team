@@ -1,0 +1,269 @@
+● Todo added: Inspect coworker memory logging task
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\fix-coworker-memory-logging.md
+  └ 22 lines read
+
+● Check repository status
+  $ git --no-pager status --short
+  └ 4 lines...
+
+I’ve got the task details. Next I’m tracing the memory initialization and logging paths to fix both the recursion overflow and the garbled log encoding cleanly.
+
+✗ Read ~\.copilot\session-state\8fb6eb49-9e37-4f68-bda5-ded2b21d18bc\plan.md
+  Path does not exist
+
+● Glob "coworker/**/*.ps1" in D:\workspace\Browser4Team\Browser4
+  └ 15 files found
+
+● Grep "UTF-8|utf8|Encoding|Out-File|Set-Content|Add-Content|Tee-Object|Start-Transcript|Console]::O
+utputEncoding|PSDefaultParameterValues" (D:\workspace\Browser4Team\Browser4\coworker)
+  └ 5 lines found
+
+● Grep "memory-generator|initialize memory|Failed to initialize memory context|call depth
+overflow|Daily memory length|Moved to working|Executing Copilot for task|Task repositories ->
+control|Starting Copilot execution" (D:\workspace\Browser4Team\Browser4\coworker)
+  └ 5 lines found
+
+● Create session plan file
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\8fb6eb49-9e37-4f68-bda5-ded2b21d18bc\plan.md';
+  @'
+  # Plan
+
+  1. Read the requested coworker task file and inspect related PowerShell scripts....
+  └ 6 lines...
+
+● Todo started: inspect-task
+
+● Read coworker\scripts\coworker.ps1
+  └ 1 line read
+
+● Grep "Failed to initialize memory context|Daily memory length|Executing Copilot for task|Task
+repositories -> control|Starting Copilot execution|Moved to working"
+(D:\workspace\Browser4Team\Browser4\coworker\scripts)
+  └ 31 lines found
+
+● Grep "Out-File|Set-Content|Add-Content|Tee-Object|Console\]::OutputEncoding|OutputEncoding|UTF8|ut
+f8|Encoding" (D:\workspace\Browser4Team\Browser4\coworker\scripts)
+  └ 44 lines found
+
+● Read ~\.copilot\session-state\8fb6eb49-9e37-4f68-bda5-ded2b21d18bc\plan.md
+  └ 6 lines read
+
+● Read coworker\scripts\workers\coworker-daily-memory-generator.ps1
+  └ 218 lines read
+
+● Read coworker\scripts\workers\coworker-memory-generator.ps1
+  └ 319 lines read
+
+I found the likely overflow root cause: the memory generator defines its own `Invoke-GhCopilot` wrapper, then recursively calls itself instead of the helper from `gh-copilot.ps1`. I’m now tightening that and checking where the log streaming loses UTF-8.
+
+● Read coworker\scripts\coworker.ps1 lines 500-690
+  └ 190 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 1-240
+  └ 240 lines read
+
+● Read coworker\scripts\workers\gh-copilot.ps1 lines 1-320
+  └ 263 lines read
+
+● Grep "Fix-Encoding-UTF8|Write-LogMessage|Write-Host|Get-Content \$stdOutLog|Out-File -FilePath
+\$copilotLogPath|Start-Process" (D:\workspace\Browser4Team\Browser4\coworker\scripts\coworker.ps1)
+  └ 5 lines found
+
+● Read coworker\scripts\coworker-scheduler.ps1 lines 1-260
+  └ 260 lines read
+
+● Grep "coworker\.ps1|RedirectStandardOutput|RedirectStandardError|Start-Process|Out-File|Set-Conten
+t|Add-Content" in *.ps1 (D:\workspace\Browser4Team\Browser4\coworker\scripts)
+  └ 46 lines found
+
+● Read coworker\scripts\process-coworker-queue.ps1
+  └ 236 lines read
+
+● Read bin\common\Util.ps1 lines 1-220
+  └ 33 lines read
+
+The logging issue looks narrower than the file writes: the garbled characters are most likely from streaming Copilot output back through `Write-Host`, then capturing that parent process output. I’m checking whether there are existing tests for these scripts; if not, I’ll add the smallest targeted ones around the helper behavior.
+
+● Glob "**/*{Test,Tests}.ps1" in D:\workspace\Browser4Team\Browser4\coworker
+  └ No matches found
+
+● Glob "**/*{Test,Tests}.ps1" in D:\workspace\Browser4Team\Browser4
+  └ No matches found
+
+● Grep "Pester|Describe\s+['"]|It\s+['"]" in *.ps1 (D:\workspace\Browser4Team\Browser4)
+  └ No matches found
+
+● Grep "Fix-Encoding-UTF8|Write-LogMessage|Invoke-GHCopilot|coworker-memory-generator" in
+*.Tests.ps1 (D:\workspace\Browser4Team\Browser4)
+  └ No matches found
+
+● Grep "Write-Host" (D:\workspace\Browser4Team\Browser4\coworker\scripts\coworker.ps1)
+  └ 10 lines found
+
+● Grep "Invoke-GhCopilot"
+(D:\workspace\Browser4Team\Browser4\coworker\scripts\workers\coworker-memory-generator.ps1)
+  └ 6 lines found
+
+● Read coworker\scripts\config.ps1 lines 1-220
+  └ 100 lines read
+
+● Read coworker\scripts\config.psd1 lines 1-160
+  └ 22 lines read
+
+I’ve got a focused fix plan now: remove the recursive wrapper in the memory generator, and route coworker console output through UTF-8-safe stream writes when output is redirected so the captured logs keep Copilot’s symbols intact.
+
+✗ Edit coworker\scripts\workers\coworker-memory-generator.ps1
+  Edit coworker\scripts\coworker.ps1
+  Failed to apply patch: Error: Failed to find expected lines in
+  D:\workspace\Browser4Team\Browser4\coworker\scripts\workers\coworker-memory-generator.ps1:
+  $configPath = Join-Path (Split-Path -Parent $PSScriptRoot) "config.ps1"
+  . $configPath
+  $repoRoot = Get-WorkspaceRoot
+  $ghCopilotHelper = Join-Path $PSScriptRoot 'gh-copilot.ps1'
+  . $ghCopilotHelper
+  $copilotCommand = Get-GHCopilotCommand -RepoRoot $repoRoot
+  $copilotExecutable = $copilotCommand.Executable
+  $copilotBaseArgs = $copilotCommand.BaseArgs
+
+  # Function to run gh copilot
+  function Invoke-GhCopilot {
+      param(
+          [string]$Prompt,
+          [switch]$CaptureOutput
+      )
+
+● Read coworker\scripts\workers\coworker-memory-generator.ps1 lines 15-80
+  └ 66 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 100-180
+  └ 81 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 80-95
+  └ 16 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 360-375
+  └ 16 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 588-642
+  └ 55 lines read
+
+✗ Edit coworker\scripts\workers\coworker-memory-generator.ps1
+  Edit coworker\scripts\coworker.ps1
+  Failed to apply patch: Error: Failed to find expected lines in
+  D:\workspace\Browser4Team\Browser4\coworker\scripts\coworker.ps1:
+          $createdDir = $taskRoots[0].Created
+          # Move directly to createdDir with original name
+          $destPath = Join-Path $createdDir $fileItem.Name
+          Move-Item -Path $fileItem.FullName -Destination $destPath -Force
+          Write-Host "Moved specified task file to: $destPath"
+
+● Read coworker\scripts\workers\coworker-memory-generator.ps1 lines 24-80
+  └ 57 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 80-155
+  └ 75 lines read
+
+● Edit coworker\scripts\coworker.ps1
+
+● Edit coworker\scripts\coworker.ps1
+
+● Edit coworker\scripts\coworker.ps1
+
+● Grep "Write-Host" (D:\workspace\Browser4Team\Browser4\coworker\scripts\coworker.ps1)
+  └ 2 lines found
+
+● Grep "Invoke-GhCopilot|Invoke-CoworkerMemoryCopilot"
+(D:\workspace\Browser4Team\Browser4\coworker\scripts\workers\coworker-memory-generator.ps1)
+  └ 5 lines found
+
+The code changes are in. I’m doing a quick verification pass now: syntax checks, a safe `init` run for the memory generator, and a small redirected-output probe to make sure the UTF-8 console path behaves as intended.
+
+● Todo started: validate-fix
+
+● Read coworker\scripts\coworker.ps1 lines 120-170
+  └ 51 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 588-644
+  └ 56 lines read
+
+● Read coworker\scripts\workers\coworker-memory-generator.ps1 lines 24-60
+  └ 36 lines read
+
+● Read coworker\scripts\workers\coworker-memory-generator.ps1 lines 240-258
+  └ 19 lines read
+
+● Validate coworker script fixes
+  $ $ErrorActionPreference = 'Stop'
+  Set-Location 'D:\workspace\Browser4Team\Browser4'
+
+  $files = @(
+    'coworker\scripts\coworker.ps1',...
+  └ 165 lines...
+
+● Validate coworker script fixes
+  $ $ErrorActionPreference = 'Stop'
+  Set-Location 'D:\workspace\Browser4Team\Browser4'
+
+  $files = @(
+    'coworker\scripts\coworker.ps1',...
+  └ 85 lines...
+
+● read_powershell
+  └ 7 lines...
+
+● stop_powershell
+  └ 1 line...
+
+The memory-generator validation passed, but my redirected-output probe found one subtle issue in the new console helper. I’m inspecting the actual captured bytes and tightening that before I wrap up.
+
+● Read coworker\scripts\coworker.ps1 lines 129-152
+  └ 24 lines read
+
+● Inspect console probe output files
+  $ $stdoutLog = Join-Path $env:TEMP 'copilot-console-line-probe.stdout'; $stderrLog = Join-Path
+  $env:TEMP 'copilot-console-line-probe.stderr'; if (Test-Path $stdoutLog) { Write-Host
+  'STDOUT:'; Format-Hex -Path $stdoutLog | Select-Object -First 8 | Out-String | Write-Host;
+  Write-Host 'STDOUT TEXT:'; Get-Content -Path $stdoutLog -Raw -Encoding Byte | ForEach-Object {
+   $_ } | Select-Object -First 40 | Out-String | Write-Host; Get-Content -Path $stdoutLog -Raw }...
+  └ 27 lines...
+
+● Edit coworker\scripts\coworker.ps1
+
+● Validate coworker script fixes
+  $ $ErrorActionPreference = 'Stop'
+  Set-Location 'D:\workspace\Browser4Team\Browser4'
+
+  $files = @(
+    'coworker\scripts\coworker.ps1',...
+  └ 80 lines...
+
+● Todo completed: implement-fix, validate-fix
+
+● Review final coworker changes
+  $ git --no-pager diff -- coworker\scripts\coworker.ps1
+  coworker\scripts\workers\coworker-memory-generator.ps1 && git --no-pager status --short --
+  coworker\scripts\coworker.ps1 coworker\scripts\workers\coworker-memory-generator.ps1
+  └ 204 lines...
+
+Done — I fixed both coworker issues without moving the task file.
+
+I changed `coworker\scripts\workers\coworker-memory-generator.ps1` to stop the accidental self-recursion during memory init/compression by renaming the local wrapper and delegating directly to the shared `Invoke-GHCopilot` helper.
+
+I changed `coworker\scripts\coworker.ps1` to stream redirected stdout/stderr as explicit UTF-8 bytes, so Copilot symbols like `●` no longer get garbled in captured logs.
+
+Validated with:
+`ParseFile` syntax checks,
+`coworker-memory-generator.ps1 -Type init -Date 2099-01-01`,
+and a redirected UTF-8 console probe.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         5m 57s
+Total session time:     7m 18s
+Total code changes:     +39 -15
+Breakdown by AI model:
+ gpt-5.4                 1.5m in, 17.4k out, 1.5m cached (Est. 1 Premium request)

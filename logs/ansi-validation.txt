@@ -1,0 +1,3 @@
+﻿PASS: Remove-AnsiEscapeSequences
+PASS: Normalize-CoworkerLogFile
+PASS: Write-CoworkerLog -NoColor emits no ESC

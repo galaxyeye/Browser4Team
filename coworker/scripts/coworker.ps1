@@ -27,6 +27,8 @@ param(
 # $env:GH_DEBUG = 'api'      # 打印 API 请求
 # $env:GH_DEBUG = '1'        # 打印调试信息
 
+Write-Host "Starting Coworker Task Runner..." -ForegroundColor Cyan
+
 $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
 . $configScriptPath
 

@@ -1,0 +1,229 @@
+● Todo added: Review task brief
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\align-mcp-tool-response-test.md
+  └ 4 lines read
+
+I’ve got the brief. Next I’m tracing the controller, response model, and E2E test together so I can make the test reflect the real API shape without changing unrelated behavior.
+
+● Todo started: review-task-brief
+
+● Glob "**/*MCPToolControllerE2ETest*.kt" in D:\workspace\Browser4Team\Browser4
+  └ 1 file found
+
+● Grep "MCPToolControllerE2ETest|MCPToolCallResponse|callTool" in *.{kt,java}
+(D:\workspace\Browser4Team\Browser4)
+  └ 11 files found
+
+● Create session plan
+  $ @'
+  # Plan
+  1. Inspect MCP controller, response DTOs, and MCPToolControllerE2ETest to confirm the real API
+   contract.
+  2. Update the test and any tightly-coupled code so callTool assertions use MCPToolCallResponse...
+  └ 5 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+  └ 1 line read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  └ 336 lines read
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  └ 490 lines read
+
+● Grep "data class MCPToolCallResponse|class MCPToolCallResponse|interface MCPToolCallResponse" in
+*.kt (D:\workspace\Browser4Team\Browser4)
+  └ 1 line found
+
+I found the contract: `MCPToolController.callTool` already returns `ResponseEntity<MCPToolCallResponse>`. The likely mismatch is isolated to the E2E test still deserializing/asserting a raw map/string shape, so I’m narrowing that test now.
+
+● Grep "callTool|MCPToolCallResponse|content\[0\]|isError|call-tool"
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller\MCPToolControllerE2ETest.kt)
+  └ 5 lines found
+
+● Grep "exchange\(|postForEntity\(|postForObject\(|body\.|ResponseEntity"
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller\MCPToolControllerE2ETest.kt)
+  └ 19 lines found
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 1-170
+  └ 170 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 171-260
+  └ 90 lines read
+
+The E2E helper is close, but it still treats `/mcp/call-tool` like a raw JSON string and then reparses it. I’m switching that helper to deserialize the real `MCPToolCallResponse` directly from `WebTestClient`, then I’ll run the focused REST test scope.
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 260-520
+  └ 260 lines read
+
+● Grep "readValue|expectBody<String>|textContent\(|assertNotError\(|assertIsError\("
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller\MCPToolControllerE2ETest.kt)
+  └ 39 lines found
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+The code change is tiny and surgical. I’m validating it with the narrowest meaningful Maven scope: compile the REST test module, then run the specific E2E test with E2E execution enabled.
+
+● Todo started: validate-mcp-test-alignment
+
+● Compile rest tests module
+  $ .\mvnw.cmd -pl pulsar-tests\pulsar-rest-tests -am -DskipTests compile
+  └ 10 lines...
+
+The first Maven selector used the directory path, but this reactor expects a different module coordinate. I’m checking the module declaration and then retrying with the correct Maven target.
+
+● Read pulsar-tests\pom.xml
+  └ 34 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\pom.xml
+  └ 53 lines read
+
+● Grep "<module>.*pulsar-rest-tests.*</module>|<artifactId>.*pulsar-rest-tests.*</artifactId>" in
+pom.xml (D:\workspace\Browser4Team\Browser4)
+  └ 2 lines found
+
+● SQL: Record validation retry
+  └ 1 row(s) updated.
+
+● Compile rest tests reactor
+  $ .\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -DskipTests compile
+  └ 57 lines...
+
+● Memory stored: build commands
+  └ Nested test modules can be targeted with `./mvnw -f pulsar-tests/pom.xml -pl pul…
+
+● Run MCPToolControllerE2E test
+  $ .\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" -DrunE2ETests=true test
+  └ 4 lines...
+
+The targeted E2E run is still in progress. I’m reading the remaining output now so I can confirm the exact result instead of guessing from the partial Maven log.
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 113-132
+  └ 20 lines read
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● list_powershell
+  └ Active shell sessions:
+
+● read_powershell
+  └ 4 lines...
+
+Maven looks active but hasn’t emitted new lines yet, which is common while the Spring/E2E setup comes up. I’m giving it a bit more time before deciding whether it’s genuinely stuck.
+
+● read_powershell
+  └ 4 lines...
+
+● List directory pulsar-tests\pulsar-rest-tests\target\surefire-reports
+  └ 1 file found
+
+● Inspect running Maven test and reports
+  $ $pid=43572; Get-Process -Id $pid | Select-Object Id, ProcessName, StartTime, CPU, Responding |
+  Format-List; if (Test-Path 'pulsar-tests\pulsar-rest-tests\target\surefire-reports') {
+  Get-ChildItem 'pulsar-tests\pulsar-rest-tests\target\surefire-reports' | Select-Object Name,
+  Length, LastWriteTime | Format-Table -AutoSize } else { 'No surefire-reports yet' }
+  └ 15 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\2026-03-11T00-00-59_476.dumpstream
+  └ 4 lines read
+
+● Inspect Maven process
+  $ Get-Process -Id 43572 | Select-Object Id, ProcessName, StartTime, CPU, Responding | Format-List
+  └ 6 lines...
+
+● list_powershell
+  └ Active shell sessions:
+
+● read_powershell
+  └ 4 lines...
+
+The run exposed an environment-specific Surefire/JDK issue rather than a Kotlin assertion failure so far. I’m checking whether the JVM is still actually executing tests or just hung after that launcher problem.
+
+● Glob "**\surefire-reports\*.txt" in
+D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target
+  └ No matches found
+
+● List Maven child processes
+  $ Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq 43572 -or $_.ProcessId -eq
+   43572 } | Select-Object ProcessId, ParentProcessId, Name, CommandLine | Format-List
+  └ 10 lines...
+
+● Glob "**\surefire-reports\*" in
+D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target
+  └ No matches found
+
+● Find Maven Java descendants
+  $ Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match
+  'surefire|pulsar-rest-tests|org.apache.maven.surefire|MCPToolControllerE2ETest|maven' } |
+  Select-Object ProcessId, ParentProcessId, Name, CommandLine | Sort-Object ParentProcessId,
+  ProcessId | Format-List
+  └ 127 lines...
+
+● read_powershell
+  └ 4 lines...
+
+The full E2E execution appears to be hanging in this environment’s Surefire/browser startup path, not in the changed assertion code. I’m stopping that stuck run and switching to `test-compile`, which still validates the updated E2E test source cleanly.
+
+● stop_powershell
+  └ 1 line...
+
+● Compile rest test sources
+  $ .\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -DskipTests test-compile
+  └ 57 lines...
+
+I’ve at least confirmed the updated E2E source compiles. To get one real executed test in addition, I’m running the existing focused unit test for the same controller contract in `pulsar-rest`.
+
+● Todo completed: implement-mcp-test-alignment
+
+● Run MCPToolController unit test
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 3 lines...
+
+● read_powershell
+  └ 3 lines...
+
+● read_powershell
+  └ 7 lines...
+
+The focused controller unit test finished successfully. I’m grabbing the final output and wrapping up the task status so I can give you a clean handoff.
+
+● Todo completed: validate-mcp-test-alignment
+
+● read_powershell
+  └ 1 line...
+
+Done. I updated `pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolControllerE2ETest.kt` so `callTool()` now deserializes `/mcp/call-tool` directly as `MCPToolCallResponse` via `expectBody<MCPToolCallResponse>()`, matching the controller’s real API contract.
+
+I also removed the now-unused manual JSON reparse path.
+
+Validation:
+- `.\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -DskipTests test-compile` ✅
+- `.\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest -D"surefire.failIfNoSpecifiedTests=false" test` ✅
+
+A full E2E run hit an environment-specific Surefire/browser startup hang, but the changed test source compiles cleanly and the controller unit test passed.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         4m 1s
+Total session time:     9m 3s
+Total code changes:     +2 -5
+Breakdown by AI model:
+ gpt-5.4                 1.2m in, 7.9k out, 1.2m cached (Est. 1 Premium request)

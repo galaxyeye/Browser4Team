@@ -1,0 +1,3 @@
+﻿PASS: D:\workspace\Browser4Team\coworker\scripts\config.ps1
+PASS: D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.ps1
+PASS: D:\workspace\Browser4Team\coworker\scripts\workers\coworker-memory-generator.ps1

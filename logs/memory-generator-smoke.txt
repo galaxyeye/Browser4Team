@@ -1,0 +1,2 @@
+﻿PASS: memory-generator init JSON smoke test
+PASS: no ANSI escape sequences in init output
