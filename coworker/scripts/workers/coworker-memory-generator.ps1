@@ -48,7 +48,7 @@ function Invoke-GhCopilot {
 
     # Truncate if too long (approx check, limit depends on OS/shell but 20k is safeish)
     if ($Prompt.Length -gt 25000) {
-        Write-Warning "Prompt is too long ($($Prompt.Length) chars). Truncating..."
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "Prompt length ($($Prompt.Length)) exceeds 25000 chars; truncating input."
         $Prompt = $Prompt.Substring(0, 25000) + " ... [Truncated]"
     }
 
@@ -97,7 +97,7 @@ elseif ($Type -eq "monthly") {
     $dailyMemories = Get-ChildItem -Path "$targetDir\*\MEMORY.*.md" -Recurse
 
     if ($dailyMemories.Count -eq 0) {
-        Write-Warning "No daily memories found for $year-$month."
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No daily memory files found for $year-$month."
         exit 0
     }
 
@@ -151,7 +151,7 @@ elseif ($Type -eq "yearly") {
     $monthlyMemories = Get-ChildItem -Path "$logsBaseDir\$year\*\MEMORY.$year*.md"
 
     if ($monthlyMemories.Count -eq 0) {
-        Write-Warning "No monthly memories found for $year."
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No monthly memory files found for $year."
         exit 0
     }
 
@@ -214,12 +214,12 @@ elseif ($Type -eq "global") {
 
     if ($yearlyMemories.Count -eq 0) {
         # Fallback to monthly if no yearly? Or just warn?
-        Write-Warning "No yearly memories found. Trying monthly..."
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No yearly memory files found; trying monthly memories.'
         $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md" }
     }
 
     if ($yearlyMemories.Count -eq 0) {
-        Write-Warning "No memories found to summarize."
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No memory files available for summary generation.'
         exit 0
     }
 
@@ -256,11 +256,11 @@ elseif ($Type -eq "init") {
     if (Test-Path $memoryDayPath) {
         $dailyContent = Get-Content $memoryDayPath -Raw -Encoding UTF8
         if ($dailyContent.Length -gt 3000) {
-            Write-Warning "Daily memory exceeds 3000 chars ($($dailyContent.Length)). Initiating compression..."
+            Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "Daily memory length is $($dailyContent.Length) chars (>3000); starting compression."
 
             # Backup
             Copy-Item -Path $memoryDayPath -Destination $memoryDayLongPath -Force
-            Write-Warning "Original memory backed up to: $memoryDayLongPath"
+            Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "Backed up original daily memory to: $memoryDayLongPath"
 
             # Compress
             $compressPrompt = "Compress the following daily memory content to under 3000 characters. Preserve key insights and structural learnings. content:`n$dailyContent"
@@ -275,7 +275,7 @@ elseif ($Type -eq "init") {
                  # But sometimes it chats.
                  # Assuming it returns markdown.
                  $compressedContent | Out-File -FilePath $memoryDayPath -Encoding UTF8 -Force
-                 Write-Warning "Daily memory compressed to $($compressedContent.Length) chars."
+                 Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "Compression complete: daily memory now $($compressedContent.Length) chars."
             }
         }
     } else {

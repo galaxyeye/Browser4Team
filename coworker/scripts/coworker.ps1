@@ -30,12 +30,6 @@ param(
 $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
 . $configScriptPath
 
-# Import common utility script
-$utilScriptPath = Join-Path $PSScriptRoot 'common\Util.ps1'
-. $utilScriptPath
-
-Fix-Encoding-UTF8
-
 # Handle specified TaskFile
 if (-not [string]::IsNullOrWhiteSpace($TaskFile)) {
     # Resolve full path before changing location

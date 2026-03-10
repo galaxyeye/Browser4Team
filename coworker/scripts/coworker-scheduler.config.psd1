@@ -1,6 +1,8 @@
 @{
     Scheduler = @{
         TickSeconds          = 5
+        # Use 'pwsh' for PowerShell 7+ (cross-platform). On Windows, switch to 'powershell.exe'
+        # only if you explicitly need Windows PowerShell 5.1 behavior.
         PowerShellExecutable = 'pwsh'
         WorkingDirectory     = '..\..'
         LogDirectory         = 'coworker\tasks\300logs\scheduler'
@@ -40,4 +42,3 @@
         }
     )
 }
-

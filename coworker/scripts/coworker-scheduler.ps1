@@ -63,26 +63,28 @@ function Get-TaskSnapshot {
         [hashtable]$TaskState
     )
 
-    return [pscustomobject]@{
-        Name                = $TaskState.Name
-        Description         = $TaskState.Description
-        Enabled             = $TaskState.Enabled
-        IntervalSeconds     = $TaskState.IntervalSeconds
-        DependsOn           = @($TaskState.DependsOn)
-        PendingPaths        = @($TaskState.PendingPaths)
-        ScriptPath          = $TaskState.ScriptPath
-        Arguments           = @($TaskState.Arguments)
-        Status              = $TaskState.Status
-        LastStartedUtc      = $TaskState.LastStartedUtc
-        LastFinishedUtc     = $TaskState.LastFinishedUtc
-        LastExitCode        = $TaskState.LastExitCode
-        LastDurationSeconds = $TaskState.LastDurationSeconds
-        CurrentPid          = $TaskState.CurrentPid
-        NextRunUtc          = $TaskState.NextRunUtc
-        StdOutLogPath       = $TaskState.StdOutLogPath
-        StdErrLogPath       = $TaskState.StdErrLogPath
-        RunCount            = $TaskState.RunCount
+    $snapshot = @{
+        'Name'                = $TaskState.Name
+        'Description'         = $TaskState.Description
+        'Enabled'             = $TaskState.Enabled
+        'IntervalSeconds'     = $TaskState.IntervalSeconds
+        'DependsOn'           = @($TaskState.DependsOn)
+        'PendingPaths'        = @($TaskState.PendingPaths)
+        'ScriptPath'          = $TaskState.ScriptPath
+        'Arguments'           = @($TaskState.Arguments)
+        'Status'              = $TaskState.Status
+        'LastStartedUtc'      = $TaskState.LastStartedUtc
+        'LastFinishedUtc'     = $TaskState.LastFinishedUtc
+        'LastExitCode'        = $TaskState.LastExitCode
+        'LastDurationSeconds' = $TaskState.LastDurationSeconds
+        'CurrentPid'          = $TaskState.CurrentPid
+        'NextRunUtc'          = $TaskState.NextRunUtc
+        'StdOutLogPath'       = $TaskState.StdOutLogPath
+        'StdErrLogPath'       = $TaskState.StdErrLogPath
+        'RunCount'            = $TaskState.RunCount
     }
+
+    return $snapshot
 }
 
 function Write-SchedulerStatus {
@@ -97,11 +99,11 @@ function Write-SchedulerStatus {
         [hashtable]$TaskStates
     )
 
-    $statusDocument = [pscustomobject]@{
-        GeneratedAtUtc = (Get-Date).ToUniversalTime().ToString('o')
-        ConfigPath     = $ConfigPath
-        TickSeconds    = $TickSeconds
-        Tasks          = @($TaskStates.Values | Sort-Object Name | ForEach-Object { Get-TaskSnapshot -TaskState $_ })
+    $statusDocument = @{
+        'GeneratedAtUtc' = (Get-Date).ToUniversalTime().ToString('o')
+        'ConfigPath'     = $ConfigPath
+        'TickSeconds'    = $TickSeconds
+        'Tasks'          = @($TaskStates.Values | Sort-Object Name | ForEach-Object { Get-TaskSnapshot -TaskState $_ })
     }
 
     $statusDocument | ConvertTo-Json -Depth 8 | Set-Content -Path $StatusFile -Encoding UTF8
@@ -202,12 +204,30 @@ function Update-ScheduledTaskRun {
     $TaskState.LastFinishedUtc = $finishedAt.ToString('o')
     $TaskState.LastExitCode = $TaskState.Process.ExitCode
     $TaskState.LastDurationSeconds = [Math]::Round(($finishedAt - $startedAt.UtcDateTime).TotalSeconds, 2)
-    $TaskState.Status = if ($TaskState.Process.ExitCode -eq 0) { 'Idle' } else { 'Failed' }
+    if ($TaskState.Process.ExitCode -eq 0) {
+        $TaskState.Status = 'Idle'
+    }
+    else {
+        $TaskState.Status = 'Failed'
+    }
+
     $TaskState.CurrentPid = $null
     $TaskState.Process = $null
     Clear-ScheduledTaskProcessExitEvent -TaskState $TaskState
 
-    $level = if ($TaskState.LastExitCode -eq 0) { 'INFO' } else { 'ERROR' }
+    foreach ($logPath in @($TaskState.StdOutLogPath, $TaskState.StdErrLogPath)) {
+        if (-not [string]::IsNullOrWhiteSpace($logPath)) {
+            Normalize-CoworkerLogFile -Path $logPath
+        }
+    }
+
+    if ($TaskState.LastExitCode -eq 0) {
+        $level = 'INFO'
+    }
+    else {
+        $level = 'ERROR'
+    }
+
     Write-CoworkerLog -Component 'scheduler' -Level $level -Message ("Finished {0} with exit code {1}" -f $TaskState.Name, $TaskState.LastExitCode)
 }
 
@@ -383,8 +403,8 @@ function Invoke-SchedulerPass {
 
     Write-SchedulerStatus -StatusFile $StatusFile -ConfigPath $ResolvedConfigPath -TickSeconds $TickSeconds -TaskStates $TaskStates
 
-    return [pscustomobject]@{
-        RunningCount = $runningCount
+    return @{
+        'RunningCount' = $runningCount
     }
 }
 

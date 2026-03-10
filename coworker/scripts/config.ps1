@@ -130,7 +130,8 @@ function Write-CoworkerLog {
         [string]$Message,
         [ValidateSet('DEBUG', 'INFO', 'WARN', 'ERROR')]
         [string]$Level = 'INFO',
-        [string]$Component = 'coworker'
+        [string]$Component = 'coworker',
+        [switch]$NoColor
     )
 
     $timestamp = (Get-Date).ToUniversalTime().ToString('o')
@@ -142,7 +143,51 @@ function Write-CoworkerLog {
         default { 'Gray' }
     }
 
+    if ($NoColor) {
+        Write-Host $formattedMessage
+        return
+    }
+
     Write-Host $formattedMessage -ForegroundColor $color
+}
+
+function Remove-AnsiEscapeSequences {
+    param(
+        [AllowNull()]
+        [string]$Text
+    )
+
+    if ([string]::IsNullOrEmpty($Text)) {
+        return $Text
+    }
+
+    $escapeCharacter = [string][char]27
+    $ansiPattern = [regex]::Escape($escapeCharacter) + '\[[0-9;?]*[ -/]*[@-~]'
+    return ($Text -replace $ansiPattern, '')
+}
+
+function Normalize-CoworkerLogFile {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return
+    }
+
+    $content = Get-Content -LiteralPath $Path -Raw -ErrorAction SilentlyContinue
+    if ($null -eq $content) {
+        return
+    }
+
+    $sanitizedContent = Remove-AnsiEscapeSequences -Text $content
+    if ($sanitizedContent -ceq $content) {
+        return
+    }
+
+    $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+    [System.IO.File]::WriteAllText($Path, $sanitizedContent, $utf8NoBom)
 }
 
 function Remove-CoworkerEventSubscription {
@@ -209,13 +254,15 @@ function New-CoworkerFileWatcher {
 
     $watcher.EnableRaisingEvents = $true
 
-    return [pscustomobject]@{
+    $registration = @{
         Path              = $resolvedPath
         Directory         = $watchDirectory
-        Filter            = $filter
+        'Filter'          = $filter
         Watcher           = $watcher
         SourceIdentifiers = $sourceIdentifiers
     }
+
+    return $registration
 }
 
 function Remove-CoworkerFileWatcher {
