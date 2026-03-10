@@ -2,7 +2,6 @@
 
 param(
     [int]$IntervalSeconds = 15,
-    [switch]$Monitor,
     [switch]$Once
 )
 
@@ -56,16 +55,6 @@ function Get-CurrentPowerShellExecutable {
     return (Join-Path $PSHOME 'pwsh.exe')
 }
 
-function Invoke-TaskSourceMonitor {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$MonitorScriptPath
-    )
-
-    Write-CoworkerLog -Component 'process-coworker-queue' -Message 'Running task source monitor.'
-    & $MonitorScriptPath -Once
-}
-
 function Invoke-CoworkerPeriodicCheck {
     param(
         [Parameter(Mandatory = $true)]
@@ -77,18 +66,10 @@ function Invoke-CoworkerPeriodicCheck {
         [Parameter(Mandatory = $true)]
         [string]$WrapperName,
         [Parameter(Mandatory = $true)]
-        [string]$MonitorScriptPath,
-        [Parameter(Mandatory = $true)]
-        [bool]$EnableMonitor,
-        [Parameter(Mandatory = $true)]
         [string]$WorkingDirectory,
         [Parameter(Mandatory = $true)]
         [string]$PowerShellExecutable
     )
-
-    if ($EnableMonitor) {
-        Invoke-TaskSourceMonitor -MonitorScriptPath $MonitorScriptPath
-    }
 
     if (-not (Test-HasPendingCoworkerTasks -RepoRoot $RepoRoot)) {
         Write-CoworkerLog -Component 'process-coworker-queue' -Level 'DEBUG' -Message 'No tasks found in 1created or 5approved.'
@@ -133,7 +114,6 @@ $powerShellExecutable = Get-CurrentPowerShellExecutable
 $scriptPath = Join-Path $PSScriptRoot 'coworker.ps1'
 $scriptName = 'coworker.ps1'
 $wrapperName = 'process-coworker-queue.ps1'
-$monitorScriptPath = Join-Path $PSScriptRoot 'process-task-source.ps1'
 $watchPaths = @(
     (Join-Path $repoRoot 'coworker\tasks\1created')
     (Join-Path $repoRoot 'coworker\tasks\5approved')
@@ -142,9 +122,6 @@ $watchRegistrations = @()
 
 Write-CoworkerLog -Component 'process-coworker-queue' -Message ("Monitoring {0}" -f $scriptName)
 Write-CoworkerLog -Component 'process-coworker-queue' -Level 'DEBUG' -Message ("Script path: {0}" -f $scriptPath)
-if ($Monitor) {
-    Write-CoworkerLog -Component 'process-coworker-queue' -Message ("Task source monitoring enabled using {0}" -f $monitorScriptPath)
-}
 
 try {
     if (-not $Once) {
@@ -159,8 +136,6 @@ try {
             -ScriptPath $scriptPath `
             -ScriptName $scriptName `
             -WrapperName $wrapperName `
-            -MonitorScriptPath $monitorScriptPath `
-            -EnableMonitor $Monitor.IsPresent `
             -WorkingDirectory $workingDirectory `
             -PowerShellExecutable $powerShellExecutable
 
