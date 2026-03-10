@@ -11,6 +11,12 @@ $ErrorActionPreference = 'Stop'
 $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
 . $configScriptPath
 
+# Import common utility script
+$utilScriptPath = Join-Path $PSScriptRoot 'Util.ps1'
+. $configScriptPath
+
+Fix-Encoding-UTF8
+
 function Resolve-SchedulerPath {
     param(
         [Parameter(Mandatory = $true)]
