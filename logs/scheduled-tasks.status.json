@@ -1,0 +1,80 @@
+{
+  "GeneratedAtUtc": "2026-03-10T07:53:09.7364925Z",
+  "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1",
+  "TickSeconds": 5,
+  "Tasks": [
+    {
+      "Name": "coworker",
+      "Description": "Process queued coworker tasks.",
+      "Enabled": true,
+      "IntervalSeconds": 15,
+      "DependsOn": [
+        "process-task-source"
+      ],
+      "PendingPaths": [
+        "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
+        "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
+      ],
+      "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\process-coworker-queue.ps1",
+      "Arguments": [
+        "-Once"
+      ],
+      "Status": "Running",
+      "LastStartedUtc": "2026-03-10T07:52:09.5615441Z",
+      "LastFinishedUtc": "2026-03-10T07:47:23.5790482Z",
+      "LastExitCode": 0,
+      "LastDurationSeconds": 165.51,
+      "CurrentPid": 35376,
+      "NextRunUtc": "2026-03-10T07:52:24.5615441Z",
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\10\\075209-coworker.stdout.log",
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\10\\075209-coworker.stderr.log",
+      "RunCount": 2
+    },
+    {
+      "Name": "draft-refinement",
+      "Description": "Process the draft refinement queue.",
+      "Enabled": true,
+      "IntervalSeconds": 15,
+      "DependsOn": [],
+      "PendingPaths": [
+        "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
+      ],
+      "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\process-draft-refinement-queue.ps1",
+      "Arguments": [
+        "-Once"
+      ],
+      "Status": "WaitingForWork",
+      "LastStartedUtc": null,
+      "LastFinishedUtc": null,
+      "LastExitCode": null,
+      "LastDurationSeconds": null,
+      "CurrentPid": null,
+      "NextRunUtc": "2026-03-10T07:53:24.7289004Z",
+      "StdOutLogPath": null,
+      "StdErrLogPath": null,
+      "RunCount": 0
+    },
+    {
+      "Name": "process-task-source",
+      "Description": "Poll configured task sources and dispatch new tasks.",
+      "Enabled": false,
+      "IntervalSeconds": 60,
+      "DependsOn": [],
+      "PendingPaths": [],
+      "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\process-task-source.ps1",
+      "Arguments": [
+        "-Once"
+      ],
+      "Status": "Disabled",
+      "LastStartedUtc": null,
+      "LastFinishedUtc": null,
+      "LastExitCode": null,
+      "LastDurationSeconds": null,
+      "CurrentPid": null,
+      "NextRunUtc": "2026-03-10T07:40:52.2366022Z",
+      "StdOutLogPath": null,
+      "StdErrLogPath": null,
+      "RunCount": 0
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "GeneratedAtUtc": "2026-03-10T06:53:26.9107199Z",
+  "GeneratedAtUtc": "2026-03-10T07:32:44.1627808Z",
   "ConfigPath": "D:\\workspace\\Browser4\\Browser4-4.6\\coworker\\scripts\\coworker-scheduler.config.psd1",
   "TickSeconds": 5,
   "Tasks": [
@@ -20,15 +20,15 @@
         "-Once"
       ],
       "Status": "WaitingForWork",
-      "LastStartedUtc": "2026-03-09T17:53:02.9638891Z",
-      "LastFinishedUtc": "2026-03-09T18:00:50.4203771Z",
+      "LastStartedUtc": "2026-03-10T07:22:46.8905573Z",
+      "LastFinishedUtc": "2026-03-10T07:24:02.1100459Z",
       "LastExitCode": 0,
-      "LastDurationSeconds": 467.46,
+      "LastDurationSeconds": 75.22,
       "CurrentPid": null,
-      "NextRunUtc": "2026-03-10T06:53:31.8843603Z",
-      "StdOutLogPath": "D:\\workspace\\Browser4\\Browser4-4.6\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\09\\175302-coworker.stdout.log",
-      "StdErrLogPath": "D:\\workspace\\Browser4\\Browser4-4.6\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\09\\175302-coworker.stderr.log",
-      "RunCount": 7
+      "NextRunUtc": "2026-03-10T07:32:49.1360336Z",
+      "StdOutLogPath": "D:\\workspace\\Browser4\\Browser4-4.6\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\10\\072246-coworker.stdout.log",
+      "StdErrLogPath": "D:\\workspace\\Browser4\\Browser4-4.6\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\10\\072246-coworker.stderr.log",
+      "RunCount": 9
     },
     {
       "Name": "draft-refinement",
@@ -49,7 +49,7 @@
       "LastExitCode": null,
       "LastDurationSeconds": null,
       "CurrentPid": null,
-      "NextRunUtc": "2026-03-10T06:53:31.8843603Z",
+      "NextRunUtc": "2026-03-10T07:32:54.1585372Z",
       "StdOutLogPath": null,
       "StdErrLogPath": null,
       "RunCount": 0

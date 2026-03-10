@@ -6,9 +6,10 @@
 - 优化 LLM message 中的 history 部分，使用压缩，记忆和外部引用的方式，减少 token 数量，提升性能。
 - 每一步都要可追溯，可审计，可监控，记录每一步的输入输出和决策过程，方便调试、优化和自我修复。
 
-## Low-level Chat Model Management
+## Low-level Chat Model `Management`
 
 - Improve ChatModelFactory to support dynamic loading and unloading of chat models.
+- Improve BrowserChatModel to log token usage and performance metrics, enabling better monitoring and optimization of chat model performance.
 - Develop a user-friendly interface for managing chat models, including features for adding, removing, and configuring models, as well as viewing performance metrics and logs.
 - Enhance the integration of chat models with other components of the system, ensuring seamless communication and data exchange for improved overall performance and user experience.
 - Implement a fallback mechanism to automatically switch to alternative chat models in case of performance issues or failures, ensuring continuous service availability and reliability.
@@ -16,7 +17,7 @@
 
 ## Coworker
 
-- 优化 coworker 下所有脚本下设置工作目录的方式，抛弃使用 git rev-parse 获取路径，改为使用相对路径 + 配置文件。
+- 优化 coworker 下所有脚本下设置工作目录的方式，抛弃使用 git rev-parse、查找 ROOT.md 等方式获取路径，改为使用相对路径 + 配置文件。
   - 配置文件设置工作目录
   - 脚本定位使用相对路径
 - 使用 Register-ObjectEvent 替代 while 循环监听文件变化，提升性能。

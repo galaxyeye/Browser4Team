@@ -1,3 +1,22 @@
+Task: add-browser4-submodule
+Description: Task from add-browser4-submodule.md
+Original File: add-browser4-submodule.md
+Started: 2026-03-10 07:44:54
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\add-browser4-submodule.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\MEMORY.20260310.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\MEMORY.20260310.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-03)]:
 # MEMORY.202603.md
 ## Monthly Memory - 2026-03
 
@@ -61,3 +80,18 @@
 - Continued maturing coworker automation by renaming periodic queue processors, keeping compatibility shims for legacy scheduler entrypoints, skipping empty scheduler launches via `PendingPaths`, relocating runtime status artifacts, and documenting the live queue-based workflow in `SKILL.md`.
 - Tightened prompt and review quality across agentic surfaces by normalizing prompt language/rules to concise English and surfacing correctness risks in DOM tree helper traversal/text-association logic.
 - Reinforced execution hygiene: prefer active/generated fixtures over stale ones, keep scheduler/runtime artifacts in ignored operational locations, and place queue-awareness/path resolution in shared orchestration layers instead of duplicated worker logic.
+
+
+[Daily Memory (2026-03-10)]:
+## Daily Memory - 2026-03-10
+
+- **Coworker path handling centralized:** Replaced coworker PowerShell scripts' repo-root discovery (`git rev-parse`, ROOT/VERSION scans) and `Set-Location` usage with shared config-backed helpers in `coworker/scripts/config.ps1` + `config.psd1`. Scheduler and worker scripts now resolve workspace/task paths from script-relative configuration, while Copilot child processes receive an explicit working directory instead of mutating the caller's current directory. **Learning:** For coworker automation, script-relative resolution plus a PSD1-defined workspace root is more reliable than probing repo markers or changing global shell state. **Validation:** PowerShell syntax parsing passed for `coworker/scripts/**/*.ps1`, `git diff --check` passed, and a config smoke test resolved `WorkspaceRoot`, `TasksRoot`, and `SchedulerWorkingDirectory` to the expected absolute paths.
+
+- **Scheduler async behavior preserved while fixing paths:** Kept `coworker-scheduler.ps1` launching queue processors with `Start-Process` and no wait, but moved its working-directory choice into configuration (`coworker-scheduler.config.psd1`). **Learning:** When throughput already depends on non-blocking scheduler dispatch, the safe improvement is to centralize cwd policy in config and leave worker polling semantics intact.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\074439-add-browser4-submodule.copilot.log
