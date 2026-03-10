@@ -71,3 +71,27 @@ The submodule is now clean and pushed. I’m finishing the root repository sync 
 
 The push succeeded, but one scheduler log changed again immediately afterward, so the root repo isn’t clean yet. I’m checking whether it was a one-off write or an actively changing file before I decide whether to do a final follow-up commit.
 
+● Todo started: pull-remote-changes
+
+● Check whether log file is still changing
+  $ Set-Location 'D:\workspace\Browser4Team';
+  Write-Host '--- NOW ---';
+  git --no-pager status --short --branch;
+  Get-Item 'D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\03\10\162514-coworke
+  r.stdout.log' | Select-Object FullName,Length,LastWriteTime;...
+  └ 17 lines...
+
+That log file looks stable now, so I’m doing one final root commit/push to capture it and leave the repo clean.
+
+● Todo completed: push-local-commits
+
+● Commit and push final root update
+  $ Set-Location 'D:\workspace\Browser4Team';
+  $commitMsg = 'chore: capture final scheduler log update';
+  $trailer = 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>';
+  git add -A;
+  git diff --cached --quiet;...
+  └ 41 lines...
+
+The same log file changed again right after the follow-up push, so I’m checking whether this is a real content rewrite or just a line-ending normalization issue.
+
