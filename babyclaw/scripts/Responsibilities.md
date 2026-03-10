@@ -1,0 +1,3 @@
+- Search for every `bootstrap.ps1`
+- Check `bootstrap.ps1`'s sibling `input` directory for Markdown files
+- If found, run `bootstrap.ps1` with the Markdown file as input
