@@ -11,6 +11,8 @@ $ErrorActionPreference = 'Stop'
 $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
 . $configScriptPath
 
+Write-Host "Starting Coworker Scheduler (PID $PID)..."
+
 function Resolve-SchedulerPath {
     param(
         [Parameter(Mandatory = $true)]
@@ -162,6 +164,11 @@ function Start-ScheduledTaskRun {
     $stdOutPath = Join-Path $dateFolder "$timestamp-$($TaskState.Name).stdout.log"
     $stdErrPath = Join-Path $dateFolder "$timestamp-$($TaskState.Name).stderr.log"
     $argumentList = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $TaskState.ScriptPath) + @($TaskState.Arguments)
+
+    Write-Host "Starting task '$($TaskState.Name)' with command: $PowerShellExecutable $($argumentList -join ' ')"
+    Write-Host "Working directory: $WorkingDirectory"
+    Write-Host "StdOut log: $stdOutPath"
+    Write-Host "StdErr log: $stdErrPath"
 
     $process = Start-Process -FilePath $PowerShellExecutable `
         -ArgumentList $argumentList `
