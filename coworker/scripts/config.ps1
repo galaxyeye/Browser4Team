@@ -52,6 +52,22 @@ function Get-WorkspaceRoot {
     return Resolve-CoworkerConfiguredPath -Path $path
 }
 
+function Get-TargetRepositoryRoot {
+    $pathsConfig = Get-CoworkerConfigValue -Map $script:configData -Key 'Paths' -DefaultValue @{}
+    $configuredPath = Get-CoworkerConfigValue -Map $pathsConfig -Key 'TargetRepositoryRoot' -DefaultValue $null
+
+    if ($null -eq $configuredPath -or [string]::IsNullOrWhiteSpace([string]$configuredPath)) {
+        return Get-WorkspaceRoot
+    }
+
+    $resolvedPath = Resolve-CoworkerConfiguredPath -Path ([string]$configuredPath)
+    if (-not (Test-Path -LiteralPath $resolvedPath -PathType Container)) {
+        throw "Configured target repository root does not exist: $resolvedPath"
+    }
+
+    return $resolvedPath
+}
+
 function Get-CoworkerRoot {
     $pathsConfig = Get-CoworkerConfigValue -Map $script:configData -Key 'Paths' -DefaultValue @{}
     $path = [string](Get-CoworkerConfigValue -Map $pathsConfig -Key 'CoworkerRoot' -DefaultValue '..')

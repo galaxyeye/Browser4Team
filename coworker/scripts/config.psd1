@@ -1,8 +1,9 @@
 @{
     Paths = @{
-        WorkspaceRoot = '..\..'
-        CoworkerRoot  = '..'
-        TasksRoot     = '..\tasks'
+        WorkspaceRoot        = '..\..'
+        CoworkerRoot         = '..'
+        TasksRoot            = '..\tasks'
+        TargetRepositoryRoot = 'D:\workspace\Browser4\Browser4-4.6'
     }
 
     Scheduler = @{

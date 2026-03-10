@@ -44,9 +44,11 @@ $tasksRoot = Join-Path $repoRoot "coworker\tasks"
 $scriptsDir = $PSScriptRoot
 $ghCopilotHelper = Join-Path $scriptsDir "workers\gh-copilot.ps1"
 . $ghCopilotHelper
-$copilotCommand = Get-GHCopilotCommand -RepoRoot $repoRoot
-$copilotExecutable = $copilotCommand.Executable
-$copilotBaseArgs = $copilotCommand.BaseArgs
+$targetRepoRoot = $repoRoot
+$copilotCommand = $null
+$copilotExecutable = $null
+$copilotBaseArgs = @()
+$copilotWorkingDirectory = $repoRoot
 $taskRoots = @(
     @{
         Prepare = (Join-Path $tasksRoot "0draft")
@@ -162,6 +164,22 @@ function Write-LogVerbose {
     $logEntry | Out-File -FilePath $scriptLogPath -Append -Encoding UTF8
 }
 
+try {
+    $targetRepoRoot = Get-TargetRepositoryRoot
+    $copilotCommand = Get-GHCopilotCommand -RepoRoot $targetRepoRoot
+    $copilotExecutable = $copilotCommand.Executable
+    $copilotBaseArgs = $copilotCommand.BaseArgs
+    $copilotWorkingDirectory = $copilotCommand.WorkingDirectory
+}
+catch {
+    Write-LogMessage "Failed to resolve target repository root for task execution: $_" ERROR
+    exit 1
+}
+
+Write-LogMessage "Control repository root: $repoRoot" INFO
+Write-LogMessage "Target repository root: $targetRepoRoot" INFO
+Write-LogMessage "Copilot task working directory: $copilotWorkingDirectory" INFO
+
 function Ensure-DraftPlaceholders {
     param(
         [Parameter(Mandatory=$true)]
@@ -205,10 +223,11 @@ Prompt: $promptSample
         $nameArguments = New-CopilotPromptArguments -Prompt $namingPrompt
 
         Write-LogVerbose ("Executing GH Copilot for naming: {0}" -f (Format-CopilotCommand -Arguments $nameArguments))
+        Write-LogVerbose "Naming Copilot working directory: $copilotWorkingDirectory"
 
         $nameStdOut = [System.IO.Path]::GetTempFileName()
         $nameStdErr = [System.IO.Path]::GetTempFileName()
-        $nameProcess = Start-GHCopilotProcess -Executable $copilotExecutable -BaseArgs $copilotBaseArgs -Prompt $namingPrompt -WorkingDirectory $repoRoot -StdOutPath $nameStdOut -StdErrPath $nameStdErr -NoNewWindow
+        $nameProcess = Start-GHCopilotProcess -Executable $copilotExecutable -BaseArgs $copilotBaseArgs -Prompt $namingPrompt -WorkingDirectory $copilotWorkingDirectory -StdOutPath $nameStdOut -StdErrPath $nameStdErr -NoNewWindow
 
         $waited = $false
         try {
@@ -547,6 +566,7 @@ Do not move **this** task file, just execute the task based on its content, the 
         Write-LogVerbose "Task log will be written to: $taskLogPath"
 
         Write-LogMessage "Executing Copilot for task: $workingBaseName" INFO
+        Write-LogMessage "Task repositories -> control: $repoRoot | target: $targetRepoRoot | Copilot cwd: $copilotWorkingDirectory" INFO
         Write-LogVerbose "Prompt length: $($prompt.Length) characters"
 
         # Record task execution details to task log
@@ -554,6 +574,9 @@ Do not move **this** task file, just execute the task based on its content, the 
 Task: $title
 Description: $description
 Original File: $($file.Name)
+Control Repo: $repoRoot
+Target Repo: $targetRepoRoot
+Copilot Working Directory: $copilotWorkingDirectory
 Started: $((Get-Date).ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss'))
 Prompt:
 $prompt
@@ -569,10 +592,11 @@ Copilot Execution Output:
             $stdErrLog = $copilotLogPath + ".stderr"
 
             Write-LogMessage "=== Starting Copilot execution ===" INFO
+            Write-LogVerbose "Task Copilot working directory: $copilotWorkingDirectory"
 
             # Execute Copilot tool with the task prompt
             # Capture both standard output and error output to separate files
-            $process = Start-GHCopilotProcess -Executable $copilotExecutable -BaseArgs $copilotBaseArgs -Prompt $prompt -AdditionalArguments @('--allow-all-tools', '--allow-all-paths') -WorkingDirectory $repoRoot -StdOutPath $stdOutLog -StdErrPath $stdErrLog -NoNewWindow
+            $process = Start-GHCopilotProcess -Executable $copilotExecutable -BaseArgs $copilotBaseArgs -Prompt $prompt -AdditionalArguments @('--allow-all-tools', '--allow-all-paths') -WorkingDirectory $copilotWorkingDirectory -StdOutPath $stdOutLog -StdErrPath $stdErrLog -NoNewWindow
 
             $lastOutputLineCount = 0
 

@@ -5,20 +5,60 @@ param(
     [string[]]$AdditionalArguments = @(),
     [switch]$AllowAllTools,
     [switch]$AllowAllPaths,
-    [switch]$CaptureOutput
+    [switch]$CaptureOutput,
+    [switch]$UseTargetRepository
 )
 
 $configPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'config.ps1'
 . $configPath
 
 function Get-GHCopilotRepoRoot {
+    param(
+        [switch]$UseTargetRepository
+    )
+
+    if ($UseTargetRepository) {
+        return Get-TargetRepositoryRoot
+    }
+
     return Get-WorkspaceRoot
+}
+
+function Assert-GHCopilotDirectory {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Path,
+        [Parameter(Mandatory = $true)]
+        [string]$ParameterName
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        throw "$ParameterName cannot be empty."
+    }
+
+    if (-not (Test-Path -LiteralPath $Path -PathType Container)) {
+        throw "$ParameterName does not exist: $Path"
+    }
+
+    return [System.IO.Path]::GetFullPath($Path)
 }
 
 function Get-GHCopilotCommand {
     param(
-        [string]$RepoRoot = (Get-GHCopilotRepoRoot)
+        [string]$RepoRoot,
+        [string]$WorkingDirectory,
+        [switch]$UseTargetRepository
     )
+
+    if (-not $PSBoundParameters.ContainsKey('RepoRoot')) {
+        $RepoRoot = Get-GHCopilotRepoRoot -UseTargetRepository:$UseTargetRepository
+    }
+    $RepoRoot = Assert-GHCopilotDirectory -Path $RepoRoot -ParameterName 'RepoRoot'
+
+    if (-not $PSBoundParameters.ContainsKey('WorkingDirectory') -or [string]::IsNullOrWhiteSpace($WorkingDirectory)) {
+        $WorkingDirectory = $RepoRoot
+    }
+    $WorkingDirectory = Assert-GHCopilotDirectory -Path $WorkingDirectory -ParameterName 'WorkingDirectory'
 
     if (-not $COPILOT) {
         $COPILOT = @('gh', 'copilot')
@@ -34,7 +74,7 @@ function Get-GHCopilotCommand {
 
     return [pscustomobject]@{
         RepoRoot         = $RepoRoot
-        WorkingDirectory = $RepoRoot
+        WorkingDirectory = $WorkingDirectory
         ConfigPath       = $configPath
         Executable       = $COPILOT[0]
         BaseArgs         = @($COPILOT | Select-Object -Skip 1)
@@ -195,18 +235,29 @@ function Invoke-GHCopilot {
         [Parameter(Mandatory = $true)]
         [string]$Prompt,
         [string[]]$AdditionalArguments = @(),
-        [string]$RepoRoot = (Get-GHCopilotRepoRoot),
-        [string]$WorkingDirectory = $RepoRoot,
-        [switch]$CaptureOutput
+        [string]$RepoRoot,
+        [string]$WorkingDirectory,
+        [switch]$CaptureOutput,
+        [switch]$UseTargetRepository
     )
 
-    $command = Get-GHCopilotCommand -RepoRoot $RepoRoot
+    $commandArgs = @{
+        UseTargetRepository = $UseTargetRepository
+    }
+    if ($PSBoundParameters.ContainsKey('RepoRoot')) {
+        $commandArgs.RepoRoot = $RepoRoot
+    }
+    if ($PSBoundParameters.ContainsKey('WorkingDirectory')) {
+        $commandArgs.WorkingDirectory = $WorkingDirectory
+    }
+
+    $command = Get-GHCopilotCommand @commandArgs
     if ($CaptureOutput) {
         $stdOutPath = [System.IO.Path]::GetTempFileName()
         $stdErrPath = [System.IO.Path]::GetTempFileName()
 
         try {
-            $process = Start-GHCopilotProcess -Executable $command.Executable -BaseArgs $command.BaseArgs -Prompt $Prompt -AdditionalArguments $AdditionalArguments -WorkingDirectory $WorkingDirectory -StdOutPath $stdOutPath -StdErrPath $stdErrPath -NoNewWindow
+            $process = Start-GHCopilotProcess -Executable $command.Executable -BaseArgs $command.BaseArgs -Prompt $Prompt -AdditionalArguments $AdditionalArguments -WorkingDirectory $command.WorkingDirectory -StdOutPath $stdOutPath -StdErrPath $stdErrPath -NoNewWindow
             $process.WaitForExit()
             $global:LASTEXITCODE = $process.ExitCode
 
@@ -229,7 +280,7 @@ function Invoke-GHCopilot {
         }
     }
 
-    $process = Start-GHCopilotProcess -Executable $command.Executable -BaseArgs $command.BaseArgs -Prompt $Prompt -AdditionalArguments $AdditionalArguments -WorkingDirectory $WorkingDirectory -NoNewWindow
+    $process = Start-GHCopilotProcess -Executable $command.Executable -BaseArgs $command.BaseArgs -Prompt $Prompt -AdditionalArguments $AdditionalArguments -WorkingDirectory $command.WorkingDirectory -NoNewWindow
     $process.WaitForExit()
     $global:LASTEXITCODE = $process.ExitCode
     return $null
@@ -249,14 +300,14 @@ if ($MyInvocation.InvocationName -ne '.') {
     }
 
     if ($CaptureOutput) {
-        $output = Invoke-GHCopilot -Prompt $Prompt -AdditionalArguments $directArguments -CaptureOutput
+        $output = Invoke-GHCopilot -Prompt $Prompt -AdditionalArguments $directArguments -CaptureOutput -UseTargetRepository:$UseTargetRepository
         if (-not [string]::IsNullOrEmpty($output)) {
             Write-Output $output
         }
         exit $LASTEXITCODE
     }
 
-    $command = Get-GHCopilotCommand
+    $command = Get-GHCopilotCommand -UseTargetRepository:$UseTargetRepository
     $process = Start-GHCopilotProcess -Executable $command.Executable -BaseArgs $command.BaseArgs -Prompt $Prompt -AdditionalArguments $directArguments -WorkingDirectory $command.WorkingDirectory -NoNewWindow
     $process.WaitForExit()
     exit $process.ExitCode

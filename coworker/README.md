@@ -46,6 +46,15 @@ GitHub CLI (`gh`) must be installed and authenticated.
 
 See https://github.com/cli/cli#installation for installation instructions.
 
+## Configuration
+
+Coworker keeps its control data in the current repository, but task execution can target a different repository. Configure both in `coworker/scripts/config.psd1`:
+
+- `Paths.WorkspaceRoot` keeps `coworker/tasks`, logs, and memory rooted in this repository.
+- `Paths.TargetRepositoryRoot` sets the repository where task-mode `gh copilot` runs. When omitted, task execution falls back to `WorkspaceRoot` for backward compatibility.
+
+The default target repository path is `D:\workspace\Browser4\Browser4-4.6`. Coworker validates that configured target directory before starting a task run, and task logs record the control repo plus the actual Copilot working directory.
+
 ## Tags
 
 You can use tags in task files to provide additional context or control behavior.

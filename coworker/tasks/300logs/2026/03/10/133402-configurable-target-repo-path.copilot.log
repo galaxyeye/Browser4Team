@@ -1,0 +1,192 @@
+● SQL: Create task todos
+  └ Executed 3 statement(s)
+
+● Read AGENTS.md
+
+● Read coworker\tasks\2working\configurable-target-repo-path.md
+  └ 33 lines read
+
+● Check git status
+  $ git --no-pager status --short --branch
+  └ 11 lines...
+
+● Create session plan file
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\9786e0cb-a6e9-456c-8c68-a1e8c731613a\plan.md';
+  @'
+  # Plan
+  1. Read the task brief and inspect the relevant coworker scripts/docs.
+  2. Identify the current hard-coded target repository path flow and update it to use a ...
+  └ 4 lines...
+
+I’ve got the task brief and I’m tracing the exact handoff points now. Next I’m reading the config and task-execution scripts together so I can make one coherent change instead of patching this piecemeal.
+
+● Todo started: read-task
+
+● Read coworker\scripts\coworker.ps1
+  └ 1 line read
+
+● Read coworker\scripts\config.ps1
+  └ 218 lines read
+
+● Read coworker\scripts\workers\gh-copilot.ps1
+  └ 263 lines read
+
+● Read coworker\scripts\config.psd1
+  └ 22 lines read
+
+● Grep "Get-WorkspaceRoot|Get-GHCopilotRepoRoot|Get-GHCopilotCommand|Invoke-GHCopilot|Start-GHCopilo
+tProcess|TargetRepositoryRoot" in **/*.ps1 (D:\workspace\Browser4Team\coworker)
+  └ 40 lines found
+
+● Read coworker\scripts\coworker.ps1 lines 1-140
+  └ 140 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 180-260
+  └ 81 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 540-660
+  └ 120 lines read
+
+● Grep "TargetRepository|working directory|RepoRoot|WorkingDirectory" in **/*.{ps1,md,psd1}
+(D:\workspace\Browser4Team\coworker)
+  └ 72 lines found
+
+● Read coworker\README.md lines 1-180
+  └ 153 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 140-180
+  └ 41 lines read
+
+● Read coworker\README.md lines 180-280
+
+● Grep "config.psd1|Paths =|WorkspaceRoot" (D:\workspace\Browser4Team\coworker\README.md)
+  └ 2 lines found
+
+I’ve narrowed it down: the change belongs in `config.ps1`, `workers/gh-copilot.ps1`, and the task-only path in `coworker.ps1`, with a small README update. I’m also checking whether the suggested external repo path already exists so I can wire the default config safely.
+
+● Read coworker\scripts\workers\gh-copilot.ps1 lines 1-264
+  └ 263 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 660-760
+  └ 53 lines read
+
+● List Browser4 directories
+  $ Get-ChildItem -LiteralPath 'D:\workspace\Browser4' -Directory -ErrorAction SilentlyContinue |
+  Select-Object -ExpandProperty FullName
+  └ 15 lines...
+
+● Check target repo path
+  $ $target = 'D:\workspace\Browser4\Browser4-4.6'; if (Test-Path -LiteralPath $target -PathType
+  Container) { Write-Output "EXISTS:$target" } else { Write-Output "MISSING:$target" }
+  └ 2 lines...
+
+● Edit coworker\scripts\config.psd1
+  Edit coworker\scripts\config.ps1
+  Edit coworker\scripts\workers\gh-copilot.ps1
+  Edit coworker\scripts\coworker.ps1
+  Edit coworker\README.md
+
+The core wiring is in place, but I spotted one subtle PowerShell binding issue while reviewing the helper changes. I’m fixing that now and then I’ll run syntax/config smoke tests plus a targeted task-run check.
+
+● Read coworker\scripts\workers\gh-copilot.ps1 lines 1-280
+  └ 280 lines read
+
+● Read coworker\scripts\config.ps1 lines 45-90
+  └ 46 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 35-190
+  └ 156 lines read
+
+● Review edited diff
+  $ git --no-pager diff -- coworker/scripts/config.psd1 coworker/scripts/config.ps1
+  coworker/scripts/workers/gh-copilot.ps1 coworker/scripts/coworker.ps1 coworker/README.md
+  └ 287 lines...
+
+I found the real issue: `gh-copilot.ps1` was still passing nullable parameters in a way that could suppress the new defaults. I’m tightening that binding path now, then I’ll run the validation pass.
+
+● Read coworker\scripts\coworker.ps1 lines 1-40
+  └ 40 lines read
+
+● Read coworker\scripts\workers\gh-copilot.ps1 lines 233-320
+  └ 72 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 190-235
+  └ 46 lines read
+
+● Inspect coworker word diff
+  $ git --no-pager diff --word-diff -- coworker/scripts/coworker.ps1
+  └ 81 lines...
+
+● Edit coworker\scripts\workers\gh-copilot.ps1
+  Edit coworker\scripts\coworker.ps1
+
+I cleaned up the binding/default path issue and removed an unintended header edit from `coworker.ps1`. I’m doing one more full read plus syntax/config validation before I wrap.
+
+● Read coworker\scripts\coworker.ps1 lines 20-240
+  └ 220 lines read
+
+● Read coworker\scripts\workers\gh-copilot.ps1 lines 1-320
+  └ 314 lines read
+
+● Grep "Describe\(|\.Tests\.ps1$" in **/* (D:\workspace\Browser4Team)
+  └ No matches found
+
+● Run diff check and review
+  $ git --no-pager diff --check && git --no-pager diff -- coworker/scripts/config.psd1
+  coworker/scripts/config.ps1 coworker/scripts/workers/gh-copilot.ps1 coworker/scripts/coworker.ps1
+  coworker/README.md
+  └ 305 lines...
+
+● Parse and config smoke test
+  $ $ErrorActionPreference = 'Stop';
+  $files = @(
+    'D:\workspace\Browser4Team\coworker\scripts\config.ps1',
+    'D:\workspace\Browser4Team\coworker\scripts\coworker.ps1',
+    'D:\workspace\Browser4Team\coworker\scripts\workers\gh-copilot.ps1'...
+  └ 34 lines...
+
+The code changes themselves look right; the only failed step was my smoke-test command, because I forgot to initialize the parser error variable before using `[ref]`. I’m rerunning the validation cleanly and closing out the todo tracker.
+
+● stop_powershell
+  └ 1 line...
+
+● Todo started: validate-change
+
+● Check git status and diff whitespace
+  $ git --no-pager status --short --branch && git --no-pager diff --check --
+  coworker/scripts/config.psd1 coworker/scripts/config.ps1 coworker/scripts/workers/gh-copilot.ps1
+  coworker/scripts/coworker.ps1 coworker/README.md
+  └ 17 lines...
+
+● Run parse and config smoke tests
+  $ $ErrorActionPreference = 'Stop'
+  $files = @(
+    'D:\workspace\Browser4Team\coworker\scripts\config.ps1',
+    'D:\workspace\Browser4Team\coworker\scripts\coworker.ps1',
+    'D:\workspace\Browser4Team\coworker\scripts\workers\gh-copilot.ps1'...
+  └ 31 lines...
+
+● Todo completed: implement-change, validate-change
+
+● Capture final diff summary
+  $ git --no-pager diff -- coworker/scripts/config.psd1 coworker/scripts/config.ps1
+  coworker/scripts/workers/gh-copilot.ps1 coworker/scripts/coworker.ps1 coworker/README.md |
+  Select-Object -First 400
+  └ 304 lines...
+
+Done: coworker task-mode now runs `gh copilot` in a separate configurable target repo while keeping tasks, logs, and memory in `Browser4Team`.
+
+Updated `coworker/scripts/config.psd1` with `Paths.TargetRepositoryRoot`, added `Get-TargetRepositoryRoot()` in `config.ps1`, taught `workers/gh-copilot.ps1` about explicit `-UseTargetRepository`/working-directory selection, and changed `coworker.ps1` so task naming + execution use the target repo and log `control repo`, `target repo`, and actual Copilot working dir. I also documented this in `coworker/README.md`.
+
+Validation passed: PowerShell parse checks, `git diff --check`, and config smoke tests confirmed default repo stays `D:\workspace\Browser4Team` while task target resolves to `D:\workspace\Browser4\Browser4-4.6`.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         5m 31s
+Total session time:     6m 29s
+Total code changes:     +133 -38
+Breakdown by AI model:
+ gpt-5.4                 708.8k in, 15.9k out, 653.3k cached (Est. 1 Premium request)

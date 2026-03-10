@@ -1,0 +1,33 @@
+
+### Configurable target repository path
+
+- 目标：让 coworker 继续以当前仓库作为“控制仓库”保存任务、日志和记录，但在执行任务类 `gh copilot` 提示时，把实际工作仓库切换到可配置的目标仓库，例如 `D:\workspace\Browser4\Browser4-4.6`。
+- 拆分理由：
+    - 当前 `Get-WorkspaceRoot()` 同时承担“coworker 控制仓库根目录”和“Copilot 工作仓库根目录”两个角色，`coworker.ps1`、`gh-copilot.ps1`、memory/refine/git-sync 等脚本都默认使用它；如果直接改掉默认值，会把日志、任务流转、memory 汇总也错误地切到目标仓库。
+    - `config.ps1` 已经提供统一的路径解析能力，支持相对路径和绝对路径，因此新增独立的目标仓库配置项风险最低，也能复用现有模式。
+    - 需求只要求“任务 prompt”切到目标仓库工作，不要求所有 `gh-copilot.ps1` 调用都切换；必须显式区分 task-mode 与非 task-mode，避免影响 memory、draft refinement、git-sync 等现有流程。
+- 任务拆分：
+    - **TR-1 在配置文件中增加目标仓库路径**
+        - 目标：在 `coworker/scripts/config.psd1` 中增加专用配置项，例如 `Paths.TargetRepositoryRoot`，允许指向外部仓库路径。
+        - 实施内容：保持 `Paths.WorkspaceRoot`、`Paths.CoworkerRoot`、`Paths.TasksRoot` 的含义不变，只新增目标仓库字段；在 `config.ps1` 中增加 `Get-TargetRepositoryRoot()`，继续复用 `Resolve-CoworkerConfiguredPath()` 解析绝对/相对路径，并定义缺省行为（例如未配置时回退到 `Get-WorkspaceRoot()` 以保持兼容）。
+        - 预期结果：coworker 能同时拿到“控制仓库根目录”和“目标仓库根目录”两个明确概念，后续脚本不再需要复用同一个 root 表达两种职责。
+    - **TR-2 在 gh-copilot helper 中引入显式 task target 入口**
+        - 目标：让 `coworker/scripts/workers/gh-copilot.ps1` 能在不破坏现有调用方的前提下，明确选择当前仓库或目标仓库作为 Copilot 工作目录。
+        - 实施内容：为 `Get-GHCopilotRepoRoot()` / `Get-GHCopilotCommand()` / `Invoke-GHCopilot()` 增加显式参数或开关（例如 `-UseTargetRepository` 或 `-RepoRoot (Get-TargetRepositoryRoot)`）；默认仍指向当前控制仓库，只有任务模式才切换到目标仓库；必要时同步在返回对象中保留 `RepoRoot` 与 `WorkingDirectory` 字段，便于调用方和日志输出明确展示实际工作仓库。
+        - 预期结果：`gh-copilot.ps1` 成为受控切换点，任务调用可以进入目标仓库，其余脚本仍保持当前仓库行为，兼容性可控。
+    - **TR-3 仅在 coworker 任务执行链路启用目标仓库**
+        - 目标：把“目标仓库工作模式”限定在真正执行任务 prompt 的路径中，而不是全局影响所有脚本。
+        - 实施内容：在 `coworker/scripts/coworker.ps1` 中保留 `$repoRoot = Get-WorkspaceRoot()` 作为任务目录、日志目录、memory 目录的基准；新增 `$targetRepoRoot = Get-TargetRepositoryRoot()`；在生成任务名、执行主任务 prompt 时，通过 `Get-GHCopilotCommand -RepoRoot $targetRepoRoot` 或 `Start-GHCopilotProcess`/`Invoke-GHCopilot` 的新参数把 Copilot 进程工作目录切到目标仓库；同时继续把 task prompt 中引用的任务文件路径保留为当前仓库绝对路径，以免任务说明丢失。
+        - 预期结果：任务流转、日志、stdout/stderr 文件、memory 文件仍全部写入 Browser4Team，而 Copilot 在执行任务时看到的当前工作目录是 Browser4-4.6。
+    - **TR-4 补充可观测性与失败校验**
+        - 目标：避免目标仓库路径配置错误时出现静默失败，并让日志能清楚显示当前任务实际操作的是哪个仓库。
+        - 实施内容：在配置 helper 或 task 执行入口增加目录存在性校验；若目标仓库不存在，则抛出明确错误并写入现有 coworker 日志；在 `coworker.ps1` 的任务日志中记录 control repo、target repo、实际 Copilot working directory；必要时在 `gh-copilot.ps1` 的格式化命令输出中加入该信息，方便排查“为什么日志在 A 仓库、改动在 B 仓库”的问题。
+        - 预期结果：路径配置错误会被尽早暴露，运维和后续任务审计能够明确区分控制仓库与目标仓库。
+    - **TR-5 验证任务模式与非任务模式均保持正确**
+        - 目标：确认新配置不会破坏现有 coworker 基础能力。
+        - 实施内容：至少验证两类场景：1）运行 `coworker.ps1` 处理一个任务，确认 Copilot 在目标仓库工作，而 `coworker\tasks\300logs\...` 仍写在当前仓库；2）运行 `workers\refine-drafts.ps1`、`workers\coworker-memory-generator.ps1` 或其他现有 helper 调用，确认它们仍默认使用当前仓库；另外检查目标仓库未配置时是否保持旧行为。
+        - 预期结果：需求覆盖面完整，新增能力只影响任务执行链路，不会把 memory、refine、git-sync 等配套流程带偏。
+- 依赖关系：
+    - 必须先完成：TR-1 -> TR-2 -> TR-3。
+    - 验证与守护：TR-4 可在 TR-2 后实施，但应在 TR-5 前完成；TR-5 依赖 TR-3、TR-4。
+    - 输出作为后续输入：TR-1 输出新的路径配置语义给 TR-2/TR-3；TR-3 输出实际接线点给 TR-4/TR-5。
