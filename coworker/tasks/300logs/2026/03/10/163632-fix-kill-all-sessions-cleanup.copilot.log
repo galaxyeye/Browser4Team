@@ -1,0 +1,484 @@
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\fix-kill-all-sessions-cleanup.md
+  └ 36 lines read
+
+● Create session plan file
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\cf8a2329-60cb-4553-9f45-5bf594e38cb5\plan.md'; if
+   (-not (Test-Path $plan)) { Set-Content -Path $plan -Value "# Plan`r`n`r`n- Inspect task and
+  affected code`r`n- Implement required cleanup changes`r`n- Run targeted validation`r`n" }
+  └ 1 line...
+
+I’ve got the task context: it points to a cleanup failure around `kill_all_sessions` returning a malformed/nullable `isError` response. Next I’m tracing the controller, response model, and the failing E2E path together so I can patch the root cause, not just the symptom.
+
+● Todo added: Inspect kill_all_sessions cleanup bug
+
+● Grep "kill_all_sessions|MCPToolCallResponse|Cleanup kill_all_sessions failed|isError" in
+*.{kt,java} (D:\workspace\Browser4Team\Browser4)
+  └ 93 lines found
+
+● Explore: Explore cleanup flow
+  ● stop_powershell
+    └ 1 line...
+  ● stop_powershell
+    └ 1 line...
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 95-145
+  └ 50 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 28-40
+  └ 13 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 170-186
+  └ 17 lines read
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  lines 130-155
+  └ 25 lines read
+
+I found the issue boundary: production already returns a non-null `isError`; the failure is happening in the E2E cleanup helper, which eagerly deserializes a best-effort teardown call. I’m checking for an existing raw-response testing pattern, then I’ll patch cleanup to stop parsing structured JSON when it doesn’t need it.
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 250-270
+  └ 21 lines read
+
+● Grep "cleanUpSessions\(|callTool\("kill_all_sessions"\)|kill_all_sessions" in *.kt
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\
+rest\api\controller)
+  └ 7 lines found
+
+● Grep "expectBody<.*String|expectBody\(\)|returnResult\(\)\.responseBody|expectBody<String>|bodyTo\
+(String" in *.kt (D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin)
+  └ 7 lines found
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 176-190
+  └ 15 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\Integratio
+  nTestBase.kt lines 35-60
+  └ 26 lines read
+
+● Todo started: inspect-kill-all-sessions
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 1-40
+  └ 40 lines read
+
+● Update session plan
+  $ Set-Content -Path
+  'C:\Users\pereg\.copilot\session-state\cf8a2329-60cb-4553-9f45-5bf594e38cb5\plan.md' -Value
+  @'# Plan
+
+  - Root cause: E2E cleanup deserializes kill_all_sessions into MCPToolCallResponse even though ...
+  └ 6 lines...
+
+I’ve narrowed it down to a test-only fix. The controller already builds `isError` correctly; the noisy failure comes from teardown parsing a response it never actually uses, so I’m switching cleanup to a raw-body call while leaving the normal typed assertions intact for real tests.
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● read_powershell
+  └ 1 line...
+
+● Todo started: implement-kill-all-sessions-fix
+
+● stop_powershell
+  └ 1 line...
+
+● Run MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -Dtest=MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 69 lines...
+
+● Run MCPToolController unit test
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 321 lines...
+
+The first validation pass exposed one repo quirk, not a regression: the nested `pulsar-rest-tests` invocation built successfully but didn’t actually select the E2E class. I’m finishing the in-flight unit run, then I’ll rerun the nested test module with a more explicit selector so we verify the cleanup path for real.
+
+● read_powershell
+  └ 3 lines...
+
+● read_powershell
+  └ 3 lines...
+
+● read_powershell
+  └ 7 lines...
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773161262523-x7gl05.txt lines -80-end
+  └ 370 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\pom.xml lines 1-220
+  └ 53 lines read
+
+I’ve confirmed the code change is in place. For verification, I’m tightening the Maven selectors: one run to prove the unit test class executed, and one direct module-level run for the REST E2E class so we exercise the actual `@AfterEach` cleanup path instead of just building the module.
+
+● Grep "MCPToolControllerTest|Tests run:|BUILD SUCCESS|BUILD FAILURE"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773161262523-x7gl05.txt)
+  └ 6 lines found
+
+● Run direct MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml
+  -Dtest=ai.platon.pulsar.rest.api.controller.MCPToolControllerE2ETest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 20 lines...
+
+The unit coverage is good: `MCPToolControllerTest` did run and passed `18` tests. The E2E rerun just tripped over PowerShell argument parsing on the fully-qualified class name, so I’m rerunning that exact class with the `-Dtest=...` value quoted properly.
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 100-135
+  └ 36 lines read
+
+● Run quoted MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml
+  "-Dtest=ai.platon.pulsar.rest.api.controller.MCPToolControllerE2ETest"
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 69 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt lines 40-90
+  └ 51 lines read
+
+● Grep "runE2ETests|excludeTags|E2ETest" (D:\workspace\Browser4Team\Browser4\pom.xml)
+  └ 5 lines found
+
+I found why the E2E class kept reporting `0 tests`: the repo excludes the `E2ETest` tag unless `-DrunE2ETests=true` is set. I’m doing one final targeted rerun with that flag so we validate the cleanup fix against the exact class that was emitting the stack trace.
+
+● SQL: Record E2E test note
+  └ Executed 2 statement(s)
+
+● Run tagged MCPToolController E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DrunE2ETests=true
+  "-Dtest=MCPToolControllerE2ETest" -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+The tagged E2E run is genuinely executing now; it’s just much slower than the unit test because it boots the REST test stack. I’m letting it finish rather than guessing from the old cleanup log, since this is the only run that can verify the noisy `@AfterEach` path end to end.
+
+● list_powershell
+  └ Active shell sessions:
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● Glob "pulsar-tests/pulsar-rest-tests/target/surefire-reports/*" in
+D:\workspace\Browser4Team\Browser4
+  └ No matches found
+
+● Glob "pulsar-tests/pulsar-rest-tests/target/failsafe-reports/*" in
+D:\workspace\Browser4Team\Browser4
+  └ No matches found
+
+● Inspect E2E mvn process
+  $ Get-Process -Id 14308 | Select-Object Id, ProcessName, CPU, StartTime, Responding | Format-List
+  └ 6 lines...
+
+The E2E Maven wrapper is still alive but essentially idle, and it hasn’t emitted any Surefire reports yet. I’m checking the child Java/Maven process tree next so I can tell whether this is a real hang in the test environment or just the wrapper sitting on a finished subprocess.
+
+● Find Maven or Java command lines
+  $ Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*pulsar-rest-tests*' -or
+  $_.CommandLine -like '*MCPToolControllerE2ETest*' } | Select-Object ProcessId, ParentProcessId,
+  Name, CommandLine | Format-List
+  └ 18 lines...
+
+● List child processes of E2E wrapper
+  $ $parent = Get-CimInstance Win32_Process -Filter "ProcessId = 14308"; Get-CimInstance
+  Win32_Process | Where-Object { $_.ParentProcessId -eq 14308 -or $_.ParentProcessId -eq
+  $parent.ProcessId } | Select-Object ProcessId, ParentProcessId, Name, CommandLine | Format-List
+  └ 7 lines...
+
+● Inspect Maven Java process
+  $ Get-Process -Id 69464 | Select-Object Id, ProcessName, CPU, StartTime, Responding, Threads,
+  WorkingSet64 | Format-List
+  └ 8 lines...
+
+● List Java child processes
+  $ Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq 69464 } | Select-Object
+  ProcessId, ParentProcessId, Name, CommandLine | Format-List
+  └ 8 lines...
+
+● List browser related processes
+  $ Get-Process | Where-Object { $_.ProcessName -match 'chrome|chromedriver|msedge|playwright|java'
+  } | Sort-Object ProcessName, Id | Select-Object Id, ProcessName, CPU, StartTime | Format-Table
+  -AutoSize
+  └ 63 lines...
+
+● List surefire JVM children
+  $ Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq 70676 } | Select-Object
+  ProcessId, ParentProcessId, Name, CommandLine | Format-List
+  └ 11 lines...
+
+● List surefire temp files
+  $ Get-ChildItem 'C:\Users\pereg\AppData\Local\Temp\surefire9824941282905532053' | Select-Object
+  Name, Length, LastWriteTime | Format-Table -AutoSize
+  └ 6 lines...
+
+● List rest test target contents
+  $ Get-ChildItem 'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target' -Force
+  | Select-Object Name, LastWriteTime | Format-Table -AutoSize
+  └ 11 lines...
+
+● Glob "pulsar-tests/pulsar-rest-tests/target/surefire-reports/*" in
+D:\workspace\Browser4Team\Browser4
+  └ No matches found
+
+● List surefire report files
+  $ Get-ChildItem
+  'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target\surefire-reports' |
+  Select-Object Name, Length, LastWriteTime | Format-Table -AutoSize
+  └ 9 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\2026-03-11T00-49-43_369.dumpstream
+  lines 1-end
+  └ 4 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\2026-03-11T00-49-11_714.dumpstream
+  lines 1-end
+  └ 4 lines read
+
+The direct E2E JVM started, but it still hasn’t produced a report file. I’m grabbing a thread dump from the live Surefire JVM to distinguish “slow browser test” from “stuck test harness,” so I can report validation accurately instead of guessing.
+
+● Tail latest surefire dumpstream
+  $ Get-Content 'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target\surefire-r
+  eports\2026-03-11T00-49-43_369.dumpstream' -Tail 50
+  └ 5 lines...
+
+● Capture surefire JVM thread dump
+  $ & 'D:\Program Files\Java\graalvm-jdk-22.0.1+8.1\bin\jcmd.exe' 68944 Thread.print
+  └ 8 lines...
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773161856559-wtg4qo.txt lines 1-120
+  └ 120 lines read
+
+● Grep "MCPToolControllerE2ETest|RUNNABLE|WAITING|TIMED_WAITING|http|chrome|WebDriver|Mock|surefire|
+main|Exception" (C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773161856559-wtg4qo.txt)
+  └ 5 lines found
+
+The thread dump gave the real answer: the E2E JVM is blocked inside `cleanUpSessions()` itself, waiting on the HTTP call to `/mcp/call-tool`. So the right fix is stronger than “don’t deserialize JSON” — the cleanup should avoid the MCP round-trip entirely and clear sessions directly in-process. I’m tracing the test base for the existing session manager hook now.
+
+● Grep "deleteAllSessions\(|sessionManager|RestAPITestBase|class RestAPITestBase|protected val
+sessionManager|val sessionManager" in *.kt
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin)
+  └ 5 lines found
+
+● Grep "class RestAPITestBase|sessionManager|deleteAllSessions\(" in *.kt
+(D:\workspace\Browser4Team\Browser4\pulsar-rest\src\test\kotlin)
+  └ 10 lines found
+
+● Grep "class RestAPITestBase|sessionManager|deleteAllSessions\(" in *.kt
+(D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-tests-common\src\test\kotlin)
+  └ No matches found
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\Integratio
+  nTestBase.kt lines 1-140
+  └ 64 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\RestAPITes
+  tBase.kt lines 1-120
+  └ 65 lines read
+
+● Grep "@Autowired|SessionManager|ManagedSession" in *.kt (D:\workspace\Browser4Team\Browser4\pulsar
+-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller)
+  └ 2 lines found
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\service\SessionManager.kt lines
+  1-260
+  └ 231 lines read
+
+● Grep "class SessionManager|interface SessionManager" in *.kt (D:\workspace\Browser4Team\Browser4)
+  └ 1 line found
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● stop_powershell
+  └ 1 line...
+
+● Todo started: implement-kill-all-sessions-fix
+
+● Compile rest E2E tests
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DskipTests test-compile
+  └ 57 lines...
+
+● Run focused kill-all E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DrunE2ETests=true
+  "-Dtest=MCPToolControllerE2ETest#testKillAllSessions" -D"surefire.failIfNoSpecifiedTests=false"
+  test
+  └ 4 lines...
+
+● read_powershell
+  └ 8 lines...
+
+The focused E2E run finished quickly this time, which is good news: the cleanup no longer hangs. It did fail, so I’m reading the actual test output now to separate any existing environment/browser issue from the cleanup regression we just fixed.
+
+● Grep "FAILURE|ERROR|Tests run:|MCPToolControllerE2ETest|Caused by:|AssertionFailedError|Exception"
+ (C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773161935967-ymuntk.txt)
+  └ 34 lines found
+
+● Glob "pulsar-tests/pulsar-rest-tests/target/surefire-reports/*" in
+D:\workspace\Browser4Team\Browser4
+  └ No matches found
+
+● List updated surefire reports
+  $ Get-ChildItem
+  'D:\workspace\Browser4Team\Browser4\pulsar-tests\pulsar-rest-tests\target\surefire-reports' |
+  Select-Object Name, Length, LastWriteTime | Sort-Object LastWriteTime -Descending | Format-Table
+  -AutoSize
+  └ 14 lines...
+
+The cleanup part is fixed, but the focused E2E run surfaced the deeper issue: `open_session` itself is returning JSON with `isError: null`, so the same deserialization problem happens before `kill_all_sessions` is even exercised. I’m tracing the REST controller’s MCP-server mapping now, because that’s likely where a nullable `isError` is leaking through.
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 200-340
+  └ 137 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\ai.platon.pulsar.rest.api.controller.MC
+  PToolControllerE2ETest.txt lines 1-220
+  └ 36 lines read
+
+● Grep "CallToolResult|isError: Boolean\?|isError\)|isError =" in *.kt
+(D:\workspace\Browser4Team\Browser4)
+  └ 38 lines found
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 80-170
+  └ 91 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\TEST-ai.platon.pulsar.rest.api.controll
+  er.MCPToolControllerE2ETest.xml lines 1-220
+  └ 7 lines read
+
+● Grep "isError":
+null|"isError"\s*:\s*null|JsonInclude|JsonProperty\("isError"\)|MCPToolCallResponse\(" in *.kt
+(D:\workspace\Browser4Team\Browser4)
+  └ 39 lines found
+
+I traced it one step deeper: the cleanup hang is fixed, but the underlying deserialization problem is broader. `open_session` is also coming back with `isError: null`, so the durable fix is to make `MCPToolCallResponse` tolerate a null/omitted `isError` and default it to `false`, then keep the cleanup shortcut so teardown doesn’t block the suite.
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  lines 1-120
+  └ 120 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 1-40
+  └ 40 lines read
+
+● Grep "jacksonObjectMapper\(|ObjectMapper\(|readValue\(|writeValueAsString\(" in *.kt
+(D:\workspace\Browser4Team\Browser4\pulsar-rest\src\test\kotlin)
+  └ No matches found
+
+● Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+
+● Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+
+I’ve applied the compatibility fix at the DTO boundary and added a unit test that pins the exact bad payload shape (`"isError": null`). Now I’m rerunning the REST unit test plus the focused E2E case to confirm both the serialization issue and the cleanup hang are resolved together.
+
+● Re-run MCPToolController unit tests
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 3 lines...
+
+● Re-run focused kill-all E2E test
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DrunE2ETests=true
+  "-Dtest=MCPToolControllerE2ETest#testKillAllSessions" -D"surefire.failIfNoSpecifiedTests=false"
+  test
+  └ 4 lines...
+
+● read_powershell
+  └ 8 lines...
+
+● read_powershell
+  └ 7 lines...
+
+● Grep "FAILURE|ERROR|Tests run:|MCPToolControllerE2ETest|Caused by:|AssertionFailedError|Exception"
+ (C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773162063105-mmd7k6.txt)
+  └ 34 lines found
+
+● Grep "MCPToolControllerTest|Tests run:|BUILD SUCCESS|BUILD FAILURE"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773162063926-u7ikh8.txt)
+  └ 6 lines found
+
+● Read pulsar-tests\pulsar-rest-tests\target\surefire-reports\ai.platon.pulsar.rest.api.controller.MC
+  PToolControllerE2ETest.txt lines 1-220
+  └ 36 lines read
+
+The production-side annotation alone wasn’t enough for Spring’s test client mapper, but that pointed to the real boundary: the E2E helper itself. I’m making the E2E test consume the raw JSON body and normalize a missing/null `isError` to `false` before mapping, which matches the existing success semantics and directly addresses the failing task file.
+
+● Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolCon
+  trollerE2ETest.kt
+
+● Recompile rest E2E tests
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DskipTests test-compile
+  └ 57 lines...
+
+● Run focused kill-all E2E after helper fix
+  $ .\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DrunE2ETests=true
+  "-Dtest=MCPToolControllerE2ETest#testKillAllSessions" -D"surefire.failIfNoSpecifiedTests=false"
+  test
+  └ 4 lines...
+
+● read_powershell
+  └ 8 lines...
+
+The focused E2E case now passes end to end. I’m doing one last diff/verification sweep and then I’ll hand back exactly what changed and what was validated.
+
+● Todo completed: implement-kill-all-sessions-fix, validate-kill-all-sessions-fix
+
+● Grep "MCPToolControllerTest|Tests run:|BUILD SUCCESS"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773162063926-u7ikh8.txt)
+  └ 6 lines found
+
+● Grep "MCPToolControllerE2ETest|Tests run:|BUILD SUCCESS"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773162181395-5l1fbw.txt)
+  └ 11 lines found
+
+● Memory stored: testing practices
+  └ E2E-tagged tests are excluded by default; run REST E2E classes with -DrunE2ETest…
+
+● Show diff for touched files
+  $ git --no-pager diff --
+  pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolControl
+  lerE2ETest.kt
+  └ 126 lines...
+
+Done.
+
+I fixed the noisy `kill_all_sessions` cleanup path in `MCPToolControllerE2ETest` by cleaning up via `SessionManager.deleteAllSessions()` instead of making a teardown MCP round-trip, and I made the E2E helper deserialize MCP responses from raw JSON while normalizing missing/null `isError` to `false`.
+
+I also hardened `MCPToolCallResponse` with `@JsonSetter(nulls = Nulls.SKIP)` and added a unit test covering `"isError": null`.
+
+Validated with:
+
+`.\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest -D"surefire.failIfNoSpecifiedTests=false" test`
+
+`.\mvnw.cmd -f pulsar-tests\pulsar-rest-tests\pom.xml -DrunE2ETests=true "-Dtest=MCPToolControllerE2ETest#testKillAllSessions" -D"surefire.failIfNoSpecifiedTests=false" test`
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         10m 30s
+Total session time:     23m 32s
+Total code changes:     +44 -16
+Breakdown by AI model:
+ gpt-5.4                 3.5m in, 27.4k out, 3.4m cached (Est. 1 Premium request)
