@@ -1,6 +1,7 @@
-# Builtin AI Coworker
+# AI Coworker
 
-The Builtin AI Coworker is an agent that assists you with various tasks in your repository. It processes task files that you create, executes them, and can commit changes back to your repository.
+The AI Coworker is an agent that assists you with various tasks in a target repository.
+It processes task files that you create, executes them, and can commit changes back to your repository.
 
 ## How to Use
 
@@ -78,9 +79,9 @@ After tasks are approved, push changes to your repository using the git-sync scr
 
 ## Unified Scheduler (PowerShell)
 
-Use the unified scheduler when you want a single Windows Task Scheduler trigger to manage all recurring coworker jobs. The scheduler launches each configured task in its own PowerShell process, records stdout/stderr logs, and continuously writes task status to `logs/scheduled-tasks.status.json`.
+Use the unified scheduler when you want a single Windows Task Scheduler trigger to manage all recurring coworker jobs. The scheduler launches each configured task in its own PowerShell process, records stdout/stderr logs, continuously writes task status to `logs/scheduled-tasks.status.json`, and uses filesystem events to react to queue changes without polling task folders.
 
-Task definitions live in `coworker/scripts/coworker-scheduler.config.psd1`. Each entry can be enabled or disabled independently and sets its own `IntervalSeconds`, script path, arguments, optional `DependsOn` task ordering, and optional `PendingPaths` input queues. When `PendingPaths` is configured, the scheduler checks those files/folders and skips spawning a PowerShell child process until work is actually present.
+Task definitions live in `coworker/scripts/coworker-scheduler.config.psd1`. Each entry can be enabled or disabled independently and sets its own `IntervalSeconds`, script path, arguments, optional `DependsOn` task ordering, and optional `PendingPaths` input queues. When `PendingPaths` is configured, the scheduler watches those files/folders and skips spawning a PowerShell child process until work is actually present.
 
 **Windows (PowerShell):**
 
@@ -91,21 +92,21 @@ Task definitions live in `coworker/scripts/coworker-scheduler.config.psd1`. Each
 
 Default scheduled tasks:
 
-- `coworker` — processes queued coworker tasks after task-source monitoring
-- `draft-refinement` — processes the draft refinement queue
+- `coworker` — runs `coworker.ps1` when `1created` or `5approved` receives work
+- `draft-refinement` — runs `workers/refine-drafts.ps1` when the draft refinement queue receives work
 - `process-task-source` — polls configured task sources and dispatches new tasks when enabled
 
-The scheduler invokes the legacy one-shot implementations from `coworker/scripts/deprecated/`. The clearer PowerShell entry points are `coworker/scripts/process-coworker-queue.ps1`, `coworker/scripts/process-draft-refinement-queue.ps1`, and `coworker/scripts/process-task-source.ps1`. The older `run_*_periodically.ps1` names remain as compatibility shims and print a deprecation warning before delegating.
+The scheduler now launches the direct worker entry points from `coworker/scripts/coworker-scheduler.config.psd1`, so it can return to watching for the next filesystem event immediately after spawning a worker. The compatibility queue processors remain available for direct manual use, and the older `run_*_periodically.ps1` names remain as compatibility shims that delegate with a deprecation warning.
 
 ## Legacy Queue Processors
 
-For direct one-shot or looped execution, use the clearer legacy queue processors:
+For direct one-shot or looped execution outside the unified scheduler, use the clearer queue processors:
 
 - `coworker/scripts/process-coworker-queue.ps1`
 - `coworker/scripts/process-draft-refinement-queue.ps1`
 - `coworker/scripts/process-task-source.ps1`
 
-The scheduler-backed implementations live in:
+Deprecated scheduler-backed implementations live in:
 
 - `coworker/scripts/deprecated/process-coworker-queue.ps1`
 - `coworker/scripts/deprecated/process-draft-refinement-queue.ps1`

@@ -1,5 +1,11 @@
 # Plans
 
+## 人类审核
+
+> 每一条尾部 `【】` 内表示人类审核意见，后续优化需要参考这些意见进行调整。
+
+- 2026/03/10 19:28:00 - Reviewed，请继续下一轮优化
+
 ## PerceptiveAgent
 
 - 目标：把当前偏“研究性”的想法拆成可以在 Browser4 代码库中逐步落地的工程任务，避免在 `pulsar-agentic` 中同时修改代理入口、推理提示、审计链路时相互干扰。
@@ -9,8 +15,8 @@
   - browser-cli 的语法、权限边界、审计保留范围都涉及产品决策；这些问题未确认前，直接编码会产生大量返工。
 - 任务拆分：
   - **PA-0 人工确认 browser-cli 语法与权限范围**
-    - 目标：确定 `PerceptiveAgent#act` 允许直接执行的命令形态与安全边界。
-    - 实施内容：人工确认采用 Kotlin 风格工具表达式、MCP 风格工具名，还是二者兼容；同时确认仅允许浏览器/驱动类命令，还是允许文件系统、系统命令等更高风险工具。
+    - 目标：确定 `PerceptiveAgent#act` 允许直接执行的命令形态与安全边界。【允许所有命令/权限】
+    - 实施内容：人工确认采用 Kotlin 风格工具表达式、MCP 风格工具名，还是二者兼容；同时确认仅允许浏览器/驱动类命令，还是允许文件系统、系统命令等更高风险工具。【MCP风格，所有工具】
     - 预期结果：形成可执行的命令白名单、语法示例和拒绝策略，作为后续自动化任务输入。
     - 人工参与：**必须人工参与**。该任务的输出将直接决定 PA-1 的解析规则和校验策略。
   - **PA-1 为 `PerceptiveAgent#act` 增加 direct command fast path**
@@ -34,9 +40,9 @@
     - 预期结果：history 从“固定截断”升级为“按预算压缩”，性能和可维护性更稳定。
     - 依赖：依赖 PA-3。
   - **PA-5 统一代理执行链路的可追溯/可审计/可监控能力**
-    - 目标：确保 direct command 路径与 LLM 路径都能输出完整 trace、事件、推理输入输出和决策依据。
+    - 目标：确保 direct command 路径与 LLM 路径都能输出完整 trace、事件、推理输入输出和决策依据。【同时需要对每一步的 ExecutionContext/AgentState 进行持久化】
     - 实施内容：统一 `AgentStateManager`、`InferenceEngine`、`ChatModelLogger`、event bus 的关联 ID；确保 direct command 的输入、校验、执行结果、失败原因全部进入已有 transcript / trace / metrics 输出。
-    - 预期结果：后续调试、监控、自修复都可以基于统一日志链路开展。
+    - 预期结果：后续调试、监控、自修复都可以基于统一日志链路开展。【很好，请保持日志目录结构清晰，每个智能体任务一个独立文件夹】
     - 依赖：依赖 PA-1；可与 PA-4 并行。
 - 依赖关系：
   - 必须先完成：PA-0 -> PA-1。
@@ -45,7 +51,7 @@
 
 ## Low-level Chat Model `Management`
 
-- 目标：围绕 `ChatModelFactory` / `BrowserChatModel` 现有实现，把“模型生命周期管理”“可观测性”“故障切换”“管理界面”拆成可独立交付的阶段，避免一次性改动 provider、缓存、控制器和 UI。
+- 目标：围绕 `ChatModelFactory` / `BrowserChatModel` 现有实现，把“模型生命周期管理”, “可观测性”, “故障切换”, “不同任务用不同模型”, “管理界面”拆成可独立交付的阶段，避免一次性改动 provider、缓存、控制器和 UI。
 - 拆分理由：
   - 当前 Browser4 已经有 `ChatModelFactory`、`CachedBrowserChatModel`、`ChatModelLogger` 和 token usage 记录，但缺少统一的生命周期 API、性能指标输出和面向用户的管理入口；如果不先补齐底座，就无法安全实现 reload / fallback / UI。
   - “训练/微调”与“运行时管理”不是同一复杂度的问题。前者涉及供应商能力、数据集治理、评估闭环；若与生命周期管理混做一个任务，会显著拉长交付周期并引入大量外部依赖。

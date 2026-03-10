@@ -6,6 +6,7 @@ param(
     [switch]$Once
 )
 
+Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $configScriptPath = Join-Path $PSScriptRoot 'config.ps1'
@@ -38,125 +39,31 @@ function Get-RunningCoworkerProcesses {
     })
 }
 
+function Get-CurrentPowerShellExecutable {
+    try {
+        $currentProcess = Get-Process -Id $PID -ErrorAction Stop
+        if (-not [string]::IsNullOrWhiteSpace($currentProcess.Path)) {
+            return $currentProcess.Path
+        }
+    }
+    catch {
+    }
+
+    if ($PSVersionTable.PSEdition -eq 'Desktop') {
+        return (Join-Path $PSHOME 'powershell.exe')
+    }
+
+    return (Join-Path $PSHOME 'pwsh.exe')
+}
+
 function Invoke-TaskSourceMonitor {
     param(
         [Parameter(Mandatory = $true)]
         [string]$MonitorScriptPath
     )
 
-    $timestamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss')
-    Write-Host "$timestamp - Running task source monitor..."
-    try {
-        & $MonitorScriptPath -Once
-    }
-    catch {
-        Write-Error "Failed to run task source monitor: $_"
-    }
-}
-
-function Monitor-CoworkerProcess {
-    param(
-        [Parameter(Mandatory = $true)]
-        [System.Diagnostics.Process]$Process,
-        [Parameter(Mandatory = $true)]
-        [string]$RepoRoot
-    )
-
-    $consecutiveLowActivity = 0
-    $maxConsecutiveLowActivity = 18
-
-    while (-not $Process.HasExited) {
-        Start-Sleep -Seconds 10
-        $Process.Refresh()
-
-        $currentYear = (Get-Date).ToUniversalTime().ToString('yyyy')
-        $currentMonth = (Get-Date).ToUniversalTime().ToString('MM')
-        $currentDay = (Get-Date).ToUniversalTime().ToString('dd')
-        $logsSubDir = Join-Path $RepoRoot "coworker\tasks\300logs\$currentYear\$currentMonth\$currentDay"
-
-        if (-not (Test-Path $logsSubDir)) {
-            continue
-        }
-
-        $latestLog = Get-ChildItem -Path $logsSubDir -Filter '*.copilot.log.stdout' |
-            Sort-Object LastWriteTime -Descending |
-            Select-Object -First 1
-        if (-not $latestLog) {
-            continue
-        }
-
-        try {
-            $linesArray = @(Get-Content -Path $latestLog.FullName -Tail 500 -ErrorAction SilentlyContinue)
-            $lineCount = $linesArray.Count
-            if ($lineCount -le 10) {
-                continue
-            }
-
-            $actionCount = 0
-            foreach ($line in $linesArray) {
-                if ($line -match '● ') {
-                    $actionCount++
-                }
-            }
-
-            $ratio = 0
-            if ($lineCount -gt 0) {
-                $ratio = $actionCount / $lineCount
-            }
-
-            if ($ratio -lt 0.05) {
-                $consecutiveLowActivity++
-                Write-Host "Warning: Low activity detected. Ratio: $ratio ($actionCount/$lineCount). Consecutive checks: $consecutiveLowActivity/$maxConsecutiveLowActivity" -ForegroundColor Yellow
-            }
-            else {
-                $consecutiveLowActivity = 0
-            }
-
-            if ($consecutiveLowActivity -lt $maxConsecutiveLowActivity) {
-                continue
-            }
-
-            Write-Host "Error: Coworker loop detected! Killing process $($Process.Id)..." -ForegroundColor Red
-            Stop-Process -Id $Process.Id -Force
-            Abort-CoworkerTaskFromLog -LogName $latestLog.Name -RepoRoot $RepoRoot
-            return 1
-        }
-        catch {
-            Write-Host "Error reading/processing log file: $_"
-        }
-    }
-
-    return $Process.ExitCode
-}
-
-function Abort-CoworkerTaskFromLog {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$LogName,
-        [Parameter(Mandatory = $true)]
-        [string]$RepoRoot
-    )
-
-    if ($LogName -notmatch '^\d{6}-(.*)\.copilot\.log\.stdout$') {
-        Write-Host "Could not determine task name from log file: $LogName"
-        return
-    }
-
-    $taskBaseName = $Matches[1]
-    Write-Host "Aborting task: $taskBaseName"
-
-    $workingDir = Join-Path $RepoRoot 'coworker\tasks\2working'
-    $abortedDir = Join-Path $RepoRoot 'coworker\tasks\3_5aborted'
-    if (-not (Test-Path $abortedDir)) {
-        New-Item -ItemType Directory -Path $abortedDir | Out-Null
-    }
-
-    $taskFiles = Get-ChildItem -Path $workingDir -Filter "$taskBaseName*" -ErrorAction SilentlyContinue
-    foreach ($file in $taskFiles) {
-        $destination = Join-Path $abortedDir $file.Name
-        Move-Item -Path $file.FullName -Destination $destination -Force
-        Write-Host "Moved task file to: $destination" -ForegroundColor Red
-    }
+    Write-CoworkerLog -Component 'process-coworker-queue' -Message 'Running task source monitor.'
+    & $MonitorScriptPath -Once
 }
 
 function Invoke-CoworkerPeriodicCheck {
@@ -172,66 +79,104 @@ function Invoke-CoworkerPeriodicCheck {
         [Parameter(Mandatory = $true)]
         [string]$MonitorScriptPath,
         [Parameter(Mandatory = $true)]
-        [bool]$EnableMonitor
+        [bool]$EnableMonitor,
+        [Parameter(Mandatory = $true)]
+        [string]$WorkingDirectory,
+        [Parameter(Mandatory = $true)]
+        [string]$PowerShellExecutable
     )
 
     if ($EnableMonitor) {
         Invoke-TaskSourceMonitor -MonitorScriptPath $MonitorScriptPath
     }
 
-    $timestamp = (Get-Date).ToUniversalTime().ToString('yyyy-MM-dd HH:mm:ss')
     if (-not (Test-HasPendingCoworkerTasks -RepoRoot $RepoRoot)) {
-        Write-Host "$timestamp - No tasks found in 1created or 5approved. Skipping check."
-        return 0
+        Write-CoworkerLog -Component 'process-coworker-queue' -Level 'DEBUG' -Message 'No tasks found in 1created or 5approved.'
+        return [pscustomobject]@{ ExitCode = 0; Action = 'Idle' }
     }
 
-    $running = Get-RunningCoworkerProcesses -ScriptName $ScriptName -WrapperName $WrapperName
+    $running = @(Get-RunningCoworkerProcesses -ScriptName $ScriptName -WrapperName $WrapperName)
     if ($running.Count -gt 0) {
-        Write-Host "$timestamp - $ScriptName is already running."
-        return 0
+        Write-CoworkerLog -Component 'process-coworker-queue' -Level 'DEBUG' -Message ("{0} is already running." -f $ScriptName)
+        return [pscustomobject]@{ ExitCode = 0; Action = 'AlreadyRunning' }
     }
 
-    Write-Host "$timestamp - $ScriptName is NOT running. Starting it..."
-    try {
-        $process = Start-Process -FilePath 'pwsh' -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $ScriptPath) -WorkingDirectory $script:workingDirectory -PassThru
-        Write-Host "Started $ScriptName with PID: $($process.Id)"
-        $exitCode = Monitor-CoworkerProcess -Process $process -RepoRoot $RepoRoot
-        Write-Host "Finished $ScriptName."
-        return $exitCode
+    $process = Start-Process -FilePath $PowerShellExecutable -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $ScriptPath) -WorkingDirectory $WorkingDirectory -PassThru
+    Write-CoworkerLog -Component 'process-coworker-queue' -Message ("Started {0} with PID {1}." -f $ScriptName, $process.Id)
+    return [pscustomobject]@{ ExitCode = 0; Action = 'Started' }
+}
+
+function Wait-ForCoworkerQueueSignal {
+    param(
+        [Parameter(Mandatory = $true)]
+        [int]$TimeoutSeconds
+    )
+
+    $eventRecord = Wait-Event -Timeout $TimeoutSeconds
+    if ($null -ne $eventRecord) {
+        Remove-Event -EventIdentifier $eventRecord.EventIdentifier -ErrorAction SilentlyContinue
     }
-    catch {
-        Write-Error "Failed to start ${ScriptName}: $_"
-        return 1
+
+    while ($true) {
+        $queuedEvent = Wait-Event -Timeout 0
+        if ($null -eq $queuedEvent) {
+            break
+        }
+
+        Remove-Event -EventIdentifier $queuedEvent.EventIdentifier -ErrorAction SilentlyContinue
     }
 }
 
 $repoRoot = Get-WorkspaceRoot
-$script:workingDirectory = Get-SchedulerWorkingDirectory
-
+$workingDirectory = Get-SchedulerWorkingDirectory
+$powerShellExecutable = Get-CurrentPowerShellExecutable
 $scriptPath = Join-Path $PSScriptRoot 'coworker.ps1'
 $scriptName = 'coworker.ps1'
 $wrapperName = 'process-coworker-queue.ps1'
 $monitorScriptPath = Join-Path $PSScriptRoot 'process-task-source.ps1'
+$watchPaths = @(
+    (Join-Path $repoRoot 'coworker\tasks\1created')
+    (Join-Path $repoRoot 'coworker\tasks\5approved')
+)
+$watchRegistrations = @()
 
-Write-Host "Monitoring $scriptName..."
-Write-Host "Script path: $scriptPath"
+Write-CoworkerLog -Component 'process-coworker-queue' -Message ("Monitoring {0}" -f $scriptName)
+Write-CoworkerLog -Component 'process-coworker-queue' -Level 'DEBUG' -Message ("Script path: {0}" -f $scriptPath)
 if ($Monitor) {
-    Write-Host "Task source monitoring enabled using: $monitorScriptPath"
+    Write-CoworkerLog -Component 'process-coworker-queue' -Message ("Task source monitoring enabled using {0}" -f $monitorScriptPath)
 }
 
-while ($true) {
-    $exitCode = Invoke-CoworkerPeriodicCheck `
-        -RepoRoot $repoRoot `
-        -ScriptPath $scriptPath `
-        -ScriptName $scriptName `
-        -WrapperName $wrapperName `
-        -MonitorScriptPath $monitorScriptPath `
-        -EnableMonitor $Monitor.IsPresent
-
-    if ($Once) {
-        exit $exitCode
+try {
+    if (-not $Once) {
+        foreach ($watchPath in $watchPaths) {
+            $watchRegistrations += New-CoworkerFileWatcher -Path $watchPath -SourcePrefix 'process-coworker-queue'
+        }
     }
 
-    Start-Sleep -Seconds $IntervalSeconds
-}
+    while ($true) {
+        $result = Invoke-CoworkerPeriodicCheck `
+            -RepoRoot $repoRoot `
+            -ScriptPath $scriptPath `
+            -ScriptName $scriptName `
+            -WrapperName $wrapperName `
+            -MonitorScriptPath $monitorScriptPath `
+            -EnableMonitor $Monitor.IsPresent `
+            -WorkingDirectory $workingDirectory `
+            -PowerShellExecutable $powerShellExecutable
 
+        if ($Once) {
+            exit $result.ExitCode
+        }
+
+        Wait-ForCoworkerQueueSignal -TimeoutSeconds $IntervalSeconds
+    }
+}
+catch {
+    Write-CoworkerLog -Component 'process-coworker-queue' -Level 'ERROR' -Message $_.Exception.Message
+    exit 1
+}
+finally {
+    foreach ($registration in @($watchRegistrations)) {
+        Remove-CoworkerFileWatcher -Registration $registration
+    }
+}

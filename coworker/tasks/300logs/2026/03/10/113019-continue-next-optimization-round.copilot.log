@@ -1,0 +1,299 @@
+I’m pulling the task brief and setting up a small execution plan first, then I’ll implement and verify the requested work.
+
+● SQL: Seed task todos
+  └ 4 row(s) inserted. Last inserted row ID: 4.
+
+● Read coworker\tasks\2working\continue-next-optimization-round.md
+  └ 7 lines read
+
+● Create session plan
+  $ @'
+  # Plan
+
+  1. Read the task brief and inspect the relevant repository context.
+  2. Implement the requested changes as surgically as possible....
+  └ 4 lines...
+
+The task file points to the shared plan, so I’m opening that and checking the current repo state to determine exactly what “next optimization round” needs me to do.
+
+● Todo started: read-task-brief
+
+● List directory coworker
+  └ 6 files found
+
+● Read coworker\tasks\200plan\plan.md
+  └ 145 lines read
+
+● Check git status
+  $ git --no-pager status --short --branch
+  └ 29 lines...
+
+I found the shared plan and the repo is already mid-flight with unrelated edits, so I’m narrowing in on the `coworker` optimization items and the existing script layout before I touch anything.
+
+● Todo started: plan-work
+
+● List directory coworker\scripts
+  └ 13 files found
+
+● Read coworker\README.md
+  └ 152 lines read
+
+● Glob "coworker\scripts\*.ps1" in D:\workspace\Browser4Team
+  └ No matches found
+
+● Glob "coworker\scripts\*.psd1" in D:\workspace\Browser4Team
+  └ No matches found
+
+● Read coworker\scripts\coworker-scheduler.config.psd1
+  └ 42 lines read
+
+I’ve confirmed the coworker plan items are local and actionable. Next I’m checking which of those optimizations are already present and where the remaining gaps are in the PowerShell scripts.
+
+● Grep "git rev-parse|ROOT\.md|WorkingDirectory|Set-Location|Push-Location" in *.ps1
+(D:\workspace\Browser4Team\coworker\scripts)
+  └ 150 lines found
+
+● Grep "Register-ObjectEvent|while\s*\(" in *.ps1 (D:\workspace\Browser4Team\coworker\scripts)
+  └ 73 lines found
+
+● Glob "coworker/scripts/**/*.ps1" in D:\workspace\Browser4Team
+  └ 15 files found
+
+● Grep "Write-Host|Write-Warning|Write-Error|Start-Transcript|try\s*\{|catch\s*\{" in *.ps1
+(D:\workspace\Browser4Team\coworker\scripts)
+  └ 5 lines found
+
+The main remaining gaps look like the queue processors still polling in `while` loops, plus ad hoc console logging. I’m reading those specific files now to make the next round focused and safe.
+
+● Read coworker\scripts\coworker-scheduler.ps1 lines 1-260
+  └ 260 lines read
+
+● Read coworker\scripts\config.ps1
+  └ 100 lines read
+
+● Read coworker\scripts\process-coworker-queue.ps1
+  └ 236 lines read
+
+● Read coworker\scripts\process-draft-refinement-queue.ps1
+  └ 57 lines read
+
+The queue processors are still pure polling loops. I’m checking the existing scheduler implementation next so I can reuse its conventions instead of inventing a parallel watcher pattern from scratch.
+
+● Grep "Write-SchedulerStatus|StatusFile|PendingPaths|WaitingForWork|Started |Finished "
+(D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.ps1)
+  └ 93 lines found
+
+● Read coworker\scripts\coworker-scheduler.ps1 lines 261-460
+  └ 162 lines read
+
+● Grep "function\s+Write-|Log" in *.ps1 (D:\workspace\Browser4Team\coworker\scripts)
+  └ 5 lines found
+
+I’ve got enough context now: the biggest value is making the scheduler and queue listeners event-driven, and giving them a shared logging/error pattern so the next round is actually cohesive.
+
+● Read coworker\scripts\config.psd1
+  └ 22 lines read
+
+● Grep "process-coworker-queue\.ps1|process-draft-refinement-queue\.ps1|coworker-scheduler\.ps1"
+(D:\workspace\Browser4Team\coworker\README.md)
+  └ 39 lines found
+
+● Grep "Get-WorkspaceRoot|Resolve-TasksPath|Get-SchedulerWorkingDirectory|Import-PowerShellDataFile"
+ in *.ps1 (D:\workspace\Browser4Team\coworker\scripts)
+  └ 106 lines found
+
+I’m checking whether there’s any script-level test harness before I edit, so I can validate this with the repo’s own patterns rather than guessing.
+
+● Glob "**/*.{Tests,Test}.ps1" in D:\workspace\Browser4Team
+  └ No matches found
+
+● Glob "**/*.Tests.ps1" in D:\workspace\Browser4Team
+  └ No matches found
+
+● Grep "Pester|Describe\s+['\"]" in *.ps1 (D:\workspace\Browser4Team)
+  └ No matches found
+
+I found a cleaner path: rather than teaching the scheduler to wait inside wrapper scripts, I’m checking whether it can launch the real worker scripts directly and become purely event-driven itself.
+
+● Read coworker\scripts\coworker.ps1 lines 1-120
+  └ 119 lines read
+
+● Grep "param\(|exit\s|LASTEXITCODE|Move-Item|5approved|1created"
+(D:\workspace\Browser4Team\coworker\scripts\coworker.ps1)
+  └ 79 lines found
+
+● Read coworker\scripts\workers\refine-drafts.ps1 lines 1-180
+  └ 134 lines read
+
+I’ve got the edit plan locked: shared watcher/log helpers, event-driven scheduler wakeups, direct worker launch from scheduler config, and lighter queue wrappers for manual use. I’m applying those changes now.
+
+● Edit coworker\scripts\config.ps1
+
+✗ Edit coworker\scripts\coworker-scheduler.config.psd1
+  Failed to apply patch: Error: Failed to find expected lines in
+  D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.config.psd1:
+          @(
+          @{
+              Name            = 'coworker'
+              Description     = 'Process queued coworker tasks.'
+              Enabled         = $true
+
+● Read coworker\scripts\coworker-scheduler.config.psd1
+  └ 42 lines read
+
+● Edit coworker\scripts\coworker-scheduler.config.psd1
+
+I’m rewriting the scheduler in one pass rather than nibbling at it, because the event-driven behavior, status updates, and process lifecycle hooks all need to line up together.
+
+● Rewrite scheduler as event-driven
+  $ @'
+  #!/usr/bin/env pwsh
+
+  param(
+      [string]$ConfigPath,...
+  └ 576 lines...
+
+● Rewrite coworker queue wrapper
+  $ @'
+  #!/usr/bin/env pwsh
+
+  param(
+      [int]$IntervalSeconds = 15,...
+  └ 175 lines...
+
+● Rewrite draft refinement queue wrapper
+  $ @'
+  #!/usr/bin/env pwsh
+
+  param(
+      [string]$Path,...
+  └ 108 lines...
+
+The code edits are in. I’m updating the coworker docs to match the new runtime behavior so the automation entry points stay discoverable and accurate.
+
+● Read coworker\README.md lines 79-125
+  └ 47 lines read
+
+● Read coworker\scripts\coworker-scheduler.config.psd1
+  └ 42 lines read
+
+● Read coworker\scripts\process-coworker-queue.ps1 lines 1-220
+  └ 161 lines read
+
+● Read coworker\scripts\process-draft-refinement-queue.ps1 lines 1-200
+  └ 99 lines read
+
+● Read coworker\README.md lines 126-154
+  └ 27 lines read
+
+● Edit coworker\README.md
+
+I’m at the verification step now: first syntax/load checks, then a small isolated scheduler smoke test against a temporary config so I can confirm the new watcher path without touching the live task queues.
+
+● Todo started: validate-task
+
+● Parse modified scripts and smoke-test draft wrapper
+  $ $files = @(
+      'D:\workspace\Browser4Team\coworker\scripts\config.ps1',
+      'D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.config.psd1',
+      'D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.ps1',
+      'D:\workspace\Browser4Team\coworker\scripts\process-coworker-queue.ps1',...
+  No Content
+
+Syntax checks passed, and the draft queue wrapper loaded cleanly in isolation. I’m doing one more isolated smoke test: a temporary scheduler config plus a fake worker, so the event-driven path is verified without touching real queues.
+
+● Prepare isolated scheduler smoke-test files
+  $ $tempRoot = 'C:\Users\pereg\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\
+  coworker-validation'
+  $pendingDir = Join-Path $tempRoot 'scheduler-input'
+  $logDir = Join-Path $tempRoot 'scheduler-logs'
+  $statusFile = Join-Path $tempRoot 'scheduler-status.json'...
+  └ 35 lines...
+
+● Start isolated scheduler smoke test
+  $ pwsh -NoProfile -ExecutionPolicy Bypass -File
+  'D:\workspace\Browser4Team\coworker\scripts\coworker-scheduler.ps1' -ConfigPath
+  'C:\Users\pereg\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\coworker-validat
+  ion\scheduler-test.config.psd1'
+  └ 1 line...
+
+● write_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+The scheduler is up and watching; I used the wrong channel to trigger the test file, so I’m creating the file from a separate shell now and then checking the scheduler output/status.
+
+● Read ~\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\coworker-validation\schedu
+  ler-test.config.psd1
+  └ 21 lines read
+
+● Create scheduler trigger file
+  $ New-Item -ItemType File -Path 'C:\Users\pereg\.copilot\session-state\5678bdf6-398d-4722-bf31-ae3
+  34df829ad\files\coworker-validation\scheduler-input\trigger.txt' -Force | Out-Null
+  └ 1 line...
+
+● read_powershell
+  └ 6 lines...
+
+● Read coworker\README.md lines 79-125
+  └ 47 lines read
+
+● Read ~\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\coworker-validation\schedu
+  ler-status.json
+  └ 29 lines read
+
+● Show diff for modified files
+  $ git --no-pager diff -- coworker\scripts\config.ps1
+  coworker\scripts\coworker-scheduler.config.psd1 coworker\scripts\coworker-scheduler.ps1
+  coworker\scripts\process-coworker-queue.ps1 coworker\scripts\process-draft-refinement-queue.ps1
+  coworker\README.md
+  └ 6 lines...
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773143119483-75kbzn.txt lines 1-80
+  └ 80 lines read
+
+● stop_powershell
+  └ 1 line...
+
+The isolated event-driven smoke test succeeded and I’ve shut it down. I’m doing one last repo-facing check now: whitespace/status for just the files I touched, then I’ll wrap up.
+
+● Todo completed: implement-task
+
+● Clean temp files and run final git checks
+  $ $tempRoot = 'C:\Users\pereg\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\
+  coworker-validation'; if (Test-Path -LiteralPath $tempRoot) { Remove-Item -LiteralPath
+  $tempRoot -Recurse -Force }
+
+  git --no-pager diff --check -- coworker\README.md coworker\scripts\config.ps1 ...
+  └ 12 lines...
+
+I’m just confirming cleanup and the touched-file status output, since the previous command mainly showed line-ending warnings.
+
+● Confirm cleanup and touched file status
+  $ $tempRoot = 'C:\Users\pereg\.copilot\session-state\5678bdf6-398d-4722-bf31-ae334df829ad\files\
+  coworker-validation'
+  Write-Host (Test-Path -LiteralPath $tempRoot)
+  git --no-pager status --short -- coworker\README.md coworker\scripts\config.ps1
+  coworker\scripts\coworker-scheduler.config.psd1 coworker\scripts\coworker-scheduler.ps1 ...
+  └ 10 lines...
+
+Done — I completed the next coworker optimization round.
+
+I made the scheduler event-driven with `Register-ObjectEvent`/`Wait-Event`, added shared logging and watcher helpers in `coworker/scripts/config.ps1`, and updated `coworker-scheduler.config.psd1` so the scheduler launches `coworker.ps1` and `workers/refine-drafts.ps1` directly instead of waiting inside queue wrappers.
+
+I also modernized `process-coworker-queue.ps1` and `process-draft-refinement-queue.ps1` to use the same logging/event-wait pattern, and updated `coworker/README.md` to match.
+
+Validation: PowerShell parse checks passed, `diff --check` passed, and an isolated scheduler smoke test successfully detected a file event and ran a worker.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         9m 22s
+Total session time:     11m 11s
+Total code changes:     +129 -11
+Breakdown by AI model:
+ gpt-5.4                 2.2m in, 29.2k out, 2.1m cached (Est. 1 Premium request)

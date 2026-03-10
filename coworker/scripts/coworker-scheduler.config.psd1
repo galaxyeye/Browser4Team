@@ -18,8 +18,8 @@
                 'coworker\tasks\1created'
                 'coworker\tasks\5approved'
             )
-            ScriptPath      = 'coworker\scripts\process-coworker-queue.ps1'
-            Arguments       = @('-Once')
+            ScriptPath      = 'coworker\scripts\coworker.ps1'
+            Arguments       = @()
         }
         @{
             Name            = 'draft-refinement'
@@ -27,8 +27,8 @@
             Enabled         = $true
             IntervalSeconds = 15
             PendingPaths    = @('coworker\tasks\0draft\refine\1ready')
-            ScriptPath      = 'coworker\scripts\process-draft-refinement-queue.ps1'
-            Arguments       = @('-Once')
+            ScriptPath      = 'coworker\scripts\workers\refine-drafts.ps1'
+            Arguments       = @('-Path', 'coworker\tasks\0draft\refine\1ready')
         }
         @{
             Name            = 'process-task-source'

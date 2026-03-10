@@ -1,0 +1,226 @@
+I’m opening the task brief and setting up tracking first, then I’ll implement and verify whatever it asks for.
+
+● SQL: Initialize todo tables
+  └ Executed 3 statement(s)
+
+● Read coworker\tasks\2working\test-browser4-mcp-copilot.md
+  └ 3 lines read
+
+● Read AGENTS.md
+  └ 430 lines read
+
+The task brief is tiny, so I’m checking the surrounding coworker workflow and Browser4 layout to infer the expected deliverable before I act.
+
+● SQL: Add context todos
+  └ 2 row(s) inserted. Last inserted row ID: 3.
+
+● List directory coworker
+  └ 6 files found
+
+● Read coworker\README.md
+  └ 152 lines read
+
+● Read README.md
+  └ 3 lines read
+
+● Glob "**\*.md" in D:\workspace\Browser4Team\coworker\tasks
+  └ 156 files found
+
+I found the workspace is just the team shell around Browser4, so I’m now tracing prior MCP-related work to see how this repo expects those tasks to be executed and recorded.
+
+● Read coworker\tasks\6git-pushed\2026\0308\start-browser4-mcp-server.md
+  └ 30 lines read
+
+● Read coworker\tasks\6git-pushed\2026\0304\improve_mcp_skills.md
+  └ 8 lines read
+
+● Read coworker\tasks\6git-pushed\2026\0305\create-mcp-tool-controller-e2e-test.md
+  └ 14 lines read
+
+● Grep "Browser4|MCP|Copilot" in *.md (D:\workspace\Browser4Team\coworker\tasks)
+  └ 5 lines found
+
+● Create session plan file
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\6151c95b-5e49-460c-9e05-485d9a770b78\plan.md';
+  @'
+  # Plan
+  1. Read the coworker task brief and surrounding docs to infer the expected deliverable.
+  2. Inspect Browser4 MCP/Copilot-related code and prior task artifacts....
+  └ 5 lines...
+
+I’ve got the plan file in place. Next I’m mapping the actual Browser4 MCP entry points and any existing Copilot-facing docs/tests so I can execute the task instead of guessing.
+
+● Todo started: inspect-task-brief
+
+● List directory .
+  └ 8 files found
+
+● Check git status baseline
+  $ git --no-pager status --short --branch
+  └ 22 lines...
+
+● Explore: Explore MCP files
+  ✗ github-mcp-server-search_code: repo:platonai/Browser4 path:sdks/browser4-cli/src program.ts MCP
+    MCP server 'github-mcp-server': failed to search code with query
+    'repo:platonai/Browser4 path:sdks/browser4-cli/src program.ts MCP': GET http
+    s://api.github.com/search/code?page=1&per_page=20&q=repo%3Aplatonai%2FBrowse
+    r4+path%3Asdks%2Fbrowser4-cli%2Fsrc+program.ts+MCP: 403 API rate limit
+    exceeded for user ID 1701451. If you reach out to GitHub Support for help,
+    please include the request ID 3406:48C5F:2C3CCB:3033D8:69AFFEBE and
+    timestamp 2026-03-10 11:21:51 UTC. For more on scraping GitHub and how it
+    may affect your rights, please review our Terms of Service (https://docs.git
+    hub.com/en/site-policy/github-terms/github-terms-of-service) [rate reset in
+    19s]
+  ● github-mcp-server-get_file_contents: docs-dev/mcp-server-design.md
+    └ successfully downloaded text file (SHA: ed26218d0ac3a073c9e0c1626e7681eb28836...
+
+The key blocker I found is that the Browser4 codebase itself isn’t checked out here, so I’m verifying whether it exists elsewhere locally before I decide between real execution and a documented validation artifact.
+
+● Read .gitmodules
+
+● Read coworker\tasks\6git-pushed\2026\0310\add-browser4-submodule.md
+  └ 9 lines read
+
+● Glob "**\Browser4*" in D:\workspace\Browser4Team
+  └ 1 file found
+
+● Check for Browser4 checkout
+  $ Get-ChildItem -Force -Name D:\workspace\Browser4Team; Write-Host '---'; Test-Path
+  D:\workspace\Browser4Team\Browser4; Test-Path D:\workspace\Browser4Team\browser4; Write-Host
+  '---'; if (Test-Path D:\workspace\Browser4Team\Browser4) { Get-ChildItem -Force -Name
+  D:\workspace\Browser4Team\Browser4 | Select-Object -First 20 }
+  └ 13 lines...
+
+I can’t run Browser4 itself from this checkout because the Browser4 source/jar isn’t here and shell network access is off, so I’m validating the integration from the two available sources: upstream Browser4 files and GitHub Copilot’s MCP configuration docs.
+
+✗ web_fetch:
+https://docs.github.com/en/copilot/customizing-copilot/extending-github-copilot-chat-with-mcp
+  Error: Failed to fetch https://docs.github.com/en/copilot/customizing-copilo
+  t/extending-github-copilot-chat-with-mcp - status code 404
+
+● github-mcp-server-search_repositories: Browser4 platonai in:name
+  └ {"total_count":7,"incomplete_results":false,"items":[{"id":124882400,"name":"...
+
+● github-mcp-server-get_file_contents:
+/pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/mcp/server/Browser4MCPServerRunner.kt
+  └ successfully downloaded text file (SHA: d3da517f47309a51539c5264d97ef649b9ac9...
+
+✗ github-mcp-server-get_file_contents: /sdks/browser4-cli/src/program.ts
+  MCP server 'github-mcp-server': Failed to get file contents. The path does
+  not point to a file or directory, or the file does not exist in the
+  repository.
+
+● github-mcp-server-get_file_contents:
+/pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/mcp/server/Browser4MCPServer.kt
+  └ Output too large to read at once (23.4 KB). Saved to: C:\Users\pereg\AppData\...
+
+I’ve confirmed Browser4 exposes a standard STDIO MCP runner. Now I’m locating Copilot’s documented MCP config surface and Browser4’s own tool list so I can validate compatibility, not just existence.
+
+● github-mcp-server-search_code: "Model Context Protocol" OR "mcp.json" repo:github/docs
+language:mdx
+  └ {"total_count":0,"incomplete_results":false}
+
+● github-mcp-server-search_code: copilot mcp repo:platonai/Browser4
+  └ Output too large to read at once (34.4 KB). Saved to: C:\Users\pereg\AppData\...
+
+● Read saved Browser4 MCP server source snippet
+  $ Get-Content C:\Users\pereg\AppData\Local\Temp\1773141790352-copilot-tool-output-ua9kv9.txt
+  -TotalCount 260
+  └ 255 lines...
+
+✗ github-mcp-server-get_file_contents: /sdks/browser4-cli/package.json
+  MCP server 'github-mcp-server': Failed to get file contents. The path does
+  not point to a file or directory, or the file does not exist in the
+  repository.
+
+● github-mcp-server-get_file_contents: /README.md
+  └ successfully downloaded text file (SHA: d6ef3fbda04b65c2c387601d4eab79286c741...
+
+I’ve confirmed Browser4’s side of the handshake: it exposes a proper STDIO MCP server with concrete tool registrations. I’m now locking down Copilot’s expected config shape so the validation report is evidence-based.
+
+● Grep "addTool\(|name = \""
+(C:\Users\pereg\AppData\Local\Temp\1773141790352-copilot-tool-output-ua9kv9.txt)
+  └ 43 lines found
+
+● web_fetch: https://code.visualstudio.com/docs/copilot/chat/mcp-servers
+  └ Contents of https://code.visualstudio.com/docs/copilot/chat/mcp-servers:
+
+● web_fetch: https://docs.github.com/search?query=GitHub+Copilot+MCP
+  └ Contents of https://docs.github.com/search?query=GitHub+Copilot+MCP:
+
+● github-mcp-server-search_code: "Model Context Protocol" "GitHub Copilot"
+  └ Output too large to read at once (93.2 KB). Saved to: C:\Users\pereg\AppData\...
+
+● github-mcp-server-search_code: "mcp.json" "GitHub Copilot"
+  └ Output too large to read at once (91.6 KB). Saved to: C:\Users\pereg\AppData\...
+
+I found the exact GitHub docs surface for Copilot MCP configuration. I’m fetching the CLI-specific instructions too, because “GitHub Copilot as a test case” could mean either IDE or CLI integration.
+
+● fetch_copilot_cli_documentation
+  └ # GitHub Copilot CLI Documentation
+
+● Grep "MCP|mcp|server|tool"
+(C:\Users\pereg\AppData\Local\Temp\1773141804334-copilot-tool-output-98nf58.txt)
+  └ 5 lines found
+
+● web_fetch:
+https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers
+  └ Contents of https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-...
+
+● web_fetch:
+https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/use-the-github-mcp-server
+  └ Contents of https://docs.github.com/en/copilot/how-tos/provide-context/use-mc...
+
+I have enough evidence now: Browser4 is a valid local STDIO MCP server, and Copilot CLI/VS Code both accept that integration style. I’m checking where the repo keeps operational docs so I can record a reusable validation artifact instead of leaving this as an ephemeral chat result.
+
+● Todo started: inspect-browser4-mcp
+
+● List directory coworker\docs
+  └ 2 files found
+
+● Read coworker\SKILL.md
+
+● Glob "**\*.md" in D:\workspace\Browser4Team\coworker\docs
+  └ 3 files found
+
+● Read coworker\docs\agent\state-transformation.md
+  └ 111 lines read
+
+● Read coworker\docs\architect\orchestrator.md
+  └ 47 lines read
+
+I’m turning the investigation into a reusable handoff doc: what’s validated, what’s blocked locally, and the exact Copilot configs/prompts needed to finish the live test once Browser4 is available.
+
+● Create coworker/docs/agent/browser4-mcp-copilot-validation.md
+
+I’ve written the validation guide. I’m doing one cleanup pass now to align the example configs with Copilot’s preferred `stdio` naming and to make the evidence trail explicit.
+
+● Edit coworker/docs/agent/browser4-mcp-copilot-validation.md
+
+● Todo completed: execute-mcp-validation
+
+● Read coworker\docs\agent\browser4-mcp-copilot-validation.md
+  └ 156 lines read
+
+● Review new documentation diff
+  $ git --no-pager diff -- coworker/docs/agent/browser4-mcp-copilot-validation.md
+  └ 1 line...
+
+Done: I added `coworker/docs/agent/browser4-mcp-copilot-validation.md`.
+
+It records the validated result that Browser4’s MCP server is compatible with GitHub Copilot’s `stdio` MCP flow, based on upstream Browser4 source plus GitHub Copilot/VS Code MCP docs. It also includes ready-to-use Copilot CLI and VS Code configs, recommended test prompts, and success criteria.
+
+I could not perform a live browser run here because this workspace does not contain the Browser4 source tree or a built `browser4-all.jar`.
+
+Next step: place a Browser4 build in the workspace and run the prompts from the new doc.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         7m 55s
+Total session time:     8m 53s
+Total code changes:     +158 -1
+Breakdown by AI model:
+ gpt-5.4                 1.5m in, 20.2k out, 1.3m cached (Est. 1 Premium request)
