@@ -47,3 +47,27 @@ I’ve checked the workspace: the root repo has tracked edits plus new task/log 
   branch -vv && Write-Host '--- SUBMODULE REMOTES ---' && git --no-pager remote -v
   └ 16 lines...
 
+The submodule has its own uncommitted edits, so I’m syncing that first. That way the root repo can record a pushed `Browser4` commit instead of pointing at a local-only submodule SHA.
+
+● Commit pull and push submodule
+  $ Set-Location 'D:\workspace\Browser4Team\Browser4';
+  $commitMsg = 'chore: sync workspace changes';
+  $trailer = 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>';
+  git add -A;
+  git diff --cached --quiet;...
+  └ 199 lines...
+
+The submodule is now clean and pushed. I’m finishing the root repository sync so the main repo records that new submodule SHA along with the other workspace changes.
+
+● Todo started: commit-local-changes
+
+● Commit pull and push root repo
+  $ Set-Location 'D:\workspace\Browser4Team';
+  $commitMsg = 'chore: sync workspace changes';
+  $trailer = 'Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>';
+  git add -A;
+  git diff --cached --quiet;...
+  └ 76 lines...
+
+The push succeeded, but one scheduler log changed again immediately afterward, so the root repo isn’t clean yet. I’m checking whether it was a one-off write or an actively changing file before I decide whether to do a final follow-up commit.
+
