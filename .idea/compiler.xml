@@ -40,6 +40,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="java-compatible" target="17" />
+      <module name="pulsar" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
