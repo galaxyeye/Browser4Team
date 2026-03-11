@@ -1,1 +1,5 @@
-logs/scheduled-tasks.status.json
+.idea
+.vscode
+node_modules
+dist
+target
