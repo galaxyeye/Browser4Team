@@ -27,3 +27,26 @@ Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
 ● Todo added: Commit pull and push repo
 
+● Inspect git status and remotes
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git remote -v
+  └ 27 lines...
+
+I’ve got the repo state. Next I’m committing everything and doing a pull/push with automatic merge preference on local changes if Git needs to resolve conflicts.
+
+● Commit, pull, and push repository
+  $ Set-Location 'D:\workspace\Browser4Team';
+  $commitMsg = @"
+  chore: sync workspace changes
+
+  Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>...
+  └ 59 lines...
+
+The top-level sync worked, but new changes appeared immediately afterward: live log/status files changed again, and the nested `submodules\Browser4` repo is still dirty. I’m checking those so I can finish the sync cleanly rather than leave the repo half-updated.
+
+● Inspect root and submodule git status
+  $ Set-Location 'D:\workspace\Browser4Team'; Write-Host 'ROOT STATUS'; git --no-pager status
+  --short --branch; Write-Host "`nSUBMODULE STATUS"; Set-Location
+  'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short --branch; git
+  remote -v
+  └ 20 lines...
+
