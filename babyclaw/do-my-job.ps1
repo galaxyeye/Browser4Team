@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
 
 $prompt = @"
-Read Responsibilities.md and do your job.
+Read responsibilities.md and do the job.
 "@
 
 COPILOT = @(
