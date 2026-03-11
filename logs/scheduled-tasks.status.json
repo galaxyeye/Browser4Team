@@ -34,7 +34,7 @@
       "Status": "WaitingForWork",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T06:46:37.2700034Z",
+      "NextRunUtc": "2026-03-11T06:47:08.2181255Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
       ],
@@ -75,5 +75,5 @@
       "LastDurationSeconds": null
     }
   ],
-  "GeneratedAtUtc": "2026-03-11T06:46:22.2719675Z"
+  "GeneratedAtUtc": "2026-03-11T06:46:53.2242172Z"
 }
