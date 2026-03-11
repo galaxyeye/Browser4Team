@@ -4,12 +4,12 @@
   "Tasks": [
     {
       "RunCount": 1,
-      "LastFinishedUtc": null,
-      "CurrentPid": 85172,
-      "Status": "Running",
+      "LastFinishedUtc": "2026-03-11T09:15:47.2764139Z",
+      "CurrentPid": null,
+      "Status": "WaitingForWork",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker.ps1",
-      "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T09:13:23.4280580Z",
+      "LastExitCode": 0,
+      "NextRunUtc": "2026-03-11T09:26:34.2880997Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
@@ -25,7 +25,7 @@
       "DependsOn": [
         "process-task-source"
       ],
-      "LastDurationSeconds": null
+      "LastDurationSeconds": 158.85
     },
     {
       "RunCount": 0,
@@ -34,7 +34,7 @@
       "Status": "WaitingForWork",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T09:15:27.4881461Z",
+      "NextRunUtc": "2026-03-11T09:26:34.2880997Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
       ],
@@ -75,5 +75,5 @@
       "LastDurationSeconds": null
     }
   ],
-  "GeneratedAtUtc": "2026-03-11T09:15:17.5023042Z"
+  "GeneratedAtUtc": "2026-03-11T09:26:24.3842975Z"
 }
