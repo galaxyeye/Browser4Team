@@ -118,3 +118,30 @@ The nested repo sync is still running, likely on network operations. I’m readi
 
 ● Todo started: sync-submodule
 
+● Inspect root repo before final commit
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && Write-Host
+  '---DIFF---' && git --no-pager diff --name-status
+  └ 10 lines...
+
+● Commit final root changes
+  $ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync workspace
+  changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 4 lines...
+
+● Todo started: commit-changes
+
+● Pull, push, and verify root repo
+  $ Set-Location 'D:\workspace\Browser4Team'; git pull --no-rebase -X ours origin main && git push
+  origin main && git --no-pager status --short --branch && git --no-pager log --oneline --decorate
+  --max-count=3
+  └ 19 lines...
+
+The top-level push succeeded, but two runtime-generated files changed again immediately afterward. I’m checking whether they’re actively being rewritten; if they are, I’ll still leave you with the latest pushed commit and call out the live-process drift clearly.
+
+● Todo started: pull-remote
+
+● Check whether remaining files keep changing
+  $ Set-Location 'D:\workspace\Browser4Team'; $first = git status --short; Start-Sleep -Seconds 8;
+  $second = git status --short; Write-Host '---FIRST---'; $first; Write-Host '---SECOND---'; $second
+  └ 7 lines...
+
