@@ -23,3 +23,98 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Todo added: Inspect repository state
+
+● Inspect git status and remotes
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  --no-pager remote -v
+  └ 17 lines...
+
+I found local work already in progress, including an unpushed commit and new filesystem changes. I’m checking the exact git state before I package everything into a clean sync.
+
+● Todo started: inspect-repo
+
+● Inspect commit and diff state
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager log --oneline --decorate --max-count=5
+  && Write-Host '---CACHED---' && git --no-pager diff --cached --name-status && Write-Host
+  '---WORKTREE---' && git --no-pager diff --name-status && Write-Host '---SUBMODULE---' && git
+  submodule status
+  └ 16 lines...
+
+● Stage and commit all changes
+  $ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync workspace
+  changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 16 lines...
+
+The local commit is in place. Next I’m reconciling with `origin/main` using an auto-conflict strategy, then I’ll push the combined result back up.
+
+● Todo started: commit-changes
+
+● Pull remote with auto-resolve strategy
+  $ Set-Location 'D:\workspace\Browser4Team'; git pull --no-rebase -X ours origin main
+  └ 4 lines...
+
+● Todo started: pull-remote
+
+● Push branch and verify clean state
+  $ Set-Location 'D:\workspace\Browser4Team'; git push origin main && git --no-pager status --short
+  --branch && git --no-pager log --oneline --decorate --max-count=3
+  └ 17 lines...
+
+Push worked, but the workspace changed again immediately afterward because live log/status files were updated during the sync. I’m capturing that final drift so the repo ends in a truly committed-and-pushed state.
+
+● Inspect post-push drift
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && Write-Host
+  '---DIFF---' && git --no-pager diff --name-status
+  └ 10 lines...
+
+● Todo started: commit-changes
+
+● Inspect submodule repository state
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  --branch && git --no-pager remote -v && Write-Host '---LOG---' && git --no-pager log --oneline
+  --decorate --max-count=3
+  └ 48 lines...
+
+I found a second Git repo inside `submodules\Browser4` with its own uncommitted work. To really satisfy “commit all changes,” I’m syncing that nested repo first, then I’ll update and push the top-level repo again.
+
+● SQL: Add submodule sync todo
+  └ Executed 2 statement(s)
+
+● Commit all submodule changes
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "chore:
+  sync workspace changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 37 lines...
+
+● Todo completed: sync-submodule
+
+● Pull and push submodule branch
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git pull --no-rebase -X ours
+  origin 4.6.x && git push origin 4.6.x && git --no-pager status --short --branch && git --no-pager
+  log --oneline --decorate --max-count=3
+  └ 1 line...
+
+The nested repo sync is still running, likely on network operations. I’m reading it through to completion, then I’ll roll the updated submodule pointer into the top-level push.
+
+✗ read_powershell
+  Invalid shell ID: 8. Please supply a valid shell ID to read output from.
+
+  <no active shell sessions>
+
+● list_powershell
+  └ <no active shell sessions>
+
+● Verify submodule sync state
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  --branch && git --no-pager log --oneline --decorate --max-count=3 && git --no-pager remote -v
+  └ 7 lines...
+
+● Todo started: sync-submodule
+
+● Sync and push submodule
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git pull --no-rebase -X ours
+  origin 4.6.x && git push origin 4.6.x && git --no-pager status --short --branch
+  └ 18 lines...
+
+● Todo started: sync-submodule
+
