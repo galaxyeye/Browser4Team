@@ -22,3 +22,73 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo state first, then I’ll commit, pull with auto-conflict handling, and push the result.
+
+● Todo added: Plan repository sync
+
+● Create session plan and inspect git state
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\36769534-046e-4055-b256-d9e8f9f88641\plan.md';
+  @'
+  # Plan
+  1. Inspect git status and branch/remotes.
+  2. Commit all current changes in D:\workspace\Browser4Team....
+  └ 63 lines...
+
+I found a dirty worktree with tracked and untracked changes, so I’m packaging everything into one commit now before syncing with `origin/main`.
+
+● Todo started: plan-sync-repo
+
+● Stage and commit all changes
+  $ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync workspace
+  updates" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 54 lines...
+
+The commit is in place. Next I’m syncing with `origin/main` using automatic conflict resolution and then pushing the updated branch back up.
+
+● Pull with auto-resolve, push, and verify git state
+  $ Set-Location 'D:\workspace\Browser4Team'; git pull --no-rebase -X ours origin main; if
+  ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main; if ($LASTEXITCODE -ne 0) {
+  exit $LASTEXITCODE }; git --no-pager status --short --branch; git --no-pager log -2 --decorate
+  --oneline
+  └ 19 lines...
+
+A couple of live runtime artifacts changed again right after the push, so I’m checking whether that’s just scheduler churn or something I need to capture in a follow-up sync commit.
+
+● Inspect remaining dirty files
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git --no-pager
+   diff -- coworker/tasks/300logs/scheduler/2026/03/11/150825-coworker.stdout.log
+  logs/scheduled-tasks.status.json; git -C submodules\Browser4 --no-pager status --short --branch
+  └ 81 lines...
+
+The remaining dirt is mostly inside the `submodules\Browser4` repo itself, so I’m syncing that nested repo first, then I’ll update the parent repo to point at the new submodule commit and re-push.
+
+● Todo added: Sync Browser4 submodule
+
+● Inspect submodule git state
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  --branch; git --no-pager remote -v; git --no-pager log -3 --decorate --oneline
+  └ 20 lines...
+
+● Todo blocked: commit-pull-push
+
+● Commit all changes in Browser4 submodule
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "chore:
+  sync workspace updates" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 13 lines...
+
+The nested `Browser4` repo has its own commit now. I’m pulling and pushing that branch, then I’ll return to the parent repo for a final cleanup commit.
+
+● Pull and push Browser4 submodule
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git pull --no-rebase -X ours
+  origin 4.6.x; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin 4.6.x; if
+  ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git --no-pager status --short --branch; git
+  --no-pager log -2 --decorate --oneline
+  └ 20 lines...
+
+● Inspect root repo after submodule sync
+  $ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git submodule
+  status --recursive
+  └ 6 lines...
+
+The parent repo is down to exactly what I expected: a new submodule pointer plus a couple of scheduler-generated files. I’m rolling those into one last root commit and pushing again.
+
