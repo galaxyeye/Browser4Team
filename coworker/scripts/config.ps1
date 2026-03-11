@@ -1,4 +1,10 @@
 $configDataPath = Join-Path $PSScriptRoot 'config.psd1'
+$utilScriptPath = Join-Path $PSScriptRoot 'common\Util.ps1'
+if (Test-Path -LiteralPath $utilScriptPath) {
+    . $utilScriptPath
+    Fix-Encoding-UTF8
+}
+
 if (-not (Test-Path $configDataPath)) {
     throw "Config data file not found: $configDataPath"
 }
@@ -176,18 +182,42 @@ function Normalize-CoworkerLogFile {
         return
     }
 
-    $content = Get-Content -LiteralPath $Path -Raw -ErrorAction SilentlyContinue
-    if ($null -eq $content) {
+    try {
+        $bytes = [System.IO.File]::ReadAllBytes($Path)
+        if ($null -eq $bytes -or $bytes.Length -eq 0) {
+            return
+        }
+
+        $content = $null
+        foreach ($encodingName in @('utf-8', [System.Text.Encoding]::Default, [System.Text.Encoding]::GetEncoding([Console]::OutputEncoding.CodePage), 'unicode')) {
+            try {
+                if ($encodingName -is [string]) {
+                    $encoding = [System.Text.Encoding]::GetEncoding($encodingName, [System.Text.EncoderFallback]::ExceptionFallback, [System.Text.DecoderFallback]::ExceptionFallback)
+                }
+                else {
+                    $encoding = [System.Text.Encoding]::GetEncoding($encodingName.WebName, [System.Text.EncoderFallback]::ExceptionFallback, [System.Text.DecoderFallback]::ExceptionFallback)
+                }
+
+                $content = $encoding.GetString($bytes)
+                break
+            }
+            catch {
+                continue
+            }
+        }
+
+        if ($null -eq $content) {
+            $content = [System.Text.Encoding]::UTF8.GetString($bytes)
+        }
+
+        $sanitizedContent = Remove-AnsiEscapeSequences -Text $content
+        $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+        [System.IO.File]::WriteAllText($Path, $sanitizedContent, $utf8NoBom)
+    }
+    catch {
+        # Best-effort normalization: keep original log if conversion fails.
         return
     }
-
-    $sanitizedContent = Remove-AnsiEscapeSequences -Text $content
-    if ($sanitizedContent -ceq $content) {
-        return
-    }
-
-    $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
-    [System.IO.File]::WriteAllText($Path, $sanitizedContent, $utf8NoBom)
 }
 
 function Remove-CoworkerEventSubscription {

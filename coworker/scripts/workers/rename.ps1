@@ -77,9 +77,9 @@ function Get-GeneratedTaskName {
 
         $rawName = ""
         if (Test-Path $nameStdOut) {
-            $lines = Get-Content -Path $nameStdOut | Where-Object { $_ -and $_.Trim() }
-            
-            $cleanLines = @($lines | Where-Object { 
+            $lines = Get-Content -Path $nameStdOut -Encoding UTF8 | Where-Object { $_ -and $_.Trim() }
+
+            $cleanLines = @($lines | Where-Object {
                 $_ -notmatch '^\s*\u25CF' -and 
                 $_ -notmatch '^\s*\u0024' -and 
                 $_ -notmatch '^\s*\u2514' -and 
@@ -107,7 +107,7 @@ function Get-GeneratedTaskName {
         }
 
         if (Test-Path $nameStdErr) {
-             $errContent = Get-Content $nameStdErr
+             $errContent = Get-Content -Path $nameStdErr -Encoding UTF8
              if ($errContent) {
                  Write-Host "DEBUG: GH Stderr: $errContent"
              }
@@ -146,7 +146,7 @@ if (Test-Path -Path $FilePath -PathType Container) {
     $files = Get-ChildItem -Path $FilePath -File | Where-Object { $_.BaseName -match '^\d+$' }
     foreach ($file in $files) {
         Write-Host "Processing $($file.Name)..."
-        $content = Get-Content -Path $file.FullName -Raw
+        $content = Get-Content -Path $file.FullName -Raw -Encoding UTF8
         $newName = Get-GeneratedTaskName -Content $content -OriginalBaseName $file.BaseName -OriginalName $file.Name
         
         if ($newName -ne $file.BaseName) {
@@ -162,9 +162,8 @@ if (Test-Path -Path $FilePath -PathType Container) {
     }
 } else {
     # Single file mode
-    $content = Get-Content -Path $FilePath -Raw
+    $content = Get-Content -Path $FilePath -Raw -Encoding UTF8
     $fileItem = Get-Item $FilePath
     $newName = Get-GeneratedTaskName -Content $content -OriginalBaseName $fileItem.BaseName -OriginalName $fileItem.Name
     Write-Output $newName
 }
-

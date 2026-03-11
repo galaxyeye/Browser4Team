@@ -244,7 +244,7 @@ Prompt: $promptSample
             Stop-Process -Id $nameProcess.Id -Force -ErrorAction SilentlyContinue
 
             if (Test-Path $nameStdErr) {
-                $errContent = Get-Content $nameStdErr
+                $errContent = Get-Content -Path $nameStdErr -Encoding UTF8
                 Write-LogVerbose "Naming Copilot STDERR (Timeout): $errContent"
             }
 

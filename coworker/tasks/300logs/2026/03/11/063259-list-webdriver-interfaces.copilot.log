@@ -1,0 +1,117 @@
+I’m opening the task, checking repo state, and setting up a lightweight plan/todo trail before I implement anything.
+
+● SQL: Initialize task todos
+  └ 4 row(s) inserted. Last inserted row ID: 4.
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\list-webdriver-interfaces.md
+  └ 1 line read
+
+● Check git status
+  $ git --no-pager status --short
+  └ 1 line...
+
+● Create session plan file
+  $ $plan = @'
+  # Plan
+
+  1. Read the assigned task and identify the requested repository changes.
+  2. Inspect the relevant code/docs and implement a minimal, complete fix....
+  └ 6 lines...
+
+The task is an investigation-only one: I’m now tracing `WebDriver` symbols across the repo and collecting the actual interface definitions with file references.
+
+● Todo started: inspect-task
+
+● Grep "\binterface\s+\w*WebDriver\w*\b" in **/*.{kt,java,ts,js}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 2 lines found
+
+● Glob "**/*WebDriver*.{kt,java,md,json}" in D:\workspace\Browser4Team\submodules\Browser4
+  └ 42 files found
+
+● Grep "\bWebDriver\b" in **/*.{kt,java,md,json,ts,js}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 6 files found
+
+I found the two direct `*WebDriver*` interface declarations already; I’m now checking related wrappers/docs so I can give a precise, not over-broad, list.
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 110-220
+  └ 111 lines read
+
+● Read sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt lines 1-120
+  └ 120 lines read
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\Fetcher.kt
+  lines 1-60
+  └ 58 lines read
+
+● Grep "\binterface\s+\w+\b" in **/*WebDriver*.kt (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 7 lines found
+
+I’ve confirmed the repo only defines two `WebDriver`-named interfaces. I’m switching to the required memory-log updates and checking whether March’s monthly rollup is missing the 2026-03-10 summary.
+
+● Todo started: implement-task
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 1-end
+  └ 63 lines read
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\MEMORY.20260310.md lines 1-end
+  └ 10 lines read
+
+● Glob "2026\03\10\*" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  └ No matches found
+
+● Glob "2026\03\*\MEMORY.202603*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  └ No matches found
+
+I confirmed the monthly log stops at the 03-09 rollup, so I’m appending a 03-10-aware monthly update plus today’s task note to the daily memory file.
+
+✗ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  Path does not exist
+
+● Append daily and monthly memory entries
+  $ $dailyPath = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md'
+  $monthlyPath = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md'
+  $dailyEntry = @'
+  - **WebDriver interface inventory completed:** Searched the Browser4 codebase for `WebDriver`
+  interface declarations and confirmed the repo defines two `WebDriver`-named interfaces: ...
+  └ 34 lines...
+
+The memory writes succeeded. I’m doing a quick verification pass on the updated log files and then I’ll hand back the interface list with file paths.
+
+● Todo completed: validate-task, update-memory
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  └ 1 line read
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 59-end
+  └ 12 lines read
+
+● Memory stored: webdriver api
+  └ The core WebDriver API is the interface in pulsar-core/pulsar-skeleton; sdks/bro…
+
+Done.
+
+I searched the Browser4 repo for `WebDriver` interface declarations and found these repo-defined interfaces:
+
+- `ai.platon.pulsar.skeleton.crawl.fetch.driver.WebDriver` — `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt:128`
+- `ai.platon.pulsar.skeleton.crawl.fetch.WebDriverFetcher` — `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\Fetcher.kt:8`
+
+I also verified `sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt` is a concrete class, not an interface.
+
+Required memory updates were appended to:
+
+- `coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md`
+- `coworker\tasks\300logs\2026\03\MEMORY.202603.md`
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         1m 34s
+Total session time:     1m 53s
+Total code changes:     +0 -0
+Breakdown by AI model:
+ gpt-5.4                 244.7k in, 4.8k out, 218.8k cached (Est. 1 Premium request)
