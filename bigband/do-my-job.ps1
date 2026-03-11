@@ -1,11 +1,11 @@
 #!/usr/bin/env pwsh
 
 $prompt = @"
-Pick a markdown file from the `input` directory and move it to the `workshop` directory.
+Pick a markdown file from the `tasks` directory and move it to the `tasks/in-process` directory.
 
-Read `responsibilities.md` and follow the instructions with the input file.
+Read `responsibilities.md` and follow the instructions with the task file.
 
-Finally, move all the generated files to the `output` directory.
+Finally, move the task file to `tasks/done`, and move all the generated files to the `output` directory.
 "@
 
 $COPILOT = @(
