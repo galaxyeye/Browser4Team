@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/Browser4/pom.xml" />
+        <option value="$PROJECT_DIR$/submodules/Browser4/pom.xml" />
       </list>
     </option>
   </component>

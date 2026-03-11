@@ -3,7 +3,7 @@
         WorkspaceRoot        = '..\..'
         CoworkerRoot         = '..'
         TasksRoot            = '..\tasks'
-        TargetRepositoryRoot = '..\..\Browser4'
+        TargetRepositoryRoot = '..\..\submodules\Browser4'
     }
 
     Scheduler = @{
