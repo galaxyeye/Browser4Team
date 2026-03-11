@@ -1,0 +1,510 @@
+I’m starting by reading the task brief, checking repo state, and locating the relevant `PerceptiveAgent` command-history code paths so I can implement and verify the requested change end-to-end.
+
+● Read
+  D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-command-history-persistence.md
+  └ 278 lines read
+
+● Grep "command history|commandHistory|CommandHistory|history persistence|PerceptiveAgent" in
+*.{kt,java,md} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 5 lines found
+
+● Check working tree status
+  $ git --no-pager status --short
+  └ 1 line...
+
+● Create session plan file
+  $ $plan = 'C:\Users\pereg\.copilot\session-state\24206555-a306-4897-aa1d-b6011efb1165\plan.md';
+  if (-not (Test-Path $plan)) { @'
+  # Plan
+
+  1. Read the task brief and inspect relevant Browser4 code paths for PerceptiveAgent command ...
+  └ 8 lines...
+
+I’ve got the task brief. Next I’m narrowing to the real implementation points in `pulsar-agentic` and locating existing tests so I can make a focused change instead of guessing across the whole repo.
+
+● Todo started: read-task-brief
+
+● Grep "fun act\(|buildAgentStateHistoryMessage|writeExecutionContext|writeAgentState|writeActionRes
+ult|writeProcessTrace|addToHistory|addTrace|validateToolCall|executeToolCall|tryExecute|SimpleKotlin
+Parser|TaskScopedBrowserAgent|RobustBrowserAgent" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic)
+  └ 5 lines found
+
+● Glob "D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\test\kotlin\**\*{Agent,Prom
+pt,History,Command}*Test.kt"
+  └ No matches found
+
+● Explore: Survey agent architecture
+  ● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt lines 120-205
+    └ 86 lines read
+  ● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt lines 250-320
+    └ 71 lines read
+
+I found the core shape: there’s parser/validator/executor machinery already, but it isn’t wired into `agent.act(...)`, and persistence is only partial after execution. I’m reading the exact implementations now so I can patch the real seams cleanly.
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt lines
+  1-320
+  └ 320 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt lines 1-260
+
+  └ 260 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt lines
+  1-340
+  └ 340 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\common\SimpleKotlinParser.kt lines
+  1-240
+  └ 224 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\util\ActionValidator.kt lines
+  1-260
+  └ 223 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt lines 1-320
+
+  └ 311 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\RobustBrowserAgent.kt lines
+  1-320
+  └ 320 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt lines
+  260-520
+  └ 261 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt lines
+  338-520
+  └ 183 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\TaskScopedBrowserAgent.kt lines
+   1-220
+  └ 84 lines read
+
+● Grep
+"parseFunctionExpression\(|validateToolCall\(|writeActionResult\(|buildAgentStateHistoryMessage\("
+in **/*.{kt,java,ts} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 33 lines found
+
+I’ve confirmed the fast-path and persistence gaps are real, not just planning notes. Now I’m checking the result/state models and the REST runner path so I can wire the fix without breaking existing agent entrypoints.
+
+✗ Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\ActionDescription.kt lines 1-260
+
+  Path does not exist
+
+✗ Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\ToolCall.kt lines 1-260
+  Path does not exist
+
+✗ Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\ActResult.kt lines 1-260
+  Path does not exist
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\ExecutionContext.kt lines 1-320
+  └ 77 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\AgentState.kt lines 1-320
+  └ 104 lines read
+
+● Grep
+"StatefulAgentRunner|executePlainCommandSync\(|normalizePlainCommand\(|TaskScopedBrowserAgent" in
+**/*.kt (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 23 lines found
+
+I hit a couple of model-path mismatches, but I’ve now got the important part: REST plain commands already funnel into the agent runner, so the safest fix is to teach the agent path to detect and persist direct tool commands rather than inventing a separate controller-side protocol.
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\service\CommandServic
+  eTest.kt lines 260-380
+  └ 121 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\api\service\CommandService.kt lines 1-200
+  └ 200 lines read
+
+● Read pulsar-tools\src\main\kotlin\ai\platon\pulsar\agentic\tools\agent\StatefulAgentRunner.kt lines
+   1-260
+  └ 127 lines read
+
+● Glob "D:\workspace\Browser4Team\submodules\Browser4\**\ActionDescription.kt"
+  └ No matches found
+
+● Glob "D:\workspace\Browser4Team\submodules\Browser4\**\ToolCall.kt"
+  └ No matches found
+
+● Glob "D:\workspace\Browser4Team\submodules\Browser4\**\ActResult.kt"
+  └ No matches found
+
+The runner path is clear now: `CommandService -> StatefulAgentRunner -> session.companionAgent.run(...)`. So once the agent learns direct-command fast-pathing and better persistence, REST inherits it automatically with minimal surface-area change.
+
+✗ Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToo
+  lControllerTest.kt lines 1-260
+  Path does not exist
+
+● Read pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\support\ToolCallExecutorTest.kt lines
+  1-320
+  └ 255 lines read
+
+● Grep "data class ActionDescription|data class ToolCall|data class ActResult|class
+DetailedActResult|fun toActResult\(" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic)
+  └ 6 lines found
+
+● Baseline compile pulsar-agentic
+  $ .\mvnw.cmd -pl pulsar-agentic -am -DskipTests compile
+  └ 86 lines...
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt lines 1-340
+  └ 339 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\PerceptiveAgent.kt lines 1-180
+  └ 180 lines read
+
+● Grep "class MCPToolControllerTest|MCPToolControllerTest" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 1 line found
+
+I’ve now got the concrete model contracts. The good news is `ActResult`/`DetailedActResult` already give me a compatible shape for a direct-command branch, so I can add the fast path without forcing REST or callers to parse a different response type.
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  lines 1-260
+  └ 260 lines read
+
+● Read pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\support\TabSwitchTest.kt lines 1-220
+  └ 140 lines read
+
+● Grep
+"addToHistory\(|updateAgentState\(|writeAgentState\(|writeActionResult\(|persistTranscript\(|step\("
+ (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agen
+tic\agents\RobustBrowserAgent.kt)
+  └ 6 lines found
+
+● read_powershell
+  └ 299 lines...
+
+I’ve also confirmed the baseline compile was already in progress and hasn’t failed early. I’m using that as the pre-change baseline while I finish reading the last pieces of `RobustBrowserAgent` that decide when history gets recorded.
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 1-240
+  └ 240 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\RobustBrowserAgent.kt lines
+  400-760
+  └ 345 lines read
+
+● Grep "history render|HistoryRenderStrategy|checkpoint|budget" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic)
+  └ 89 lines found
+
+● Grep "companionAgent" in **/*.kt (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 43 lines found
+
+One more architectural point is confirmed: `session.companionAgent` is the shared agent object used by REST and examples, so this really is a core behavior change in `pulsar-agentic`, not something that should live in one controller. I’m checking its concrete type now and then I’ll patch.
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\AgenticSession.kt lines 1-140
+  └ 91 lines read
+
+● Grep "buildSummaryPrompt\(|buildAgentStateHistoryMessage\(" (D:\workspace\Browser4Team\submodules\
+Browser4\pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt)
+  └ 4 lines found
+
+● Grep "ActionValidator\(|validateToolCall\(|denyUnknownActions|enablePreActionValidation" in
+**/*.kt (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic)
+  └ 9 lines found
+
+● Grep "MessageWriter.writeOnce|class MessageWriter" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 12 lines found
+
+I found another subtle issue: the agent already writes JSONL files, but it appends to a shared agent-session log directory rather than a clearly named task-scoped folder, and only some state transitions are actually written after execution. I’m fixing both together to keep the audit trail coherent.
+
+● read_powershell
+  └ 8 lines...
+
+● Read pulsar-core\pulsar-common\src\main\kotlin\ai\platon\pulsar\common\MessageWriter.kt lines 1-180
+
+  └ 180 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\detail\CheckpointManager.kt
+  lines 1-220
+  └ 193 lines read
+
+● Grep "getRunLogDir0|auxRunLogDir" (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\sr
+c\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt)
+  └ 12 lines found
+
+Baseline compile finished successfully, so I’ve got a clean pre-change signal. I’m grabbing the final logging-directory helper and then moving from investigation into the actual code edits.
+
+● Todo started: plan-work
+
+● read_powershell
+  └ 1 line...
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt lines
+  520-620
+  └ 33 lines read
+
+I’m at the implementation boundary now. The plan is to patch three seams together: direct-command detection in `act(...)`, argument normalization/validation for parsed tool calls, and state/history persistence so both direct and LLM-driven actions leave the same audit trail.
+
+● Read
+  pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\inference\InferenceSummaryJsonLinesTest.kt
+  lines 1-240
+  └ 111 lines read
+
+● Grep "BasicBrowserAgent\(|RobustBrowserAgent\(|AgentStateManager\(|PromptBuilder\(" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\test\kotlin)
+  └ 1 line found
+
+● Grep "mockk<|Mockito\.mock|@Mock|AgenticSession" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\test\kotlin)
+  └ 8 lines found
+
+I found a helpful precedent in tests: there’s already coverage around named-argument tool execution and a lightweight `BasicBrowserAgent` instantiation pattern. I’m using those patterns so the new tests stay consistent with the module.
+
+● Read
+  pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\builtin\ExecutorsNamedArgsTest.kt
+  lines 1-220
+  └ 79 lines read
+
+● Read pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\mcp\MCPAutoWiringTest.kt lines 1-140
+  └ 67 lines read
+
+● Grep "toolSpecs|getToolSpecs\(|open\(|navigate\(|click\(|fill\(" in **/*.kt (D:\workspace\Browser4
+Team\submodules\Browser4\pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin)
+  └ 11 lines found
+
+✗ Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\detail\ActResultHelper.kt
+  lines 1-220
+  Path does not exist
+
+● Grep "actionDescription =|toolCallResult =|updateAgentState\(" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\main\kotlin)
+  └ 25 lines found
+
+I’m checking one last consistency point before editing: whether `AgentState.actionDescription` and `toolCallResult` are reliably set today. That matters because the new persistence should write the same rich state no matter how the action was triggered.
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt lines 332-380
+  └ 49 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\action\ContextToAction.kt
+  lines 1-120
+  └ 78 lines read
+
+● Grep "object ActResultHelper|class ActResultHelper" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\main\kotlin)
+  └ 1 line found
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\AbstractToolExecutor.kt
+  lines 1-120
+  └ 120 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\detail\SupportTypes.kt lines
+   1-180
+  └ 47 lines read
+
+● Grep "fun getToolSpecs\(|override fun getToolSpecs\(" (D:\workspace\Browser4Team\submodules\Browse
+r4\pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\WebDriverToolExecutor.kt)
+  └ No matches found
+
+I’m also thinking through the testability angle before I touch code. `BasicBrowserAgent.act(...)` pulls browser state early, so the direct-command tests need a mocked `PulsarWebDriver`/snapshot path rather than a pure string-level unit test.
+
+● Grep "mockk<.*PulsarWebDriver|PulsarWebDriver" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\test\kotlin)
+  └ No matches found
+
+● Grep "data class BrowserUseState|class BrowserUseState|data class BrowserState|data class
+DOMState" in **/*.kt (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 3 lines found
+
+● Read
+  pulsar-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\chrome\dom\model\DomModels.kt
+  lines 603-760
+  └ 139 lines read
+
+● Grep "mockk<.*WebDriver|mockk<.*Browser|mockk<.*AgenticSession" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\test\kotlin)
+  └ 4 lines found
+
+I found a nice escape hatch for testing browser state: `BrowserUseState.DUMMY` exists, so the direct-command agent tests can stub snapshotting without building a real DOM tree. That should keep the new tests focused on routing/persistence instead of browser internals.
+
+● Grep "interface PulsarWebDriver|class PulsarWebDriver" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 14 lines found
+
+● Grep "interface SnapshotService|class SnapshotService|getBrowserUseState\(" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 13 lines found
+
+I’m making one pragmatic testing tradeoff: the history-rendering and tool-call normalization tests are straightforward, but the `act(...)` fast path needs a mocked browser-state bootstrap. I’m checking that helper next so I know whether I can cover the agent path directly or should target the extracted helper seams.
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\detail\PageStateTracker.kt
+  lines 1-220
+  └ 210 lines read
+
+● Grep "interface AgenticSession.*sessionConfig|get\(\) = sessionConfig|val sessionConfig" in
+**/*.kt (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\main\kotlin\ai\platon\puls
+ar\agentic)
+  └ No matches found
+
+I’ve got enough context to batch the edits cleanly. I’m applying the implementation now across the agent fast path, history rendering, and persistence/logging paths in one pass so the behavior stays coherent.
+
+● Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  Create
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\history\HistoryRenderStrategy.kt
+  Create pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\history\DefaultHistoryRend
+  erStrategy.kt
+  Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt
+  Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt
+  Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt
+  Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\RobustBrowserAgent.kt
+  Create pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutorNormalizeTool
+  CallTest.kt
+  Create pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilderHistoryStrate
+  gyTest.kt
+  Create pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManagerPersisten
+  ceTest.kt
+
+The implementation is in. I’m validating it with a focused `pulsar-agentic` test run first so I can catch any compile or contract mismatches before touching the memory logs.
+
+● Run targeted pulsar-agentic tests
+  $ .\mvnw.cmd -pl pulsar-agentic -am -Dtest=AgentToolExecutorNormalizeToolCallTest,PromptBuilderHis
+  toryStrategyTest,AgentStateManagerPersistenceTest -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 5 lines...
+
+● Review code diff
+  $ git --no-pager diff --
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt ...
+  └ 7 lines...
+
+The first test invocation tripped over PowerShell quoting, not the code itself. I’m rerunning it with explicit argument array syntax so I get a real compile/test signal instead of shell noise.
+
+● Check modified files
+  $ git --no-pager status --short
+  └ 10 lines...
+
+● Run targeted tests with safe quoting
+  $ & .\mvnw.cmd -pl pulsar-agentic -am '-Dtest=AgentToolExecutorNormalizeToolCallTest,PromptBuilder
+  HistoryStrategyTest,AgentStateManagerPersistenceTest' '-Dsurefire.failIfNoSpecifiedTests=false'
+  test
+  └ 4 lines...
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt lines 1-30
+  └ 30 lines read
+
+● Read pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManagerPersistence
+  Test.kt lines 1-220
+  └ 78 lines read
+
+● read_powershell
+  └ 8 lines...
+
+The targeted test run finished, but it failed in code/test compilation rather than execution. I’m reading the compiler output directly now and will tighten up the patch before rerunning.
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773214537659-l8gnvx.txt lines 1-260
+  └ 260 lines read
+
+● Read pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutorNormalizeToolCa
+  llTest.kt lines 1-200
+  └ 39 lines read
+
+● Grep "\[ERROR\]|error:|e: file:"
+(C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773214537659-l8gnvx.txt)
+  └ 14 lines found
+
+● Read ~\AppData\Local\Temp\copilot-tool-output-1773214537659-l8gnvx.txt lines 950-998
+  └ 49 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt lines
+  145-260
+  └ 116 lines read
+
+The first failure is small and clean: `RobustBrowserAgent` already had its own `actionValidator`, and my new config-aware validator in `BasicBrowserAgent` shadowed it. I’m removing that duplicate and tightening one history-write edge case before rerunning.
+
+● Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\RobustBrowserAgent.kt
+  Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt
+
+That conflict is fixed. I’m rerunning the focused tests now to surface the next real compiler/test issue, if any.
+
+● Review latest diff snippets
+  $ git --no-pager diff --
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\RobustBrowserAgent.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt
+  └ 183 lines...
+
+● Re-run targeted pulsar-agentic tests
+  $ & .\mvnw.cmd -pl pulsar-agentic -am '-Dtest=AgentToolExecutorNormalizeToolCallTest,PromptBuilder
+  HistoryStrategyTest,AgentStateManagerPersistenceTest' '-Dsurefire.failIfNoSpecifiedTests=false'
+  test
+  └ 4 lines...
+
+The duplicate-validator fix compiled far enough to restart the test build. I’m polling the new run now; if it fails again, it should be a more substantive code/test issue rather than the earlier shadowing bug.
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt lines
+  140-250
+  └ 111 lines read
+
+● read_powershell
+  └ 8 lines...
+
+The targeted `pulsar-agentic` validation passed. I’m doing one quick compatibility check against the existing REST MCP controller test, then I’ll append the required memory log entry and wrap up.
+
+● Todo started: validate-changes
+
+● Run MCP controller regression test
+  $ & .\mvnw.cmd -pl pulsar-rest -am '-Dtest=MCPToolControllerTest'
+  '-Dsurefire.failIfNoSpecifiedTests=false' test
+  └ 4 lines...
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  └ 2 lines read
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 1-end
+  └ 70 lines read
+
+● read_powershell
+  └ 4 lines...
+
+The daily memory file is ready for append, and the monthly rollup already includes `2026-03-10`, so there shouldn’t be any backfill work there. I’m just waiting on the REST regression check to finish before I write the final memory entry.
+
+● read_powershell
+  └ 8 lines...
+
+Validation is complete. I’m appending the required daily memory entry now and marking the task done in the session tracker; the monthly memory is already current through `2026-03-10`, so no backfill append is needed there.
+
+● Todo started: update-memory
+
+● Collect diff summary
+  $ git --no-pager diff --stat
+  └ 14 lines...
+
+● Append daily memory entry
+  $ $daily = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md';
+  $entry = @'
+  - **PerceptiveAgent direct-command and history persistence implemented:** Wired
+  `BasicBrowserAgent.act(ActionOptions)` to detect parser-recognized MCP/Kotlin-style tool
+  expressions, normalize positional arguments to tool-spec names, validate recognized direct ...
+  └ 24 lines...
+
+I’ve finished the code and the required memory logging. I’m doing one last quick sanity check on the appended daily memory entry and the final file list, then I’ll hand you the concise summary.
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  └ 3 lines read
+
+● Final modified file list
+  $ git --no-pager status --short
+  └ 12 lines...
+
+Done: `PerceptiveAgent` now fast-paths parser-recognized direct tool commands in `BasicBrowserAgent.act(...)`, normalizes positional args to tool-spec names, validates recognized commands before execution, and routes both direct-command and LLM paths through shared state/result/trace persistence. I also refactored prompt history rendering behind a strategy with recent-step retention plus compressed older-step summaries, and moved audit artifacts into per-task folders like `task-<sessionId>`.
+
+Validated with `.\mvnw.cmd -pl pulsar-agentic -am -Dtest=AgentToolExecutorNormalizeToolCallTest,PromptBuilderHistoryStrategyTest,AgentStateManagerPersistenceTest -Dsurefire.failIfNoSpecifiedTests=false test` and `.\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest -Dsurefire.failIfNoSpecifiedTests=false test`. Daily memory was appended; monthly memory already covered `2026-03-10`, so no backfill was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         14m 26s
+Total session time:     17m 56s
+Total code changes:     +553 -81
+Breakdown by AI model:
+ gpt-5.4                 6.2m in, 51.9k out, 5.4m cached (Est. 1 Premium request)

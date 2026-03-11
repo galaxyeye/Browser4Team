@@ -1,0 +1,124 @@
+I’m opening the task brief and checking the current repo state first, then I’ll turn it into concrete edits and validation.
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-browser4-breakdown.md
+  └ 52 lines read
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md
+  └ 1 line read
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md
+  └ 70 lines read
+
+● Check git status
+  $ git --no-pager status --short
+  └ 1 line...
+
+I’ve confirmed this is a planning/refinement task, not a production-code change. Next I’m mapping the actual Browser4 touchpoints so I can rewrite the breakdown into concrete, codebase-specific work items.
+
+● SQL: Create task todos
+  └ 3 row(s) inserted. Last inserted row ID: 3.
+
+● Create session plan file
+  $ @'
+  # Plan
+  1. Map the real Browser4 classes, methods, and tests implicated by the PerceptiveAgent
+  breakdown.
+  2. Rewrite the task brief into executable engineering work items with explicit code targets, ...
+  └ 6 lines...
+
+● Explore: Explore agent surfaces
+  ● Glob "**/AgentTaskStatus.kt" in D:\workspace\Browser4Team\submodules\Browser4
+    └ No matches found
+  ● Read pulsar-tools\src\main\kotlin\ai\platon\pulsar\agentic\tools\agent\Models.kt lines 1-200
+    └ 126 lines read
+
+I found one important architecture mismatch already: `PerceptiveAgent` is just the interface, while the real implementation work lands in `BasicBrowserAgent`/`RobustBrowserAgent`. I’m spot-checking the cited code now so the rewritten plan is grounded in real files and method names.
+
+● Todo started: map-browser4-surfaces
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\PerceptiveAgent.kt lines 170-285
+  └ 116 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt lines
+  135-230
+  └ 96 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\PromptBuilder.kt lines
+  420-470
+  └ 51 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\inference\AgentStateManager.kt lines
+  330-430
+  └ 101 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt lines
+  150-220
+  └ 71 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\api\service\CommandService.kt lines 60-120
+  └ 61 lines read
+
+I’ve got enough code anchors now to turn the brief into a real implementation plan with concrete file targets, tests, and acceptance criteria. Next I’m rewriting the task file in place and preserving the human review decisions as the source of truth.
+
+● Delete D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-browser4-breakdown.md
+
+● Create D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-browser4-breakdown.md
+
+The rewrite is in place. I’m doing a quick verification pass now, then I’ll append the memory log and close the task out cleanly.
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-browser4-breakdown.md
+  └ 302 lines read
+
+● Memory stored: agent architecture
+  └ PerceptiveAgent is an interface; implementation work usually lands in BasicBrows…
+
+● Show task file diff
+  $ git --no-pager diff --
+  D:\workspace\Browser4Team\coworker\tasks\2working\perceptive-agent-browser4-breakdown.md
+  └ 2 lines...
+
+The task file itself lives outside the Browser4 git repo, so I validated it by reading it back rather than via `git diff`. I’m appending the daily memory entry now; the monthly memory already includes the 2026-03-10 rollup, so it doesn’t need a catch-up update.
+
+● Todo started: rewrite-breakdown
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  └ 1 line read
+
+● Append daily memory entry
+  $ @'
+  - **PerceptiveAgent breakdown refined into executable Browser4 tasks:** Reworked
+  `coworker\tasks\2working\perceptive-agent-browser4-breakdown.md` from a high-level research
+  outline into a codebase-grounded engineering plan. The updated breakdown now maps each phase
+  to concrete Browser4 files (`BasicBrowserAgent`, `RobustBrowserAgent`, ...
+  └ 10 lines...
+
+I’ve written the memory entry; I’m just reading it back once to confirm the append landed, then I’m done.
+
+● Todo completed: validate-and-log
+
+● Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  └ 2 lines read
+
+Done.
+
+I rewrote `coworker\tasks\2working\perceptive-agent-browser4-breakdown.md` into an executable Browser4 engineering plan with
+concrete code targets, dependencies, acceptance criteria, suggested tests, and a clear implementation order.
+
+Key improvement: the plan now targets the real implementation surfaces (`BasicBrowserAgent`, `RobustBrowserAgent`,
+`TaskScopedBrowserAgent`, `PromptBuilder`, `AgentStateManager`, `AgentToolExecutor`, REST/MCP/CLI entry points)
+instead of treating `PerceptiveAgent` as the implementation.
+
+I also appended the required summary to `coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md`.
+
+I checked the monthly memory precondition too: `MEMORY.202603.md` already contains the 2026-03-10 rollup, so no catch-up append was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         7m 27s
+Total session time:     9m 6s
+Total code changes:     +303 -53
+Breakdown by AI model:
+ gpt-5.4                 3.0m in, 27.1k out, 2.5m cached (Est. 1 Premium request)
