@@ -1,0 +1,104 @@
+I’m reading the task brief and checking the repo state first, then I’ll implement and validate the fix end to end.
+
+● SQL: Initialize task todos
+  └ Executed 2 statement(s)
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\fix-garbled-text-encoding.md
+  └ 12 lines read
+
+● Check git working tree
+  $ git --no-pager status --short
+  └ 11 lines...
+
+I found the failing area in `coworker.ps1`; next I’m checking the surrounding logic and task-file encoding assumptions so I can make a surgical fix.
+
+● SQL: Insert task todos
+  └ 3 row(s) inserted. Last inserted row ID: 3.
+
+● Read coworker\scripts\coworker.ps1 lines 380-560
+  └ 181 lines read
+
+● Grep "Encoding|Get-Content -Path \$file\.FullName|Move-Item -Path
+\$file\.FullName|tasks\\1created|workingPath|createdPath" in **/*.ps1
+(D:\workspace\Browser4Team\submodules\Browser4\coworker)
+  └ 43 lines found
+
+● Create session plan file
+  $ @'
+  # Plan
+  1. Inspect coworker task-loading code and surrounding workflow.
+  2. Identify why garbled text / missing-file errors occur and implement a minimal fix.
+  3. Run targeted validation and summarize results....
+  └ 3 lines...
+
+I’ve confirmed the current code hardcodes `UTF8` when reading task files. I’m now checking whether the repo already has a safe file-reading helper I can reuse before patching `coworker.ps1`.
+
+● Todo started: plan-fix
+
+● Read coworker\scripts\process-task-source.ps1 lines 1-150
+  └ 150 lines read
+
+● Grep "DetectEncoding|StreamReader\(|DefaultEncoding|Encoding]::GetEncoding|GetEncoding\(|ReadAllTe
+xt\(|UTF8Encoding|byte\[\]|Get-FileEncoding|ReadTask|Read-.*Content" in **/*.ps1
+(D:\workspace\Browser4Team\submodules\Browser4\coworker)
+  └ No matches found
+
+● Read coworker\scripts\workers\rename.ps1 lines 120-190
+  └ 50 lines read
+
+There isn’t an existing encoding helper in the coworker scripts, so I’m adding one in `coworker.ps1` and wiring only the task-file read through it.
+
+● Read coworker\scripts\coworker.ps1 lines 1-220
+  └ 219 lines read
+
+● Grep "function Resolve-UniquePath|function
+Write-LogMessage|Set-StrictMode|param\(|ErrorActionPreference"
+(D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\coworker.ps1)
+  └ 11 lines found
+
+● Edit coworker\scripts\coworker.ps1
+
+The patch is in: task files now load with BOM/UTF fallback and are normalized to UTF-8 before the rest of the workflow touches them. I’m spot-checking the exact edit and then running a focused validation with a non-UTF8 Chinese sample.
+
+● Todo started: implement-fix
+
+● Read coworker\scripts\coworker.ps1 lines 170-260
+  └ 90 lines read
+
+● Read coworker\scripts\coworker.ps1 lines 432-448
+  └ 17 lines read
+
+● Validate encoding helper with GBK sample
+  $ $scriptPath = 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\coworker.ps1'
+  $scriptText = Get-Content -Path $scriptPath -Raw
+  $names = 'Write-LogVerbose','Read-TaskFileContent','Convert-TaskFileToUtf8'
+  foreach ($name in $names) {
+    $match = [regex]::Match($scriptText, "function $name \{.*?^\}", ...
+  └ 26 lines...
+
+The focused test passed with a GBK/CP936 Chinese sample: the helper decoded it correctly and rewrote it as UTF-8. I’m doing one last diff check and then I’ll wrap up.
+
+● Todo completed: implement-fix, validate-fix
+
+● Show final coworker diff
+  $ git --no-pager diff -- coworker/scripts/coworker.ps1
+  └ 87 lines...
+
+Fixed the garbled-text issue in `coworker\scripts\coworker.ps1`.
+
+I added `Read-TaskFileContent` to read task files via BOM detection, strict UTF-8, then local code-page fallback, and `Convert-TaskFileToUtf8` to rewrite the task file as UTF-8 before the rename/move workflow continues. That keeps Chinese task content readable for downstream Copilot processing.
+
+I intentionally left the separate missing-file/move problem untouched, per the task note.
+
+Validation: I ran a focused PowerShell check with a GBK/CP936 Chinese sample file and confirmed it round-trips correctly after conversion to UTF-8.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         2m 56s
+Total session time:     3m 20s
+Total code changes:     +68 -1
+Breakdown by AI model:
+ gpt-5.4                 291.4k in, 6.5k out, 275.7k cached (Est. 1 Premium request)

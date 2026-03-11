@@ -1,0 +1,343 @@
+● Todo added: Read task brief
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\add-browser4-launcher.md
+  └ 14 lines read
+
+● Check git status
+  $ git --no-pager status --short
+  └ 2 lines...
+
+I’ve got the task brief and I’m mapping where the launcher belongs so I can wire both entrypoints cleanly without disturbing unrelated work. Next I’m reading the existing app runners and module packaging, then I’ll implement and validate the smallest safe change.
+
+● Todo started: read-task
+
+✗ Read ~\.copilot\session-state\966c4681-17a2-4cdd-bb08-43dd366d012e\plan.md
+  Path does not exist
+
+● Read browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  └ 178 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt
+  └ 72 lines read
+
+● Explore: Explore launcher context
+  ● Glob "browser4/browser4-agents/target/Browser4.jar" in
+  D:\workspace\Browser4Team\submodules\Browser4
+    └ No matches found
+  ● Inspect built Browser4.jar for manifest and MCP class
+    $ $jar='D:\workspace\Browser4Team\submodules\Browser4\browser4\browser4-agents\target\Browser4.j
+    ar'; if (Test-Path $jar) { Add-Type -AssemblyName System.IO.Compression.FileSystem;
+    $zip=[IO.Compression.ZipFile]::OpenRead($jar); $entries=$zip.Entries | Where-Object {
+    $_.FullName -in @('META-INF/MANIFEST.MF','BOOT-INF/classes/ai/platon/pulsar/app/Browser4Agents
+    ApplicationKt.class') -or $_.FullName -like '*Browser4MCPServerRunnerKt*' } | Select-Object ...
+    └ 5 lines...
+
+● Read browser4\browser4-agents\pom.xml
+  └ 313 lines read
+
+● Read pulsar-rest\pom.xml
+  └ 137 lines read
+
+● Read browser4\browser4-agents\README.md
+  └ 163 lines read
+
+● Read pulsar-agentic\pom.xml
+  └ 117 lines read
+
+● Create session plan
+  $ @'
+  # Browser4 launcher plan
+
+  1. Confirm packaging and runtime conventions for the existing Browser4 agents executable and
+  MCP runner....
+  └ 10 lines...
+
+I’ve confirmed the launcher should live in `browser4/browser4-agents`, since that module already owns the shipped `Browser4.jar`/`Browser4.exe`. I’m doing a quick baseline compile there first, then I’ll wire the new dispatcher and update the packaging entrypoint.
+
+● Todo started: plan-work
+
+● Baseline compile browser4-agents
+  $ .\mvnw.cmd -pl browser4\browser4-agents -am -DskipTests compile
+  └ 64 lines...
+
+● Todo started: validate-changes
+
+● Read browser4\browser4-agents\src\main\packaging\Browser4.cmd
+  └ 23 lines read
+
+● Read browser4\browser4-agents\src\main\packaging\Browser4.ps1
+  └ 29 lines read
+
+● Glob "browser4\browser4-agents\src\test\**\*"
+  └ No matches found
+
+● Grep "exitProcess|--app=|Browser4Launcher|fun main\(args: Array<String>\)|fun main\(\)" in *.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 101 lines found
+
+I found one coupling issue worth fixing while I’m in here: the packaged `Browser4.ps1` wrapper currently drops all CLI args, so `--app=mcp` would never reach the jar when launched via the Windows helper script. I’m updating that alongside the launcher so the packaged entrypoints actually work end to end.
+
+✗ Edit browser4/browser4-agents/src/main/kotlin/ai/platon/pulsar/app/Browser4AgentsApplication.kt
+  Create browser4/browser4-agents/src/main/kotlin/ai/platon/pulsar/app/Browser4Launcher.kt
+  Edit pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/mcp/server/Browser4MCPServerRunner.kt
+  Edit browser4/browser4-agents/pom.xml
+  Edit browser4/browser4-agents/src/main/packaging/Browser4.ps1
+  Edit browser4/browser4-agents/README.md
+  Create browser4/browser4-agents/src/test/kotlin/ai/platon/pulsar/app/Browser4LauncherTest.kt
+  Failed to apply patch: Error: Failed to find expected lines in
+  D:\workspace\Browser4Team\submodules\Browser4\browser4\browser4-agents\pom.xml:
+                  </executions>
+                  <configuration>
+                      <mainClass>ai.platon.pulsar.app.Browser4AgentsApplicationKt</mainClass>
+                      <addResources>true</addResources>
+                  </configuration>
+              </plugin>
+
+● Read browser4\browser4-agents\pom.xml lines 72-95
+  └ 24 lines read
+
+● Read browser4\browser4-agents\pom.xml lines 120-140
+  └ 21 lines read
+
+● Read browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  lines 168-178
+  └ 11 lines read
+
+● Read browser4\browser4-agents\README.md lines 110-135
+  └ 25 lines read
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt
+  lines 20-80
+  └ 60 lines read
+
+● Read browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  lines 172-185
+  └ 9 lines read
+
+● Read browser4\browser4-agents\src\main\packaging\Browser4.ps1 lines 24-35
+  └ 6 lines read
+
+✗ Create browser4/browser4-agents/src/main/kotlin/ai/platon/pulsar/app/Browser4Launcher.kt
+  Create browser4/browser4-agents/src/test/kotlin/ai/platon/pulsar/app/Browser4LauncherTest.kt
+  Edit browser4/browser4-agents/pom.xml
+  Edit browser4/browser4-agents/src/main/packaging/Browser4.ps1
+  Edit browser4/browser4-agents/README.md
+  Failed to apply patch: Error: Failed to find expected lines in
+  D:\workspace\Browser4Team\submodules\Browser4\browser4\browser4-agents\pom.xml:
+                  </executions>
+                  <configuration>
+                      <mainClass>ai.platon.pulsar.app.Browser4AgentsApplicationKt</mainClass>
+                      <addResources>true</addResources>
+                  </configuration>
+              </plugin>
+
+Baseline compile finished cleanly, so I’m applying the launcher changes now and then I’ll rerun a focused compile plus the new launcher test. I also need to finish the Windows wrapper fix so `--app=...` survives the packaged script path.
+
+● read_powershell
+  └ 8 lines...
+
+● Glob "browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt"
+  └ No matches found
+
+● Glob "browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt"
+  └ No matches found
+
+● Inspect current launcher diff
+  $ git --no-pager diff --
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt
+  browser4\browser4-agents\pom.xml browser4\browser4-agents\README.md
+  browser4\browser4-agents\src\main\packaging\Browser4.ps1
+  └ 52 lines...
+
+● Create browser4/browser4-agents/src/main/kotlin/ai/platon/pulsar/app/Browser4Launcher.kt
+  Create browser4/browser4-agents/src/test/kotlin/ai/platon/pulsar/app/Browser4LauncherTest.kt
+  Edit browser4/browser4-agents/pom.xml
+  Edit browser4/browser4-agents/src/main/packaging/Browser4.ps1
+  Edit browser4/browser4-agents/README.md
+
+The code changes are in: new `Browser4Launcher.kt`, POM entrypoint switch, a small launcher test, and the Windows wrapper arg pass-through. I’m validating with a focused module compile and the new test now.
+
+● Read browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt
+  └ 78 lines read
+
+● Read browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt
+  └ 48 lines read
+
+● Compile browser4-agents after launcher changes
+  $ .\mvnw.cmd -pl browser4\browser4-agents -am -DskipTests compile
+  └ 143 lines...
+
+● Run Browser4LauncherTest
+  $ .\mvnw.cmd -pl browser4\browser4-agents -am -Dtest=Browser4LauncherTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 138 lines...
+
+● Read browser4\browser4-agents\README.md lines 12-24
+  └ 13 lines read
+
+● Read browser4\browser4-agents\pom.xml lines 80-136
+  └ 57 lines read
+
+● Read browser4\browser4-agents\src\main\packaging\Browser4.ps1 lines 1-35
+  └ 29 lines read
+
+● read_powershell
+  └ 272 lines...
+
+● read_powershell
+  └ 276 lines...
+
+Validation is still running through the reactor; nothing looks stuck, just a broad module dependency chain. I’m letting it finish so I can give you a verified handoff rather than a best guess.
+
+● Summarize changed files
+  $ git --no-pager diff --stat --
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt
+  browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt ...
+  └ 13 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● list_powershell
+  └ Active shell sessions:
+
+● Read browser4\browser4-agents\README.md lines 111-133
+  └ 23 lines read
+
+● Show new launcher files diff
+  $ git --no-pager diff --
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt
+  browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt
+  └ 1 line...
+
+● Check changed file status
+  $ git --no-pager status --short --
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt
+  browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt ...
+  └ 10 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 8 lines...
+
+● Read browser4\browser4-agents\pom.xml lines 122-132
+  └ 11 lines read
+
+● read_powershell
+  └ 4 lines...
+
+The compile passed after the launcher changes. I’m waiting on the focused `Browser4LauncherTest` run to finish so I can close this out with both build and test verification.
+
+● read_powershell
+  └ 1 line...
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerRunner.kt
+  lines 49-79
+  └ 31 lines read
+
+● Read browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  lines 172-180
+  └ 9 lines read
+
+● read_powershell
+  └ 8 lines...
+
+The targeted test failed, so I’m pulling the tail of the Maven output now to isolate whether it’s my new test or an existing reactor-side issue. Then I’ll either fix it or switch to the smallest passing validation scope if the failure is unrelated.
+
+● Read failing test output tail
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773239697981-nr32rg.txt'
+  -Tail 250
+  └ 249 lines...
+
+● Locate surefire reports
+  $ Get-ChildItem -Path 'D:\workspace\Browser4Team\submodules\Browser4' -Recurse -Filter
+  'surefire-reports' | Select-Object -ExpandProperty FullName
+  └ 15 lines...
+
+The failure is directly caused by my new test: `browser4-agents` didn’t have JUnit on its test classpath yet. I’m adding the standard Spring Boot test dependency to that module and rerunning the focused test.
+
+● Edit browser4/browser4-agents/pom.xml
+
+● Show pom dependency update
+  $ git --no-pager diff -- browser4\browser4-agents\pom.xml
+  └ 38 lines...
+
+● Re-run Browser4LauncherTest
+  $ .\mvnw.cmd -pl browser4\browser4-agents -am -Dtest=Browser4LauncherTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 332 lines...
+
+● Read browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt lines
+  1-49
+  └ 48 lines read
+
+● read_powershell
+  └ 4 lines...
+
+● list_powershell
+  └ Active shell sessions:
+
+● read_powershell
+  └ 4 lines...
+
+The retest is still progressing through the full reactor, but the earlier failure mode is fixed: the only break was missing test dependencies in `browser4-agents`, and that’s now corrected. I’m waiting for the rerun to finish cleanly before I wrap up.
+
+● Check test-related file status
+  $ git --no-pager status --short -- browser4\browser4-agents\pom.xml
+  browser4\browser4-agents\src\test\kotlin\ai\platon\pulsar\app\Browser4LauncherTest.kt
+  └ 3 lines...
+
+● read_powershell
+  └ 8 lines...
+
+● Todo completed: implement-launcher, validate-changes
+
+● Read successful test tail
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773239891150-ogyi7w.txt'
+  -Tail 80
+  └ 79 lines...
+
+● Memory stored: build commands
+  └ browser4-agents validates with `.\mvnw.cmd -pl browser4\browser4-agents -am -Dsk…
+
+● Summarize final diff
+  $ git --no-pager diff --stat -- browser4\browser4-agents\README.md
+  browser4\browser4-agents\pom.xml
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4AgentsApplication.kt
+  browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt
+  browser4\browser4-agents\src\main\packaging\Browser4.ps1 ...
+  └ 13 lines...
+
+Done: `Browser4.jar` now has a unified launcher that dispatches `--app=agents` or `--app=mcp`, defaulting to agents for backward compatibility.
+
+I added `browser4\browser4-agents\src\main\kotlin\ai\platon\pulsar\app\Browser4Launcher.kt`, extracted reusable runners from the agents app and MCP runner, switched `browser4-agents\pom.xml` to package `Browser4LauncherKt`, fixed `src\main\packaging\Browser4.ps1` to forward CLI args, updated `browser4-agents\README.md`, and added `Browser4LauncherTest.kt` plus the missing test dependency.
+
+Validated with:
+
+`.\mvnw.cmd -pl browser4\browser4-agents -am -DskipTests compile`
+
+`.\mvnw.cmd -pl browser4\browser4-agents -am -Dtest=Browser4LauncherTest -D"surefire.failIfNoSpecifiedTests=false" test`
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         9m 43s
+Total session time:     15m 42s
+Total code changes:     +143 -4
+Breakdown by AI model:
+ gpt-5.4                 2.0m in, 23.8k out, 1.8m cached (Est. 1 Premium request)

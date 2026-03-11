@@ -1,0 +1,10 @@
+[31;1mGet-Content: [0mD:\workspace\Browser4Team\coworker\scripts\coworker.ps1:436[0m
+[31;1m[0m[36;1mLine |[0m
+[31;1m[0m[36;1m[36;1m 436 | [0m …       $content = [36;1mGet-Content -Path $file.FullName -Raw -Encoding UTF8[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mCannot find path 'D:\workspace\Browser4Team\coworker\tasks\1created\3.md' because it does not exist.[0m
+[31;1mMove-Item: [0mD:\workspace\Browser4Team\coworker\scripts\coworker.ps1:513[0m
+[31;1m[0m[36;1mLine |[0m
+[31;1m[0m[36;1m[36;1m 513 | [0m         [36;1mMove-Item -Path $file.FullName -Destination $workingPath -For[0m …[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mCannot find path 'D:\workspace\Browser4Team\coworker\tasks\1created\3.md' because it does not exist.[0m

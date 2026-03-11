@@ -3,13 +3,13 @@
   "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1",
   "Tasks": [
     {
-      "RunCount": 3,
-      "LastFinishedUtc": "2026-03-11T09:54:19.9983368Z",
-      "CurrentPid": 73488,
+      "RunCount": 1,
+      "LastFinishedUtc": null,
+      "CurrentPid": 94660,
       "Status": "Running",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker.ps1",
-      "LastExitCode": 0,
-      "NextRunUtc": "2026-03-11T13:46:48.7546379Z",
+      "LastExitCode": null,
+      "NextRunUtc": "2026-03-11T15:08:40.3424470Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
@@ -17,15 +17,15 @@
       "Arguments": [],
       "Name": "coworker",
       "Description": "Process queued coworker tasks.",
-      "LastStartedUtc": "2026-03-11T13:46:33.7546379Z",
+      "LastStartedUtc": "2026-03-11T15:08:25.3424470Z",
       "IntervalSeconds": 15,
       "Enabled": true,
-      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\134633-coworker.stderr.log",
-      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\134633-coworker.stdout.log",
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\150825-coworker.stderr.log",
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\150825-coworker.stdout.log",
       "DependsOn": [
         "process-task-source"
       ],
-      "LastDurationSeconds": 800.0
+      "LastDurationSeconds": null
     },
     {
       "RunCount": 0,
@@ -34,7 +34,7 @@
       "Status": "WaitingForWork",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T13:53:50.3485165Z",
+      "NextRunUtc": "2026-03-11T15:09:11.8368758Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
       ],
@@ -59,7 +59,7 @@
       "Status": "Disabled",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\process-task-source.ps1",
       "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T09:13:08.4191304Z",
+      "NextRunUtc": "2026-03-11T15:08:25.3347374Z",
       "PendingPaths": [],
       "Arguments": [
         "-Once"
@@ -75,5 +75,5 @@
       "LastDurationSeconds": null
     }
   ],
-  "GeneratedAtUtc": "2026-03-11T13:53:40.5194377Z"
+  "GeneratedAtUtc": "2026-03-11T15:08:56.8456630Z"
 }

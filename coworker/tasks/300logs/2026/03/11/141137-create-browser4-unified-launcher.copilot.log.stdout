@@ -1,0 +1,11 @@
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\create-browser4-unified-launcher.md
+  └ 14 lines read
+
+● Check git status
+  $ git --no-pager status --short
+  └ 2 lines...
+
+I’ve got the task requirements. Next I’m tracing the launcher-related entrypoints and build wiring so I can make the smallest complete change.
+
+● Todo added: Inspect launcher entrypoints
+

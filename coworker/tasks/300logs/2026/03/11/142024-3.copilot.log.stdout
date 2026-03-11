@@ -1,0 +1,339 @@
+✗ Read D:\workspace\Browser4Team\coworker\tasks\2working\3.md
+  Path does not exist
+
+● Check git status
+  $ git --no-pager status --short
+  └ 10 lines...
+
+I hit a path mismatch, so I’m locating the actual task file and then I’ll implement exactly what it asks without disturbing the existing in-progress changes I found.
+
+● Glob "**\tasks\2working\*.md" in D:\workspace\Browser4Team
+  └ No matches found
+
+● Glob "**\3.md" in D:\workspace\Browser4Team
+  └ 3 files found
+
+● Read coworker\tasks\0draft\3.md
+
+● Read D:\workspace\Browser4Team\coworker\tasks\0draft\3.md
+
+The referenced task file doesn’t exist at the given path, and the only matching `3.md` files appear effectively empty. I’m checking the surrounding coworker task directories and file metadata to recover the intended task safely.
+
+● List directory D:\workspace\Browser4Team\coworker\tasks
+  └ 13 files found
+
+● List directory coworker\tasks
+  └ 8 files found
+
+● Show task file metadata
+  $ Get-ChildItem -Recurse -File D:\workspace\Browser4Team\coworker\tasks | Where-Object { $_.Name
+  -eq '3.md' } | Select-Object FullName, Length, LastWriteTime | Format-Table -AutoSize; '' ;
+  Get-ChildItem -Recurse -File D:\workspace\Browser4Team\submodules\Browser4\coworker\tasks |
+  Where-Object { $_.Name -eq '3.md' } | Select-Object FullName, Length, LastWriteTime | Format-Table
+   -AutoSize
+  └ 7 lines...
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\2working
+
+● List directory coworker\tasks\2working
+
+● Read D:\workspace\Browser4Team\coworker\tasks\700archive\3.md
+  └ 20 lines read
+
+I found the referenced `2working\3.md` missing, but the archived `3.md` contains a concrete task: implement all `sdks/skill/SKILL.md` methods in `browser4-cli`, with tests and backend/OpenAPI updates if needed. I’m proceeding on that recovered task definition and documenting the plan.
+
+● SQL: Create task todos
+  └ 5 row(s) inserted. Last inserted row ID: 5.
+
+● Glob "**\SKILL.md" in D:\workspace\Browser4Team\submodules\Browser4
+  └ 8 files found
+
+● Glob "**\browser4-cli\**\*" in D:\workspace\Browser4Team\submodules\Browser4
+  └ No matches found
+
+● Create session plan file
+  $ @'
+  # Task Plan
+
+  1. Recover the intended task definition from available coworker task artifacts.
+  2. Inspect `sdks/skill/SKILL.md` and the `sdks/browser4-cli` implementation to map required ...
+  └ 8 lines...
+
+● List directory sdks
+  └ 3 files found
+
+● Read sdks\skill\SKILL.md
+  └ 163 lines read
+
+● Explore: Explore browser4-cli gap
+  ● Read pulsar-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\chrome\dom\Locator.kt
+    lines 50-110
+    └ 61 lines read
+  ● Read pulsar-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\chrome\PageHandler.kt
+    lines 84-116
+    └ 33 lines read
+
+I’ve narrowed this down: most CLI commands already exist on paper, but they’re wired to the wrong MCP tool names/arg shapes, and a few features likely need backend support. I’m reading the exact implementation/test files now so I can make the smallest correct fix set.
+
+● Todo started: inspect-browser4-cli-skill-surface
+
+● Read sdks\browser4-cli\src\cli\daemon\commands.ts lines 1-260
+  └ 260 lines read
+
+● Read sdks\browser4-cli\src\cli\daemon\commands.ts lines 261-520
+  └ 260 lines read
+
+● Read sdks\browser4-cli\src\program.ts lines 1-260
+  └ 259 lines read
+
+● Read sdks\browser4-cli\src\cli\daemon\commands.ts lines 521-1045
+  └ 517 lines read
+
+● Read sdks\browser4-cli\src\state.ts
+  └ 60 lines read
+
+● Read sdks\browser4-cli\src\program.ts lines 261-520
+  └ 206 lines read
+
+● Read sdks\browser4-cli\tests\program.test.ts lines 1-260
+  └ 127 lines read
+
+● Read sdks\browser4-cli\tests\commands.test.ts lines 1-420
+  └ 357 lines read
+
+✗ Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\browser\WebDriverToolExecutor.kt
+   lines 100-360
+
+  Path does not exist
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  lines 110-320
+  └ 210 lines read
+
+● Grep "pdf|PDF" in **/*.kt (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic)
+  └ 5 lines found
+
+● Grep "open_session|capabilities|persistent|profile" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\main\kotlin)
+  └ 13 lines found
+
+● Grep "toolName\s*=\s*'browser_|toolName:\s*'browser_|browser_pdf_save|browser_evaluate|browser_pre
+ss_sequentially|browser_press_key|browser_navigate|browser_tabs" in **/*.{ts,kt}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 76 lines found
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\service\SessionManager.kt lines
+  1-140
+  └ 140 lines read
+
+● Glob "**\WebDriverToolExecutor.kt" in D:\workspace\Browser4Team\submodules\Browser4
+  └ 1 file found
+
+● Read pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\WebDriverToolExecutor.kt
+   lines 100-360
+
+  └ 214 lines read
+
+● Grep "aria_snapshot|page_url|page_title|select_option|evaluate|press\(|type\(|fill\(|click\(|dblcl
+ick\(|drag\(" (D:\workspace\Browser4Team\submodules\Browser4\pulsar-agentic\src\main\kotlin\ai\plato
+n\pulsar\agentic\tools\builtin\WebDriverToolExecutor.kt)
+  └ 14 lines found
+
+I’ve confirmed the main breakage is in `browser4-cli` itself: command definitions don’t match the live MCP tool surface, and a few SKILL behaviors need stateful CLI handling. I’m checking for any existing “active element” or upload semantics before patching so the fix matches repo patterns.
+
+● List directory sdks\browser4-cli
+  └ 8 files found
+
+● Read sdks\browser4-cli\package.json
+  └ 62 lines read
+
+● Glob "**\README*.md" in D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli
+  └ 2 files found
+
+● Grep "activeSelector|selector slot|upload\s+\./|browser4-cli
+upload|press\s+Enter|type\s+"|snapshot behavior|after each command" in **/*.{ts,md,kt}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 16 lines found
+
+● Read sdks\browser4-cli\README.md lines 1-220
+  └ 98 lines read
+
+● Read sdks\browser4-cli\src\cli\daemon\command.ts lines 1-220
+  └ 97 lines read
+
+● Grep "evaluate\(|press\(|type\(|upload\(" in **/*.ts
+(D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli\src)
+  └ No matches found
+
+● Grep "fun .*pdf|pdf\(|save.*pdf|printToPDF|printToPdf|page\.pdf|pdfSave|export.*pdf" in
+**/*.{kt,ts,java} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 4 lines found
+
+I found another mismatch: the CLI docs promise that `e15` refs work directly and that `type`/`press` use the last active element, but none of that is actually wired today. I’m verifying backend selector behavior now so I can decide whether to normalize refs in the CLI or rely on server support.
+
+✗ Read pulsar-core\src\main\kotlin\ai\platon\pulsar\crawler\fetch\driver\Locator.kt lines 1-140
+  Path does not exist
+
+● Grep "backend:|e\d+|ref=e|accessible element|backend id|backendId" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-core)
+  └ 5 lines found
+
+● Grep "Locator|backend:" in **/*.kt (D:\workspace\Browser4Team\submodules\Browser4\pulsar-core)
+  └ 11 files found
+
+● Read pulsar-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\chrome\PageHandler.kt
+  lines 80-150
+  └ 71 lines read
+
+● Read pulsar-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\chrome\dom\Locator.kt
+  lines 1-140
+  └ 140 lines read
+
+I’ve reached the one place that likely needs backend help: element-scoped `eval "fn" e5` can’t be done correctly in the CLI alone because `e5` is a backend node ref, not a DOM selector. I’m checking whether the driver already has an element-eval primitive I can expose before I touch the REST layer.
+
+● Grep "persistent profile|profileDir|userDataDir|head(ed)?|browserName|capabilities" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 5 lines found
+
+● Grep "evaluate.*selector|evaluate.*element|fun .*evaluate|suspend fun
+.*evaluate|executeScript|callFunctionOn|Runtime\.callFunctionOn|backendNodeId" in **/*.{kt,java}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 5 lines found
+
+● Grep "interface WebDriver|fun evaluate\(|fun press\(|fun type\(|fun upload\(|fun screenshot\(" in
+**/*.kt (D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-skeleton\src\main\kotlin)
+  └ 9 lines found
+
+● Grep "evaluate\(|evaluateDetail\(|evaluateValue\(|callFunctionOn|backendNodeId" in **/*.kt (D:\wor
+kspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-plugins\pulsar-protocol\src\main\kotlin)
+  └ 36 lines found
+
+● Grep "capabilities|profile|persistent|headed|browserName|userDataDir" in **/*.kt (D:\workspace\Bro
+wser4Team\submodules\Browser4\pulsar-core\pulsar-plugins\pulsar-protocol\src\main\kotlin)
+  └ 42 lines found
+
+● Read sdks\browser4-cli\jest.config.js
+  └ 14 lines read
+
+● Read sdks\browser4-cli\tsconfig.json
+  └ 21 lines read
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 1715-1755
+  └ 41 lines read
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 1755-1785
+  └ 31 lines read
+
+● Read pulsar-core\pulsar-plugins\pulsar-protocol\src\main\kotlin\ai\platon\pulsar\protocol\browser\d
+  river\cdt\PulsarWebDriver.kt lines 186-232
+  └ 47 lines read
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 1780-1810
+  └ 31 lines read
+
+● Grep "@MCP[\s\S]{0,120}suspend fun .*pdf|suspend fun .*pdf|evaluateValue\(|evaluate_value"
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon
+\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt)
+  └ 3 lines found
+
+● Grep "evaluate_value|evaluateValue" in **/*.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest)
+  └ No matches found
+
+I found a promising shortcut for `eval`: the underlying driver already exposes an element-scoped `evaluateValue(selector, functionDeclaration)` API, it’s just not surfaced cleanly through the current CLI/controller path. I’m now checking whether PDF support exists at the CDP layer before deciding between a backend addition or a documented limitation workaround.
+
+● Grep "printToPDF|printToPdf|PrintToPDF|PDF" in **/*.{kt,java}
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-browser)
+  └ No matches found
+
+● Grep "printToPDF|printToPdf|PrintToPDF|PDF" in **/*.{kt,java}
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-plugins\pulsar-protocol)
+  └ 1 line found
+
+● Grep "class Page|interface Page|printToPDF|printToPdf" in **/*.{kt,java}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 23 lines found
+
+● Glob "**\*Page*.kt" in
+D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-plugins\pulsar-protocol
+  └ 1 file found
+
+● Glob "**\*Page*.java" in
+D:\workspace\Browser4Team\submodules\Browser4\pulsar-core\pulsar-plugins\pulsar-protocol
+  └ No matches found
+
+● Grep "printTo|PrintTo" in **/*.{kt,java} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ No matches found
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 800-920
+  └ 121 lines read
+
+● Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  iver.kt lines 916-990
+  └ 75 lines read
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolControllerTest.kt
+  lines 1-470
+  └ 470 lines read
+
+I’ve got the implementation plan settled: fix command/tool wiring, add real named-session + active-element state, and cover it with dispatch tests. I’m patching the CLI state layer first because several SKILL behaviors depend on it.
+
+● Edit sdks/browser4-cli/src/state.ts
+
+● Edit sdks/browser4-cli/src/cli/daemon/commands.ts
+
+● Edit sdks/browser4-cli/src/cli/daemon/commands.ts
+
+● Edit sdks/browser4-cli/src/program.ts
+
+● Edit sdks/browser4-cli/tests/commands.test.ts
+
+● Delete sdks/browser4-cli/tests/program.test.ts
+
+● Create sdks/browser4-cli/tests/program.test.ts
+
+● Edit pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/openapi/controller/MCPToolController.kt
+
+● Edit pulsar-rest/src/test/kotlin/ai/platon/pulsar/rest/openapi/controller/MCPToolControllerTest.kt
+
+The core CLI wiring is patched. I’m running the browser4-cli typecheck and targeted Jest suite now to shake out any mismatches before I decide whether the remaining PDF gap needs a separate fallback.
+
+● Todo started: implement-missing-browser4-cli-methods
+
+● Typecheck and run browser4-cli tests
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; npx tsc
+  --noEmit; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; npx jest tests\commands.test.ts
+  tests\program.test.ts --runInBand
+  └ 9 lines...
+
+Typecheck looks clean; Jest just tripped over a Windows path-pattern quirk. I’m rerunning the same targeted tests with `--runTestsByPath` so we get the real signal from the updated CLI behavior.
+
+● Run browser4-cli tests by path
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; npx jest
+  --runInBand --runTestsByPath tests/commands.test.ts tests/program.test.ts
+  └ 31 lines...
+
+● Read sdks\browser4-cli\src\program.ts lines 430-490
+  └ 37 lines read
+
+● Read sdks\browser4-cli\src\cli\daemon\commands.ts lines 987-1045
+  └ 51 lines read
+
+One patch only half-landed: `commands.ts` is updated, but `program.ts` still has the old dispatch/export block. I’m correcting that now and also restoring the session-management commands in the supported CLI command set so the targeted tests line up with the intended surface.
+
+● Read sdks\browser4-cli\src\cli\daemon\commands.ts lines 1-120
+  └ 120 lines read
+
+● Read sdks\browser4-cli\src\program.ts lines 1-520
+  └ 466 lines read
+
+● Edit sdks/browser4-cli/src/cli/daemon/commands.ts
+
+● Edit sdks/browser4-cli/src/cli/daemon/commands.ts
+
+● Delete sdks/browser4-cli/src/program.ts
+
