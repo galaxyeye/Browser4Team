@@ -50,3 +50,25 @@ The top-level sync worked, but new changes appeared immediately afterward: live 
   remote -v
   └ 20 lines...
 
+The nested `Browser4` repo has real source changes, so I’m syncing that first, then I’ll update the parent repo to record the new submodule pointer plus the latest tracked log/status changes.
+
+● Commit, pull, and push submodule
+  $ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4';
+  git add -A;
+  $null = git diff --cached --quiet;
+  if ($LASTEXITCODE -ne 0) {
+    git commit -m "chore: sync workspace changes" -m "Co-authored-by: Copilot ...
+  └ 49 lines...
+
+The submodule is now synced and pushed. I’m doing one final parent-repo commit/pull/push so the root repo records that new submodule revision and the remaining tracked file updates.
+
+● Finalize parent repo sync
+  $ Set-Location 'D:\workspace\Browser4Team';
+  git add -A;
+  $null = git diff --cached --quiet;
+  if ($LASTEXITCODE -ne 0) {
+    git commit -m "chore: sync workspace changes" -m "Co-authored-by: Copilot ...
+  └ 30 lines...
+
+One tracked scheduler log is still live-updating while I work, so I’m making one last pass to capture it. If it changes again immediately afterward, I’ll report that as a continuously-written runtime artifact rather than keep looping forever.
+
