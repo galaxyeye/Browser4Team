@@ -3,13 +3,13 @@
   "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1",
   "Tasks": [
     {
-      "RunCount": 1,
-      "LastFinishedUtc": "2026-03-11T09:15:47.2764139Z",
-      "CurrentPid": null,
-      "Status": "WaitingForWork",
+      "RunCount": 3,
+      "LastFinishedUtc": "2026-03-11T09:54:19.9983368Z",
+      "CurrentPid": 73488,
+      "Status": "Running",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker.ps1",
       "LastExitCode": 0,
-      "NextRunUtc": "2026-03-11T09:26:34.2880997Z",
+      "NextRunUtc": "2026-03-11T13:46:48.7546379Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
@@ -17,15 +17,15 @@
       "Arguments": [],
       "Name": "coworker",
       "Description": "Process queued coworker tasks.",
-      "LastStartedUtc": "2026-03-11T09:13:08.4280580Z",
+      "LastStartedUtc": "2026-03-11T13:46:33.7546379Z",
       "IntervalSeconds": 15,
       "Enabled": true,
-      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\091308-coworker.stderr.log",
-      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\091308-coworker.stdout.log",
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\134633-coworker.stderr.log",
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\11\\134633-coworker.stdout.log",
       "DependsOn": [
         "process-task-source"
       ],
-      "LastDurationSeconds": 158.85
+      "LastDurationSeconds": 800.0
     },
     {
       "RunCount": 0,
@@ -34,7 +34,7 @@
       "Status": "WaitingForWork",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "LastExitCode": null,
-      "NextRunUtc": "2026-03-11T09:26:34.2880997Z",
+      "NextRunUtc": "2026-03-11T13:48:11.7679849Z",
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
       ],
@@ -75,5 +75,5 @@
       "LastDurationSeconds": null
     }
   ],
-  "GeneratedAtUtc": "2026-03-11T09:26:24.3842975Z"
+  "GeneratedAtUtc": "2026-03-11T13:48:02.0675408Z"
 }

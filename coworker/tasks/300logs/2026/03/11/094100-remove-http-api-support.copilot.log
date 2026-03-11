@@ -1,0 +1,293 @@
+● Todo added: Review task file
+
+● Read D:\workspace\Browser4Team\coworker\tasks\2working\remove-http-api-support.md
+  └ 19 lines read
+
+● Check git status
+  $ git --no-pager status --short
+  └ 1 line...
+
+● Create session plan
+  $ @'
+  # Plan
+
+  1. Read the task description and inspect the affected code paths.
+  2. Implement the required code and documentation changes....
+  └ 4 lines...
+
+I’ve got the task file and I’m mapping the blast radius now. Next I’m checking which controllers, tests, and docs still reference the HTTP API so I can remove them cleanly without touching unrelated REST/MCP pieces.
+
+● Todo started: review-task-file
+
+✗ Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\PulsarApplicationKt.kt
+  Path does not exist
+
+● Read pulsar-rest\pom.xml
+  └ 149 lines read
+
+● Glob "pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\*.kt" in
+D:\workspace\Browser4Team\submodules\Browser4
+  └ No matches found
+
+● Grep
+"openapi/controller|/api/|/openapi|HealthController|SessionController|PulsarSessionController" in
+*.{kt,xml,md,properties,yml,yaml} (D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest)
+  └ 16 lines found
+
+● Grep "ExtendedController|CookieController|NavigationController|EventsController|AgentController|Se
+lectorController|ElementController|SessionController|ScrollController|OpenApiController|HealthContro
+ller|ControlController|ScreenshotController|ScriptController|PulsarSessionController" in
+*.{kt,java,md,yml,yaml,json,xml,properties} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 50 lines found
+
+I found the controllers under `pulsar-rest` plus a couple of OpenAPI contract tests and docs references. I’m doing one broader pass now to catch wiring and config that would otherwise leave the module half-removed.
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\OpenApiContractTest.kt
+  └ 174 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\OpenApiController.kt
+  └ 38 lines read
+
+● Read
+  pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\openapi\OpenApiContractTest.kt
+
+  └ 174 lines read
+
+● Grep "openapi.yaml|springdoc|swagger-ui|openapi.md|rest/openapi" in
+*.{kt,xml,md,properties,yml,yaml} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 60 lines found
+
+● Explore: Inspect HTTP API usage
+  ● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\EnvironmentTests.kt
+    └ 22 lines read
+  ● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\WebDriverSerializationTest.kt
+    └ 170 lines read
+
+● List directory pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi
+  └ 5 files found
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\RestAPITes
+  tBase.kt
+  └ 65 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\ApiApplication.kt
+  └ 30 lines read
+
+● Read pulsar-rest\src\main\resources\application-rest.properties
+  └ 12 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\pom.xml
+  └ 53 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\ControllerUtils.kt
+  └ 56 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+  └ 339 lines read
+
+● Grep "ControllerUtils\.|ErrorResponse|ApiDtos|InMemoryStore|SessionLocks" in *.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest)
+  └ 5 lines found
+
+I’ve confirmed the MCP controller is separate from the old WebDriver-style HTTP surface. I’m trimming only the legacy OpenAPI/HTTP pieces and keeping the MCP path intact, then I’ll run a focused REST build and tests.
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\dto\ApiDtos.kt
+  └ 720 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\support\SessionLocks.kt
+  └ 27 lines read
+
+● Read pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\store\InMemoryStore.kt
+  └ 221 lines read
+
+● Grep "ErrorResponse|ControllerUtils\.|InMemoryStore|SessionLocks|ApiDtos" in *.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\test\kotlin)
+  └ No matches found
+
+● Grep "ErrorResponse|ControllerUtils\.|InMemoryStore|SessionLocks|ApiDtos" in *.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\main\kotlin)
+  └ 5 lines found
+
+✗ Glob "pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\{dto,service,store,support}\*.kt"
+in D:\workspace\Browser4Team\submodules\Browser4
+  └ rg: error parsing glob
+  'pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\{dto,service,store,support}\*.kt':
+  unopened alternate group; missing '{' (maybe escape '}' with '[}]'?)
+
+● Glob "pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\*.kt" in
+D:\workspace\Browser4Team\submodules\Browser4
+  └ No matches found
+
+● Grep ""/health"" in *.{kt,ts,js,yml,yaml,xml,md,properties}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 2 lines found
+
+● Grep "openapi\.yaml|openapi/openapi\.md|webdriver2-gap-analysis|README-webdriver2-analysis|webdriv
+er2-comparison-table" in *.{kt,md,yml,yaml,properties,xml}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 58 lines found
+
+● List directory openapi
+  └ 3 files found
+
+● Grep "classpath:static/openapi\.yaml|springdoc|swagger-ui|/openapi\.yaml" in
+*.{kt,md,xml,yml,yaml,properties} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 20 lines found
+
+● Grep "openapi/" in *.{md,kt,xml,yml,yaml,properties}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 15 lines found
+
+● Read pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\openapi\WebDriverSerializationTest.kt
+  └ 170 lines read
+
+● Grep "snakeyaml" in pom.xml (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 3 lines found
+
+● Grep "actuator/health|api/system/health" in *.{kt,ts,js,md,yml,yaml,properties}
+(D:\workspace\Browser4Team\submodules\Browser4)
+  └ 17 lines found
+
+● Edit pulsar-rest\pom.xml
+
+● Edit pulsar-rest\src\main\resources\application-rest.properties
+  Edit pulsar-tests\pulsar-rest-tests\pom.xml
+  Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\RestAPITes
+  tBase.kt
+
+● Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller\MCPToolController.kt
+
+The surgical edits are in. I’m deleting the old controller/spec/doc surface now and then I’ll do a repo-wide search plus Maven validation to catch any dangling references.
+
+● Check status after deletions
+  $ git --no-pager status --short
+  └ 6 lines...
+
+● Delete removed HTTP API files
+  $ $paths = @(
+  'D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\main\kotlin\ai\platon\pulsar\re
+  st\openapi\controller\AgentController.kt',
+  'D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\main\kotlin\ai\platon\pulsar\re
+  st\openapi\controller\ControlController.kt',...
+  └ 62 lines...
+
+✗ Read openapi
+  Path does not exist
+
+● List directory pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\openapi\controller
+  └ 1 file found
+
+● Grep "class
+(ExtendedController|CookieController|NavigationController|EventsController|AgentController|SelectorC
+ontroller|ElementController|SessionController|ScrollController|OpenApiController|HealthController|Co
+ntrolController|ScreenshotController|ScriptController|PulsarSessionController)|openapi\.yaml|springd
+oc\.swagger-ui|springdoc\.api-docs|ControllerUtils\.|ErrorResponse|InMemoryStore|SessionLocks" in
+*.{kt,md,xml,yml,yaml,properties} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ 9 lines found
+
+● Remove empty static dir
+  $ $dirs = @('D:\workspace\Browser4Team\submodules\Browser4\pulsar-rest\src\main\resources\static')
+  foreach ($dir in $dirs) { if ((Test-Path $dir) -and -not (Get-ChildItem -LiteralPath $dir -Force |
+   Select-Object -First 1)) { Remove-Item -LiteralPath $dir -Force } }
+
+  └ 1 line...
+
+The repo-wide search is clean for the removed controllers/spec files. I’m on the validation pass now: compile `pulsar-rest`, run the surviving REST unit tests, and then hit the targeted `pulsar-rest-tests` scope that depended on the old `/health` endpoint.
+
+● Todo started: implement-task
+
+● Grep "class\s+\w+\s*:\s*RestAPITestBase\(" in *.kt
+(D:\workspace\Browser4Team\submodules\Browser4\pulsar-tests\pulsar-rest-tests\src\test\kotlin)
+  └ 4 lines found
+
+● Run pulsar-rest unit tests
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest,WebDriverSerializationTest
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 5 lines...
+
+● Compile pulsar-rest module
+  $ .\mvnw.cmd -pl pulsar-rest -am -DskipTests compile
+  └ 270 lines...
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\ScrapeAPIT
+  ests.kt
+  └ 137 lines read
+
+● Read pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\CommandCon
+  trollerSSETest.kt
+  └ 112 lines read
+
+● Run pulsar-rest tests
+  $ .\mvnw.cmd -pl pulsar-rest -am -Dtest="MCPToolControllerTest,WebDriverSerializationTest"
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 4 lines...
+
+● Run pulsar-rest-tests base test
+  $ .\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -Dtest=RestAPITestBase
+  -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 9 lines...
+
+The compile finished, and I’ve already got one targeted `pulsar-rest-tests` run back successfully. I’m pulling the remaining Maven outputs now so I can confirm the exact passing scopes and do one final diff sweep before wrapping up.
+
+● read_powershell
+  └ 8 lines...
+
+● Grep "OpenApiContractTest|openapi\.yaml|springdoc-openapi-starter-webmvc-ui|class
+OpenApiController|class HealthController|class SessionController|class AgentController|class
+SelectorController|class ElementController|class ScriptController|class ScreenshotController|class
+ControlController|class EventsController|class ScrollController|class NavigationController|class
+CookieController|class ExtendedController|class PulsarSessionController" in
+*.{kt,md,xml,yml,yaml,properties} (D:\workspace\Browser4Team\submodules\Browser4)
+  └ No matches found
+
+● Read pulsar-rest-tests output tail
+  $ Get-Content 'C:\Users\pereg\AppData\Local\Temp\copilot-tool-output-1773222805892-etzgta.txt'
+  -Tail 120
+  └ 172 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● Review final diff
+  $ git --no-pager diff --stat && git --no-pager diff -- pulsar-rest/pom.xml
+  pulsar-rest/src/main/resources/application-rest.properties
+  pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/openapi/controller/MCPToolController.kt
+  pulsar-tests/pulsar-rest-tests/pom.xml pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pu
+  lsar/rest/api/controller/RestAPITestBase.kt
+  └ 158 lines...
+
+● read_powershell
+  └ 4 lines...
+
+● read_powershell
+  └ 1 line...
+
+● read_powershell
+  └ 1 line...
+
+● Todo completed: validate-task
+
+● Check final git status
+  $ git --no-pager status --short
+  └ 34 lines...
+
+Done: I removed the legacy WebDriver/OpenAPI HTTP surface from `pulsar-rest` and kept the MCP endpoint intact.
+
+Deleted the listed controllers plus their DTO/store/support files, both `OpenApiContractTest` files, `pulsar-rest/src/main/resources/static/openapi.yaml`, and the entire root `openapi/` docs set. I also removed `springdoc` and now-unused `snakeyaml` dependencies, dropped `springdoc.*` config, and inlined request-id handling into `MCPToolController`.
+
+To keep tests green, `RestAPITestBase` now probes `/actuator/health`.
+
+Validated with:
+`.\mvnw.cmd -pl pulsar-rest -am -DskipTests compile`
+`.\mvnw.cmd -f pulsar-tests\pom.xml -pl pulsar-rest-tests -am -Dtest=RestAPITestBase -D"surefire.failIfNoSpecifiedTests=false" test`
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         8m 43s
+Total session time:     11m 21s
+Total code changes:     +8 -26
+Breakdown by AI model:
+ gpt-5.4                 2.9m in, 27.2k out, 2.6m cached (Est. 1 Premium request)
