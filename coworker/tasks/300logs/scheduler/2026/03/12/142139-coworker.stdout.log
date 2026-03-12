@@ -22,3 +22,30 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Todo added: Commit pull push repo
+
+● Check git status and remotes
+  $ git --no-pager status --short --branch && git --no-pager remote -v
+  └ 27 lines...
+
+I’ve checked the repo state and I’m going to perform the full sync now: stage everything, create a commit, pull with automatic conflict preference, and push the result.
+
+● Commit all changes, pull, and push
+  $ git add -A && git commit -m "chore: sync workspace" -m "Co-authored-by: Copilot
+  <223556219+Copilot@users.noreply.github.com>" && git pull --no-rebase -X ours origin main && git
+  push origin HEAD:main
+  └ 35 lines...
+
+● Todo completed: repo-sync
+
+● Memory stored: git workflow
+  └ Repository sync work succeeded with git add -A, git commit, git pull --no-rebase…
+
+● Verify clean status and latest commit
+  $ git --no-pager status --short --branch && git --no-pager log -1 --decorate --oneline
+  └ 6 lines...
+
+A couple of runtime-generated changes appeared immediately after the first push, so I’m doing one more pass to make sure the repository is actually synced rather than stopping on a stale verification.
+
+● Todo started: repo-sync
+
