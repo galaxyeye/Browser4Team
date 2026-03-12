@@ -1,29 +1,29 @@
 {
   "Tasks": [
     {
-      "LastStartedUtc": null,
+      "LastStartedUtc": "2026-03-12T06:19:30.5954332Z",
       "IntervalSeconds": 15,
       "Enabled": true,
-      "RunCount": 0,
+      "RunCount": 2,
       "Description": "Process queued coworker tasks.",
-      "StdOutLogPath": null,
-      "LastExitCode": null,
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\061930-coworker.stdout.log",
+      "LastExitCode": 0,
       "Arguments": [],
-      "CurrentPid": null,
+      "CurrentPid": 12684,
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
       ],
-      "LastFinishedUtc": null,
-      "LastDurationSeconds": null,
-      "NextRunUtc": "2026-03-12T05:14:05.1907143Z",
+      "LastFinishedUtc": "2026-03-12T06:09:53.1744325Z",
+      "LastDurationSeconds": 3270.47,
+      "NextRunUtc": "2026-03-12T06:19:45.5954332Z",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker.ps1",
       "DependsOn": [
         "process-task-source"
       ],
-      "Status": "WaitingForWork",
+      "Status": "Running",
       "Name": "coworker",
-      "StdErrLogPath": null
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\061930-coworker.stderr.log"
     },
     {
       "LastStartedUtc": null,
@@ -43,7 +43,7 @@
       ],
       "LastFinishedUtc": null,
       "LastDurationSeconds": null,
-      "NextRunUtc": "2026-03-12T05:14:05.1907143Z",
+      "NextRunUtc": "2026-03-12T06:22:21.3382183Z",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "DependsOn": [],
       "Status": "WaitingForWork",
@@ -74,6 +74,6 @@
     }
   ],
   "TickSeconds": 5,
-  "GeneratedAtUtc": "2026-03-12T05:14:00.5137009Z",
+  "GeneratedAtUtc": "2026-03-12T06:22:16.6603192Z",
   "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1"
 }
