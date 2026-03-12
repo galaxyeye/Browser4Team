@@ -1,38 +1,38 @@
 {
   "Tasks": [
     {
-      "LastStartedUtc": "2026-03-12T06:19:30.5954332Z",
+      "LastStartedUtc": "2026-03-12T14:21:39.6774347Z",
       "IntervalSeconds": 15,
       "Enabled": true,
-      "RunCount": 2,
+      "RunCount": 4,
       "Description": "Process queued coworker tasks.",
-      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\061930-coworker.stdout.log",
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\142139-coworker.stdout.log",
       "LastExitCode": 0,
       "Arguments": [],
-      "CurrentPid": 12684,
+      "CurrentPid": 7276,
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\1created",
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\5approved"
       ],
-      "LastFinishedUtc": "2026-03-12T06:09:53.1744325Z",
-      "LastDurationSeconds": 3270.47,
-      "NextRunUtc": "2026-03-12T06:19:45.5954332Z",
+      "LastFinishedUtc": "2026-03-12T14:09:32.7980932Z",
+      "LastDurationSeconds": 454.12,
+      "NextRunUtc": "2026-03-12T14:21:54.6774347Z",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker.ps1",
       "DependsOn": [
         "process-task-source"
       ],
       "Status": "Running",
       "Name": "coworker",
-      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\061930-coworker.stderr.log"
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\142139-coworker.stderr.log"
     },
     {
-      "LastStartedUtc": null,
+      "LastStartedUtc": "2026-03-12T08:53:45.9304057Z",
       "IntervalSeconds": 15,
       "Enabled": true,
-      "RunCount": 0,
+      "RunCount": 1,
       "Description": "Process the draft refinement queue.",
-      "StdOutLogPath": null,
-      "LastExitCode": null,
+      "StdOutLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\085345-draft-refinement.stdout.log",
+      "LastExitCode": 0,
       "Arguments": [
         "-Path",
         "coworker\\tasks\\0draft\\refine\\1ready"
@@ -41,14 +41,14 @@
       "PendingPaths": [
         "D:\\workspace\\Browser4Team\\coworker\\tasks\\0draft\\refine\\1ready"
       ],
-      "LastFinishedUtc": null,
-      "LastDurationSeconds": null,
-      "NextRunUtc": "2026-03-12T06:22:52.4080186Z",
+      "LastFinishedUtc": "2026-03-12T08:54:44.2367999Z",
+      "LastDurationSeconds": 58.31,
+      "NextRunUtc": "2026-03-12T14:22:36.5045761Z",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "DependsOn": [],
       "Status": "WaitingForWork",
       "Name": "draft-refinement",
-      "StdErrLogPath": null
+      "StdErrLogPath": "D:\\workspace\\Browser4Team\\coworker\\tasks\\300logs\\scheduler\\2026\\03\\12\\085345-draft-refinement.stderr.log"
     },
     {
       "LastStartedUtc": null,
@@ -74,6 +74,6 @@
     }
   ],
   "TickSeconds": 5,
-  "GeneratedAtUtc": "2026-03-12T06:22:37.4149787Z",
+  "GeneratedAtUtc": "2026-03-12T14:22:31.8383593Z",
   "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1"
 }
