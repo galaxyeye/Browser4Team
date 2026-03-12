@@ -94,7 +94,7 @@ elseif ($Type -eq "monthly") {
     }
 
     # Gather all daily memories for the month (stored under day subdirectories)
-    $dailyMemories = Get-ChildItem -Path "$targetDir\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{8}\.md" }
+    $dailyMemories = Get-ChildItem -Path "$targetDir\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{8}\.md$" }
 
     if ($dailyMemories.Count -eq 0) {
         Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No daily memory files found for $year-$month."
@@ -152,7 +152,7 @@ elseif ($Type -eq "yearly") {
     $targetFile = "$targetDir\MEMORY.$year.md"
 
     # Gather all monthly memories for the year (stored under month subdirectories)
-    $monthlyMemories = Get-ChildItem -Path "$logsBaseDir\$year\*\MEMORY.$year*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md" }
+    $monthlyMemories = Get-ChildItem -Path "$logsBaseDir\$year\*\MEMORY.$year*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md$" }
 
     if ($monthlyMemories.Count -eq 0) {
         Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No monthly memory files found for $year."
@@ -222,7 +222,7 @@ elseif ($Type -eq "global") {
     if ($yearlyMemories.Count -eq 0) {
         # Fallback to monthly memories if no yearly summaries exist yet
         Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No yearly memory files found; falling back to monthly memories.'
-        $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md" }
+        $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md$" }
     }
 
     if ($yearlyMemories.Count -eq 0) {
