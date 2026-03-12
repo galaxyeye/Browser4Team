@@ -43,7 +43,7 @@
       ],
       "LastFinishedUtc": null,
       "LastDurationSeconds": null,
-      "NextRunUtc": "2026-03-12T06:22:21.3382183Z",
+      "NextRunUtc": "2026-03-12T06:22:52.4080186Z",
       "ScriptPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\workers\\refine-drafts.ps1",
       "DependsOn": [],
       "Status": "WaitingForWork",
@@ -74,6 +74,6 @@
     }
   ],
   "TickSeconds": 5,
-  "GeneratedAtUtc": "2026-03-12T06:22:16.6603192Z",
+  "GeneratedAtUtc": "2026-03-12T06:22:37.4149787Z",
   "ConfigPath": "D:\\workspace\\Browser4Team\\coworker\\scripts\\coworker-scheduler.config.psd1"
 }
