@@ -92,3 +92,20 @@ The nested `Browser4` repo has its own commit now. I’m pulling and pushing tha
 
 The parent repo is down to exactly what I expected: a new submodule pointer plus a couple of scheduler-generated files. I’m rolling those into one last root commit and pushing again.
 
+● Todo started: commit-pull-push
+
+● Commit final root changes
+  $ Set-Location 'D:\workspace\Browser4Team'; git add
+  coworker/tasks/300logs/scheduler/2026/03/11/150825-coworker.stdout.log
+  logs/scheduled-tasks.status.json submodules/Browser4; git commit -m "chore: update Browser4
+  submodule pointer" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 4 lines...
+
+● Push final root sync and verify status
+  $ Set-Location 'D:\workspace\Browser4Team'; git pull --no-rebase -X ours origin main; if
+  ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main; if ($LASTEXITCODE -ne 0) {
+  exit $LASTEXITCODE }; git --no-pager status --short --branch; git --no-pager log -3 --decorate
+  --oneline
+  └ 19 lines...
+
+The sync itself is complete, but the repo has two tracked live-runtime files that change as the scheduler/CLI runs, so they re-dirty the worktree immediately after each push. I’m recording that state and wrapping up with the exact commits pushed.
