@@ -1,0 +1,92 @@
+● Read read-skill-docs-and-install.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\read-skill-docs-and-install.md
+  └ 30 lines read
+
+● Read SKILL.md
+  └ 155 lines read
+
+● List shells
+  └ <no active shell sessions>
+
+● List contents of sdks directory (shell)
+  │ Get-ChildItem sdks
+  └ 8 lines...
+
+● List contents of sdks/skill directory (shell)
+  │ Get-ChildItem sdks/skill
+  └ 4 lines...
+
+● Read SKILL.md
+  │ sdks\skill\SKILL.md
+  └ 163 lines read
+
+● List contents of sdks/browser4-cli directory (shell)
+  │ Get-ChildItem sdks/browser4-cli
+  └ 14 lines...
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ 203 lines read
+
+● Create read-skill-docs-and-install.solution.md +80
+  └ D:\workspace\Browser4Team\coworker\tasks\2working\read-skill-docs-and-install.solution.md
+
+● Check Rust version (shell)
+  │ rustc --version
+  └ 2 lines...
+
+● Read MEMORY.202603.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md
+  └ 81 lines read
+
+● List all files in March memory logs (shell)
+  │ Get-ChildItem -Recurse D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\ | Select-Object
+  │ FullName
+  └ 10 lines...
+
+● Check if yesterday's memory directory exists (shell)
+  │ Test-Path D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\22
+  └ 2 lines...
+
+● Check if 2026/03/13 memory directory exists (shell)
+  │ Test-Path D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\13
+  └ 2 lines...
+
+● Read MEMORY.20260323.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md
+  └ 13 lines read
+
+● Append task summary to daily memory (shell)
+  │ Add-Content -Path
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md -Value "-
+  │ **Plan Automated SKILL Installation**: Designed a workflow for ""Document-driven Automated
+  │ Installation"" of SKILL (specifically `browser4-cli`), extracting installation steps from
+  │ `sdks/browser4-cli/README.md`."…
+  └ 10 lines...
+
+● Read MEMORY.20260323.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md
+  └ 17 lines read
+
+The task described in `D:\workspace\Browser4Team\coworker\tasks\2working\read-skill-docs-and-install.md` has been completed.
+
+**Actions Taken:**
+1.  **Read Task Requirements**: Analyzed the "Document-driven Automated Installation" task, which required designing a workflow for an Agent to autonomously read documentation and install a "SKILL".
+2.  **Identified "SKILL" Context**: Located `sdks/skill/SKILL.md` which serves as metadata for the `browser4-cli` tool. Found the actual installation instructions in `sdks/browser4-cli/README.md`.
+3.  **Extracted Installation Steps**: Verified that `browser4-cli` is a Rust project requiring `cargo build --release` and `Rust 1.70+`. Checked the local environment and confirmed `rustc 1.94.0` is available.
+4.  **Designed Solution**: Created a detailed design document at `D:\workspace\Browser4Team\coworker\tasks\2working\read-skill-docs-and-install.solution.md`. This document outlines a two-phase process (Read & Understand, Execute & Verify) for an Agent to autonomously install the SKILL, including error handling and required capabilities.
+5.  **Updated Memory**: Appended a summary of this task, the outcome, and lessons learned to the daily memory log `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md`.
+
+**Deliverables:**
+-   `D:\workspace\Browser4Team\coworker\tasks\2working\read-skill-docs-and-install.solution.md`: Contains the flowchart and step-by-step plan for the automated installation agent capability.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         2m 20s
+Total session time:     2m 45s
+Total code changes:     +80 -0
+Breakdown by AI model:
+ gemini-3-pro-preview     625.4k in, 2.6k out, 548.8k cached (Est. 1 Premium request)

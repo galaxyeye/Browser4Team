@@ -12,3 +12,6 @@
 - **Outcome**: The script now generates concise kebab-case filenames for drafts, improving file organization and readability.
 - **Lesson learned**: Using GitHub Copilot for semantic file renaming is effective but requires careful prompt engineering to ensure valid and concise filenames.
 
+- **Plan Automated SKILL Installation**: Designed a workflow for "Document-driven Automated Installation" of SKILL (specifically rowser4-cli), extracting installation steps from sdks/browser4-cli/README.md.
+- **Outcome**: Created coworker/tasks/2working/read-skill-docs-and-install.solution.md detailing the retrieval, parsing, execution (Rust build), and verification steps. Verified Rust toolchain (1.94.0) is present.
+- **Lesson learned**: The sdks/skill/SKILL.md file serves as metadata/entry point for rowser4-cli, while actual build instructions are in sdks/browser4-cli/README.md.

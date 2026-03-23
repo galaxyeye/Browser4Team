@@ -440,7 +440,7 @@ foreach ($taskRoot in $taskRoots) {
         # Check if the file needs renaming (numeric or generic names, or always rename?)
         # User implies "numeric filenames are treated as random filenames... coworker needs to rename these"
         # The current implementation attempts to rename ALL files using gh copilot via rename.ps1.
-        # This seems to cover the requirement "1.md, 2.md... are treated as random... rename these".
+        # This seems to cover the requirement "improve-coworker-daily-memory-generator.md, 2.md... are treated as random... rename these".
 
         Write-LogVerbose "renameScript path: $renameScript"
         Write-LogVerbose "Test-Path renameScript: $(Test-Path $renameScript)"
