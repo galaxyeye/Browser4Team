@@ -24,3 +24,15 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check the current status of the repository (shell)
+  │ git status
+  └ 8 lines...
+
+● Stage all changes and commit with a descriptive message (shell)
+  │ git add -A && git commit -m "Update repository state: move tasks and update logs"
+  └ 39 lines...
+
+● Pull changes from remote (resolving conflicts by favoring local version) and push to remote (shel…
+  │ git pull --no-rebase -X ours && git push && git status
+  └ 16 lines...
+
