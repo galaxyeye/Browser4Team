@@ -1,0 +1,136 @@
+Starting Coworker Task Runner...
+[2026-03-23 16:17:56] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-03-23 16:17:56] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-23 16:17:56] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-23 16:17:56] [INFO] ===========================================================================
+[2026-03-23 16:17:56] [INFO] Coworker Task Runner - PowerShell Version
+[2026-03-23 16:17:56] [INFO] Started at: 03/23/2026 16:17:56
+[2026-03-23 16:17:56] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\161756-coworker.log
+[2026-03-23 16:17:56] [INFO] ==========================================================================
+[2026-03-23 16:17:56] [INFO] Created missing draft placeholder: D:\workspace\Browser4Team\coworker\tasks\0draft\1.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: 1.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: 2.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: 3.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: 4.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: 5.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: README.md
+[2026-03-23 16:17:56] [INFO] [PREPARE] Task: README.zh.md
+[2026-03-23 16:17:56] [INFO] [COMPLETE] Task waiting for review: estimate-plan-implementation-requirements.md
+[2026-03-23 16:17:56] [INFO] [PUSHED] Task: fix-rust-toolchain-missing-manifest.md (updated 03/23/2026 22:10:51)
+DEBUG: GH Stderr:  Total usage est:        1 Premium request API time spent:         6s Total session time:     18s Total code changes:     +0 -0 Breakdown by AI model:  gemini-3-pro-preview     16.4k in, 11 out, 0 cached (Est. 1 Premium request)
+[2026-03-23 16:18:18] [INFO] Renamed in created: 1.md -> rename-refine-drafts-by-content.md
+[2026-03-23 16:18:18] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\rename-refine-drafts-by-content.md
+[2026-03-23 16:18:18] [INFO] Memory context initialized via generator.
+[2026-03-23 16:18:18] [INFO] Executing Copilot for task: rename-refine-drafts-by-content
+[2026-03-23 16:18:18] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-23 16:18:18] [INFO] === Starting Copilot execution ===
+● Read rename-refine-drafts-by-content.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\rename-refine-drafts-by-content.md
+  └ 10 lines read
+● List shells
+  └ <no active shell sessions>
+● Read refine-drafts.ps1
+  │ D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1
+  └ 134 lines read
+● Read gh-copilot.ps1
+  │ D:\workspace\Browser4Team\coworker\scripts\workers\gh-copilot.ps1
+  └ 314 lines read
+✗ Create test-draft.md
+  │ D:\workspace\Browser4Team\coworker\0draft\refine\1ready\test-draft.md
+  └ Parent directory does not exist
+● Create required directories for testing (shell)
+  │ New-Item -ItemType Directory -Path "D:\workspace\Browser4Team\coworker\0draft\refine\1ready"
+  │ -Force
+  │ New-Item -ItemType Directory -Path "D:\workspace\Browser4Team\coworker\0draft\refine\2working"
+  │ -Force
+  │ New-Item -ItemType Directory -Path "D:\workspace\Browser4Team\coworker\0draft\refine\3done" …
+  └ 7 lines...
+● Create test-draft.md +3
+  └ D:\workspace\Browser4Team\coworker\0draft\refine\1ready\test-draft.md
+● Edit refine-drafts.ps1 +41
+  └ D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1
+● Edit refine-drafts.ps1 +3 -2
+  └ D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1
+● Read refine-drafts.ps1
+  │ D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1
+  └ 176 lines read
+● Execute the refined script to test functionality (shell)
+  │ & "D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1"
+  └ 2 lines...
+● Read config.ps1
+  │ D:\workspace\Browser4Team\coworker\scripts\config.ps1
+  └ 311 lines read
+● Read config.psd1
+  │ D:\workspace\Browser4Team\coworker\scripts\config.psd1
+  └ 23 lines read
+● Move test file to correct location and cleanup (shell)
+  │ New-Item -ItemType Directory -Path
+  │ "D:\workspace\Browser4Team\coworker\tasks\0draft\refine\1ready" -Force
+  │ New-Item -ItemType Directory -Path
+  │ "D:\workspace\Browser4Team\coworker\tasks\0draft\refine\2working" -Force
+  │ New-Item -ItemType Directory -Path …
+  └ 11 lines...
+● Execute the refined script to test functionality (shell)
+  │ & "D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1"
+  └ 8 lines...
+● Read shell output Waiting up to 30 seconds for command output
+  └ 8 lines...
+● Read shell output Waiting up to 60 seconds for command output
+  └ 16 lines...
+● Read naming-is-hard.md
+  │ D:\workspace\Browser4Team\coworker\tasks\0draft\refine\3done\naming-is-hard.md
+  └ 20 lines read
+● Read MEMORY.202603.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md
+  └ 81 lines read
+● List shells
+  └ Active shell sessions:
+● List daily memory files for March 2026 (shell)
+  │ Get-ChildItem -Path "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03" -Filter
+  │ "MEMORY.202603*.md" | Select-Object Name
+  └ 4 lines...
+● List daily directories for March 2026 (shell)
+  │ Get-ChildItem -Path "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03" -Directory |
+  │ Select-Object Name
+  └ 16 lines...
+● Read MEMORY.20260323.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md
+  └ 10 lines read
+● Remove test artifact (shell)
+  │ Remove-Item -Path
+  │ "D:\workspace\Browser4Team\coworker\tasks\0draft\refine\3done\naming-is-hard.md" -Force
+  └ 1 line...
+● Edit MEMORY.20260323.md +4
+  └ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\MEMORY.20260323.md
+The task described in `D:\workspace\Browser4Team\coworker\tasks\2working\rename-refine-drafts-by-content.md` has been completed.
+**Summary of changes:**
+1.  **Modified `coworker\scripts\workers\refine-drafts.ps1`**:
+    *   Added a `Get-RefinedFileName` function that uses
+    *   Updated the processing loop to call `Get-RefinedFileName` and rename the draft when moving it from `1ready` to 
+    *   Added error handling and validation for the generated filename to ensure it's safe for the file system.
+**Verification:**
+*   Created a test draft `test-draft.md` with content about "Naming is Hard".
+*   Ran the updated script.
+*   Verified that the draft was moved to `2working` and renamed to `naming-is-hard.md`.
+*   Verified that the refinement process completed successfully and the file was moved to `3done`.
+**Memory Update:**
+*   Updated `D:\workspace\Browser4Team\coworker\tasks\3
+*   Verified that no daily memories were missing from the monthly memory file `MEMORY.202603.md` (no logs found for 2026-03-13 to 2026-03-22).
+The system is now ready to automatically rename drafts based on their content during the refinement process.
+
+[STDERR OUTPUT]
+Total usage est:        1 Premium request
+API time spent:         2m 36s
+Total session time:     4m 31s
+Total code changes:     +51 -2
+Breakdown by AI model:
+ gemini-3-pro-preview     821.3k in, 2.7k out, 695.6k cached (Est. 1 Premium request)
+[2026-03-23 16:22:54] [INFO] Copilot execution finished with exit code 0
+[2026-03-23 16:22:54] [INFO] === Copilot execution completed ===
+[2026-03-23 16:22:54] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0323\rename-refine-drafts-by-content.md
+[2026-03-23 16:22:54] [INFO] ---
+[2026-03-23 16:22:54] [INFO] ===========================================================================
+[2026-03-23 16:22:54] [INFO] All tasks completed
+[2026-03-23 16:22:54] [INFO] Ended at: 03/23/2026 16:22:54
+[2026-03-23 16:22:54] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\23\161756-coworker.log
+[2026-03-23 16:22:54] [INFO] ==========================================================================

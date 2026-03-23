@@ -69,6 +69,47 @@ function Get-RefineTargets {
     return @($item)
 }
 
+function Get-RefinedFileName {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.IO.FileInfo]$DraftFile
+    )
+
+    $draftContent = Get-Content -Path $DraftFile.FullName -Raw -Encoding UTF8
+    $prompt = @"
+Generate a concise, kebab-case filename (without extension) that accurately reflects the content of the following text.
+Do not return any other text, just the filename.
+Ensure the filename is valid for Windows file systems (no special characters).
+
+--- BEGIN CONTENT ---
+$draftContent
+--- END CONTENT ---
+"@
+
+    try {
+        $refinedName = Invoke-GHCopilot -Prompt $prompt -AdditionalArguments @('--allow-all-tools', '--allow-all-paths') -RepoRoot $repoRoot -WorkingDirectory $repoRoot -CaptureOutput
+        
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning "GitHub Copilot exited with code $LASTEXITCODE while generating filename for $($DraftFile.Name). Using original name."
+            return $DraftFile.BaseName
+        }
+
+        $refinedName = $refinedName.Trim().Trim('"').Trim("'")
+        
+        # Basic validation
+        if ([string]::IsNullOrWhiteSpace($refinedName) -or $refinedName -match '[<>:"/\\|?*]') {
+            Write-Warning "Generated filename '$refinedName' is invalid or empty. Using original name."
+            return $DraftFile.BaseName
+        }
+
+        return $refinedName
+    }
+    catch {
+        Write-Warning "Failed to generate filename for $($DraftFile.Name): $_. Using original name."
+        return $DraftFile.BaseName
+    }
+}
+
 function Invoke-DraftRefinement {
     param(
         [Parameter(Mandatory = $true)]
@@ -110,10 +151,11 @@ if ($targets.Count -eq 0) {
 $failureCount = 0
 
 foreach ($target in $targets) {
-    $workingPath = Resolve-UniquePath -Directory $workingDir -BaseName $target.BaseName -Extension $target.Extension
+    $newBaseName = Get-RefinedFileName -DraftFile $target
+    $workingPath = Resolve-UniquePath -Directory $workingDir -BaseName $newBaseName -Extension $target.Extension
     Move-Item -Path $target.FullName -Destination $workingPath -Force
     $workingFile = Get-Item $workingPath
-    Write-Host "Moved draft to working: $workingPath"
+    Write-Host "Moved draft to working: $($workingFile.FullName) (renamed from $($target.Name))"
 
     try {
         $refinedContent = Invoke-DraftRefinement -WorkingFile $workingFile

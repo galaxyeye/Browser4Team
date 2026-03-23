@@ -1,0 +1,13 @@
+
+Total usage est:        1 Premium request
+API time spent:         7s
+Total session time:     17s
+Total code changes:     +0 -0
+Breakdown by AI model:
+ gemini-3-pro-preview     16.3k in, 5 out, 0 cached (Est. 1 Premium request)
+Move-Item: D:\workspace\Browser4Team\coworker\scripts\workers\refine-drafts.ps1:156
+Line |
+ 156 |      Move-Item -Path $target.FullName -Destination $workingPath -Force
+     |      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot find path 'D:\workspace\Browser4Team\coworker\tasks\0draft\refine\1ready\test-draft.md' because it does
+     | not exist.
