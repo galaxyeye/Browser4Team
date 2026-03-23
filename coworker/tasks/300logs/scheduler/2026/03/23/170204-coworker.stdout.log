@@ -22,3 +22,19 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check git status in the workspace (shell)
+  │ Set-Location "D:\workspace\Browser4Team"; git status
+  └ 9 lines...
+
+● Add all changes and commit (shell)
+  │ git add -A; git commit -m "Auto-sync: Commit all changes"
+  └ 25 lines...
+
+● Pull from remote with auto-conflict resolution favoring local changes, then push to remote (shell)
+  │ git pull --no-rebase -X ours; git push
+  └ 11 lines...
+
+● Verify git status after sync (shell)
+  │ git status
+  └ 6 lines...
+
