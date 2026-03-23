@@ -29,4 +29,6 @@ Find all links containing /dp/.
 
 ## Implementation Notes
 
-agent run 是长时操作，需要提供接口反馈和进度更新，以便用户了解任务的执行状态
+- agent run
+  - 转发到 ai.platon.pulsar.rest.api.controller.CommandController.submitPlainCommand，或者同 submitPlainCommand 行为一致
+  - 长时操作，需立即返回，并提供状态查询接口
