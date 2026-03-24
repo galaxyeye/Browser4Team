@@ -1,6 +1,7 @@
 # CLI Session Management Implementation Plan
 
-Based on the review of `session-management.md` and the Rust CLI implementation (`sdks/browser4-cli`), several gaps have been identified where the code does not match the documented behavior.
+Based on the review of `session-management.md` and the Rust CLI implementation (`sdks/browser4-cli`), several gaps 
+have been identified where the code does not match the documented behavior.
 
 ## Gap Analysis
 

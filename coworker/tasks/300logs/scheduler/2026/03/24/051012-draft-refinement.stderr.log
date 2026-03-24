@@ -1,0 +1,14 @@
+
+Total usage est:        1 Premium request
+API time spent:         5s
+Total session time:     13s
+Total code changes:     +0 -0
+Breakdown by AI model:
+ gemini-3-pro-preview     16.7k in, 8 out, 0 cached (Est. 1 Premium request)
+
+Total usage est:        1 Premium request
+API time spent:         38s
+Total session time:     48s
+Total code changes:     +6 -5
+Breakdown by AI model:
+ gemini-3-pro-preview     68.4k in, 604 out, 45.0k cached (Est. 1 Premium request)

@@ -1,15 +1,3 @@
-● Read improve-webdriver-api.md
-  │ coworker\tasks\0draft\refine\2working\improve-webdriver-api.md
-  └ 6 lines read
-
-● Search (grep)
-  │ "@MCP"
-  └ 26 files found
-
-● Search (grep)
-  │ "BrowserTabToolExecutor"
-  └ 9 files found
-
 # Improve WebDriver API
 
 The primary goal of this task is to simplify `BrowserTabToolExecutor` and enhance its efficiency.
