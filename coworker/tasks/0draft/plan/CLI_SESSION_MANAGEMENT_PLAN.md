@@ -12,7 +12,7 @@ have been identified where the code does not match the documented behavior.
 | **Profile Path** | `--profile=/path` specifies profile directory. | `--profile` flag is not implemented in `open` command arguments. |
 | **Headed Mode** | `--headed` opens visible browser. | `--headed` flag is parsed but **ignored** (not passed to `open_session`). |
 | **Session List** | `list` shows all sessions. | `list` calls server `list_sessions` but does not correlate IDs with local named sessions. |
-| **Env Variable** | `PLAYWRIGHT_CLI_SESSION` sets default session. | Not implemented. |
+| **Env Variable** | `BROWSER4_CLI_SESSION` sets default session. | Not implemented. |
 
 ## Implementation Plan
 
@@ -31,7 +31,7 @@ Refactor `CliState` to support multiple session files instead of a single `cli-s
 Support environment variable and ensure `-s` flag correctly selects the state file.
 
 -   **Update `parse_global_flags`**:
-    -   Check `BROWSER4_CLI_SESSION` (and legacy `PLAYWRIGHT_CLI_SESSION`) environment variable if `-s` is not provided.
+    -   Check `BROWSER4_CLI_SESSION` (and legacy `BROWSER4_CLI_SESSION`) environment variable if `-s` is not provided.
 -   **Update `main`**:
     -   Pass the resolved session name to `read_state` / `write_state`.
 
