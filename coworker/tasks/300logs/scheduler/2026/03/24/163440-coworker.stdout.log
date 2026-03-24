@@ -43,3 +43,12 @@ If conflicts occur, resolve them automatically.' --allow-all-tools
   │ submodules/Browser4 push
   └ 17 lines...
 
+● Commit, pull, and push changes in the parent repository (shell)
+  │ git add -A && git commit -m "Update task status, logs, and Browser4 submodule" && git pull
+  │ --no-rebase -X ours && git push
+  └ 27 lines...
+
+● Verify final repository status (shell)
+  │ git status
+  └ 5 lines...
+
