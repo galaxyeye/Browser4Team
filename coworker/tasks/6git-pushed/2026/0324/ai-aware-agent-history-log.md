@@ -1,0 +1,1 @@
+# Add history log path to DefaultHistoryRenderStrategy
