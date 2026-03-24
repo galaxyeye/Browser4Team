@@ -1,0 +1,6 @@
+Move-Item: D:\workspace\Browser4Team\coworker\scripts\coworker.ps1:724
+Line |
+ 724 |          Move-Item -Path $workingPath -Destination $targetInfo.Path -F …
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot find path 'D:\workspace\Browser4Team\coworker\tasks\2working\review-cli-session-management-plan.md'
+     | because it does not exist.

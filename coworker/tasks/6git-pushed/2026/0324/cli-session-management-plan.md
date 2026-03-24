@@ -1,7 +1,7 @@
 # CLI Session Management Plan
 
 Read `session-management.md`, check the existing implementation of CLI session management, find out if there are any gaps 
-in the documentation, and provide a plan for improvement.
+in the documentation, and provide a plan to implement any missing features or clarify any confusing sections.
 
 ## References
 
