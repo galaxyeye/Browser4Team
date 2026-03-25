@@ -6,3 +6,5 @@ target
 /**/node_modules/**
 /**/dist/**
 logs/scheduled-tasks.status.json
+/.browser4-cli/
+/logs/
