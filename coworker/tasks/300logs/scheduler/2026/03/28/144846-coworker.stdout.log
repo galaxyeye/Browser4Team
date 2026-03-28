@@ -37,3 +37,43 @@ There’s a dirty `submodules\Browser4`, so I’m checking it first to avoid lea
 
 I’ve confirmed the submodule has local edits on `4.6.x`. I’m committing and syncing that first, then I’ll update the parent repo to point at the pushed submodule commit.
 
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location submodules\Browser4; git add -A; git commit -m "Update coworker scripts and docs"
+  │ -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne
+  │ 0) { git diff --cached --quiet; if ($LASTEXITCODE -eq 0) { Write-Host "No submodule commit
+  │ needed" } else { exit $LASTEXITCODE } }; git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0)
+  │ { exit $LASTEXITCODE }; git push
+  └ 18 lines...
+
+● Check root state after submodule push (shell)
+  │ git --no-pager status --short --branch && git --no-pager log -2 --decorate --oneline && git -C
+  │ submodules\Browser4 --no-pager log -1 --decorate --oneline
+  └ 5 lines...
+
+The previous shell stayed inside the submodule, so I’m switching back to the repo root in a fresh session and finishing the parent repo sync there.
+
+● Inspect root repo state from root (shell)
+  │ Set-Location D:\workspace\Browser4Team; git --no-pager status --short --branch && git --no-pager
+  │ log -2 --decorate --oneline && git -C submodules\Browser4 --no-pager log -1 --decorate --oneline
+  └ 33 lines...
+
+The parent repo is one commit ahead already and still has new task/log/submodule-pointer changes. I’m bundling those into a fresh commit, then pulling with `-X ours` and pushing.
+
+● Commit pull and push root repository (shell)
+  │ Set-Location D:\workspace\Browser4Team; git add -A; git commit -m "Sync coworker tasks and logs"
+  │ -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne
+  │ 0) { git diff --cached --quiet; if ($LASTEXITCODE -eq 0) { Write-Host "No root commit needed" }
+  │ else { exit $LASTEXITCODE } }; git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit
+  │ $LASTEXITCODE }; git push
+  └ 51 lines...
+
+Everything pushed cleanly so far. I’m doing one final verification pass on both the parent repo and the submodule.
+
+● Verify root and submodule are clean and pushed (shell)
+  │ Set-Location D:\workspace\Browser4Team; git --no-pager status --short --branch && git --no-pager
+  │ log -1 --decorate --oneline && git -C submodules\Browser4 --no-pager status --short --branch &&
+  │ git -C submodules\Browser4 --no-pager log -1 --decorate --oneline
+  └ 6 lines...
+
+A scheduler log file changed after the first push, so I’m capturing that final drift and pushing one last commit to leave the repo fully clean.
+
