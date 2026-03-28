@@ -1,0 +1,2752 @@
+Directory metadata report
+Generated: 2026-03-28 13:02:45
+Input file: D:\workspace\Browser4Team\bin\tools\system\move-folder-to-d.txt
+
+Summary
+-------
+
+Path                                       Status   LinkType     Size      SizeOnDisk Files Subdirs Depth Breadth FileSystem
+----                                       ------   --------     ----      ---------- ----- ------- ----- ------- ----------
+C:\Users\pereg\AppData\Local\FbSoftware    Analyzed SymbolicLink 3.48 GB   3.53 GB    17552     764    10    3480 NTFS
+C:\Users\pereg\AppData\Local\Google        Analyzed Directory    1.23 GB   1.25 GB     8002     914    11    3715 NTFS
+C:\Users\pereg\AppData\Local\JetBrains     Analyzed Directory    7.25 GB   7.31 GB    29528    7122    14    1324 NTFS
+C:\Users\pereg\AppData\Local\JianyingPro   Analyzed SymbolicLink 6.78 GB   6.93 GB    64341   12510    13   13937 NTFS
+C:\Users\pereg\AppData\Local\kingsoft      Analyzed Directory    2.74 GB   2.76 GB    11148    3494    14     267 NTFS
+C:\Users\pereg\AppData\Local\Microsoft     Analyzed Directory    4.19 GB   4.25 GB    25431    2739    13    4160 NTFS
+C:\Users\pereg\AppData\Local\ms-playwright Analyzed Directory    1.12 GB   1.13 GB     1009      75     8     220 NTFS
+C:\Users\pereg\AppData\Local\npm-cache     Analyzed SymbolicLink 11.32 GB  11.49 GB   70573   28320    12   19871 NTFS
+C:\Users\pereg\AppData\Local\pypoetry      Analyzed Directory    1.31 GB   1.36 GB    23077   11472    16     406 NTFS
+C:\Users\pereg\AppData\Local\ShadowBot     Analyzed Directory    1.32 GB   1.35 GB    13848    1300    14     629 NTFS
+C:\Users\pereg\AppData\Local\Temp          Analyzed Directory    8.57 GB   8.58 GB     4800    1267    11     635 NTFS
+C:\Users\pereg\AppData\Local\uv            Analyzed SymbolicLink 1.96 GB   2.05 GB    35770    5017    14    6951 NTFS
+C:\Users\pereg\.browser4                   Analyzed Directory    194.58 MB 200.36 MB   2489    7846     8     330 NTFS
+C:\Users\pereg\scoop                       Analyzed Directory    2.78 GB   2.90 GB    51611    9365    20    1989 NTFS
+C:\Users\pereg\go                          Analyzed SymbolicLink 1.78 GB   1.96 GB    71550   18449    19    1230 NTFS
+C:\Users\pereg\.rustup                     Analyzed Directory    1.20 GB   1.34 GB    51894    1939    16    6661 NTFS
+C:\Users\pereg\.pulsar                     Missing  n/a          n/a       n/a                                    
+C:\Users\pereg\.gradle                     Missing  n/a          n/a       n/a                                    
+C:\Users\pereg\.copilot                    Analyzed Directory    3.03 GB   3.06 GB     9146    5263     9    1152 NTFS
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\FbSoftware
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\FbSoftware
+Size: 3.48 GB (3740827567 bytes)
+Size on disk: 3.53 GB (3788587008 bytes)
+Creation time: 2025-04-18 13:23:22
+Last modified: 2025-04-18 13:23:22
+Last accessed: 2025-04-18 13:23:22
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 17552
+Subdirectories: 764
+Distinct file types: 60
+Structure metrics: max depth=10, max breadth=3480, max subdirectory breadth=43, average breadth=23.94, visited directories=765
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.7642%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 15712
+  - .pak: 292
+  - .png: 222
+  - .xpi: 187
+  - .json: 133
+  - .old: 116
+  - .js: 111
+  - .hyb: 104
+  - .dll: 91
+  - .log: 77
+  - .dmp: 51
+  - .html: 49
+  - .fingerprint: 47
+  - .ldb: 40
+  - .css: 34
+  - .exe: 33
+  - .ico: 29
+  - .txt: 29
+  - .pb: 26
+  - .tmp: 26
+  - .dat: 19
+  - .ttf: 15
+  - .db: 12
+  - .db-journal: 12
+  - .svg: 9
+  - .webp: 8
+  - .woff: 8
+  - .data: 6
+  - .bin: 5
+  - .manifest: 5
+  - .bak: 4
+  - .usage: 4
+  - .pma: 3
+  - .sig: 3
+  - .xml: 3
+  - .ini: 2
+  - .ja: 2
+  - .1987650928271ad440c2b8a50f309139de82c742fb6f1f3ea055b35718ac46e7: 1
+  - .2638e3c2d1fa1d417bfdc31dd21bc938f106d3b436a6488b41b014ca9e2b7541: 1
+  - .29661be65c8fb50d3d4df2fe040a1cc6dd525f50a95850aae6a191301c3de744: 1
+  - .3bd47fb587179a747f774cf3eff91c71f9624d3465d0234ba6b484c3fc8c46da: 1
+  - .3eb16d6c28b502ac4cfee8f4a148df05f4d93229fa36a71db8b08d06329ff18a: 1
+  - .44c97a8527ef50cab95a16c5e78cd321cbdf315726823afe7e0482af9eb18319: 1
+  - .545666a4efd056351597bb386aea1368105ededc976ed5650d8682daab9f37ff: 1
+  - .6af08fc2b0dd497e30e40290efcb817b9b1f7dc7f734ab1a9dd000ae01f36050: 1
+  - .735e672dfc473cd68910fe5beb9b40609ef66162b030f06af3aa37876febd90d: 1
+  - .780ed8a4eda82d8fef820781c32c60705576b4feb90d1fc4306966ecc4ebaf73: 1
+  - .7c7087f1e01a939b41851a790125c2fed32542cba2ff03cd364e3292810704b2: 1
+  - .8814cb6cab024b119ab991ad7acd74f4df7bc68bbf86c0903c8be9852a5baa55: 1
+  - .8c18c00546f3a15fb76a4c00b64c7f02fe992d1facd3866775736484cd892d6f: 1
+  - .95671b1a6fd61a618d394508294ad248ef5a71c7ab624a4fd1a1543f2b8ac7b3: 1
+  - .9f64d174f399031b59ba557c2fc3d355f329ade8a1114cab159b928ca1b0a237: 1
+  - .a6af95a209b2e652ed6766804b9b8ad6b6a68f2c610b8f14713cd40df0d62bf9: 1
+  - .bdic: 1
+  - .c52c62a7c50daf7d3f73ec16977cd4b0ea401710807d5dbe3850941dd1b73a70: 1
+  - .cfg: 1
+  - .d66493bde74e078e8c2805eb80b3e6c086436545a859af43deb91d54788319b9: 1
+  - .jpg: 1
+  - .list: 1
+  - .map: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Google
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.23 GB (1318110059 bytes)
+Size on disk: 1.25 GB (1338232832 bytes)
+Creation time: 2023-07-21 13:16:18
+Last modified: 2025-09-15 23:54:34
+Last accessed: 2026-03-28 11:24:41
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 8002
+Subdirectories: 914
+Distinct file types: 65
+Structure metrics: max depth=11, max breadth=3715, max subdirectory breadth=256, average breadth=9.74, visited directories=915
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6232%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 6925
+  - .json: 294
+  - .png: 159
+  - .map: 77
+  - .js: 74
+  - .svg: 70
+  - .hyb: 52
+  - .old: 50
+  - .log: 39
+  - .ldb: 38
+  - .html: 32
+  - .pb: 25
+  - .css: 20
+  - .txt: 19
+  - .tflite: 14
+  - .ico: 13
+  - .store: 12
+  - .md5: 10
+  - .tmp: 9
+  - .fingerprint: 8
+  - .dmp: 5
+  - .db: 4
+  - .woff2: 4
+  - .db-journal: 3
+  - .gif: 3
+  - .dat: 2
+  - .model: 2
+  - .pma: 2
+  - .32_13355978797727466: 1
+  - .32_13410710154460697: 1
+  - .32_13418717803172953: 1
+  - .32_13418806893038366: 1
+  - .32_13418808666749967: 1
+  - .32_13418810452524258: 1
+  - .32_13418819461882423: 1
+  - .32_13418821280061791: 1
+  - .4_13355978797722191: 1
+  - .4_13418808666749228: 1
+  - .4_13418810452524001: 1
+  - .4_13418844312387169: 1
+  - .4_13418846091510660: 1
+  - .4_13418847902163234: 1
+  - .4_13418847902863407: 1
+  - .4_13418847902871936: 1
+  - .4_13418847902888912: 1
+  - .4_13418847902897504: 1
+  - .4_13418847902905625: 1
+  - .4_13418849731933781: 1
+  - .4_13418849734463084: 1
+  - .4_13418849734473519: 1
+  - .4_13418849734485116: 1
+  - .4_13418849734493159: 1
+  - .4_13418849734501830: 1
+  - .baf: 1
+  - .baj: 1
+  - .bak: 1
+  - .bin: 1
+  - .binarypb: 1
+  - .db-wal: 1
+  - .dll: 1
+  - .fbs: 1
+  - .gz: 1
+  - .journal: 1
+  - .mjs: 1
+  - .wasm: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\JetBrains
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 7.25 GB (7780705231 bytes)
+Size on disk: 7.31 GB (7850795008 bytes)
+Creation time: 2025-09-14 20:59:48
+Last modified: 2026-03-27 19:09:34
+Last accessed: 2026-03-28 12:58:18
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 29528
+Subdirectories: 7122
+Distinct file types: 606
+Structure metrics: max depth=14, max breadth=1324, max subdirectory breadth=535, average breadth=5.15, visited directories=7123
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 3.6558%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 5065
+  - .len: 4316
+  - .rs: 4122
+  - [no extension]: 3158
+  - .json: 1424
+  - .js: 994
+  - .xml: 937
+  - .at: 884
+  - .html: 742
+  - .keystream: 730
+  - .etag: 564
+  - .storage: 560
+  - .svg: 527
+  - .ver: 403
+  - .dat: 398
+  - .s: 387
+  - .values: 359
+  - .storage_i: 308
+  - .true: 303
+  - .tab: 225
+  - .tab_i: 222
+  - .txt: 201
+  - .md: 196
+  - .toml: 150
+  - .log: 143
+  - .png: 138
+  - .jar: 133
+  - .css: 127
+  - .lock: 83
+  - .orig: 80
+  - .zip: 72
+  - .wit: 68
+  - .2: 62
+  - .2_i: 58
+  - .29: 56
+  - .29_i: 48
+  - .old: 48
+  - .pack: 46
+  - .idx: 45
+  - .yml: 41
+  - .sh: 32
+  - .mp4: 30
+  - .0: 28
+  - .csv: 28
+  - .8: 19
+  - .index_inputs: 19
+  - .10: 18
+  - .8_i: 18
+  - .cpp: 18
+  - .project: 17
+  - .c: 16
+  - .h: 16
+  - .mv: 15
+  - .10_i: 14
+  - .dll: 14
+  - .fast: 14
+  - .a: 12
+  - .yaml: 12
+  - .data: 11
+  - .next: 10
+  - .exe: 9
+  - .hashtoid: 9
+  - .hpp: 9
+  - .in: 9
+  - .jpeg: 9
+  - .db: 7
+  - .index_inputs_i: 7
+  - .name_inputs: 7
+  - .0_with_llvm-exception: 6
+  - .1: 6
+  - .auxv: 6
+  - .flag: 6
+  - .gif: 6
+  - .hash: 6
+  - .ij: 6
+  - .lib: 6
+  - .o: 6
+  - .otf: 6
+  - .outputs: 6
+  - .name_inputs_i: 5
+  - .version: 5
+  - .0_i: 4
+  - .1_i: 4
+  - .3: 4
+  - .bpe: 4
+  - .db-journal: 4
+  - .enum: 4
+  - .git-blame-ignore-revs: 4
+  - .gitmodules: 4
+  - .mmap: 4
+  - .model: 4
+  - .crc: 3
+  - .editorconfig: 3
+  - .map: 3
+  - .names: 3
+  - .names_i: 3
+  - .198: 2
+  - .853: 2
+  - .appinfo: 2
+  - .binary_builders: 2
+  - .binary_builders_i: 2
+  - .chunks: 2
+  - .cmake: 2
+  - .config: 2
+  - .environment_inputs: 2
+  - .environment_inputs_i: 2
+  - .expression_inputs: 2
+  - .expression_inputs_i: 2
+  - .extensible_inputs: 2
+  - .extensible_inputs_i: 2
+  - .failed__dde: 2
+  - .home: 2
+  - .host_inputs: 2
+  - .ignore: 2
+  - .key_inputs: 2
+  - .mjs: 2
+  - .mmapped: 2
+  - .names_inputs: 2
+  - .names_inputs_i: 2
+  - .pb: 2
+  - .pid: 2
+  - .pma: 2
+  - .rst: 2
+  - .selectors_inputs: 2
+  - .selectors_inputs_i: 2
+  - .spec: 2
+  - .stamp: 2
+  - .storagedata: 2
+  - .storagerecordindex: 2
+  - .values_inputs: 2
+  - .values_inputs_i: 2
+  - .versions: 2
+  - .wasm: 2
+  - ._c: 1
+  - ._test_extension: 1
+  - ._test_extension_cpp: 1
+  - ._tkagg: 1
+  - ._umath_tests: 1
+  - .022c26ce-18e9-48b9-9784-f4c0e277bad2: 1
+  - .046f1316-fdb2-4f6c-905d-d92be3a19edc: 1
+  - .054fcd3c-1ced-46a0-bbf5-544fcf46b10c: 1
+  - .05fa4bff-50a9-493f-9b7d-149390d95140: 1
+  - .067e1cb7-bb35-470b-97b0-e30ee8ddc534: 1
+  - .07057ec8-2dd6-410f-839e-3fac5fd5e12e: 1
+  - .0a1f4788-c4db-4a75-8a7e-4e57e63dbb72: 1
+  - .0c017c8c-62a8-4ace-8504-ceddb6b46975: 1
+  - .0c859782-06d3-4320-8385-5cd568a1b33b: 1
+  - .0c8e8203-0aca-44da-8251-c60abd7c4897: 1
+  - .0cd18c42-942b-43e3-832c-c951e86f1ff7: 1
+  - .0cd37e90-70ba-445d-b9c1-5e00a666f79f: 1
+  - .103e4da6-133a-47fe-b79c-340375d40a2f: 1
+  - .11: 1
+  - .118: 1
+  - .12: 1
+  - .120: 1
+  - .123: 1
+  - .127: 1
+  - .128: 1
+  - .12de3d36-0004-4145-9cc1-d15bbe2f7f12: 1
+  - .13: 1
+  - .138: 1
+  - .1426c713-4fe4-49cc-adc9-b0c559378cea: 1
+  - .15e35ac5-1704-4880-aba3-c5f838b4047e: 1
+  - .15fe6667-67b2-45ba-986f-012343f06de4: 1
+  - .1629b614-c3bc-4cbc-92e0-cd6d25d41c6a: 1
+  - .163: 1
+  - .164: 1
+  - .167: 1
+  - .169: 1
+  - .175: 1
+  - .176: 1
+  - .17c571d6-8e7d-449b-afaf-fdaeccf3dae1: 1
+  - .181: 1
+  - .184: 1
+  - .187: 1
+  - .189: 1
+  - .19056b86-5a79-4ad2-9f93-26b7044770f4: 1
+  - .196: 1
+  - .1aeef60a-0090-4817-a7a8-77209df40f40: 1
+  - .1af6fbb5-42ec-43f6-afee-b077dcbfb335: 1
+  - .1d3e9984-8ead-431c-91f1-84b38b9b0c07: 1
+  - .1dbb783e-8334-49cd-b5c5-03d109f41dfe: 1
+  - .200: 1
+  - .202: 1
+  - .205: 1
+  - .206: 1
+  - .207: 1
+  - .20d01250-97a1-486d-9f1c-a16424c2f915: 1
+  - .21: 1
+  - .213: 1
+  - .21cd9208: 1
+  - .21f5596d-1b11-4982-8254-9dfe58ce49a7: 1
+  - .22: 1
+  - .220: 1
+  - .223: 1
+  - .224: 1
+  - .227: 1
+  - .22f24d97-acde-4d69-a2d4-425d2ba29427: 1
+  - .234: 1
+  - .240: 1
+  - .241: 1
+  - .247: 1
+  - .250: 1
+  - .251: 1
+  - .252: 1
+  - .253: 1
+  - .254: 1
+  - .2544c82e-a295-429e-8eea-e2fc6890e76c: 1
+  - .255: 1
+  - .25517823-567f-439e-b66b-821a982554d2: 1
+  - .258: 1
+  - .26: 1
+  - .260: 1
+  - .262: 1
+  - .263: 1
+  - .269: 1
+  - .270: 1
+  - .27ffef7e-bfcd-4114-8c15-eea942e32aac: 1
+  - .28: 1
+  - .283: 1
+  - .287: 1
+  - .292: 1
+  - .2c8c7ddd-0d43-4f16-8824-9ba2998d866b: 1
+  - .2ca288b7-8145-4ce7-8833-2a760989b5f7: 1
+  - .2d56ad4b: 1
+  - .2f9aab3b-8022-4b1b-93e8-08e01dec015a: 1
+  - .2fa357fb-2ed4-46f5-8a53-f5de60e6778d: 1
+  - .30: 1
+  - .300: 1
+  - .301: 1
+  - .30177bcb-83c7-481c-af9b-9a151123660e: 1
+  - .302: 1
+  - .306: 1
+  - .309: 1
+  - .30a6dbad-abbe-4a07-927d-1c05c05a34b1: 1
+  - .310: 1
+  - .316: 1
+  - .326: 1
+  - .3260990a-43a1-461e-8328-a4518674ce52: 1
+  - .332: 1
+  - .333: 1
+  - .335: 1
+  - .336bf01: 1
+  - .336ca8f: 1
+  - .338: 1
+  - .341: 1
+  - .345: 1
+  - .347: 1
+  - .348: 1
+  - .35: 1
+  - .358: 1
+  - .361: 1
+  - .365: 1
+  - .366: 1
+  - .368: 1
+  - .36b5b55f: 1
+  - .37143dc3-95d3-41ff-b18d-2364a0362371: 1
+  - .388: 1
+  - .391: 1
+  - .396: 1
+  - .3987088c-defa-4912-ac96-9bc14ac56c77: 1
+  - .3a943061: 1
+  - .3bee6875-8922-4df1-a4a7-961d7a785e5a: 1
+  - .3d7a778c-efc4-4e33-9180-a33caaebc85e: 1
+  - .3ebf9dd2-c9ef-4446-82d6-db48f00639cf: 1
+  - .4: 1
+  - .40: 1
+  - .401: 1
+  - .402: 1
+  - .409: 1
+  - .411: 1
+  - .412: 1
+  - .413: 1
+  - .417d7ab3-d41a-46eb-b895-bd0b1ec6867f: 1
+  - .418: 1
+  - .425: 1
+  - .431: 1
+  - .432: 1
+  - .43d23659-fc1a-4fe9-88f4-a3fa9d291afe: 1
+  - .448: 1
+  - .450: 1
+  - .452: 1
+  - .457: 1
+  - .458: 1
+  - .459: 1
+  - .45b471a8-5067-492c-a514-ef9f3a35d381: 1
+  - .460: 1
+  - .463: 1
+  - .465: 1
+  - .466: 1
+  - .46ae20cf-d4be-4bd0-b71d-5c9424170bc7: 1
+  - .473: 1
+  - .480: 1
+  - .488: 1
+  - .489147c9-7065-472f-bd70-762e9d068edd: 1
+  - .4939a3ae-2e73-48d6-a88a-76f8443a09ed: 1
+  - .494: 1
+  - .495: 1
+  - .497: 1
+  - .4e8325a7-87d8-47cc-8f82-fb8e352249d5: 1
+  - .4f267cfa-13b9-4b40-8447-e0e800444708: 1
+  - .4fae4a22-c167-4627-a507-edd2809c9b00: 1
+  - .501: 1
+  - .502a5cde: 1
+  - .503: 1
+  - .509: 1
+  - .51: 1
+  - .511: 1
+  - .51307aa9-d09f-4623-abf8-adf5d3cc108c: 1
+  - .51a40705-1d98-4a52-af19-43bee0741ce1: 1
+  - .5221adb9-d514-4d27-9516-d7ecbd50343b: 1
+  - .523: 1
+  - .526: 1
+  - .528: 1
+  - .531: 1
+  - .534: 1
+  - .538: 1
+  - .53884d79: 1
+  - .547c2d73-4aa3-4613-91f3-edf8207eb3fc: 1
+  - .55: 1
+  - .551: 1
+  - .557: 1
+  - .561: 1
+  - .561ade4a-6b2c-48bc-af9a-1eed4fa07c01: 1
+  - .562: 1
+  - .564: 1
+  - .567: 1
+  - .568: 1
+  - .56bf8266-a959-4dfa-9eb7-39319908dc65: 1
+  - .56dc0152-bf68-41c5-b896-84e0576c6afa: 1
+  - .574: 1
+  - .576: 1
+  - .5760e35b-e1ca-49aa-902f-a19fd6a4d9f6: 1
+  - .580: 1
+  - .582: 1
+  - .596: 1
+  - .5b0c248d-f23b-4022-8717-67c388391a7b: 1
+  - .5d0aa85c-7214-4386-87b1-80db3081aa6c: 1
+  - .607: 1
+  - .608: 1
+  - .609: 1
+  - .611: 1
+  - .614: 1
+  - .617: 1
+  - .6194c4a1-ea6f-4daf-a36d-3d4ce3fca791: 1
+  - .624: 1
+  - .627: 1
+  - .630: 1
+  - .631: 1
+  - .6314af1b-ec2f-4402-86a8-9780b8a7a080: 1
+  - .632: 1
+  - .636: 1
+  - .637: 1
+  - .64: 1
+  - .66: 1
+  - .662: 1
+  - .663: 1
+  - .67b1be3c-8aaf-4875-a47c-001a6005ce03: 1
+  - .683: 1
+  - .684b47d7-ad5f-45d7-86d4-1a41575edc25: 1
+  - .687: 1
+  - .6918ce68-2e79-47d4-bfe0-75209b4f3064: 1
+  - .692: 1
+  - .695: 1
+  - .698: 1
+  - .6bd278ae-3ae5-4b3d-afea-aa5f559e1c6a: 1
+  - .6cfae9a1-370f-49bc-a0e3-1278af0e647b: 1
+  - .6f0f2d05-2893-44f6-8b02-7cceb44dda78: 1
+  - .6f78a39b-df8c-446d-8f8d-37676098f5cf: 1
+  - .7: 1
+  - .70: 1
+  - .704: 1
+  - .708: 1
+  - .708f9368-6a17-4d87-8ae2-16a0e5c59709: 1
+  - .71: 1
+  - .710: 1
+  - .712: 1
+  - .713750a0-8552-4bae-bfdf-b9b0fa7b33ff: 1
+  - .714: 1
+  - .715: 1
+  - .718: 1
+  - .719: 1
+  - .720: 1
+  - .722: 1
+  - .723: 1
+  - .731: 1
+  - .735: 1
+  - .735a8aa9-e3c6-4f25-a188-eba56edd5f23: 1
+  - .73f65485: 1
+  - .7407c326-ae35-46ff-a22f-7eb9838d38eb: 1
+  - .744: 1
+  - .750: 1
+  - .757: 1
+  - .761: 1
+  - .762: 1
+  - .765: 1
+  - .769: 1
+  - .770: 1
+  - .773: 1
+  - .77533afe-3ba9-4c8d-b08c-e06d35783f7c: 1
+  - .777: 1
+  - .78: 1
+  - .7835cb51-16c7-41db-a5e9-ceede59e0c15: 1
+  - .787: 1
+  - .788: 1
+  - .78ded798-c05c-4642-bbad-732521b16a95: 1
+  - .790: 1
+  - .791: 1
+  - .797: 1
+  - .799: 1
+  - .7b8a29c7-b42b-439a-8857-5b2eff00a017: 1
+  - .7c937d91: 1
+  - .7c95eb13-a4df-4be9-8998-36134862e320: 1
+  - .7d35f526-3923-4255-85fe-c6b1bce0f152: 1
+  - .7d778395-6eef-4d99-96be-1622f70de584: 1
+  - .80: 1
+  - .806: 1
+  - .81092f4c-94bf-4744-80eb-9894207e8600: 1
+  - .814: 1
+  - .816: 1
+  - .817: 1
+  - .818: 1
+  - .821: 1
+  - .823: 1
+  - .828: 1
+  - .83: 1
+  - .833: 1
+  - .835: 1
+  - .839: 1
+  - .841: 1
+  - .845: 1
+  - .848: 1
+  - .85: 1
+  - .85144f08-b3d3-45d9-b87c-5e471ed8ff28: 1
+  - .851759e0-cf0f-41a4-9b3d-5b80c2fb1a21: 1
+  - .856: 1
+  - .858014cf-835e-4bbe-8aa2-27fe912c4861: 1
+  - .859: 1
+  - .863: 1
+  - .864: 1
+  - .865: 1
+  - .86745148-b039-42cd-a3cf-8adde966194a: 1
+  - .87: 1
+  - .870: 1
+  - .8702bccb-e31c-470e-8d95-8635503467d3: 1
+  - .873: 1
+  - .874e21d8-cd51-4f5b-87ac-b2865e468cd9: 1
+  - .876: 1
+  - .88: 1
+  - .880: 1
+  - .882: 1
+  - .883: 1
+  - .888: 1
+  - .88e7ada5-44ea-43bb-a821-b6f4e4ec6246: 1
+  - .890: 1
+  - .895: 1
+  - .896: 1
+  - .8a1a7bdc-353f-4b81-8234-77c6f78e8c61: 1
+  - .8da1e60e-e5b4-42ec-a64a-8facf4ef0abe: 1
+  - .8dfb8aa7-06d1-46bb-8bbb-c8bd3dca003e: 1
+  - .8e02bc43-6855-4a80-8dc5-9b6684a964a9: 1
+  - .8f31b17e-bbaf-4194-a3ca-b2c89a12dc1f: 1
+  - .8f81812b-45a5-4c42-bbdc-80474b55b4c8: 1
+  - .902: 1
+  - .903: 1
+  - .905: 1
+  - .906d6863-2b10-4569-b902-f3ac3a94c2ca: 1
+  - .907: 1
+  - .90bd68ba-4c0c-41e1-bdb9-6c1ff4a9afd5: 1
+  - .910: 1
+  - .920: 1
+  - .93: 1
+  - .938: 1
+  - .93f9402f-f6aa-4ac6-a500-d7c8cd222c9c: 1
+  - .945: 1
+  - .94b41d46-a528-48ea-964b-e1fd9f8aded0: 1
+  - .952: 1
+  - .956: 1
+  - .959: 1
+  - .964: 1
+  - .967: 1
+  - .970fec58-85ce-46e6-aebc-52ce2dbd8c41: 1
+  - .972: 1
+  - .975: 1
+  - .982: 1
+  - .98618200-f520-40ff-8f02-8d14e85a3dbd: 1
+  - .99: 1
+  - .992: 1
+  - .993: 1
+  - .996: 1
+  - .9997dec: 1
+  - .9a4a86d7-ee33-410d-a93a-ca45672964ca: 1
+  - .9adc4438-d681-4667-a600-3a0da56738ff: 1
+  - .9e1742bc-6099-4f56-b5d4-2119bbe70cd3: 1
+  - .a28fb738-890d-428b-a3b8-e4291a1d8374: 1
+  - .a31acaef-baa7-4691-b58c-07a08cc1ccfd: 1
+  - .a66b1e1f-64e0-4b60-bf01-d5cc501b3282: 1
+  - .a842f3cc-e8a5-4dcd-9050-9e2905b5468a: 1
+  - .a9bc0352-febe-4e98-822c-4050e15e060b: 1
+  - .a9ef8161-55d3-4834-8741-4e14f7f19e93: 1
+  - .ac9d7c1a-a4f9-4040-a745-fd4c1c993a27: 1
+  - .ace47528-59d7-4a02-9ad6-1967955225f4: 1
+  - .adf0b894-af90-4bee-aa2d-09c31b4fe6fe: 1
+  - .adminregister_inputs: 1
+  - .ae279556-64b2-4318-a54a-cec5c171255c: 1
+  - .argument_inputs: 1
+  - .argument_inputs_i: 1
+  - .autoconfiguremetadataindex_inputs: 1
+  - .autoconfiguremetadataindex_inputs_i: 1
+  - .b2af1c5b-7292-472f-8006-0044fe71b1ad: 1
+  - .b36c3b6d-3b45-4a9e-b651-fe9725ee222d: 1
+  - .b4a80ad7-99a0-4077-82c0-49d05a8eed1d: 1
+  - .b4ca30eb-e300-42ad-a336-5042a09dcecc: 1
+  - .b5ab05cd: 1
+  - .b776a108-27b6-48b2-a68e-277831f78e03: 1
+  - .b8c795b6-7807-4869-a333-96b5bcbd1e4c: 1
+  - .b9907670-bc73-4fed-bf40-2cfd0c39a82b: 1
+  - .ba2750c8-8c94-4856-9324-d45f1339672a: 1
+  - .broken: 1
+  - .c08b8164: 1
+  - .c3c82ef4-bc5d-4332-b3b1-ddccd5197878: 1
+  - .c47a7af4-5275-4580-9fec-4053d6498e8f: 1
+  - .c4b6790c-f681-412b-85bb-b656bd1bbc98: 1
+  - .c5b9a091-3880-4198-8f07-5c39cb3508d1: 1
+  - .c8e10895-f355-44ee-9a42-c607bf42c89e: 1
+  - .ccfe2c16-5018-413e-847b-f611000ca4a3: 1
+  - .cd86bca3-9914-4f6f-9f36-8344947c1c51: 1
+  - .cf484f07-9b6e-4720-9ec2-d4edbee1cc1a: 1
+  - .clang-format: 1
+  - .component_inputs: 1
+  - .d0c3decb-5892-409e-8daa-ef9a7d49cb61: 1
+  - .d0e4d730-afb6-4c6c-b907-6552ff0bad27: 1
+  - .d1220cd7-516a-45aa-a46e-81d5fc038b5a: 1
+  - .d2c65f49-2f0c-4539-8583-c3167c804284: 1
+  - .d71978e1-274d-48fb-9d72-f5ef41f29527: 1
+  - .dab870a: 1
+  - .def: 1
+  - .django_inputs: 1
+  - .e1b5891b-1346-4fd7-be21-31db6e70d772: 1
+  - .e23d73dd-2c35-495c-ba85-a23ae18f76ce: 1
+  - .e50b23fa-a804-4c44-a83d-202c2185c1dc: 1
+  - .e72baff4-1fd8-4c6c-8d52-2b75abaa2fa0: 1
+  - .e91b76a3-fab9-407f-aa66-76103579ec3f: 1
+  - .ee3aa8d6-c2c1-48a0-a13a-342fb2a3f583: 1
+  - .efee80fa-84cb-4b5e-89fd-d9169d95cef9: 1
+  - .entityregisterfileindex_inputs: 1
+  - .entityregisterfileindex_inputs_i: 1
+  - .f2435d85-fc58-4a32-9854-442f8fde3541: 1
+  - .f347798f-3735-477e-8f5e-d195d2980881: 1
+  - .f6130d2e-dbb7-41e9-a0d1-814c6346f927: 1
+  - .f845e69f-5d7c-4073-914c-ec5f6c2de90d: 1
+  - .f92952b8-9f57-4773-9e9a-ecaad4497d21: 1
+  - .fastapi_inputs: 1
+  - .fastapi_inputs_i: 1
+  - .fc9accfc-7e5e-4454-90fa-10fa70c83401: 1
+  - .flask_inputs: 1
+  - .flask_inputs_i: 1
+  - .gitconfig: 1
+  - .global-cache: 1
+  - .host_inputs_i: 1
+  - .imports_inputs: 1
+  - .importsfileindex_inputs: 1
+  - .importsfileindex_inputs_i: 1
+  - .invalidate: 1
+  - .jl: 1
+  - .keyvalues_inputs: 1
+  - .keyvalues_inputs_i: 1
+  - .klibmetafileindex_inputs: 1
+  - .klibmetafileindex_inputs_i: 1
+  - .kotlinbuiltinsmetadataindex_inputs: 1
+  - .kotlinbuiltinsmetadataindex_inputs_i: 1
+  - .kotlinclassfileindex_inputs: 1
+  - .kotlinclassfileindex_inputs_i: 1
+  - .kotlinjavascriptmetafileindex_inputs: 1
+  - .kotlinjsmetadataversionindex_inputs: 1
+  - .kotlinjvmmetadataversionindex_inputs: 1
+  - .kotlinjvmmetadataversionindex_inputs_i: 1
+  - .kotlinjvmmoduleannotationsindex_inputs: 1
+  - .kotlinjvmmoduleannotationsindex_inputs_i: 1
+  - .kotlinmetadatafileindex_inputs: 1
+  - .kotlinmetadatafileindex_inputs_i: 1
+  - .kotlinmetadatafilepackageindex_inputs: 1
+  - .kotlinmetadatafilepackageindex_inputs_i: 1
+  - .kotlinmodulemappingindex_inputs: 1
+  - .kotlinmodulemappingindex_inputs_i: 1
+  - .kotlinpartialpackagenamesindex_inputs: 1
+  - .kotlinpartialpackagenamesindex_inputs_i: 1
+  - .kotlinstdlibindex_inputs: 1
+  - .kotlinstdlibindex_inputs_i: 1
+  - .libraries_inputs: 1
+  - .libraries_inputs_i: 1
+  - .modulemap: 1
+  - .namespace_inputs: 1
+  - .namespace_inputs_i: 1
+  - .ninja_inputs: 1
+  - .ninja_inputs_i: 1
+  - .package-cache: 1
+  - .port: 1
+  - .properties: 1
+  - .rev: 1
+  - .rsaliasindex_inputs: 1
+  - .rsaliasindex_inputs_i: 1
+  - .sample: 1
+  - .spifileindex_inputs: 1
+  - .spifileindex_inputs_i: 1
+  - .tag: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\JianyingPro
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\Users\pereg\AppData\Local\JianyingPro
+Size: 6.78 GB (7276411192 bytes)
+Size on disk: 6.93 GB (7438049280 bytes)
+Creation time: 2024-10-18 17:46:10
+Last modified: 2024-10-18 17:46:10
+Last accessed: 2024-10-18 17:46:10
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 64341
+Subdirectories: 12510
+Distinct file types: 101
+Structure metrics: max depth=13, max breadth=13937, max subdirectory breadth=680, average breadth=6.14, visited directories=12511
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 3.4636%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 17017
+  - .png: 12398
+  - .material: 4354
+  - .meta: 4189
+  - .frag: 3696
+  - .vert: 3460
+  - .json: 3435
+  - .xshader: 3382
+  - .mesh: 2613
+  - .wavedatav2: 1957
+  - .lua: 1779
+  - .rt: 1457
+  - .config: 824
+  - .svg: 627
+  - .scene: 580
+  - .js: 455
+  - .prefab: 405
+  - .txt: 365
+  - .ttf: 196
+  - .tag: 172
+  - .css: 129
+  - .mp3: 128
+  - .jpeg: 59
+  - .model: 57
+  - .zip: 57
+  - .html: 51
+  - .log: 48
+  - .mp4: 45
+  - .ini: 43
+  - .texture: 34
+  - .otf: 28
+  - .md5: 23
+  - .cache: 21
+  - .gif: 21
+  - .pcm: 20
+  - .aac: 16
+  - .hot: 16
+  - .bin: 15
+  - .crc: 15
+  - .db: 13
+  - .cube: 11
+  - .ausl: 7
+  - .info: 7
+  - .ldb: 7
+  - .m4a: 7
+  - .old: 6
+  - .pftconfig: 5
+  - .vesf: 5
+  - .webp: 5
+  - .ds_store: 4
+  - .map: 4
+  - .db-shm: 3
+  - .db-wal: 3
+  - .fsh: 3
+  - .vsh: 3
+  - .yuv: 3
+  - .beat: 2
+  - .clang-format: 2
+  - .dat: 2
+  - .db-journal: 2
+  - .dll: 2
+  - .fingerprint: 2
+  - .fs: 2
+  - .iproj: 2
+  - .jpg: 2
+  - .rcc: 2
+  - .sig: 2
+  - .version: 2
+  - .yml: 2
+  - .0_aiavatarmask: 1
+  - .0_auto-beauty: 1
+  - .0_auto-beauty2: 1
+  - .0_auto-beauty3: 1
+  - .0_bubble: 1
+  - .0_bubble2: 1
+  - .0_canvas: 1
+  - .0_effects2: 1
+  - .0_face-prop: 1
+  - .0_flower2: 1
+  - .0_fonts: 1
+  - .0_makeup: 1
+  - .0_shape-animation: 1
+  - .0_smart_color_adjust: 1
+  - .0_split-screen: 1
+  - .0_sticker: 1
+  - .0_text: 1
+  - .0_text_glow: 1
+  - .0_tone: 1
+  - .0_transitions: 1
+  - .0_video: 1
+  - .0_videomask: 1
+  - .0_voice-change: 1
+  - .0a60950: 1
+  - .567f5df81ea0c9bdcfb7221f0ea091893150f8c16e3012e4f0314ba3d43f1632: 1
+  - .bdic: 1
+  - .default: 1
+  - .textclipping: 1
+  - .tga: 1
+  - .warpx: 1
+  - .warpxmodel: 1
+  - .wav: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\kingsoft
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 2.74 GB (2937902537 bytes)
+Size on disk: 2.76 GB (2964787200 bytes)
+Creation time: 2023-05-13 21:35:08
+Last modified: 2025-04-18 13:35:10
+Last accessed: 2026-03-28 11:26:57
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 11148
+Subdirectories: 3494
+Distinct file types: 94
+Structure metrics: max depth=14, max breadth=267, max subdirectory breadth=225, average breadth=4.19, visited directories=3495
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.3806%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .svg: 2024
+  - .js: 1371
+  - .png: 1097
+  - .dll: 970
+  - .xml: 949
+  - .kuip: 654
+  - .prog: 534
+  - .html: 464
+  - .qm: 455
+  - .css: 424
+  - .ico: 269
+  - .ini: 219
+  - .bmp: 216
+  - .gif: 185
+  - .data: 171
+  - .json: 120
+  - .exe: 66
+  - .rcc: 65
+  - .cfg: 61
+  - .lex: 52
+  - [no extension]: 50
+  - .webp: 48
+  - .pptx: 46
+  - .dat: 38
+  - .pluginspec: 38
+  - .ttf: 38
+  - .txt: 38
+  - .wav: 38
+  - .doc: 32
+  - .dll_bk: 28
+  - .exe_bk: 27
+  - .kui: 22
+  - .xlsx: 22
+  - .png_bk: 16
+  - .dic: 14
+  - .docx: 14
+  - .potx: 14
+  - .tag: 14
+  - .zip: 14
+  - .woff: 12
+  - .conf: 10
+  - .eftx: 10
+  - .thmx: 10
+  - .bin: 8
+  - .dpt: 8
+  - .inf: 8
+  - .msix: 8
+  - .pak: 8
+  - .svga: 8
+  - .dotx: 6
+  - .emf: 6
+  - .ini_bk: 6
+  - .jpg: 6
+  - .rms: 6
+  - .ukey: 6
+  - .wpt: 6
+  - .xls: 6
+  - .aff: 4
+  - .csv: 4
+  - .dotm: 4
+  - .et: 4
+  - .ett: 4
+  - .mp4: 4
+  - .pdf: 4
+  - .ppt: 4
+  - .ts: 4
+  - .txt_bk: 4
+  - .woff2: 4
+  - .db: 3
+  - .ccl: 2
+  - .chm: 2
+  - .crt: 2
+  - .docx_bk: 2
+  - .dps: 2
+  - .dsc: 2
+  - .eot: 2
+  - .et_bk: 2
+  - .md: 2
+  - .mp3: 2
+  - .olb: 2
+  - .pdf_bk: 2
+  - .pem: 2
+  - .plg: 2
+  - .pptx_bk: 2
+  - .qrc: 2
+  - .rpk: 2
+  - .styx: 2
+  - .tmp: 2
+  - .wps: 2
+  - .xls_bk: 2
+  - .dll_d_105142f7: 1
+  - .dll_d_1f386d09: 1
+  - .dll_d_261a16e: 1
+  - .pri: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Microsoft
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 4.19 GB (4495877942 bytes)
+Size on disk: 4.25 GB (4560343040 bytes)
+Creation time: 2025-07-14 14:17:30
+Last modified: 2026-01-10 23:03:55
+Last accessed: 2026-03-28 12:59:22
+Owner: ALTAIR\pereg
+Group: NT AUTHORITY\SYSTEM
+Files: 25431
+Subdirectories: 2739
+Distinct file types: 162
+Structure metrics: max depth=13, max breadth=4160, max subdirectory breadth=126, average breadth=10.29, visited directories=2738
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 2.1236%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 9325
+  - .js: 4050
+  - .xml: 3228
+  - .ts: 1596
+  - .png: 1381
+  - .json: 1218
+  - .odl: 669
+  - .svg: 487
+  - .resjson: 321
+  - .bin: 280
+  - .html: 185
+  - .md: 184
+  - .dll: 181
+  - .map: 175
+  - .log: 125
+  - .webp: 118
+  - .css: 108
+  - .mui: 95
+  - .old: 95
+  - .hyb: 89
+  - .resw: 86
+  - .txt: 86
+  - .db: 76
+  - .lock: 69
+  - .ldb: 68
+  - .exe: 66
+  - .ini: 59
+  - .odlgz: 58
+  - .woff: 58
+  - .woff2: 57
+  - .ttf: 56
+  - .jpg: 45
+  - .tbres: 44
+  - .dat: 38
+  - .gz: 33
+  - .qml: 32
+  - .mp4: 30
+  - .tsv: 30
+  - .mts: 29
+  - .tmp: 25
+  - .cjs: 24
+  - .adml: 17
+  - .done: 17
+  - .fingerprint: 17
+  - .lnk: 17
+  - .aodl: 16
+  - .eslintrc: 15
+  - .jpeg: 15
+  - .cts: 14
+  - .yml: 14
+  - .otf: 12
+  - .wpl: 12
+  - .config: 11
+  - .ico: 11
+  - .pb: 11
+  - .vcrd: 11
+  - .nycrc: 10
+  - .bundle: 9
+  - .db-journal: 9
+  - .qmltypes: 9
+  - .jrs: 8
+  - .gif: 7
+  - .sa: 7
+  - .blob: 6
+  - .cache: 6
+  - .otc: 6
+  - .pma: 6
+  - .md5: 5
+  - .pri: 5
+  - .vstemplate: 5
+  - .chk: 4
+  - .db-shm: 4
+  - .db-wal: 4
+  - .dmp: 4
+  - .jfm: 4
+  - .keystore: 4
+  - .s: 4
+  - .sqlite: 4
+  - .theme: 4
+  - .ds_store: 3
+  - .list: 3
+  - .mjs: 3
+  - .vssettings: 3
+  - .wxs: 3
+  - .0_2026-03-18: 2
+  - .bak: 2
+  - .c4: 2
+  - .ctm: 2
+  - .cur: 2
+  - .customui: 2
+  - .edb: 2
+  - .etl: 2
+  - .flow: 2
+  - .log1: 2
+  - .log2: 2
+  - .otc-shm: 2
+  - .otc-wal: 2
+  - .regtrans-ms: 2
+  - .scss: 2
+  - .0_2023-11-16: 1
+  - .0_2025-01-23: 1
+  - .0-07218068cfa519613b646f716c6dc5b8db19e3779fe69bbb567d349ccd549385: 1
+  - .0-48b11410dc937a1723bf4c5ad33ecdb286d8ec69544241bc373f753e64b396c1: 1
+  - .0-a82cb2897a8bf9445d68dcc2be05af89ad4b2fda1fddb2952693be7cd5353ad3: 1
+  - .1_2024-01-11: 1
+  - .1_2025-04-24: 1
+  - .2_2024-04-12: 1
+  - .2_2025-06-24: 1
+  - .26123bef7d73536450862d2c4d44963d720aa80b6fc2d8496f559cb9c1fdeb00: 1
+  - .2c13e08ab14d5da89694f0820f13eced132c319bc434bd21e23572581a3e70a4: 1
+  - .3_2024-06-18: 1
+  - .32_13419077013807075: 1
+  - .32_13419100088851513: 1
+  - .3912ae3b63a3e8ee555d67078fbbddcc8b8441a2ea309a96030a8239637c1476: 1
+  - .4_2024-07-23: 1
+  - .4_2025-10-20: 1
+  - .42af0d1905c8f1d8f6167365271c4549a73603b838ba58b9a664c57c00db1ee5: 1
+  - .44c48b9ecd87acddd850f9aa5e1c9d48b7a398dec13d376cd62d55dadbd464a5: 1
+  - .5_2024-08-20: 1
+  - .6_2024-10-24: 1
+  - .7_2023-09-19: 1
+  - .8bfd50d350d47445b57bb1d61bbde41ceda7ac43dc81fce95bf1ac646d97d2a0: 1
+  - .9_2023-10-26: 1
+  - .a81d1959892ae4180554347df1b97834abba2e1a5e6b9aeba000ecea26eabecc: 1
+  - .admx: 1
+  - .assemblymetadata: 1
+  - .baf: 1
+  - .baj: 1
+  - .bat: 1
+  - .bdic: 1
+  - .blf: 1
+  - .c4b45940980de267593e38fc3bcee9abb1886239db94d11c879120f684187bd2: 1
+  - .cacheinputsfingerprint: 1
+  - .catalogs: 1
+  - .cookie: 1
+  - .data: 1
+  - .drconf: 1
+  - .err: 1
+  - .jshintrc: 1
+  - .lastupdatedate: 1
+  - .markov: 1
+  - .mp3: 1
+  - .mpack: 1
+  - .msbak: 1
+  - .msix: 1
+  - .npmignore: 1
+  - .one: 1
+  - .ort: 1
+  - .scan: 1
+  - .store: 1
+  - .thumbnailcachecreated: 1
+  - .tsx: 1
+  - .updateuri: 1
+  - .usage: 1
+  - .uuid: 1
+  - .vpol: 1
+  - .vsch: 1
+  - .vstdir: 1
+  - .vstman: 1
+  - .wasm: 1
+  - .wav: 1
+  - .wmdb: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\ms-playwright
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.12 GB (1205331536 bytes)
+Size on disk: 1.13 GB (1208389632 bytes)
+Creation time: 2025-05-11 17:05:27
+Last modified: 2026-03-02 01:34:23
+Last accessed: 2026-03-28 11:27:13
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 1009
+Subdirectories: 75
+Distinct file types: 25
+Structure metrics: max depth=8, max breadth=220, max subdirectory breadth=16, average breadth=14.26, visited directories=76
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.5627%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .pak: 446
+  - .svg: 219
+  - .hyb: 104
+  - .dll: 91
+  - .js: 50
+  - .png: 26
+  - .exe: 22
+  - [no extension]: 13
+  - .json: 11
+  - .dat: 4
+  - .ini: 4
+  - .bin: 2
+  - .css: 2
+  - .ja: 2
+  - .pb: 2
+  - .xml: 2
+  - .1: 1
+  - .cfg: 1
+  - .err: 1
+  - .headless_shell: 1
+  - .html: 1
+  - .list: 1
+  - .manifest: 1
+  - .session: 1
+  - .ttf: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\npm-cache
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\npm-cache
+Size: 11.32 GB (12150550538 bytes)
+Size on disk: 11.49 GB (12336709632 bytes)
+Creation time: 2025-04-18 13:24:15
+Last modified: 2025-04-18 13:24:15
+Last accessed: 2025-04-18 13:24:15
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 70573
+Subdirectories: 28320
+Distinct file types: 55
+Structure metrics: max depth=12, max breadth=19871, max subdirectory breadth=256, average breadth=3.49, visited directories=28319
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 5.7447%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 47821
+  - .js: 11892
+  - .ts: 3819
+  - .map: 1693
+  - .json: 1336
+  - .md: 1335
+  - .mjs: 707
+  - .mts: 563
+  - .yml: 211
+  - .eslintrc: 204
+  - .nycrc: 151
+  - .html: 122
+  - .ps1: 119
+  - .cmd: 88
+  - .cjs: 62
+  - .css: 61
+  - .sh: 50
+  - .editorconfig: 47
+  - .svg: 42
+  - .txt: 37
+  - .cts: 30
+  - .xml: 25
+  - .npmignore: 15
+  - .out: 15
+  - .log: 12
+  - .eslintignore: 11
+  - .png: 10
+  - .ttf: 10
+  - .jsx: 8
+  - .markdown: 8
+  - .tsx: 8
+  - .iml: 7
+  - .pegjs: 6
+  - .lock: 4
+  - .svelte: 4
+  - .tsbuildinfo: 4
+  - .vue: 4
+  - .node: 3
+  - .babelrc: 2
+  - .bnf: 2
+  - .bsd: 2
+  - .cvsignore: 2
+  - .exe: 2
+  - .flowconfig: 2
+  - .gz: 2
+  - .ico: 2
+  - .jshintrc: 2
+  - .mdown: 2
+  - .wasm: 2
+  - .yaml: 2
+  - .applescript: 1
+  - .dtd: 1
+  - .gitmodules: 1
+  - .nvmrc: 1
+  - .webmanifest: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\pypoetry
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.31 GB (1401381378 bytes)
+Size on disk: 1.36 GB (1459216384 bytes)
+Creation time: 2025-07-04 14:39:51
+Last modified: 2025-07-04 14:39:51
+Last accessed: 2026-03-28 11:30:29
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 23077
+Subdirectories: 11472
+Distinct file types: 79
+Structure metrics: max depth=16, max breadth=406, max subdirectory breadth=402, average breadth=3.01, visited directories=11473
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6795%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 9502
+  - .pyi: 4344
+  - [no extension]: 2988
+  - .json: 1819
+  - .gz: 1754
+  - .txt: 422
+  - .whl: 405
+  - .pyc: 227
+  - .typed: 212
+  - .pyd: 186
+  - .exe: 134
+  - .f90: 122
+  - .afm: 120
+  - .ttf: 76
+  - .csv: 66
+  - .css: 60
+  - .mplstyle: 58
+  - .h: 54
+  - .f: 48
+  - .png: 46
+  - .lib: 44
+  - .svg: 38
+  - .c: 26
+  - .pdf: 22
+  - .pxd: 22
+  - .pyx: 20
+  - .hash: 16
+  - .rst: 16
+  - .dll: 15
+  - .md: 14
+  - .pyf: 14
+  - .npy: 12
+  - .html: 10
+  - .js: 10
+  - .npz: 10
+  - .pth: 10
+  - .apache: 8
+  - .bsd: 8
+  - .tex: 8
+  - .bat: 6
+  - .build: 6
+  - .cfg: 6
+  - .ini: 6
+  - .pem: 6
+  - .1: 4
+  - .apache2: 4
+  - .dat: 4
+  - .f2py_f2cmap: 4
+  - .mit: 4
+  - .tmpl: 4
+  - .bash: 2
+  - .conf: 2
+  - .cpp: 2
+  - .egg: 2
+  - .external: 2
+  - .f95: 2
+  - .fish: 2
+  - .fits: 2
+  - .gitignore: 2
+  - .inc: 2
+  - .jpg: 2
+  - .lua: 2
+  - .markdown-it: 2
+  - .nu: 2
+  - .odt: 2
+  - .pc: 2
+  - .pkl: 2
+  - .ps1: 2
+  - .pxi: 2
+  - .sty: 2
+  - .tag: 2
+  - .template: 2
+  - .virtualenv: 2
+  - .xml: 2
+  - .xrc: 2
+  - .yaml: 2
+  - .zip: 2
+  - .zsh: 2
+  - .toml: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\ShadowBot
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.32 GB (1414036436 bytes)
+Size on disk: 1.35 GB (1446178816 bytes)
+Creation time: 2023-11-01 17:43:49
+Last modified: 2025-03-15 16:41:13
+Last accessed: 2026-03-28 11:30:38
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 13848
+Subdirectories: 1300
+Distinct file types: 73
+Structure metrics: max depth=14, max breadth=629, max subdirectory breadth=53, average breadth=11.64, visited directories=1301
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6734%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 4872
+  - .pyc: 4813
+  - [no extension]: 2804
+  - .dll: 381
+  - .can_deleted: 152
+  - .log: 109
+  - .pyi: 95
+  - .pyd: 67
+  - .txt: 64
+  - .c: 50
+  - .pyx: 46
+  - .h: 44
+  - .exe: 39
+  - .pxd: 28
+  - .json: 27
+  - .whl: 26
+  - .xml: 24
+  - .al: 16
+  - .f90: 16
+  - .csv: 14
+  - .ldb: 11
+  - .old: 10
+  - .typed: 9
+  - .(null)log: 8
+  - .in: 8
+  - .manifest: 6
+  - .onnx: 6
+  - .png: 6
+  - .tasklog: 5
+  - .xsl: 5
+  - .ini: 4
+  - .md: 4
+  - .npy: 4
+  - .pdb: 4
+  - .pkl: 4
+  - .tpl: 4
+  - .xlsx: 4
+  - .crx: 3
+  - .db3: 3
+  - .pem: 3
+  - .pth: 3
+  - .tab: 3
+  - .bdic: 2
+  - .cfg: 2
+  - .config: 2
+  - .egg: 2
+  - .f: 2
+  - .fingerprint: 2
+  - .g4: 2
+  - .jpg: 2
+  - .lib: 2
+  - .npz: 2
+  - .sig: 2
+  - .sigstore: 2
+  - .xpi: 2
+  - .1: 1
+  - .4: 1
+  - .apache: 1
+  - .bsd: 1
+  - .dat: 1
+  - .db: 1
+  - .db-journal: 1
+  - .f2py_f2cmap: 1
+  - .fits: 1
+  - .gz: 1
+  - .kml: 1
+  - .mod: 1
+  - .parquet: 1
+  - .pxi: 1
+  - .rtf: 1
+  - .settings: 1
+  - .zi: 1
+  - .zip: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Temp
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 8.57 GB (9200183304 bytes)
+Size on disk: 8.58 GB (9209356288 bytes)
+Creation time: 2025-07-14 14:17:30
+Last modified: 2026-03-28 13:01:10
+Last accessed: 2026-03-28 13:01:10
+Owner: ALTAIR\pereg
+Group: NT AUTHORITY\SYSTEM
+Files: 4800
+Subdirectories: 1267
+Distinct file types: 41
+Structure metrics: max depth=11, max breadth=635, max subdirectory breadth=500, average breadth=4.78, visited directories=1268
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 4.2884%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .dll: 2328
+  - .cjs: 635
+  - .vsix: 463
+  - .cab: 350
+  - .msi: 203
+  - .png: 145
+  - .exe: 126
+  - .config: 114
+  - .log: 90
+  - [no extension]: 80
+  - .xml: 60
+  - .tmp: 43
+  - .json: 34
+  - .etl: 22
+  - .pri: 18
+  - .ico: 13
+  - .txt: 13
+  - .dat: 9
+  - .ps1: 7
+  - .db: 6
+  - .imagemanifest: 6
+  - .lck: 6
+  - .md: 4
+  - .jar: 3
+  - .node: 3
+  - .js: 2
+  - .lock: 2
+  - .zip: 2
+  - .0, culture=neutral, publickeytoken=null: 1
+  - .flag: 1
+  - .javaccompiler11282210064693259173arguments: 1
+  - .javaccompiler12242090278854633724arguments: 1
+  - .javaccompiler7055654843931851727arguments: 1
+  - .nupkg: 1
+  - .opc: 1
+  - .ses: 1
+  - .so: 1
+  - .sock: 1
+  - .vhdx: 1
+  - .yaml: 1
+  - .z: 1
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\uv
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\uv
+Size: 1.96 GB (2109683930 bytes)
+Size on disk: 2.05 GB (2198290432 bytes)
+Creation time: 2025-04-18 13:25:12
+Last modified: 2025-04-18 13:25:12
+Last accessed: 2025-04-18 13:25:12
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 35770
+Subdirectories: 5017
+Distinct file types: 168
+Structure metrics: max depth=14, max breadth=6951, max subdirectory breadth=404, average breadth=8.13, visited directories=5018
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.0237%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 16739
+  - .h: 9349
+  - [no extension]: 2405
+  - .json: 992
+  - .gz: 896
+  - .pyc: 729
+  - .pyi: 456
+  - .pyd: 357
+  - .lock: 345
+  - .txt: 309
+  - .js: 291
+  - .msgpack: 189
+  - .typed: 184
+  - .http: 183
+  - .rkyv: 160
+  - .lib: 150
+  - .png: 118
+  - .md: 117
+  - .a: 115
+  - .mat: 110
+  - .html: 97
+  - .testcase: 72
+  - .pxd: 68
+  - .f90: 60
+  - .cpp: 59
+  - .doctest: 59
+  - .hpp: 57
+  - .cuh: 56
+  - .jpg: 48
+  - .sav: 47
+  - .pyx: 46
+  - .pxi: 44
+  - .0-py3-none-any: 39
+  - .csv: 36
+  - .dll: 34
+  - .npy: 34
+  - .1-py3-none-any: 33
+  - .exe: 31
+  - .cmake: 29
+  - .dat: 26
+  - .cc: 24
+  - .pickle: 24
+  - .f: 23
+  - .npz: 23
+  - .wav: 22
+  - .xml: 18
+  - .3-py3-none-any: 17
+  - .al: 16
+  - .arff: 16
+  - .htm: 14
+  - .py3-none-any: 14
+  - .ini: 13
+  - .pkl: 11
+  - .sh: 11
+  - .xsl: 11
+  - .gif: 10
+  - .0-cp312-cp312-win_amd64: 9
+  - .2-py3-none-any: 9
+  - .bz2: 9
+  - .css: 9
+  - .cu: 9
+  - .c: 8
+  - .cfg: 8
+  - .hash: 8
+  - .ps1: 8
+  - .tab: 8
+  - .2-cp312-cp312-win_amd64: 7
+  - .4-py3-none-any: 7
+  - .pyf: 7
+  - .rst: 7
+  - .tpl: 7
+  - .1-cp312-cp312-win_amd64: 6
+  - .bat: 6
+  - .build: 6
+  - .yaml: 6
+  - .7-py3-none-any: 5
+  - .asp: 5
+  - .gzip: 5
+  - .lzma: 5
+  - .pem: 5
+  - .pys: 5
+  - .xz: 5
+  - .6-py3-none-any: 4
+  - .gitignore: 4
+  - .orc: 4
+  - .parquet: 4
+  - .pth: 4
+  - .toml: 4
+  - .ts: 4
+  - .whl: 4
+  - .apache: 3
+  - .apache2: 3
+  - .bmp: 3
+  - .bsd: 3
+  - .mit: 3
+  - .mjs: 3
+  - .nc: 3
+  - .svg: 3
+  - .tag: 3
+  - .ttf: 3
+  - .vbs: 3
+  - .z: 3
+  - .1: 2
+  - .15-py3-none-any: 2
+  - .16-py3-none-any: 2
+  - .3-cp312-cp312-win_amd64: 2
+  - .5-py3-none-any: 2
+  - .8-py3-none-any: 2
+  - .a99: 2
+  - .asm: 2
+  - .b99: 2
+  - .csh: 2
+  - .f2py_f2cmap: 2
+  - .fish: 2
+  - .g4: 2
+  - .in: 2
+  - .keep: 2
+  - .lark: 2
+  - .nu: 2
+  - .obj: 2
+  - .tif: 2
+  - .tmpl: 2
+  - .zi: 2
+  - .0-cp38-abi3-win_amd64: 1
+  - .0-py3-none-win_amd64: 1
+  - .1-cp39-abi3-win_amd64: 1
+  - .10-py3-none-any: 1
+  - .11-py3-none-any: 1
+  - .13-py3-none-any: 1
+  - .14-cp312-cp312-win_amd64: 1
+  - .15-cp312-cp312-win_amd64: 1
+  - .16-py312-none-any: 1
+  - .18-py3-none-any: 1
+  - .20-py3-none-any: 1
+  - .20250306-py3-none-any: 1
+  - .20250319-py3-none-any: 1
+  - .26-py3-none-any: 1
+  - .3-cp38-abi3-win_amd64: 1
+  - .31-py3-none-any: 1
+  - .4-cp312-cp312-win_amd64: 1
+  - .40-py3-none-any: 1
+  - .46-py3-none-any: 1
+  - .6-cp312-cp312-win_amd64: 1
+  - .9-py3-none-any: 1
+  - .ani: 1
+  - .bazel: 1
+  - .bzl: 1
+  - .chm: 1
+  - .cmd: 1
+  - .dev14-py3-none-any: 1
+  - .egg: 1
+  - .f95: 1
+  - .feather: 1
+  - .fits: 1
+  - .git: 1
+  - .ico: 1
+  - .idl: 1
+  - .inc: 1
+  - .pc: 1
+  - .psf: 1
+  - .pyw: 1
+  - .rc: 1
+  - .rng: 1
+  - .sct: 1
+  - .template: 1
+  - .thrift: 1
+  - .yml: 1
+  - .zip: 1
+
+================================================================================
+Path: C:\Users\pereg\.browser4
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 194.58 MB (204032448 bytes)
+Size on disk: 200.36 MB (210096128 bytes)
+Creation time: 2026-01-18 01:20:22
+Last modified: 2026-03-27 22:41:46
+Last accessed: 2026-03-28 11:31:42
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 2489
+Subdirectories: 7846
+Distinct file types: 19
+Structure metrics: max depth=8, max breadth=330, max subdirectory breadth=330, average breadth=1.32, visited directories=7846
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.0978%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .md: 833
+  - .log: 515
+  - .json: 449
+  - .txt: 359
+  - .jsonl: 115
+  - .xsd: 78
+  - .ttf: 54
+  - .py: 45
+  - .xml: 13
+  - .crc: 8
+  - [no extension]: 7
+  - .sh: 4
+  - .js: 2
+  - .parquet: 2
+  - .gz: 1
+  - .html: 1
+  - .jar: 1
+  - .pdf: 1
+  - .properties: 1
+
+================================================================================
+Path: C:\Users\pereg\scoop
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 2.78 GB (2985083280 bytes)
+Size on disk: 2.90 GB (3117826048 bytes)
+Creation time: 2025-07-04 01:19:54
+Last modified: 2025-07-04 01:29:27
+Last accessed: 2026-03-28 11:32:36
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 51611
+Subdirectories: 9365
+Distinct file types: 172
+Structure metrics: max depth=20, max breadth=1989, max subdirectory breadth=231, average breadth=6.52, visited directories=9350
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.4519%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .java: 17793
+  - .html: 13322
+  - .go: 10372
+  - .json: 1523
+  - .txt: 1474
+  - .jar: 1327
+  - .kt: 1027
+  - .s: 617
+  - .png: 442
+  - [no extension]: 424
+  - .crt: 407
+  - .bin: 352
+  - .lock: 229
+  - .class: 216
+  - .c: 133
+  - .golden: 129
+  - .properties: 112
+  - .out: 101
+  - .ps1: 90
+  - .marker: 80
+  - .template: 77
+  - .exe: 58
+  - .input: 50
+  - .md: 50
+  - .gradlemoduleservices: 49
+  - .js: 49
+  - .mo: 48
+  - .receipt: 46
+  - .zip: 44
+  - .tar: 42
+  - .h: 41
+  - .svg: 40
+  - .css: 39
+  - .test: 37
+  - .sng: 35
+  - .pem: 32
+  - .sample: 28
+  - .jpeg: 26
+  - .license: 25
+  - .dll: 23
+  - .obj: 20
+  - .rules: 20
+  - .syso: 20
+  - .mod: 19
+  - .expect-noinput: 18
+  - .base64: 17
+  - .gif: 17
+  - .conf: 16
+  - .expect: 16
+  - .go2: 16
+  - .gox: 16
+  - .reg: 16
+  - .sh: 15
+  - .sum: 15
+  - .bat: 14
+  - .nexts: 14
+  - .yml: 14
+  - .bash: 12
+  - .bz2: 11
+  - .elf: 11
+  - .a: 10
+  - .rev: 10
+  - .src: 10
+  - .cmd: 9
+  - .idx: 9
+  - .in: 9
+  - .pack: 9
+  - .pl: 9
+  - .shim: 9
+  - .xml: 9
+  - .log: 8
+  - .tmpl: 8
+  - .kotlin_module: 7
+  - .gitignore: 6
+  - .groovy: 6
+  - .imp: 6
+  - .projectconfigureaction: 6
+  - .gz: 5
+  - .rc: 4
+  - .sha256: 4
+  - .sha512: 4
+  - .tmp: 4
+  - .xsd: 4
+  - .dat: 3
+  - .gitattributes: 3
+  - .lck: 3
+  - .ok: 3
+  - .tag: 3
+  - .zst: 3
+  - .1: 2
+  - .buildsrcprojectconfigurationaction: 2
+  - .cc: 2
+  - .cfg: 2
+  - .cs: 2
+  - .editorconfig: 2
+  - .elf4: 2
+  - .extensionmodule: 2
+  - .f90: 2
+  - .gpg: 2
+  - .gradleapispecprovider: 2
+  - .key: 2
+  - .klib: 2
+  - .m: 2
+  - .node_map: 2
+  - .pprof: 2
+  - .sfx: 2
+  - .vendor: 2
+  - .x: 2
+  - .0-20200325131415-0123456789ab: 1
+  - .0-47-generic: 1
+  - .3: 1
+  - .7z: 1
+  - .awk: 1
+  - .bnf: 1
+  - .browser: 1
+  - .chm: 1
+  - .config: 1
+  - .connectionversion4: 1
+  - .cov: 1
+  - .csproj: 1
+  - .csv: 1
+  - .ctl: 1
+  - .db: 1
+  - .dist: 1
+  - .dockerignore: 1
+  - .elf5: 1
+  - .env: 1
+  - .extra: 1
+  - .filters: 1
+  - .gitkeep: 1
+  - .gitkeepdir: 1
+  - .globs2: 1
+  - .gpg-agent: 1
+  - .ignore: 1
+  - .info: 1
+  - .info-1: 1
+  - .info-2: 1
+  - .info-3: 1
+  - .ion: 1
+  - .keyboxd: 1
+  - .list: 1
+  - .macho: 1
+  - .macho4: 1
+  - .msi: 1
+  - .norm: 1
+  - .notzip: 1
+  - .o: 1
+  - .original: 1
+  - .pbxproj: 1
+  - .pdf: 1
+  - .pgo: 1
+  - .plan9: 1
+  - .ps1xml: 1
+  - .psd1: 1
+  - .py: 1
+  - .raw: 1
+  - .rendered: 1
+  - .scdaemon: 1
+  - .slf4jserviceprovider: 1
+  - .sln: 1
+  - .so_: 1
+  - .ssh: 1
+  - .swig: 1
+  - .swigcxx: 1
+  - .ttt: 1
+  - .types: 1
+  - .vcxproj: 1
+  - .xcscheme: 1
+  - .xcsettings: 1
+  - .xcworkspacedata: 1
+  - .xsl: 1
+  - .yaml: 1
+
+================================================================================
+Path: C:\Users\pereg\go
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\go
+Size: 1.78 GB (1912892879 bytes)
+Size on disk: 1.96 GB (2102091776 bytes)
+Creation time: 2025-07-18 20:21:49
+Last modified: 2025-07-18 20:21:49
+Last accessed: 2025-07-18 20:21:49
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 71550
+Subdirectories: 18449
+Distinct file types: 462
+Structure metrics: max depth=19, max breadth=1230, max subdirectory breadth=766, average breadth=4.88, visited directories=18450
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.9789%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .go: 44833
+  - .json: 3773
+  - [no extension]: 2695
+  - .mod: 2551
+  - .h: 2272
+  - .md: 1614
+  - .test: 1441
+  - .txt: 1191
+  - .info: 1016
+  - .yml: 868
+  - .golden: 643
+  - .c: 594
+  - .toml: 573
+  - .lock: 553
+  - .zip: 510
+  - .s: 479
+  - .proto: 477
+  - .ziphash: 363
+  - .yaml: 351
+  - .txtar: 341
+  - .gitignore: 284
+  - .sum: 262
+  - .snap: 254
+  - .sh: 252
+  - .png: 223
+  - .html: 209
+  - .tmpl: 200
+  - .in: 153
+  - .dat: 132
+  - .gox: 101
+  - .js: 95
+  - .gz: 84
+  - .pem: 78
+  - .input: 77
+  - .css: 68
+  - .gif: 57
+  - .text: 56
+  - .expect-noinput: 54
+  - .ct: 50
+  - .gitattributes: 50
+  - .expect: 48
+  - .template: 46
+  - .bin: 45
+  - .a: 41
+  - .svg: 39
+  - .ts: 39
+  - .tsx: 37
+  - .cfg: 36
+  - .0: 35
+  - .bash: 35
+  - .env: 35
+  - .bazel: 34
+  - .hlp: 32
+  - .tcl: 32
+  - .tar: 28
+  - .editorconfig: 26
+  - .ini: 25
+  - .p: 25
+  - .xml: 24
+  - .ico: 22
+  - .mdx: 19
+  - .conf: 18
+  - .dot: 17
+  - .gotemp: 16
+  - .vue: 16
+  - .want: 15
+  - .db: 14
+  - .key: 14
+  - .string: 14
+  - .obj: 12
+  - .exe: 11
+  - .map: 11
+  - .zst: 11
+  - .blob: 10
+  - .installer: 10
+  - .mk: 10
+  - .o: 10
+  - .tmp: 10
+  - .dockerignore: 9
+  - .star: 9
+  - .cpu: 8
+  - .crt: 8
+  - .cs: 8
+  - .py: 8
+  - .work: 8
+  - .cer: 7
+  - .csv: 7
+  - .dockerfile: 7
+  - .focus: 7
+  - .mailmap: 7
+  - .nix: 7
+  - .pdf: 7
+  - .service: 7
+  - .syso: 7
+  - .y: 7
+  - .asc: 6
+  - .bench: 6
+  - .gliffy: 6
+  - .mp3: 6
+  - .multi: 6
+  - .ps1: 6
+  - .rsp: 6
+  - .sql: 6
+  - .swagger-codegen-ignore: 6
+  - .bat: 5
+  - .deflate: 5
+  - .erb: 5
+  - .gitmodules: 5
+  - .pprof: 5
+  - .prettierrc: 5
+  - .rawsnappy: 5
+  - .rev: 5
+  - .xcf: 5
+  - .1: 4
+  - .2: 4
+  - .cert: 4
+  - .common: 4
+  - .contention: 4
+  - .envrc: 4
+  - .hide: 4
+  - .j2: 4
+  - .jpg: 4
+  - .pb: 4
+  - .plg: 4
+  - .plist: 4
+  - .temp: 4
+  - .vtt: 4
+  - .xlsx: 4
+  - .4: 3
+  - .5: 3
+  - .callgrind: 3
+  - .docx: 3
+  - .gitkeep: 3
+  - .heap: 3
+  - .ignore: 3
+  - .license: 3
+  - .lua: 3
+  - .macho: 3
+  - .mp4: 3
+  - .so: 3
+  - .socket: 3
+  - .sqlite: 3
+  - .src: 3
+  - .traces: 3
+  - .woff2: 3
+  - .6: 2
+  - .avif: 2
+  - .awk: 2
+  - .base64: 2
+  - .big: 2
+  - .binary: 2
+  - .binpb: 2
+  - .bpf: 2
+  - .bzl: 2
+  - .cab: 2
+  - .cff: 2
+  - .cgi: 2
+  - .cjs: 2
+  - .client: 2
+  - .cnf: 2
+  - .codespellignore: 2
+  - .codespellrc: 2
+  - .comments: 2
+  - .confd: 2
+  - .config: 2
+  - .dbf: 2
+  - .default: 2
+  - .deps: 2
+  - .dind: 2
+  - .doc: 2
+  - .dwg: 2
+  - .el: 2
+  - .explain: 2
+  - .fits: 2
+  - .gcfg: 2
+  - .gcloudignore: 2
+  - .geojson: 2
+  - .go-autogen: 2
+  - .golang: 2
+  - .golang-tip: 2
+  - .gotip: 2
+  - .gotmpl: 2
+  - .hcl: 2
+  - .hujson: 2
+  - .ics: 2
+  - .imports: 2
+  - .init: 2
+  - .initd: 2
+  - .install: 2
+  - .integration-daemon-start: 2
+  - .integration-daemon-stop: 2
+  - .integration-test-helpers: 2
+  - .jar: 2
+  - .jpeg: 2
+  - .jwt: 2
+  - .libyaml: 2
+  - .log: 2
+  - .lycheeignore: 2
+  - .mc: 2
+  - .meta: 2
+  - .mkwinres: 2
+  - .msg: 2
+  - .msi: 2
+  - .mts: 2
+  - .nanorc: 2
+  - .ndjson: 2
+  - .new: 2
+  - .notzip: 2
+  - .oga: 2
+  - .old: 2
+  - .out: 2
+  - .p7s: 2
+  - .ppt: 2
+  - .pptx: 2
+  - .pub: 2
+  - .rc: 2
+  - .rpm: 2
+  - .rst: 2
+  - .rules: 2
+  - .sample: 2
+  - .shp: 2
+  - .simple: 2
+  - .swaggo: 2
+  - .sysconfig: 2
+  - .t: 2
+  - .tags: 2
+  - .testbuildmultistagecopy: 2
+  - .testbuildpreserveownership: 2
+  - .thread: 2
+  - .tmlanguage: 2
+  - .tmpreferences: 2
+  - .token: 2
+  - .validate: 2
+  - .vcf: 2
+  - .vte: 2
+  - .windows: 2
+  - .workflow: 2
+  - .wprp: 2
+  - .xls: 2
+  - .yamllint: 2
+  - .zsh: 2
+  - .0-20180127040603-bd5ef7bd5415: 1
+  - .0-20190215142949-d0b11bdaac8a: 1
+  - .0-20190308221718-c2843e01d9a2: 1
+  - .0-20190423024810-112230192c58: 1
+  - .0-20190620200207-3b0461eec859: 1
+  - .0-20190717185122-a985d3407aa7: 1
+  - .0-20191109212701-97ad0ed33101: 1
+  - .0-20200116055534-eef842397966: 1
+  - .0-20231108232855-2478ac86f678: 1
+  - .0-20231110203233-9a3e6036ecaa: 1
+  - .0-20250102033503-faa5f7b0171c: 1
+  - .0-20250218142911-aa4b98e5adaa: 1
+  - .0-20250417124945-06ef541f3fa3: 1
+  - .10: 1
+  - .11: 1
+  - .12: 1
+  - .13: 1
+  - .14: 1
+  - .15: 1
+  - .16: 1
+  - .17: 1
+  - .18: 1
+  - .19: 1
+  - .20180830191138-d8f796af33cc: 1
+  - .20181226105442-5d4384ee4fb2: 1
+  - .20240526193622-a339e1f7089c: 1
+  - .20250423142747-f3939df9aa3c: 1
+  - .20250523013057-bbc2f4dd71ea: 1
+  - .20250610205101-c26dd3ba555e: 1
+  - .23: 1
+  - .3g2: 1
+  - .3gp: 1
+  - .3mf: 1
+  - .7: 1
+  - .7z: 1
+  - .8: 1
+  - .9: 1
+  - .91: 1
+  - .aac: 1
+  - .aaf: 1
+  - .abnf: 1
+  - .accdb: 1
+  - .adml: 1
+  - .admx: 1
+  - .aiff: 1
+  - .all: 1
+  - .amf: 1
+  - .amr: 1
+  - .ape: 1
+  - .arm: 1
+  - .arm64: 1
+  - .asf: 1
+  - .atom: 1
+  - .au: 1
+  - .avi: 1
+  - .b64: 1
+  - .base: 1
+  - .bazelrc: 1
+  - .bazelversion: 1
+  - .bigfft: 1
+  - .bmp: 1
+  - .bpg: 1
+  - .branch: 1
+  - .bsd-2-clause: 1
+  - .bz2: 1
+  - .checkpoint: 1
+  - .class: 1
+  - .cpio: 1
+  - .cpp: 1
+  - .cpu_no_samples_type: 1
+  - .crash: 1
+  - .cross-compiles: 1
+  - .crx: 1
+  - .csproj: 1
+  - .dae: 1
+  - .dcm: 1
+  - .deb: 1
+  - .debian6: 1
+  - .debug: 1
+  - .def: 1
+  - .defaults: 1
+  - .diff: 1
+  - .disasm: 1
+  - .djvu: 1
+  - .docs: 1
+  - .eot: 1
+  - .epub: 1
+  - .fb: 1
+  - .fdf: 1
+  - .fft: 1
+  - .fish: 1
+  - .flac: 1
+  - .flv: 1
+  - .for-package-center: 1
+  - .fuzz: 1
+  - .gbr: 1
+  - .git-blame-ignore-revs: 1
+  - .glb: 1
+  - .gml: 1
+  - .gmp: 1
+  - .go-version: 1
+  - .godoc_config: 1
+  - .gogo-release: 1
+  - .golint_failures: 1
+  - .google: 1
+  - .goversion: 1
+  - .gpx: 1
+  - .growth: 1
+  - .har: 1
+  - .hdr: 1
+  - .header: 1
+  - .heic: 1
+  - .heif: 1
+  - .helmignore: 1
+  - .htaccess: 1
+  - .icns: 1
+  - .invalid: 1
+  - .ipynb: 1
+  - .jp2: 1
+  - .jpf: 1
+  - .jpm: 1
+  - .jsonl: 1
+  - .jxl: 1
+  - .jxr: 1
+  - .keep: 1
+  - .kml: 1
+  - .kts: 1
+  - .lit: 1
+  - .lnk: 1
+  - .lz: 1
+  - .m3u: 1
+  - .m4a: 1
+  - .manifest: 1
+  - .markdown: 1
+  - .master: 1
+  - .mdb: 1
+  - .midi: 1
+  - .mkv: 1
+  - .mobi: 1
+  - .mov: 1
+  - .mpc: 1
+  - .mpeg: 1
+  - .mqv: 1
+  - .mrc: 1
+  - .nes: 1
+  - .none: 1
+  - .odc: 1
+  - .odf: 1
+  - .odg: 1
+  - .odp: 1
+  - .ods: 1
+  - .odt: 1
+  - .ogv: 1
+  - .openrc: 1
+  - .otf: 1
+  - .otg: 1
+  - .otp: 1
+  - .ots: 1
+  - .ott: 1
+  - .owl: 1
+  - .pat: 1
+  - .patch: 1
+  - .peek: 1
+  - .php: 1
+  - .pl: 1
+  - .prettierignore: 1
+  - .prototext: 1
+  - .ps: 1
+  - .psd: 1
+  - .qcp: 1
+  - .qpkg: 1
+  - .rar: 1
+  - .release: 1
+  - .resx: 1
+  - .rl: 1
+  - .rmvb: 1
+  - .rpt: 1
+  - .rss: 1
+  - .rtf: 1
+  - .saved: 1
+  - .sc: 1
+  - .semgrepignore: 1
+  - .show: 1
+  - .show_from: 1
+  - .shx: 1
+  - .sketch: 1
+  - .sln: 1
+  - .sri: 1
+  - .srt: 1
+  - .stun: 1
+  - .swf: 1
+  - .sxc: 1
+  - .table: 1
+  - .tailscale-head: 1
+  - .tcx: 1
+  - .tiff: 1
+  - .topproto: 1
+  - .torrent: 1
+  - .tpl: 1
+  - .tree: 1
+  - .tsv: 1
+  - .ttc: 1
+  - .ttf: 1
+  - .unit: 1
+  - .user: 1
+  - .voc: 1
+  - .warc: 1
+  - .wasm: 1
+  - .wav: 1
+  - .weblist: 1
+  - .webm: 1
+  - .webp: 1
+  - .woff: 1
+  - .wxs: 1
+  - .x3d: 1
+  - .xar: 1
+  - .xfdf: 1
+  - .xlf: 1
+  - .xpm: 1
+  - .xz: 1
+  - .yamlignore: 1
+
+================================================================================
+Path: C:\Users\pereg\.rustup
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.20 GB (1290549828 bytes)
+Size on disk: 1.34 GB (1443672064 bytes)
+Creation time: 2026-03-23 22:34:44
+Last modified: 2026-03-23 22:41:39
+Last accessed: 2026-03-28 11:34:05
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 51894
+Subdirectories: 1939
+Distinct file types: 46
+Structure metrics: max depth=16, max breadth=6661, max subdirectory breadth=78, average breadth=27.75, visited directories=1940
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6723%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .html: 46266
+  - .js: 2584
+  - .rs: 1944
+  - .woff2: 223
+  - .css: 170
+  - [no extension]: 94
+  - .svg: 72
+  - .txt: 70
+  - .md: 60
+  - .toml: 56
+  - .png: 51
+  - .1: 38
+  - .s: 28
+  - .sh: 22
+  - .rlib: 21
+  - .rmeta: 21
+  - .nojekyll: 19
+  - .cpp: 18
+  - .pdb: 17
+  - .h: 16
+  - .exe: 15
+  - .py: 11
+  - .yml: 11
+  - .hpp: 9
+  - .in: 9
+  - .auxv: 6
+  - .c: 6
+  - .json: 5
+  - .lock: 5
+  - .natvis: 4
+  - .dll: 3
+  - .cmake: 2
+  - .git-blame-ignore-revs: 2
+  - .rst: 2
+  - .spec: 2
+  - .yaml: 2
+  - .clang-format: 1
+  - .cmd: 1
+  - .def: 1
+  - .editorconfig: 1
+  - .jl: 1
+  - .jpeg: 1
+  - .jpg: 1
+  - .lib: 1
+  - .modulemap: 1
+  - .xml: 1
+
+================================================================================
+Path: C:\Users\pereg\.pulsar
+Status: Missing
+  Error: Directory not found: C:\Users\pereg\.pulsar
+
+================================================================================
+Path: C:\Users\pereg\.gradle
+Status: Missing
+  Error: Directory not found: C:\Users\pereg\.gradle
+
+================================================================================
+Path: C:\Users\pereg\.copilot
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 3.03 GB (3255850330 bytes)
+Size on disk: 3.06 GB (3281219584 bytes)
+Creation time: 2026-01-10 23:04:30
+Last modified: 2026-03-13 14:47:03
+Last accessed: 2026-03-28 12:58:24
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 9146
+Subdirectories: 5263
+Distinct file types: 27
+Structure metrics: max depth=9, max breadth=1152, max subdirectory breadth=1132, average breadth=2.74, visited directories=5264
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.40 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.5279%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .md: 1597
+  - .json: 1464
+  - .jsonl: 1250
+  - .yaml: 1184
+  - .log: 1081
+  - [no extension]: 638
+  - .node: 501
+  - .js: 405
+  - .db: 186
+  - .ts: 159
+  - .pdb: 149
+  - .wasm: 148
+  - .exe: 115
+  - .dll: 66
+  - .mjs: 60
+  - .mts: 50
+  - .scm: 48
+  - .ps1: 15
+  - .txt: 9
+  - .lock: 7
+  - .sh: 6
+  - .extraction-complete: 2
+  - .patch: 2
+  - .bat: 1
+  - .new: 1
+  - .psd1: 1
+  - .xml: 1

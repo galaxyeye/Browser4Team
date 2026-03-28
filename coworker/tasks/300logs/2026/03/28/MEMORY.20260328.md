@@ -13,3 +13,17 @@
     - When scanning large Windows directory trees, skip descending into nested reparse points to avoid loops while still reporting link metadata.
     - "Size on disk" can be estimated reliably enough for reporting by rounding file lengths to the volume allocation unit from `Win32_Volume`.
     - Volatile directories such as `Temp` can change during long scans, so repeated validation runs may show small metric differences even when the script is correct.
+
+## Make Subdirectory Scan Optional
+
+- **Context**: The new `bin\tools\system\analyze-directory-metadata.ps1` analyzer was recursively scanning every subdirectory by default, which made routine runs slow on large Windows folders.
+- **Action**:
+    - Added a new `-IncludeSubdirectories` switch and changed the default behavior to analyze only the top-level contents of each listed directory.
+    - Kept the existing recursive traversal logic behind the switch so full tree scans remain available on demand.
+    - Added `ScanMode` to the JSON/text output and summary table so reports clearly indicate whether they were generated in `TopLevelOnly` or `Recursive` mode.
+    - Validated the script with a synthetic directory tree and a smoke test against `move-folder-to-d.txt`; the default mode now reports shallow counts, while `-IncludeSubdirectories` restores recursive totals.
+- **Outcome**: Directory metadata analysis is now fast by default for large folders, while still supporting full recursive scans when explicitly requested.
+- **Lessons Learned**:
+    - When changing performance-sensitive scripts, expose expensive traversal as an explicit switch instead of silently preserving the slow path.
+    - Reporting the selected scan mode inside both human-readable and JSON output avoids ambiguity when shallow and recursive results differ significantly.
+    - For workspace memory maintenance, the March monthly rollup was already current through the latest available pre-today daily memory (2026-03-24), and no 2026-03-25/26/27 daily memory files existed, so no monthly append was needed.

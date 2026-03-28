@@ -1,0 +1,170 @@
+I’m pulling in the task details and checking the repo state first so I can implement it cleanly and validate the right scope.
+
+● Read make-subdirectory-scan-optional.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\make-subdirectory-scan-optional.md
+  └ 9 lines read
+
+● Read MEMORY.20260328.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\28\MEMORY.20260328.md
+  └ 15 lines read
+
+● Check repo status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I’ve got the task: make deep subdirectory scanning opt-in in the metadata analyzer. Next I’m reading the script to find the current recursion points and then I’ll patch and validate it with the smallest practical run.
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L1:260 (260 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L261:520 (257 lines read)
+
+I found the recursion hotspot. I’m going to make the scan mode explicit in the script and then verify both the fast default and the opt-in recursive behavior with small, controlled inputs.
+
+● Search (grep)
+  │ "analyze-directory-metadata\.ps1" (D:\workspace\Browser4Team)
+  └ 39 lines found
+
+● Create session plan (shell)
+  │ @'
+  │ # Plan
+  │ - Inspect analyzer script and identify recursive scan points.
+  │ - Make subdirectory scanning optional, defaulting to non-recursive behavior.
+  │ - Validate both default and recursive modes with controlled PowerShell runs.…
+  └ 5 lines...
+
+✗ Edit
+  └ Edit D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+
+The script is straightforward enough that I’m doing a surgical patch rather than a rewrite. I hit a context mismatch on the first pass, so I’m re-reading the exact blocks and then applying one clean edit.
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L120:220 (101 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L430:520 (88 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L240:380 (141 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L1:80 (80 lines read)
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L1:120 (120 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L441:520 (80 lines read)
+
+● Read analyze-directory-metadata.ps1
+  │ D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ L128:380 (253 lines read)
+
+● Inspect script diff (shell)
+  │ git --no-pager diff -- D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1
+  └ 2 lines...
+
+The code change is in place. I’m validating it against a tiny synthetic directory tree so I can prove the new default stays shallow and the opt-in flag still does the recursive scan.
+
+● Validate analyzer default and recursive scan modes (shell)
+  │ $scriptPath = 'D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1'
+  │ $tempRoot = Join-Path $env:TEMP ('browser4-scan-test-' + [guid]::NewGuid().ToString('N'))
+  │ $inputFile = Join-Path $tempRoot 'input.txt'
+  │ $defaultJson = Join-Path $tempRoot 'default.json'
+  │ $recursiveJson = Join-Path $tempRoot 'recursive.json'…
+  └ 86 lines...
+
+The shallow/recursive behavior is now verified on a controlled tree. I’m doing one last real-world smoke test against the existing input file so we know the updated default mode works end-to-end with the actual workflow.
+
+● Smoke test analyzer with real input file (shell)
+  │ $scriptPath = 'D:\workspace\Browser4Team\bin\tools\system\analyze-directory-metadata.ps1'
+  │ $tempRoot = Join-Path $env:TEMP ('browser4-scan-smoke-' + [guid]::NewGuid().ToString('N'))
+  │ try {
+  │ $null = New-Item -ItemType Directory -Path $tempRoot -Force
+  │ & $scriptPath -InputFilePath …
+  └ 70 lines...
+
+I’m at the handoff stage now: checking the broader workspace diff and then updating the required daily/monthly memory logs so the task is fully closed out.
+
+● Read MEMORY.202603.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md
+  └ L1:end (93 lines read)
+
+● Search (glob)
+  │ "**\MEMORY.202603*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03
+  └ 25 files found
+
+● Check workspace git status (shell)
+  │ git -C 'D:\workspace\Browser4Team' --no-pager status --short
+  └ 16 lines...
+
+I checked the workspace and there are unrelated in-flight changes outside this task, so I’m leaving those untouched. I’m just confirming whether the monthly memory actually needs an append, then I’ll write the daily memory entry and stop.
+
+● Search (grep)
+  │ "Daily Rollup Update \(2026-03-01 to 2026-03-24\)|2026-03-27"
+  │ (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md)
+  └ 1 line found
+
+● Search (glob)
+  │ "26\MEMORY.20260326*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03
+  └ No matches found
+
+● Search (glob)
+  │ "25\MEMORY.20260325*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03
+  └ No matches found
+
+● Search (glob)
+  │ "27\MEMORY.20260327*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03
+  └ No matches found
+
+● Append daily memory and finalize plan (shell)
+  │ $dailyPath = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\28\MEMORY.20260328.md'
+  │ $planPath =
+  │ 'C:\Users\pereg\.copilot\session-state\f666c4ce-52d9-4d39-87c0-7fe81d82f752\plan.md'
+  │ $entry = @'…
+  └ 38 lines...
+
+● Read MEMORY.20260328.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\28\MEMORY.20260328.md
+  └ L1:end (29 lines read)
+
+● Review final workspace diff (shell)
+  │ git -C 'D:\workspace\Browser4Team' --no-pager diff --
+  │ bin/tools/system/analyze-directory-metadata.ps1
+  │ coworker/tasks/300logs/2026/03/28/MEMORY.20260328.md
+  └ 160 lines...
+
+Done: `bin\tools\system\analyze-directory-metadata.ps1` now scans only top-level contents by default, with full recursion available via `-IncludeSubdirectories`.
+
+I also added `ScanMode` to the text/JSON output so shallow vs. recursive reports are explicit.
+
+Validation:
+- Synthetic tree test confirmed default counts stay shallow and `-IncludeSubdirectories` restores recursive totals.
+- Smoke test against `bin\tools\system\move-folder-to-d.txt` completed successfully in `TopLevelOnly` mode.
+
+Memory updated:
+- Appended today’s task summary to `coworker\tasks\300logs\2026\03\28\MEMORY.20260328.md`.
+- Checked monthly memory; no append was needed because no 2026-03-25/26/27 daily memory files existed.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         2m 38s
+Total session time:     3m 7s
+Total code changes:     +24 -9
+Breakdown by AI model:
+ gpt-5.4                  606.7k in, 9.6k out, 552.2k cached (Est. 1 Premium request)

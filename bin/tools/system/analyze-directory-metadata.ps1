@@ -2,7 +2,8 @@
 param(
     [string]$InputFilePath = (Join-Path $PSScriptRoot 'move-folder-to-d.txt'),
     [string]$TextReportPath,
-    [string]$JsonReportPath
+    [string]$JsonReportPath,
+    [switch]$IncludeSubdirectories
 )
 
 Set-StrictMode -Version Latest
@@ -128,7 +129,8 @@ function Convert-AclRules {
 function Get-DirectoryTreeMetrics {
     param(
         [string]$RootPath,
-        [UInt64]$ClusterSize
+        [UInt64]$ClusterSize,
+        [switch]$IncludeSubdirectories
     )
 
     $stack = [System.Collections.Generic.Stack[object]]::new()
@@ -177,7 +179,7 @@ function Get-DirectoryTreeMetrics {
             if ($child.PSIsContainer) {
                 $subdirectoryCount++
                 $isReparsePoint = (($child.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)
-                if (-not $isReparsePoint) {
+                if ($IncludeSubdirectories -and -not $isReparsePoint) {
                     $stack.Push([pscustomobject]@{ Path = $child.FullName; Depth = $childDepth })
                 }
                 continue
@@ -244,12 +246,16 @@ function Get-DirectoryTreeMetrics {
 }
 
 function New-MissingDirectoryReport {
-    param([string]$DirectoryPath)
+    param(
+        [string]$DirectoryPath,
+        [string]$ScanMode
+    )
 
     return [pscustomobject]@{
         Path = $DirectoryPath
         Exists = $false
         Status = 'Missing'
+        ScanMode = $ScanMode
         ItemType = 'Missing'
         LinkType = 'n/a'
         Target = $null
@@ -285,11 +291,14 @@ function New-MissingDirectoryReport {
 function New-DirectoryReport {
     param(
         [string]$DirectoryPath,
-        [hashtable]$VolumeCache
+        [hashtable]$VolumeCache,
+        [switch]$IncludeSubdirectories
     )
 
+    $scanMode = if ($IncludeSubdirectories) { 'Recursive' } else { 'TopLevelOnly' }
+
     if (-not (Test-Path -LiteralPath $DirectoryPath -PathType Container)) {
-        return New-MissingDirectoryReport -DirectoryPath $DirectoryPath
+        return New-MissingDirectoryReport -DirectoryPath $DirectoryPath -ScanMode $scanMode
     }
 
     $item = Get-Item -LiteralPath $DirectoryPath -Force
@@ -300,7 +309,7 @@ function New-DirectoryReport {
 
     $volume = Get-VolumeInfoForPath -DirectoryPath $DirectoryPath -Cache $VolumeCache
     $clusterSize = if ($null -ne $volume -and $null -ne $volume.BlockSize) { [UInt64]$volume.BlockSize } else { [UInt64]0 }
-    $metrics = Get-DirectoryTreeMetrics -RootPath $DirectoryPath -ClusterSize $clusterSize
+    $metrics = Get-DirectoryTreeMetrics -RootPath $DirectoryPath -ClusterSize $clusterSize -IncludeSubdirectories:$IncludeSubdirectories
     $acl = Get-Acl -LiteralPath $DirectoryPath
     $accessRules = Convert-AclRules -Acl $acl
     $diskUsagePercent = if ($null -ne $volume -and $volume.Capacity) {
@@ -313,6 +322,7 @@ function New-DirectoryReport {
         Path = $DirectoryPath
         Exists = $true
         Status = 'Analyzed'
+        ScanMode = $scanMode
         ItemType = if ($item.PSIsContainer) { 'Directory' } else { $item.PSObject.TypeNames[0] }
         LinkType = $linkType
         Target = $target
@@ -367,6 +377,7 @@ function Convert-DirectoryReportToLines {
     $lines = [System.Collections.Generic.List[string]]::new()
     $lines.Add(("Path: {0}" -f $Report.Path))
     $lines.Add(("Status: {0}" -f $Report.Status))
+    $lines.Add(("Scan mode: {0}" -f $Report.ScanMode))
 
     if (-not $Report.Exists) {
         foreach ($errorMessage in $Report.AnalysisErrors) {
@@ -445,14 +456,17 @@ if ($inputDirectories.Count -eq 0) {
 
 $volumeCache = @{}
 $reports = foreach ($directoryPath in $inputDirectories) {
-    Write-Host ("Analyzing {0}" -f $directoryPath)
-    New-DirectoryReport -DirectoryPath $directoryPath -VolumeCache $volumeCache
+    Write-Host ("Analyzing {0} [{1}]" -f $directoryPath, $(if ($IncludeSubdirectories) { 'recursive' } else { 'top-level only' }))
+    New-DirectoryReport -DirectoryPath $directoryPath -VolumeCache $volumeCache -IncludeSubdirectories:$IncludeSubdirectories
 }
 
 $summaryTable = $reports |
     Select-Object @{
             Name = 'Path'
             Expression = { $_.Path }
+        }, @{
+            Name = 'ScanMode'
+            Expression = { $_.ScanMode }
         }, @{
             Name = 'Status'
             Expression = { $_.Status }
@@ -490,6 +504,7 @@ $detailedLines = [System.Collections.Generic.List[string]]::new()
 $detailedLines.Add(("Directory metadata report"))
 $detailedLines.Add(("Generated: {0}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')))
 $detailedLines.Add(("Input file: {0}" -f $InputFilePath))
+$detailedLines.Add(("Include subdirectories: {0}" -f $IncludeSubdirectories.IsPresent))
 $detailedLines.Add('')
 $detailedLines.Add('Summary')
 $detailedLines.Add('-------')
