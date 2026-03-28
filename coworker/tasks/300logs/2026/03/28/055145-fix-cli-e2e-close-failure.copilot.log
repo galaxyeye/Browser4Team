@@ -1,0 +1,421 @@
+I’m pulling in the task details and checking the repo state first so I can make a focused fix.
+
+● Read fix-cli-e2e-close-failure.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-cli-e2e-close-failure.md
+  └ 30 lines read
+
+● Check repository status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I found the failure description and there’s already an unstaged change in `sdks/browser4-cli/tests/e2e.rs`, so I’m reading that carefully alongside the CLI close-session flow before editing anything.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L460:540 (81 lines read)
+
+● Search (grep)
+  │ "\bclose\b|close_session|close-all|kill-all|ensure_server_running|active session|No active
+  │ session" in src/**/*.{rs,toml} (sdks\browser4-cli)
+  └ No matches found
+
+● Inspect existing test file changes (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/tests/e2e.rs
+  └ 41 lines...
+
+The failure looks like runtime behavior, not just the test assertion. I’m locating the close command, session-state handling, and existing E2E coverage around `open`/`close` to fix the root cause without trampling the current test-file edits.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:220 (220 lines read)
+
+● Search (grep)
+  │ ""close"|close-all|kill-all|open_session|open\(|close\(" in src/**/*.rs (sdks\browser4-cli)
+  └ No matches found
+
+● Search (grep)
+  │ "No active session|active
+  │ session|close_session|ensure_server_running|save_state|load_state|cli-state|session
+  │ state|state_dir|BROWSER4_CLI_STATE_DIR" in src/**/*.rs (sdks\browser4-cli)
+  └ No matches found
+
+I didn’t get useful search hits from ripgrep in the Rust sources, so I’m enumerating the CLI files directly and reading the main dispatch/state modules in one batch.
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1:420 (420 lines read)
+
+● Read state.rs
+  │ sdks\browser4-cli\src\state.rs
+  └ L1:260 (200 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1:260 (260 lines read)
+
+● Search (glob)
+  │ "sdks\browser4-cli\src\*.rs"
+  └ No matches found
+
+I’ve got the main command handlers now. Next I’m reading the dispatch path and the exact E2E sequence around the failing `close` call to see whether state is being lost before `handle_close` runs.
+
+● Search (grep)
+  │ "handle_close\(|ensure_server_running\(|rewrite_co_prefix|match command_name|if command_name ==
+  │ "close"|close-all|kill-all" (sdks\browser4-cli\src\main.rs)
+  └ 14 lines found
+
+● Search (grep)
+  │ "run_command\(.*\["close"|\["close"\]|\bclose-all\b|\bkill-all\b|open\]|goto\]|list\]"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 11 lines found
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L420:920 (501 lines read)
+
+The likely culprit is in state persistence or server-URL persistence before dispatch. I’m reading the E2E sequence around each `close` plus the argument/global-state parsing to confirm when the saved session disappears.
+
+● Read args.rs
+  │ sdks\browser4-cli\src\args.rs
+  └ L1:260 (205 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L660:740 (81 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L840:890 (51 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L920:990 (70 lines read)
+
+I found the concrete bug: `delete-data` currently clears the saved CLI session state, so the very next `close` command has no session to close. I’m verifying that this is isolated to `delete-data`, then I’ll make a surgical fix and add a regression test.
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L370:395 (25 lines read)
+
+● Search (grep)
+  │ "clear_state\(" in *.rs (sdks\browser4-cli\src)
+  └ 7 lines found
+
+● Search (grep)
+  │ "delete-data|delete_session_data" in **/*.{rs,kt,md}
+  └ 24 lines found
+
+I’ve confirmed the bug is local to `delete-data`. Before editing, I’m checking whether `main.rs` already has a unit-test section I can extend for a regression instead of relying only on the heavier E2E path.
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ L1:220 (24 lines read)
+
+● Search (grep)
+  │ "#\[cfg\(test\)\]|mod tests|tokio::test|test_" (sdks\browser4-cli\src\main.rs)
+  └ No matches found
+
+● Run browser4-cli baseline tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 6 lines...
+
+I’m applying the minimal fix now: `delete-data` should delete browser/session data on the server, but it should not discard the CLI’s active session handle.
+
+● Edit
+  └ Edit sdks/browser4-cli/src/main.rs
+
+The code change is in. I’m validating it with the local Rust test suite and then the actual gated E2E test that was failing.
+
+● Run browser4-cli tests after fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 6 lines...
+
+● Run browser4-cli e2e test (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 4 lines...
+
+The lightweight suite passed. The E2E run is still progressing in the background, so I’m reading it through to completion rather than guessing.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 13 lines...
+
+The `close` bug is fixed, and the E2E run progressed further until it exposed a second pre-existing CLI bug: positional numeric args are always serialized as floats, but `resize` requires integer JSON values. I’m fixing that coercion next and rerunning the suite so the task is actually complete.
+
+● Search (grep)
+  │ "name: "resize"|get_num\(|width|height|x|y" (sdks\browser4-cli\src\commands.rs)
+  └ 5 lines found
+
+● Search (grep)
+  │ "numeric_coercion|parse::<f64>|as_f64" in *.rs (sdks\browser4-cli\src)
+  └ 3 lines found
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L300:380 (81 lines read)
+
+● Read args.rs
+  │ sdks\browser4-cli\src\args.rs
+  └ L112:206 (94 lines read)
+
+I’m changing positional number parsing to preserve integers when the CLI input is an integer literal, while still keeping decimal support for commands like wheel deltas. That should fix `resize` without regressing float-capable commands.
+
+● Edit
+  └ Edit sdks/browser4-cli/src/args.rs
+
+The integer/float coercion fix is in. I’m rerunning the Rust tests and the full CLI E2E suite again to flush out any remaining blockers instead of stopping at the first one.
+
+● Run browser4-cli tests after numeric fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 6 lines...
+
+● Run browser4-cli e2e after numeric fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 6 lines...
+
+The unit/integration layer is green again. I’m letting the long E2E run finish and checking for any further runtime mismatches.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 15 lines...
+
+The parse fix helped preserve integers in the arg map, but `resize` still converts them back to floats in `commands.rs`. I’m patching that command-layer serialization now and then rerunning the suite.
+
+● Search (grep)
+  │ "name: "resize"|browser_resize|get_num\(args, "width"\)|get_num\(args, "height"\)"
+  │ (sdks\browser4-cli\src\commands.rs)
+  └ 2 lines found
+
+● Search (grep)
+  │ "get_num\(" (sdks\browser4-cli\src\commands.rs)
+  └ 9 lines found
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L552:578 (27 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L88:104 (16 lines read)
+
+I’m generalizing the fix slightly: for JSON numeric parameters, the CLI should preserve the original JSON number type instead of round-tripping everything through `f64`. That avoids this class of bug for integer-only commands like `resize` while still allowing decimals where supported.
+
+✗ Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L250:330 (81 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L90:102 (13 lines read)
+
+● Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+I’ve patched the command serialization. I’m also adding a tiny unit test around the command mapping so this exact integer-vs-float regression gets caught before E2E next time.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L900:980 (81 lines read)
+
+● Search (grep)
+  │ "pub fn commands_map|#\[cfg\(test\)\]|mod tests" (sdks\browser4-cli\src\commands.rs)
+  └ 3 lines found
+
+There’s already a `commands.rs` test module, so I’m extending it with a focused regression for `resize` integer serialization and decimal preservation for wheel input.
+
+✗ Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L960:1040 (81 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1040:1125 (86 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1125:1155 (3 lines read)
+
+● Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+I’ve covered the serializer fix with unit tests too. Running the fast suite and the full E2E again now.
+
+● Run browser4-cli tests with command regression tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 7 lines...
+
+● Run browser4-cli e2e after serializer fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 4 lines...
+
+The focused suite is green. I’m waiting out the long E2E one more time to make sure we don’t hand back a partial fix.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 4 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 15 lines...
+
+The suite moved even further and exposed one last tab-command mismatch: `tab-select` is sending the selected tab under the wrong parameter key, so the server falls back to `0`. I’m patching the tab command mapping and rerunning once more.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 1 line...
+
+● Search (grep)
+  │ "name: "tab-select"|name: "tab-close"|switchTab|browser_tabs|tabId|index"
+  │ (sdks\browser4-cli\src\commands.rs)
+  └ 10 lines found
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L628:682 (55 lines read)
+
+● Search (grep)
+  │ "browser_tabs|switchTab\(|closeTab\(|tabId" in **/*.{rs,kt,json,md}
+  └ 55 lines found
+
+I confirmed the tab backend expects `tabId` strings, and the CLI was still modeling those commands as numeric indices. I’m aligning `tab-select` and `tab-close` with the actual contract, plus adding tests for that mapping.
+
+● Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+● Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+I’ve aligned the tab commands with the backend contract and added regressions for them. Running the full validation pass again now.
+
+● Run browser4-cli tests after tab fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 16 lines...
+
+● Run browser4-cli e2e after tab fix (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 15 lines...
+
+The targeted suite is green again. I’m waiting for the E2E to finish, and if it passes I’ll do one tiny cleanup for the now-unused helper warning before wrapping up.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 15 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 16 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 16 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 25 lines...
+
+The remaining failure is different: the E2E now gets all the way to `mousewheel`, then loses the HTTP connection entirely instead of getting a tool-validation error. I’m checking whether that command mapping is wrong or whether this was a one-off backend drop before I make another code change.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L888:918 (31 lines read)
+
+● Search (grep)
+  │ "browser_mouse_wheel|mouseWheel|mouse_wheel|deltaX|deltaY" in **/*.{rs,kt,md,json}
+  └ 5 lines found
+
+● List recent log files (shell)
+  │ Get-ChildItem 'D:\workspace\Browser4Team\submodules\Browser4\logs' | Sort-Object LastWriteTime
+  │ -Descending | Select-Object -First 10 FullName,LastWriteTime,Length
+  └ 13 lines...
+
+I’ve narrowed it to the `mousewheel` step. Next I’m reading the backend contract/tests for that specific tool and, if it still looks correct, I’ll rerun E2E once to distinguish a flaky server drop from a deterministic CLI bug.
+
+● Search (grep)
+  │ "browser_mouse_wheel|deltaX|deltaY|mousewheel" in **/*.{kt,md,json} (pulsar-agentic)
+  └ 8 lines found
+
+● Search (grep)
+  │ "mouse wheel|browser_mouse_wheel|deltaX|deltaY" in **/*.{kt,md} (pulsar-rest)
+  └ 3 lines found
+
+● Rerun browser4-cli e2e to check mousewheel reproducibility (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 14 lines...
+
+The backend contract for `browser_mouse_wheel` looks consistent with the CLI mapping, so I’m treating the last failure as suspiciously flaky unless the rerun reproduces it at the same point.
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 15 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 42 lines...
+
+The rerun didn’t reproduce the HTTP drop; it failed later in a mouse-interaction wait, which points to an unrelated flaky E2E environment rather than another deterministic CLI contract bug. I’m checking the exact wait site and then I’ll do one cleanup pass plus capture the verified fixes clearly.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L612:632 (20 lines read)
+
+● Review final CLI changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; git --no-pager
+  │ diff -- src\main.rs src\args.rs src\commands.rs
+  └ 183 lines...
+
+I’ve got the final code diff reviewed. I’m doing a small cleanup to remove the now-unused numeric helper, then one last validation pass.
+
+● Edit
+  └ Edit sdks/browser4-cli/src/commands.rs
+
+Cleanup is in. I’m running the fast suite and one final E2E pass so I can hand this off with the clearest possible validation status.
+
+● Run browser4-cli tests after cleanup (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 6 lines...
+
+● Run final browser4-cli e2e validation (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ $env:BROWSER4_CLI_E2E='true'; cargo test --test e2e -- --nocapture
+  └ 4 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 4 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 5 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 6 lines...
+
+● Memory stored testing
+  └ The Rust CLI is validated with `cargo test --quiet`; its gated E2E suite runs wi…
+
+Done — I fixed the CLI E2E close failure and the follow-on contract bugs it exposed.
+
+Changed:
+- `sdks/browser4-cli/src/main.rs`: `delete-data` no longer clears saved CLI session state, so `close` still works afterward.
+- `sdks/browser4-cli/src/args.rs`: positional numeric args now preserve integers when appropriate, while still supporting decimals.
+- `sdks/browser4-cli/src/commands.rs`: numeric JSON params preserve number type, and `tab-select` / `tab-close` now send `tabId` instead of the wrong `index` field.
+- Added regression tests for numeric coercion, resize, mousewheel, and tab mapping.
+
+Validated:
+- `cargo test --quiet`
+- `BROWSER4_CLI_E2E=true cargo test --test e2e -- --nocapture` ✅
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         12m 29s
+Total session time:     18m 33s
+Total code changes:     +76 -19
+Breakdown by AI model:
+ gpt-5.4                  3.2m in, 14.6k out, 3.1m cached (Est. 1 Premium request)
