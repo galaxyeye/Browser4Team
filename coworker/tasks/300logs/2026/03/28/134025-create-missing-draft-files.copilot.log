@@ -1,0 +1,261 @@
+I’m opening the task brief and checking the repo state so I can implement it end-to-end without disturbing unrelated work.
+
+● Read create-missing-draft-files.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\create-missing-draft-files.md
+  └ 4 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I found the ask: update the draft-refinement flow so it auto-creates `1.md` through `5.md` in the drafts directory when missing. Next I’m locating that script and its related tests/docs before changing anything.
+
+● Search (glob)
+  │ "**/*draft*"
+  └ 7 files found
+
+● Search (glob)
+  │ "**/*refin*"
+  └ 7 files found
+
+● Search (grep)
+  │ "draft-refinement|drafts directory|drafts|refinement"
+  └ 5 lines found
+
+I’ve narrowed it to the coworker draft-processing scripts. I’m reading the queue processor and the worker scripts together so I can put the fix in the right layer and keep behavior consistent.
+
+● Read process-draft-refinement-queue.ps1
+  │ coworker\scripts\process-draft-refinement-queue.ps1
+  └ 57 lines read
+
+● Read refine-drafts.ps1
+  │ coworker\scripts\workers\refine-drafts.ps1
+  └ 138 lines read
+
+● Read refine-last-draft.ps1
+  │ coworker\scripts\workers\refine-last-draft.ps1
+  └ 34 lines read
+
+● Read SKILL.md
+  └ L1:180 (155 lines read)
+
+There’s already a similar placeholder pattern for main task drafts, so I’m checking that implementation and the related docs to reuse the same style instead of inventing a new one.
+
+● Read coworker.ps1
+  │ coworker\scripts\coworker.ps1
+  └ L150:210 (61 lines read)
+
+● Read README.md
+  │ coworker\README.md
+  └ L115:170 (40 lines read)
+
+● Read README.md
+  │ coworker\tasks\0draft\README.md
+  └ L1:120 (37 lines read)
+
+● Search (grep)
+  │ "1\.md|2\.md|3\.md|4\.md|5\.md|placeholder|auto-creates|New-Item.*1\.md" (coworker)
+  └ 5 lines found
+
+I found the docs and a likely prior-art implementation in the main coworker worker. I’m zooming in on that code now so the refinement script matches existing conventions.
+
+● Read coworker.ps1
+  │ coworker\scripts\coworker.ps1
+  └ L240:310 (71 lines read)
+
+● Search (grep)
+  │ "auto-creates `0draft/1\.md`|0draft/1\.md|1\.md\.\.`5\.md|placeholder task"
+  │ (coworker\scripts\coworker.ps1)
+  └ No matches found
+
+● Read coworker.ps1
+  │ coworker\scripts\coworker.ps1
+  └ L680:735 (56 lines read)
+
+● Search (grep)
+  │ "Ensure-DraftPlaceholders" (coworker\scripts\coworker.ps1)
+  └ 3 lines found
+
+● Read coworker.ps1
+  │ coworker\scripts\coworker.ps1
+  └ L412:432 (21 lines read)
+
+● Read coworker.ps1
+  │ coworker\scripts\coworker.ps1
+  └ L784:800 (17 lines read)
+
+I’ve confirmed the main coworker worker already maintains `1.md`–`5.md` placeholders. I’m checking how “pending” files are defined so the refinement pipeline can create placeholders without accidentally processing empty drafts.
+
+● Read gh-copilot.ps1
+  │ coworker\scripts\workers\gh-copilot.ps1
+  └ L1:120 (120 lines read)
+
+● Read config.ps1
+  │ coworker\scripts\config.ps1
+  └ 180 lines read
+
+● Search (grep)
+  │ "function Test-CoworkerPendingFile|Test-CoworkerPendingFile" (coworker\scripts)
+  └ 9 lines found
+
+Empty placeholder files currently count as “pending,” so simply creating them would make the refiner try to process blank drafts. I’m looking for an existing helper for that case; if there isn’t one, I’ll add a small, local guard in the refinement flow.
+
+● Search (grep)
+  │ "Ensure-.*Placeholder|Placeholder" (coworker\scripts)
+  └ 5 lines found
+
+● Search (grep)
+  │ "Length -eq 0|IsNullOrWhiteSpace\(|placeholder|numeric.*md|\.md"\)|Get-Content -Raw.*Trim"
+  │ (coworker)
+  └ 5 lines found
+
+To keep the scheduler from waking up on blank placeholders, I’m tracing the draft-refinement pending check through the scheduler too. If it shares the same generic file predicate, I’ll tighten that path as part of the fix.
+
+● Read coworker-scheduler.ps1
+  │ coworker\scripts\coworker-scheduler.ps1
+  └ L1:110 (110 lines read)
+
+● Read coworker-scheduler.config.psd1
+  │ coworker\scripts\coworker-scheduler.config.psd1
+  └ L1:120 (41 lines read)
+
+● Read README.md
+  │ coworker\README.md
+  └ L1:90 (90 lines read)
+
+I’ve got the shape of the fix: add shared helpers for refinement placeholders and “actionable” drafts, then wire them into the worker, queue processor, and scheduler so blank `1.md`–`5.md` files exist without being processed. I’m checking whether this repo already tests the PowerShell coworker scripts before I edit.
+
+● Search (grep)
+  │ "Pester|Describe\s+['\"]|It\s+['\"]" (coworker)
+  └ 1 line found
+
+● Search (glob)
+  │ "**/*.Tests.ps1"
+  └ No matches found
+
+● Search (glob)
+  │ "**/*Test*.ps1"
+  └ No matches found
+
+I’ve confirmed there aren’t existing script tests here, so I’m setting up a small work plan and then I’ll implement the change with manual validation against the scripts themselves.
+
+● Create draft refinement todos (sql)
+  │ CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, title TEXT NOT NULL, desc…
+  └ Executed 3 statement(s)
+
+● Create plan file (shell)
+  │ @'
+  │ # Plan
+  │
+  │ 1. Add shared PowerShell helpers for draft-refinement placeholders and actionable draft
+  │ detection.…
+  └ 6 lines...
+
+I’ve got the implementation mapped out. I’m making the shared helper change first, then wiring it into the three affected scripts and the draft-refinement docs in one pass.
+
+● Todo started implement-placeholder-support
+
+● Edit
+  │ Edit coworker\scripts\config.ps1
+  │ Edit coworker\scripts\workers\refine-drafts.ps1
+  │ Edit coworker\scripts\process-draft-refinement-queue.ps1
+  │ Edit coworker\scripts\coworker-scheduler.ps1
+  └ Edit coworker\README.md
+
+The code change is in place. I’m doing a quick readback plus targeted PowerShell runs against a temp refinement folder to verify two things: placeholders are created, and blank placeholders no longer count as work.
+
+● Read config.ps1
+  │ coworker\scripts\config.ps1
+  └ L140:205 (66 lines read)
+
+● Read coworker-scheduler.ps1
+  │ coworker\scripts\coworker-scheduler.ps1
+  └ L47:80 (33 lines read)
+
+● Read README.md
+  │ coworker\README.md
+  └ L130:152 (23 lines read)
+
+● Read process-draft-refinement-queue.ps1
+  │ coworker\scripts\process-draft-refinement-queue.ps1
+  └ L1:80 (59 lines read)
+
+● Read refine-drafts.ps1
+  │ coworker\scripts\workers\refine-drafts.ps1
+  └ L1:170 (146 lines read)
+
+I’m validating in two layers: first PowerShell syntax for every edited script, then a temp-directory check that placeholder creation yields blank `1.md`–`5.md` files and that only non-empty drafts are considered actionable.
+
+● Show diff for edited files (shell)
+  │ git --no-pager diff -- coworker/scripts/config.ps1 coworker/scripts/workers/refine-drafts.ps1
+  │ coworker/scripts/process-draft-refinement-queue.ps1 coworker/scripts/coworker-scheduler.ps1
+  │ coworker/README.md
+  └ 178 lines...
+
+● Parse scripts and validate draft helpers (shell)
+  │ $files = @(
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\config.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\workers\refine-drafts.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\process-draft-refinement-que
+  │ ue.ps1',…
+  └ 98 lines...
+
+One validation command tripped over a PowerShell string interpolation edge case, not the repo code. I’m rerunning the checks with a safer command string and a lighter diff summary.
+
+● Show diff stat (shell)
+  │ git --no-pager diff --stat -- coworker/scripts/config.ps1
+  │ coworker/scripts/workers/refine-drafts.ps1 coworker/scripts/process-draft-refinement-queue.ps1
+  │ coworker/scripts/coworker-scheduler.ps1 coworker/README.md
+  └ 8 lines...
+
+● Validate PowerShell scripts and helpers (shell)
+  │ $files = @(
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\config.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\workers\refine-drafts.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\process-draft-refinement-que
+  │ ue.ps1',…
+  └ 48 lines...
+
+The logic is validated. I’m doing one cleanup pass on line endings and then I’ll check the final diff/status so the handoff is clean.
+
+● Todo started implement-placeholder-support
+
+● Normalize edited file line endings (shell)
+  │ $paths = @(
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\README.md',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\config.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\coworker-scheduler.ps1',
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\coworker\scripts\process-draft-refinement-que…
+  └ 10 lines...
+
+I’m at the final check now: repo status, focused diff, and then I’ll wrap with exactly what changed and how I verified it.
+
+✔ Todo completed validate-and-document
+
+● Check final status and diff stat (shell)
+  │ git --no-pager status --short && git --no-pager diff --stat -- coworker/scripts/config.ps1
+  │ coworker/scripts/workers/refine-drafts.ps1 coworker/scripts/process-draft-refinement-queue.ps1
+  │ coworker/scripts/coworker-scheduler.ps1 coworker/README.md
+  └ 13 lines...
+
+Done: draft refinement now auto-maintains `1.md`–`5.md` placeholders in `coworker\tasks\0draft\refine\1ready` without trying to refine blank files.
+
+Changed:
+- `coworker\scripts\config.ps1` — added shared helpers for placeholder creation and “actionable draft” detection.
+- `coworker\scripts\workers\refine-drafts.ps1` — ensures placeholders before/after runs and skips empty drafts.
+- `coworker\scripts\process-draft-refinement-queue.ps1` — creates placeholders each pass and only queues non-empty drafts.
+- `coworker\scripts\coworker-scheduler.ps1` — won’t treat blank refinement placeholders as pending work.
+- `coworker\README.md` — documented the behavior.
+
+Validated by parsing all edited PowerShell files and running a temp-directory check that confirmed placeholders are created and only non-empty drafts are actionable.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         10m 29s
+Total session time:     11m 11s
+Total code changes:     +63 -9
+Breakdown by AI model:
+ gpt-5.4                  792.0k in, 12.5k out, 708.5k cached (Est. 1 Premium request)
