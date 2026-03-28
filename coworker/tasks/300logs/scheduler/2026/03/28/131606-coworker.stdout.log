@@ -64,3 +64,43 @@ Everything pushed cleanly so far. I’m doing a final verification that both the
   │ '---SUBMODULE-HEAD---'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git …
   └ 10 lines...
 
+A scheduler log changed while I was verifying, so I’m folding that last live update into one final sync pass to leave `main` fully pushed.
+
+● Commit and push final parent updates (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "Sync final log updates" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" && git pull --no-rebase
+  │ -X ours && git push
+  └ 15 lines...
+
+● Final verify parent and submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULE---'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git
+  │ --no-pager status --short --branch; Write-Host '---PARENT-HEAD---'; Set-Location
+  │ 'D:\workspace\Browser4Team'; git --no-pager log -1 --decorate --oneline; Write-Host
+  │ '---SUBMODULE-HEAD---'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git …
+  └ 10 lines...
+
+Done: I committed, pulled, and pushed both repos.
+
+`submodules\Browser4`
+- committed as `2d68e4694`
+- pulled and pushed `4.6.x`
+
+`D:\workspace\Browser4Team`
+- committed as `829cd59`
+- then a live scheduler log changed, so I committed again as `a0bad76`
+- pulled and pushed `main`
+
+Remote is updated successfully.
+
+One caveat: `coworker\tasks\300logs\scheduler\2026\03\28\131606-coworker.stdout.log` is actively changing, so the parent repo becomes dirty again immediately after sync. I did not stop that background writer in this shared environment.
+
+[2026-03-28 13:18:55] [INFO] Git sync executed successfully.
+[2026-03-28 13:18:55] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-28 13:18:55] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-28 13:18:55] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-28 13:18:55] [INFO] ===========================================================================
+[2026-03-28 13:18:55] [INFO] All tasks completed
+[2026-03-28 13:18:55] [INFO] Ended at: 03/28/2026 13:18:55
+[2026-03-28 13:18:55] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\28\131607-coworker.log
+[2026-03-28 13:18:55] [INFO] ==========================================================================
