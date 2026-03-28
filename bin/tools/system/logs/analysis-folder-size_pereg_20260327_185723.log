@@ -1,0 +1,245 @@
+**********************
+PowerShell transcript start
+Start time: 20260327185723
+Username: ALTAIR\pereg
+RunAs User: ALTAIR\pereg
+Configuration Name: 
+Machine: ALTAIR (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -File D:/workspace/Browser4Team/bin/tools/system/analysis-folder-size.ps1
+Process ID: 36404
+PSVersion: 7.5.5
+PSEdition: Core
+GitCommitId: 7.5.5
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+日志文件: D:\workspace\Browser4Team\bin\tools\system\logs\analysis-folder-size_pereg_20260327_185723.log
+
+请输入要查找的大文件夹的阈值大小
+支持的格式: B, KB, MB, GB, TB (例如: 1GB, 500MB, 2TB)
+直接回车将使用默认值 1GB
+使用默认阈值: 1GB
+
+开始扫描目录: C:\Users\pereg
+扫描时间: 2026-03-27 18:57:26
+大小阈值: 1.00 GB
+发现大文件夹: C:\Users\pereg\.auto-coder-rag → 1.19 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.browser4 → 4.86 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.copilot → 2.91 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.gradle → 1.13 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.pulsar → 2.87 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.rustup → 1.20 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\AppData → 62.56 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\Documents → 1.49 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\go → 1.78 GB (深度: 1) [符号链接 → D:\MovedFolders\go]
+发现大文件夹: C:\Users\pereg\scoop → 2.78 GB (深度: 1)
+发现大文件夹: C:\Users\pereg\.auto-coder-rag\dependencies → 1.14 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\.auto-coder-rag\dependencies\python-packages → 1.14 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop → 1.14 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop\Lib → 1.04 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop\Lib\site-packages → 1.00 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\.browser4\browser → 3.46 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome → 3.46 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome\default → 1.38 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome\default-archive → 1.87 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome\default\pulsar_chrome → 1.37 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome\default-archive\pulsar_chrome → 1.87 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\.browser4\browser\chrome\default-archive\pulsar_chrome\Default → 1.01 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\.copilot\pkg → 2.68 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\.copilot\pkg\universal → 2.60 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\.pulsar\browser → 1.69 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\.pulsar\browser\chrome → 1.69 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\.pulsar\browser\chrome\default → 1.48 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\.rustup\toolchains → 1.20 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\.rustup\toolchains\stable-x86_64-pc-windows-msvc → 1.20 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local → 43.26 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\AppData\Roaming → 19.20 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\AppData\Local\BraveSoftware → 1.44 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\Docker → 159.78 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\FbSoftware → 3.48 GB (深度: 3) [符号链接 → D:\MovedFolders\FbSoftware]
+发现大文件夹: C:\Users\pereg\AppData\Local\Google → 1.23 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains → 11.87 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\JianyingPro → 6.78 GB (深度: 3) [符号链接 → D:\Users\pereg\AppData\Local\JianyingPro]
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft → 2.74 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\Microsoft → 4.08 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\ms-playwright → 1.12 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\npm-cache → 11.32 GB (深度: 3) [符号链接 → D:\MovedFolders\npm-cache]
+发现大文件夹: C:\Users\pereg\AppData\Local\pypoetry → 1.31 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\ShadowBot → 1.32 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\Temp → 7.72 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Local\uv → 1.96 GB (深度: 3) [符号链接 → D:\MovedFolders\uv]
+发现大文件夹: C:\Users\pereg\AppData\Local\Yarn → 3.25 GB (深度: 3) [符号链接 → D:\MovedFolders\Yarn]
+发现大文件夹: C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser → 1.44 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser\User Data → 1.44 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default → 1.13 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Local\Google\Chrome → 1.23 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\Google\Chrome\User Data → 1.23 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\IntelliJIdea2025.3 → 4.86 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2 → 4.61 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3 → 2.40 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\index → 1.22 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\tmp → 1.22 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\tmp\patch-update → 1.22 GB (深度: 6)
+Get-Item: D:\workspace\Browser4Team\bin\tools\system\analysis-folder-size.ps1:114
+Line |
+ 114 |          $item = Get-Item -Path $path -Force
+     |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot find path 'C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3\httpFileSystem' because it does not exist.
+Get-Item: D:\workspace\Browser4Team\bin\tools\system\analysis-folder-size.ps1:114
+Line |
+ 114 |          $item = Get-Item -Path $path -Force
+     |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Cannot find path 'C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3\httpFileSystem' because it does not exist.
+
+发现大文件夹: C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3\index → 1.22 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft\WPS Office → 2.68 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.24657 → 1.41 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.25225 → 1.26 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.24657\office6 → 1.20 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.25225\office6 → 1.19 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Local\Microsoft\Edge → 2.35 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\Microsoft\Edge\User Data → 2.35 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\Microsoft\Edge\User Data\Default → 1.83 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Local\pypoetry\Cache → 1.31 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\Temp\ci2raiw4 → 6.11 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\Temp\DiagOutputDir → 1.09 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Local\Temp\ci2raiw4\Microsoft.VisualStudio.VC.Llvm.Clang.952D350109C04EB090EF → 2.07 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Local\Temp\DiagOutputDir\RdClientAutoTrace → 1.09 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\Code → 1.42 GB (深度: 3) [符号链接 → D:\MovedFolders\Code]
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains → 6.22 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft → 5.51 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\npm → 1.37 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\Tencent → 6.55 GB (深度: 3) [符号链接 → D:\MovedFolders\Tencent]
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\IntelliJIdea2025.3 → 2.22 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.2 → 2.36 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.3 → 1.63 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\IntelliJIdea2025.3\plugins → 2.19 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.2\plugins → 2.35 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.3\plugins → 1.62 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps → 5.15 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons → 5.13 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\data → 1.42 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\pool → 3.71 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\data\win-i386 → 1.42 GB (深度: 7)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\pool\win-i386 → 3.71 GB (深度: 7)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\npm\node_modules → 1.37 GB (深度: 4)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\npm\node_modules\openclaw → 1.24 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\AppData\Roaming\npm\node_modules\openclaw\node_modules → 1.15 GB (深度: 6)
+发现大文件夹: C:\Users\pereg\scoop\persist → 1.34 GB (深度: 2)
+发现大文件夹: C:\Users\pereg\scoop\apps\gradle\9.2.1\.gradle → 1.34 GB (深度: 5)
+发现大文件夹: C:\Users\pereg\scoop\persist\gradle → 1.34 GB (深度: 3)
+发现大文件夹: C:\Users\pereg\scoop\persist\gradle\.gradle → 1.34 GB (深度: 4)
+
+扫描统计信息:
+总文件夹数: 120745
+最大深度: 20
+
+大文件夹汇总:
+
+Path                                                                                                 Size      Depth 类型
+----                                                                                                 ----      ----- ----
+C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\pool\win-i386                                     3.71 GB       7 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\data\win-i386                                     1.42 GB       7 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome\default-archive\pulsar_chrome\Default                        1.01 GB       6 普通文件夹
+C:\Users\pereg\AppData\Roaming\npm\node_modules\openclaw\node_modules                                1.15 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\Microsoft\Edge\User Data\Default                                        1.83 GB       6 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\pool                                              3.71 GB       6 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons\data                                              1.42 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\tmp\patch-update                                1.22 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser\User Data\Default                           1.13 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.25225\office6                                1.19 GB       6 普通文件夹
+C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop\Lib\site-packages            1.00 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.24657\office6                                1.20 GB       6 普通文件夹
+C:\Users\pereg\AppData\Local\Temp\ci2raiw4\Microsoft.VisualStudio.VC.Llvm.Clang.952D350109C04EB090EF 2.07 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\Microsoft\Edge\User Data                                                2.35 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3\index                                           1.22 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.24657                                        1.41 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\tmp                                             1.22 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2\index                                           1.22 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\Google\Chrome\User Data                                                 1.23 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\kingsoft\WPS Office\12.1.0.25225                                        1.26 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser\User Data                                   1.44 GB       5 普通文件夹
+C:\Users\pereg\AppData\Local\Temp\DiagOutputDir\RdClientAutoTrace                                    1.09 GB       5 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome\default\pulsar_chrome                                        1.37 GB       5 普通文件夹
+C:\Users\pereg\scoop\apps\gradle\9.2.1\.gradle                                                       1.34 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\npm\node_modules\openclaw                                             1.24 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft\wps\addons                                                   5.13 GB       5 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome\default-archive\pulsar_chrome                                1.87 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.2\plugins                                       2.35 GB       5 普通文件夹
+C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop\Lib                          1.04 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\IntelliJIdea2025.3\plugins                                  2.19 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.3\plugins                                       1.62 GB       5 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.3                                               1.63 GB       4 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\PyCharm2025.2                                               2.36 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\pypoetry\Cache                                                          1.31 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\kingsoft\WPS Office                                                     2.68 GB       4 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft\wps                                                          5.15 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\Temp\ci2raiw4                                                           6.11 GB       4 普通文件夹
+C:\Users\pereg\AppData\Roaming\npm\node_modules                                                      1.37 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\Temp\DiagOutputDir                                                      1.09 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.3                                                 2.40 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\PyCharm2025.2                                                 4.61 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains\IntelliJIdea2025.3                                            4.86 GB       4 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains\IntelliJIdea2025.3                                          2.22 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\Google\Chrome                                                           1.23 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\Microsoft\Edge                                                          2.35 GB       4 普通文件夹
+C:\Users\pereg\AppData\Local\BraveSoftware\Brave-Browser                                             1.44 GB       4 普通文件夹
+C:\Users\pereg\scoop\persist\gradle\.gradle                                                          1.34 GB       4 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome\default-archive                                              1.87 GB       4 普通文件夹
+C:\Users\pereg\.auto-coder-rag\dependencies\python-packages\rag-desktop                              1.14 GB       4 普通文件夹
+C:\Users\pereg\.pulsar\browser\chrome\default                                                        1.48 GB       4 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome\default                                                      1.38 GB       4 普通文件夹
+C:\Users\pereg\scoop\persist\gradle                                                                  1.34 GB       3 普通文件夹
+C:\Users\pereg\AppData\Roaming\Tencent                                                               6.55 GB       3 符号链接 → D:\MovedFolders\Tencent
+C:\Users\pereg\AppData\Roaming\npm                                                                   1.37 GB       3 普通文件夹
+C:\Users\pereg\AppData\Roaming\kingsoft                                                              5.51 GB       3 普通文件夹
+C:\Users\pereg\AppData\Roaming\JetBrains                                                             6.22 GB       3 普通文件夹
+C:\Users\pereg\AppData\Roaming\Code                                                                  1.42 GB       3 符号链接 → D:\MovedFolders\Code
+C:\Users\pereg\AppData\Local\Yarn                                                                    3.25 GB       3 符号链接 → D:\MovedFolders\Yarn
+C:\Users\pereg\.copilot\pkg\universal                                                                2.60 GB       3 普通文件夹
+C:\Users\pereg\.pulsar\browser\chrome                                                                1.69 GB       3 普通文件夹
+C:\Users\pereg\.auto-coder-rag\dependencies\python-packages                                          1.14 GB       3 普通文件夹
+C:\Users\pereg\.rustup\toolchains\stable-x86_64-pc-windows-msvc                                      1.20 GB       3 普通文件夹
+C:\Users\pereg\.browser4\browser\chrome                                                              3.46 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\Docker                                                                  159.78 GB     3 普通文件夹
+C:\Users\pereg\AppData\Local\FbSoftware                                                              3.48 GB       3 符号链接 → D:\MovedFolders\FbSoftware
+C:\Users\pereg\AppData\Local\Google                                                                  1.23 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains                                                               11.87 GB      3 普通文件夹
+C:\Users\pereg\AppData\Local\JianyingPro                                                             6.78 GB       3 符号链接 → D:\Users\pereg\AppData\Local\JianyingPro
+C:\Users\pereg\AppData\Local\kingsoft                                                                2.74 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\Microsoft                                                               4.08 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\ms-playwright                                                           1.12 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\npm-cache                                                               11.32 GB      3 符号链接 → D:\MovedFolders\npm-cache
+C:\Users\pereg\AppData\Local\pypoetry                                                                1.31 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\ShadowBot                                                               1.32 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\Temp                                                                    7.72 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\uv                                                                      1.96 GB       3 符号链接 → D:\MovedFolders\uv
+C:\Users\pereg\AppData\Local\BraveSoftware                                                           1.44 GB       3 普通文件夹
+C:\Users\pereg\.auto-coder-rag\dependencies                                                          1.14 GB       2 普通文件夹
+C:\Users\pereg\scoop\persist                                                                         1.34 GB       2 普通文件夹
+C:\Users\pereg\.copilot\pkg                                                                          2.68 GB       2 普通文件夹
+C:\Users\pereg\.pulsar\browser                                                                       1.69 GB       2 普通文件夹
+C:\Users\pereg\.rustup\toolchains                                                                    1.20 GB       2 普通文件夹
+C:\Users\pereg\AppData\Local                                                                         43.26 GB      2 普通文件夹
+C:\Users\pereg\AppData\Roaming                                                                       19.20 GB      2 普通文件夹
+C:\Users\pereg\.browser4\browser                                                                     3.46 GB       2 普通文件夹
+C:\Users\pereg\scoop                                                                                 2.78 GB       1 普通文件夹
+C:\Users\pereg\go                                                                                    1.78 GB       1 符号链接 → D:\MovedFolders\go
+C:\Users\pereg\Documents                                                                             1.49 GB       1 普通文件夹
+C:\Users\pereg\AppData                                                                               62.56 GB      1 普通文件夹
+C:\Users\pereg\.rustup                                                                               1.20 GB       1 普通文件夹
+C:\Users\pereg\.pulsar                                                                               2.87 GB       1 普通文件夹
+C:\Users\pereg\.gradle                                                                               1.13 GB       1 普通文件夹
+C:\Users\pereg\.copilot                                                                              2.91 GB       1 普通文件夹
+C:\Users\pereg\.browser4                                                                             4.86 GB       1 普通文件夹
+C:\Users\pereg\.auto-coder-rag                                                                       1.19 GB       1 普通文件夹
+
+日志文件: D:\workspace\Browser4Team\bin\tools\system\logs\analysis-folder-size_pereg_20260327_185723.log
+**********************
+PowerShell transcript end
+End time: 20260327191618
+**********************

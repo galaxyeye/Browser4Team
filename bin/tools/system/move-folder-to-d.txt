@@ -1,0 +1,20 @@
+C:\Users\pereg\AppData\Local\FbSoftware                                                              3.48 GB       3 符号链接 → D:\MovedFolders\FbSoftware
+C:\Users\pereg\AppData\Local\Google                                                                  1.23 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\JetBrains                                                               11.87 GB      3 普通文件夹
+C:\Users\pereg\AppData\Local\JianyingPro                                                             6.78 GB       3 符号链接 → D:\Users\pereg\AppData\Local\JianyingPro
+C:\Users\pereg\AppData\Local\kingsoft                                                                2.74 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\Microsoft                                                               4.08 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\ms-playwright                                                           1.12 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\npm-cache                                                               11.32 GB      3 符号链接 → D:\MovedFolders\npm-cache
+C:\Users\pereg\AppData\Local\pypoetry                                                                1.31 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\ShadowBot                                                               1.32 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\Temp                                                                    7.72 GB       3 普通文件夹
+C:\Users\pereg\AppData\Local\uv                                                                      1.96 GB       3 符号链接 → D:\MovedFolders\uv
+
+C:\Users\pereg\.browser4
+C:\Users\pereg\scoop                                                                                 2.78 GB       1 普通文件夹
+C:\Users\pereg\go                                                                                    1.78 GB       1 符号链接 → D:\MovedFolders\go
+C:\Users\pereg\.rustup                                                                               1.20 GB       1 普通文件夹
+C:\Users\pereg\.pulsar                                                                               2.87 GB       1 普通文件夹
+C:\Users\pereg\.gradle                                                                               1.13 GB       1 普通文件夹
+C:\Users\pereg\.copilot                                                                              2.91 GB       1 普通文件夹

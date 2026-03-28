@@ -1,0 +1,2471 @@
+[
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\FbSoftware",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "SymbolicLink",
+    "Target": "D:\\MovedFolders\\FbSoftware",
+    "CreationTime": "2025-04-18T13:23:22.2770772+08:00",
+    "LastWriteTime": "2025-04-18T13:23:22.2770772+08:00",
+    "LastAccessTime": "2025-04-18T13:23:22.2770772+08:00",
+    "Owner": "BUILTIN\\Administrators",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": true
+    },
+    "SizeBytes": 3740827567,
+    "SizeOnDiskBytes": 3788587008,
+    "FileCount": 17552,
+    "SubdirectoryCount": 764,
+    "Structure": {
+      "MaxDepth": 10,
+      "MaxBreadth": 3480,
+      "MaxSubdirectoryBreadth": 43,
+      "AverageBreadth": 23.94,
+      "VisitedDirectoryCount": 765
+    },
+    "DistinctFileTypeCount": 60,
+    "FileTypes": [
+      {
+        "Extension": "[no extension]",
+        "Count": 15712
+      },
+      {
+        "Extension": ".pak",
+        "Count": 292
+      },
+      {
+        "Extension": ".png",
+        "Count": 222
+      },
+      {
+        "Extension": ".xpi",
+        "Count": 187
+      },
+      {
+        "Extension": ".json",
+        "Count": 133
+      },
+      {
+        "Extension": ".old",
+        "Count": 116
+      },
+      {
+        "Extension": ".js",
+        "Count": 111
+      },
+      {
+        "Extension": ".hyb",
+        "Count": 104
+      },
+      {
+        "Extension": ".dll",
+        "Count": 91
+      },
+      {
+        "Extension": ".log",
+        "Count": 77
+      },
+      {
+        "Extension": ".dmp",
+        "Count": 51
+      },
+      {
+        "Extension": ".html",
+        "Count": 49
+      },
+      {
+        "Extension": ".fingerprint",
+        "Count": 47
+      },
+      {
+        "Extension": ".ldb",
+        "Count": 40
+      },
+      {
+        "Extension": ".css",
+        "Count": 34
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 1.7642,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\Google",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2023-07-21T13:16:18.8571658+08:00",
+    "LastWriteTime": "2025-09-15T23:54:34.9672704+08:00",
+    "LastAccessTime": "2026-03-27T19:05:31.9109623+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 1318110059,
+    "SizeOnDiskBytes": 1338232832,
+    "FileCount": 8002,
+    "SubdirectoryCount": 914,
+    "Structure": {
+      "MaxDepth": 11,
+      "MaxBreadth": 3715,
+      "MaxSubdirectoryBreadth": 256,
+      "AverageBreadth": 9.74,
+      "VisitedDirectoryCount": 915
+    },
+    "DistinctFileTypeCount": 65,
+    "FileTypes": [
+      {
+        "Extension": "[no extension]",
+        "Count": 6925
+      },
+      {
+        "Extension": ".json",
+        "Count": 294
+      },
+      {
+        "Extension": ".png",
+        "Count": 159
+      },
+      {
+        "Extension": ".map",
+        "Count": 77
+      },
+      {
+        "Extension": ".js",
+        "Count": 74
+      },
+      {
+        "Extension": ".svg",
+        "Count": 70
+      },
+      {
+        "Extension": ".hyb",
+        "Count": 52
+      },
+      {
+        "Extension": ".old",
+        "Count": 50
+      },
+      {
+        "Extension": ".log",
+        "Count": 39
+      },
+      {
+        "Extension": ".ldb",
+        "Count": 38
+      },
+      {
+        "Extension": ".html",
+        "Count": 32
+      },
+      {
+        "Extension": ".pb",
+        "Count": 25
+      },
+      {
+        "Extension": ".css",
+        "Count": 20
+      },
+      {
+        "Extension": ".txt",
+        "Count": 19
+      },
+      {
+        "Extension": ".tflite",
+        "Count": 14
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.6232,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\JetBrains",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-09-14T20:59:48.1047416+08:00",
+    "LastWriteTime": "2026-03-27T19:09:34.6479836+08:00",
+    "LastAccessTime": "2026-03-28T10:40:25.8990179+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 7778163970,
+    "SizeOnDiskBytes": 7848230912,
+    "FileCount": 29526,
+    "SubdirectoryCount": 7122,
+    "Structure": {
+      "MaxDepth": 14,
+      "MaxBreadth": 1324,
+      "MaxSubdirectoryBreadth": 535,
+      "AverageBreadth": 5.15,
+      "VisitedDirectoryCount": 7123
+    },
+    "DistinctFileTypeCount": 606,
+    "FileTypes": [
+      {
+        "Extension": ".py",
+        "Count": 5065
+      },
+      {
+        "Extension": ".len",
+        "Count": 4316
+      },
+      {
+        "Extension": ".rs",
+        "Count": 4122
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 3158
+      },
+      {
+        "Extension": ".json",
+        "Count": 1423
+      },
+      {
+        "Extension": ".js",
+        "Count": 994
+      },
+      {
+        "Extension": ".xml",
+        "Count": 937
+      },
+      {
+        "Extension": ".at",
+        "Count": 884
+      },
+      {
+        "Extension": ".html",
+        "Count": 742
+      },
+      {
+        "Extension": ".keystream",
+        "Count": 730
+      },
+      {
+        "Extension": ".etag",
+        "Count": 563
+      },
+      {
+        "Extension": ".storage",
+        "Count": 560
+      },
+      {
+        "Extension": ".svg",
+        "Count": 527
+      },
+      {
+        "Extension": ".ver",
+        "Count": 403
+      },
+      {
+        "Extension": ".dat",
+        "Count": 398
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 3.6546,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\JianyingPro",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "SymbolicLink",
+    "Target": "D:\\Users\\pereg\\AppData\\Local\\JianyingPro",
+    "CreationTime": "2024-10-18T17:46:10.2994894+08:00",
+    "LastWriteTime": "2024-10-18T17:46:10.2994894+08:00",
+    "LastAccessTime": "2024-10-18T17:46:10.2994894+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": true
+    },
+    "SizeBytes": 7276411192,
+    "SizeOnDiskBytes": 7438049280,
+    "FileCount": 64341,
+    "SubdirectoryCount": 12510,
+    "Structure": {
+      "MaxDepth": 13,
+      "MaxBreadth": 13937,
+      "MaxSubdirectoryBreadth": 680,
+      "AverageBreadth": 6.14,
+      "VisitedDirectoryCount": 12511
+    },
+    "DistinctFileTypeCount": 101,
+    "FileTypes": [
+      {
+        "Extension": "[no extension]",
+        "Count": 17017
+      },
+      {
+        "Extension": ".png",
+        "Count": 12398
+      },
+      {
+        "Extension": ".material",
+        "Count": 4354
+      },
+      {
+        "Extension": ".meta",
+        "Count": 4189
+      },
+      {
+        "Extension": ".frag",
+        "Count": 3696
+      },
+      {
+        "Extension": ".vert",
+        "Count": 3460
+      },
+      {
+        "Extension": ".json",
+        "Count": 3435
+      },
+      {
+        "Extension": ".xshader",
+        "Count": 3382
+      },
+      {
+        "Extension": ".mesh",
+        "Count": 2613
+      },
+      {
+        "Extension": ".wavedatav2",
+        "Count": 1957
+      },
+      {
+        "Extension": ".lua",
+        "Count": 1779
+      },
+      {
+        "Extension": ".rt",
+        "Count": 1457
+      },
+      {
+        "Extension": ".config",
+        "Count": 824
+      },
+      {
+        "Extension": ".svg",
+        "Count": 627
+      },
+      {
+        "Extension": ".scene",
+        "Count": 580
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 3.4636,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\kingsoft",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2023-05-13T21:35:08.4592983+08:00",
+    "LastWriteTime": "2025-04-18T13:35:10.1905221+08:00",
+    "LastAccessTime": "2026-03-27T19:11:06.5153098+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 2937902537,
+    "SizeOnDiskBytes": 2964787200,
+    "FileCount": 11148,
+    "SubdirectoryCount": 3494,
+    "Structure": {
+      "MaxDepth": 14,
+      "MaxBreadth": 267,
+      "MaxSubdirectoryBreadth": 225,
+      "AverageBreadth": 4.19,
+      "VisitedDirectoryCount": 3495
+    },
+    "DistinctFileTypeCount": 94,
+    "FileTypes": [
+      {
+        "Extension": ".svg",
+        "Count": 2024
+      },
+      {
+        "Extension": ".js",
+        "Count": 1371
+      },
+      {
+        "Extension": ".png",
+        "Count": 1097
+      },
+      {
+        "Extension": ".dll",
+        "Count": 970
+      },
+      {
+        "Extension": ".xml",
+        "Count": 949
+      },
+      {
+        "Extension": ".kuip",
+        "Count": 654
+      },
+      {
+        "Extension": ".prog",
+        "Count": 534
+      },
+      {
+        "Extension": ".html",
+        "Count": 464
+      },
+      {
+        "Extension": ".qm",
+        "Count": 455
+      },
+      {
+        "Extension": ".css",
+        "Count": 424
+      },
+      {
+        "Extension": ".ico",
+        "Count": 269
+      },
+      {
+        "Extension": ".ini",
+        "Count": 219
+      },
+      {
+        "Extension": ".bmp",
+        "Count": 216
+      },
+      {
+        "Extension": ".gif",
+        "Count": 185
+      },
+      {
+        "Extension": ".data",
+        "Count": 171
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 1.3806,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\Microsoft",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-07-14T14:17:30.6762212+08:00",
+    "LastWriteTime": "2026-01-10T23:03:55.5570023+08:00",
+    "LastAccessTime": "2026-03-28T11:16:47.9384571+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "NT AUTHORITY\\SYSTEM",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 4495096120,
+    "SizeOnDiskBytes": 4559577088,
+    "FileCount": 25436,
+    "SubdirectoryCount": 2739,
+    "Structure": {
+      "MaxDepth": 13,
+      "MaxBreadth": 4160,
+      "MaxSubdirectoryBreadth": 126,
+      "AverageBreadth": 10.29,
+      "VisitedDirectoryCount": 2738
+    },
+    "DistinctFileTypeCount": 162,
+    "FileTypes": [
+      {
+        "Extension": "[no extension]",
+        "Count": 9328
+      },
+      {
+        "Extension": ".js",
+        "Count": 4050
+      },
+      {
+        "Extension": ".xml",
+        "Count": 3228
+      },
+      {
+        "Extension": ".ts",
+        "Count": 1596
+      },
+      {
+        "Extension": ".png",
+        "Count": 1381
+      },
+      {
+        "Extension": ".json",
+        "Count": 1218
+      },
+      {
+        "Extension": ".odl",
+        "Count": 669
+      },
+      {
+        "Extension": ".svg",
+        "Count": 487
+      },
+      {
+        "Extension": ".resjson",
+        "Count": 321
+      },
+      {
+        "Extension": ".bin",
+        "Count": 280
+      },
+      {
+        "Extension": ".html",
+        "Count": 185
+      },
+      {
+        "Extension": ".md",
+        "Count": 184
+      },
+      {
+        "Extension": ".dll",
+        "Count": 181
+      },
+      {
+        "Extension": ".map",
+        "Count": 175
+      },
+      {
+        "Extension": ".log",
+        "Count": 125
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 2.1232,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\ms-playwright",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-05-11T17:05:27.4783681+08:00",
+    "LastWriteTime": "2026-03-02T01:34:23.2711593+08:00",
+    "LastAccessTime": "2026-03-27T19:07:50.7917815+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 1205331536,
+    "SizeOnDiskBytes": 1208389632,
+    "FileCount": 1009,
+    "SubdirectoryCount": 75,
+    "Structure": {
+      "MaxDepth": 8,
+      "MaxBreadth": 220,
+      "MaxSubdirectoryBreadth": 16,
+      "AverageBreadth": 14.26,
+      "VisitedDirectoryCount": 76
+    },
+    "DistinctFileTypeCount": 25,
+    "FileTypes": [
+      {
+        "Extension": ".pak",
+        "Count": 446
+      },
+      {
+        "Extension": ".svg",
+        "Count": 219
+      },
+      {
+        "Extension": ".hyb",
+        "Count": 104
+      },
+      {
+        "Extension": ".dll",
+        "Count": 91
+      },
+      {
+        "Extension": ".js",
+        "Count": 50
+      },
+      {
+        "Extension": ".png",
+        "Count": 26
+      },
+      {
+        "Extension": ".exe",
+        "Count": 22
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 13
+      },
+      {
+        "Extension": ".json",
+        "Count": 11
+      },
+      {
+        "Extension": ".dat",
+        "Count": 4
+      },
+      {
+        "Extension": ".ini",
+        "Count": 4
+      },
+      {
+        "Extension": ".bin",
+        "Count": 2
+      },
+      {
+        "Extension": ".css",
+        "Count": 2
+      },
+      {
+        "Extension": ".ja",
+        "Count": 2
+      },
+      {
+        "Extension": ".pb",
+        "Count": 2
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.5627,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\npm-cache",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "SymbolicLink",
+    "Target": "D:\\MovedFolders\\npm-cache",
+    "CreationTime": "2025-04-18T13:24:15.1638506+08:00",
+    "LastWriteTime": "2025-04-18T13:24:15.1638506+08:00",
+    "LastAccessTime": "2025-04-18T13:24:15.1638506+08:00",
+    "Owner": "BUILTIN\\Administrators",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": true
+    },
+    "SizeBytes": 12150550538,
+    "SizeOnDiskBytes": 12336709632,
+    "FileCount": 70573,
+    "SubdirectoryCount": 28320,
+    "Structure": {
+      "MaxDepth": 12,
+      "MaxBreadth": 19871,
+      "MaxSubdirectoryBreadth": 256,
+      "AverageBreadth": 3.49,
+      "VisitedDirectoryCount": 28319
+    },
+    "DistinctFileTypeCount": 55,
+    "FileTypes": [
+      {
+        "Extension": "[no extension]",
+        "Count": 47821
+      },
+      {
+        "Extension": ".js",
+        "Count": 11892
+      },
+      {
+        "Extension": ".ts",
+        "Count": 3819
+      },
+      {
+        "Extension": ".map",
+        "Count": 1693
+      },
+      {
+        "Extension": ".json",
+        "Count": 1336
+      },
+      {
+        "Extension": ".md",
+        "Count": 1335
+      },
+      {
+        "Extension": ".mjs",
+        "Count": 707
+      },
+      {
+        "Extension": ".mts",
+        "Count": 563
+      },
+      {
+        "Extension": ".yml",
+        "Count": 211
+      },
+      {
+        "Extension": ".eslintrc",
+        "Count": 204
+      },
+      {
+        "Extension": ".nycrc",
+        "Count": 151
+      },
+      {
+        "Extension": ".html",
+        "Count": 122
+      },
+      {
+        "Extension": ".ps1",
+        "Count": 119
+      },
+      {
+        "Extension": ".cmd",
+        "Count": 88
+      },
+      {
+        "Extension": ".cjs",
+        "Count": 62
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 5.7447,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\pypoetry",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-07-04T14:39:51.5011925+08:00",
+    "LastWriteTime": "2025-07-04T14:39:51.5011925+08:00",
+    "LastAccessTime": "2026-03-27T19:09:19.8898227+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 1401381378,
+    "SizeOnDiskBytes": 1459216384,
+    "FileCount": 23077,
+    "SubdirectoryCount": 11472,
+    "Structure": {
+      "MaxDepth": 16,
+      "MaxBreadth": 406,
+      "MaxSubdirectoryBreadth": 402,
+      "AverageBreadth": 3.01,
+      "VisitedDirectoryCount": 11473
+    },
+    "DistinctFileTypeCount": 79,
+    "FileTypes": [
+      {
+        "Extension": ".py",
+        "Count": 9502
+      },
+      {
+        "Extension": ".pyi",
+        "Count": 4344
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 2988
+      },
+      {
+        "Extension": ".json",
+        "Count": 1819
+      },
+      {
+        "Extension": ".gz",
+        "Count": 1754
+      },
+      {
+        "Extension": ".txt",
+        "Count": 422
+      },
+      {
+        "Extension": ".whl",
+        "Count": 405
+      },
+      {
+        "Extension": ".pyc",
+        "Count": 227
+      },
+      {
+        "Extension": ".typed",
+        "Count": 212
+      },
+      {
+        "Extension": ".pyd",
+        "Count": 186
+      },
+      {
+        "Extension": ".exe",
+        "Count": 134
+      },
+      {
+        "Extension": ".f90",
+        "Count": 122
+      },
+      {
+        "Extension": ".afm",
+        "Count": 120
+      },
+      {
+        "Extension": ".ttf",
+        "Count": 76
+      },
+      {
+        "Extension": ".csv",
+        "Count": 66
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.6795,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\ShadowBot",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2023-11-01T17:43:49.4422741+08:00",
+    "LastWriteTime": "2025-03-15T16:41:13.5395545+08:00",
+    "LastAccessTime": "2026-03-27T19:09:30.978118+08:00",
+    "Owner": "BUILTIN\\Administrators",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 1414036436,
+    "SizeOnDiskBytes": 1446178816,
+    "FileCount": 13848,
+    "SubdirectoryCount": 1300,
+    "Structure": {
+      "MaxDepth": 14,
+      "MaxBreadth": 629,
+      "MaxSubdirectoryBreadth": 53,
+      "AverageBreadth": 11.64,
+      "VisitedDirectoryCount": 1301
+    },
+    "DistinctFileTypeCount": 73,
+    "FileTypes": [
+      {
+        "Extension": ".py",
+        "Count": 4872
+      },
+      {
+        "Extension": ".pyc",
+        "Count": 4813
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 2804
+      },
+      {
+        "Extension": ".dll",
+        "Count": 381
+      },
+      {
+        "Extension": ".can_deleted",
+        "Count": 152
+      },
+      {
+        "Extension": ".log",
+        "Count": 109
+      },
+      {
+        "Extension": ".pyi",
+        "Count": 95
+      },
+      {
+        "Extension": ".pyd",
+        "Count": 67
+      },
+      {
+        "Extension": ".txt",
+        "Count": 64
+      },
+      {
+        "Extension": ".c",
+        "Count": 50
+      },
+      {
+        "Extension": ".pyx",
+        "Count": 46
+      },
+      {
+        "Extension": ".h",
+        "Count": 44
+      },
+      {
+        "Extension": ".exe",
+        "Count": 39
+      },
+      {
+        "Extension": ".pxd",
+        "Count": 28
+      },
+      {
+        "Extension": ".json",
+        "Count": 27
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.6734,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\Temp",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-07-14T14:17:30.6762212+08:00",
+    "LastWriteTime": "2026-03-28T11:20:47.0506584+08:00",
+    "LastAccessTime": "2026-03-28T11:20:47.0506584+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "NT AUTHORITY\\SYSTEM",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 9106872349,
+    "SizeOnDiskBytes": 9115127808,
+    "FileCount": 4324,
+    "SubdirectoryCount": 1197,
+    "Structure": {
+      "MaxDepth": 11,
+      "MaxBreadth": 635,
+      "MaxSubdirectoryBreadth": 500,
+      "AverageBreadth": 4.61,
+      "VisitedDirectoryCount": 1198
+    },
+    "DistinctFileTypeCount": 41,
+    "FileTypes": [
+      {
+        "Extension": ".dll",
+        "Count": 1941
+      },
+      {
+        "Extension": ".cjs",
+        "Count": 635
+      },
+      {
+        "Extension": ".vsix",
+        "Count": 463
+      },
+      {
+        "Extension": ".cab",
+        "Count": 350
+      },
+      {
+        "Extension": ".msi",
+        "Count": 202
+      },
+      {
+        "Extension": ".png",
+        "Count": 121
+      },
+      {
+        "Extension": ".exe",
+        "Count": 107
+      },
+      {
+        "Extension": ".config",
+        "Count": 95
+      },
+      {
+        "Extension": ".log",
+        "Count": 88
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 80
+      },
+      {
+        "Extension": ".xml",
+        "Count": 50
+      },
+      {
+        "Extension": ".tmp",
+        "Count": 38
+      },
+      {
+        "Extension": ".json",
+        "Count": 30
+      },
+      {
+        "Extension": ".etl",
+        "Count": 22
+      },
+      {
+        "Extension": ".pri",
+        "Count": 15
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 4.2446,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\AppData\\Local\\uv",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "SymbolicLink",
+    "Target": "D:\\MovedFolders\\uv",
+    "CreationTime": "2025-04-18T13:25:12.7528639+08:00",
+    "LastWriteTime": "2025-04-18T13:25:12.7528639+08:00",
+    "LastAccessTime": "2025-04-18T13:25:12.7528639+08:00",
+    "Owner": "BUILTIN\\Administrators",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": true
+    },
+    "SizeBytes": 2109683930,
+    "SizeOnDiskBytes": 2198290432,
+    "FileCount": 35770,
+    "SubdirectoryCount": 5017,
+    "Structure": {
+      "MaxDepth": 14,
+      "MaxBreadth": 6951,
+      "MaxSubdirectoryBreadth": 404,
+      "AverageBreadth": 8.13,
+      "VisitedDirectoryCount": 5018
+    },
+    "DistinctFileTypeCount": 168,
+    "FileTypes": [
+      {
+        "Extension": ".py",
+        "Count": 16739
+      },
+      {
+        "Extension": ".h",
+        "Count": 9349
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 2405
+      },
+      {
+        "Extension": ".json",
+        "Count": 992
+      },
+      {
+        "Extension": ".gz",
+        "Count": 896
+      },
+      {
+        "Extension": ".pyc",
+        "Count": 729
+      },
+      {
+        "Extension": ".pyi",
+        "Count": 456
+      },
+      {
+        "Extension": ".pyd",
+        "Count": 357
+      },
+      {
+        "Extension": ".lock",
+        "Count": 345
+      },
+      {
+        "Extension": ".txt",
+        "Count": 309
+      },
+      {
+        "Extension": ".js",
+        "Count": 291
+      },
+      {
+        "Extension": ".msgpack",
+        "Count": 189
+      },
+      {
+        "Extension": ".typed",
+        "Count": 184
+      },
+      {
+        "Extension": ".http",
+        "Count": 183
+      },
+      {
+        "Extension": ".rkyv",
+        "Count": 160
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 1.0237,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\.browser4",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2026-01-18T01:20:22.8782976+08:00",
+    "LastWriteTime": "2026-03-27T22:41:46.8887366+08:00",
+    "LastAccessTime": "2026-03-28T10:40:25.8821427+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 204032448,
+    "SizeOnDiskBytes": 210096128,
+    "FileCount": 2489,
+    "SubdirectoryCount": 7846,
+    "Structure": {
+      "MaxDepth": 8,
+      "MaxBreadth": 330,
+      "MaxSubdirectoryBreadth": 330,
+      "AverageBreadth": 1.32,
+      "VisitedDirectoryCount": 7846
+    },
+    "DistinctFileTypeCount": 19,
+    "FileTypes": [
+      {
+        "Extension": ".md",
+        "Count": 833
+      },
+      {
+        "Extension": ".log",
+        "Count": 515
+      },
+      {
+        "Extension": ".json",
+        "Count": 449
+      },
+      {
+        "Extension": ".txt",
+        "Count": 359
+      },
+      {
+        "Extension": ".jsonl",
+        "Count": 115
+      },
+      {
+        "Extension": ".xsd",
+        "Count": 78
+      },
+      {
+        "Extension": ".ttf",
+        "Count": 54
+      },
+      {
+        "Extension": ".py",
+        "Count": 45
+      },
+      {
+        "Extension": ".xml",
+        "Count": 13
+      },
+      {
+        "Extension": ".crc",
+        "Count": 8
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 7
+      },
+      {
+        "Extension": ".sh",
+        "Count": 4
+      },
+      {
+        "Extension": ".js",
+        "Count": 2
+      },
+      {
+        "Extension": ".parquet",
+        "Count": 2
+      },
+      {
+        "Extension": ".gz",
+        "Count": 1
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.0978,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\scoop",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2025-07-04T01:19:54.978047+08:00",
+    "LastWriteTime": "2025-07-04T01:29:27.9295623+08:00",
+    "LastAccessTime": "2026-03-28T09:45:22.5202223+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 2985083280,
+    "SizeOnDiskBytes": 3117826048,
+    "FileCount": 51611,
+    "SubdirectoryCount": 9365,
+    "Structure": {
+      "MaxDepth": 20,
+      "MaxBreadth": 1989,
+      "MaxSubdirectoryBreadth": 231,
+      "AverageBreadth": 6.52,
+      "VisitedDirectoryCount": 9350
+    },
+    "DistinctFileTypeCount": 172,
+    "FileTypes": [
+      {
+        "Extension": ".java",
+        "Count": 17793
+      },
+      {
+        "Extension": ".html",
+        "Count": 13322
+      },
+      {
+        "Extension": ".go",
+        "Count": 10372
+      },
+      {
+        "Extension": ".json",
+        "Count": 1523
+      },
+      {
+        "Extension": ".txt",
+        "Count": 1474
+      },
+      {
+        "Extension": ".jar",
+        "Count": 1327
+      },
+      {
+        "Extension": ".kt",
+        "Count": 1027
+      },
+      {
+        "Extension": ".s",
+        "Count": 617
+      },
+      {
+        "Extension": ".png",
+        "Count": 442
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 424
+      },
+      {
+        "Extension": ".crt",
+        "Count": 407
+      },
+      {
+        "Extension": ".bin",
+        "Count": 352
+      },
+      {
+        "Extension": ".lock",
+        "Count": 229
+      },
+      {
+        "Extension": ".class",
+        "Count": 216
+      },
+      {
+        "Extension": ".c",
+        "Count": 133
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 1.4519,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\go",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "SymbolicLink",
+    "Target": "D:\\MovedFolders\\go",
+    "CreationTime": "2025-07-18T20:21:49.1765335+08:00",
+    "LastWriteTime": "2025-07-18T20:21:49.1765335+08:00",
+    "LastAccessTime": "2025-07-18T20:21:49.1765335+08:00",
+    "Owner": "BUILTIN\\Administrators",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": true
+    },
+    "SizeBytes": 1912892879,
+    "SizeOnDiskBytes": 2102091776,
+    "FileCount": 71550,
+    "SubdirectoryCount": 18449,
+    "Structure": {
+      "MaxDepth": 19,
+      "MaxBreadth": 1230,
+      "MaxSubdirectoryBreadth": 766,
+      "AverageBreadth": 4.88,
+      "VisitedDirectoryCount": 18450
+    },
+    "DistinctFileTypeCount": 462,
+    "FileTypes": [
+      {
+        "Extension": ".go",
+        "Count": 44833
+      },
+      {
+        "Extension": ".json",
+        "Count": 3773
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 2695
+      },
+      {
+        "Extension": ".mod",
+        "Count": 2551
+      },
+      {
+        "Extension": ".h",
+        "Count": 2272
+      },
+      {
+        "Extension": ".md",
+        "Count": 1614
+      },
+      {
+        "Extension": ".test",
+        "Count": 1441
+      },
+      {
+        "Extension": ".txt",
+        "Count": 1191
+      },
+      {
+        "Extension": ".info",
+        "Count": 1016
+      },
+      {
+        "Extension": ".yml",
+        "Count": 868
+      },
+      {
+        "Extension": ".golden",
+        "Count": 643
+      },
+      {
+        "Extension": ".c",
+        "Count": 594
+      },
+      {
+        "Extension": ".toml",
+        "Count": 573
+      },
+      {
+        "Extension": ".lock",
+        "Count": 553
+      },
+      {
+        "Extension": ".zip",
+        "Count": 510
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.9789,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\.rustup",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2026-03-23T22:34:44.382982+08:00",
+    "LastWriteTime": "2026-03-23T22:41:39.6498611+08:00",
+    "LastAccessTime": "2026-03-28T10:40:25.8821427+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 1290549828,
+    "SizeOnDiskBytes": 1443672064,
+    "FileCount": 51894,
+    "SubdirectoryCount": 1939,
+    "Structure": {
+      "MaxDepth": 16,
+      "MaxBreadth": 6661,
+      "MaxSubdirectoryBreadth": 78,
+      "AverageBreadth": 27.75,
+      "VisitedDirectoryCount": 1940
+    },
+    "DistinctFileTypeCount": 46,
+    "FileTypes": [
+      {
+        "Extension": ".html",
+        "Count": 46266
+      },
+      {
+        "Extension": ".js",
+        "Count": 2584
+      },
+      {
+        "Extension": ".rs",
+        "Count": 1944
+      },
+      {
+        "Extension": ".woff2",
+        "Count": 223
+      },
+      {
+        "Extension": ".css",
+        "Count": 170
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 94
+      },
+      {
+        "Extension": ".svg",
+        "Count": 72
+      },
+      {
+        "Extension": ".txt",
+        "Count": 70
+      },
+      {
+        "Extension": ".md",
+        "Count": 60
+      },
+      {
+        "Extension": ".toml",
+        "Count": 56
+      },
+      {
+        "Extension": ".png",
+        "Count": 51
+      },
+      {
+        "Extension": ".1",
+        "Count": 38
+      },
+      {
+        "Extension": ".s",
+        "Count": 28
+      },
+      {
+        "Extension": ".sh",
+        "Count": 22
+      },
+      {
+        "Extension": ".rlib",
+        "Count": 21
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 0.6723,
+    "AnalysisErrors": []
+  },
+  {
+    "Path": "C:\\Users\\pereg\\.pulsar",
+    "Exists": false,
+    "Status": "Missing",
+    "ItemType": "Missing",
+    "LinkType": "n/a",
+    "Target": null,
+    "CreationTime": null,
+    "LastWriteTime": null,
+    "LastAccessTime": null,
+    "Owner": null,
+    "Group": null,
+    "AccessRules": [],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": null,
+    "SizeOnDiskBytes": null,
+    "FileCount": null,
+    "SubdirectoryCount": null,
+    "Structure": null,
+    "DistinctFileTypeCount": null,
+    "FileTypes": [],
+    "FileSystem": null,
+    "Volume": null,
+    "DiskUsagePercentOfVolume": null,
+    "AnalysisErrors": [
+      "Directory not found: C:\\Users\\pereg\\.pulsar"
+    ]
+  },
+  {
+    "Path": "C:\\Users\\pereg\\.gradle",
+    "Exists": false,
+    "Status": "Missing",
+    "ItemType": "Missing",
+    "LinkType": "n/a",
+    "Target": null,
+    "CreationTime": null,
+    "LastWriteTime": null,
+    "LastAccessTime": null,
+    "Owner": null,
+    "Group": null,
+    "AccessRules": [],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": null,
+    "SizeOnDiskBytes": null,
+    "FileCount": null,
+    "SubdirectoryCount": null,
+    "Structure": null,
+    "DistinctFileTypeCount": null,
+    "FileTypes": [],
+    "FileSystem": null,
+    "Volume": null,
+    "DiskUsagePercentOfVolume": null,
+    "AnalysisErrors": [
+      "Directory not found: C:\\Users\\pereg\\.gradle"
+    ]
+  },
+  {
+    "Path": "C:\\Users\\pereg\\.copilot",
+    "Exists": true,
+    "Status": "Analyzed",
+    "ItemType": "Directory",
+    "LinkType": "Directory",
+    "Target": null,
+    "CreationTime": "2026-01-10T23:04:30.2390936+08:00",
+    "LastWriteTime": "2026-03-13T14:47:03.9128521+08:00",
+    "LastAccessTime": "2026-03-28T11:14:26.2565634+08:00",
+    "Owner": "ALTAIR\\pereg",
+    "Group": "ALTAIR\\pereg",
+    "AccessRules": [
+      {
+        "IdentityReference": "NT AUTHORITY\\SYSTEM",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "BUILTIN\\Administrators",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      },
+      {
+        "IdentityReference": "altair\\pereg",
+        "AccessType": "Allow",
+        "Rights": "FullControl",
+        "IsInherited": true,
+        "InheritanceFlags": "ContainerInherit, ObjectInherit",
+        "PropagationFlags": "None",
+        "Read": true,
+        "Write": true,
+        "Execute": true
+      }
+    ],
+    "Attributes": {
+      "Hidden": false,
+      "ReadOnly": false,
+      "System": false,
+      "Archive": false,
+      "Compressed": false,
+      "Encrypted": false,
+      "ReparsePoint": false
+    },
+    "SizeBytes": 3255613610,
+    "SizeOnDiskBytes": 3280982016,
+    "FileCount": 9144,
+    "SubdirectoryCount": 5259,
+    "Structure": {
+      "MaxDepth": 9,
+      "MaxBreadth": 1151,
+      "MaxSubdirectoryBreadth": 1131,
+      "AverageBreadth": 2.74,
+      "VisitedDirectoryCount": 5260
+    },
+    "DistinctFileTypeCount": 27,
+    "FileTypes": [
+      {
+        "Extension": ".md",
+        "Count": 1596
+      },
+      {
+        "Extension": ".json",
+        "Count": 1464
+      },
+      {
+        "Extension": ".jsonl",
+        "Count": 1249
+      },
+      {
+        "Extension": ".yaml",
+        "Count": 1183
+      },
+      {
+        "Extension": ".log",
+        "Count": 1080
+      },
+      {
+        "Extension": "[no extension]",
+        "Count": 638
+      },
+      {
+        "Extension": ".node",
+        "Count": 501
+      },
+      {
+        "Extension": ".js",
+        "Count": 405
+      },
+      {
+        "Extension": ".db",
+        "Count": 186
+      },
+      {
+        "Extension": ".ts",
+        "Count": 159
+      },
+      {
+        "Extension": ".pdb",
+        "Count": 149
+      },
+      {
+        "Extension": ".wasm",
+        "Count": 148
+      },
+      {
+        "Extension": ".exe",
+        "Count": 115
+      },
+      {
+        "Extension": ".dll",
+        "Count": 66
+      },
+      {
+        "Extension": ".mjs",
+        "Count": 60
+      }
+    ],
+    "FileSystem": "NTFS",
+    "Volume": {
+      "DriveLetter": "C:",
+      "Label": "Windows",
+      "TotalSpaceBytes": 214748360704,
+      "FreeSpaceBytes": 27893485568,
+      "AllocationUnitBytes": 4096
+    },
+    "DiskUsagePercentOfVolume": 1.5278,
+    "AnalysisErrors": []
+  }
+]

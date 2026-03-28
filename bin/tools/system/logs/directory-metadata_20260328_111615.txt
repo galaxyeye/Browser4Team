@@ -1,0 +1,752 @@
+Directory metadata report
+Generated: 2026-03-28 11:23:55
+Input file: D:\workspace\Browser4Team\bin\tools\system\move-folder-to-d.txt
+
+Summary
+-------
+
+Path                                       Status   LinkType     Size      SizeOnDisk Files Subdirs Depth Breadth FileSystem
+----                                       ------   --------     ----      ---------- ----- ------- ----- ------- ----------
+C:\Users\pereg\AppData\Local\FbSoftware    Analyzed SymbolicLink 3.48 GB   3.53 GB    17552     764    10    3480 NTFS
+C:\Users\pereg\AppData\Local\Google        Analyzed Directory    1.23 GB   1.25 GB     8002     914    11    3715 NTFS
+C:\Users\pereg\AppData\Local\JetBrains     Analyzed Directory    7.24 GB   7.31 GB    29526    7122    14    1324 NTFS
+C:\Users\pereg\AppData\Local\JianyingPro   Analyzed SymbolicLink 6.78 GB   6.93 GB    64341   12510    13   13937 NTFS
+C:\Users\pereg\AppData\Local\kingsoft      Analyzed Directory    2.74 GB   2.76 GB    11148    3494    14     267 NTFS
+C:\Users\pereg\AppData\Local\Microsoft     Analyzed Directory    4.19 GB   4.25 GB    25436    2739    13    4160 NTFS
+C:\Users\pereg\AppData\Local\ms-playwright Analyzed Directory    1.12 GB   1.13 GB     1009      75     8     220 NTFS
+C:\Users\pereg\AppData\Local\npm-cache     Analyzed SymbolicLink 11.32 GB  11.49 GB   70573   28320    12   19871 NTFS
+C:\Users\pereg\AppData\Local\pypoetry      Analyzed Directory    1.31 GB   1.36 GB    23077   11472    16     406 NTFS
+C:\Users\pereg\AppData\Local\ShadowBot     Analyzed Directory    1.32 GB   1.35 GB    13848    1300    14     629 NTFS
+C:\Users\pereg\AppData\Local\Temp          Analyzed Directory    8.48 GB   8.49 GB     4324    1197    11     635 NTFS
+C:\Users\pereg\AppData\Local\uv            Analyzed SymbolicLink 1.96 GB   2.05 GB    35770    5017    14    6951 NTFS
+C:\Users\pereg\.browser4                   Analyzed Directory    194.58 MB 200.36 MB   2489    7846     8     330 NTFS
+C:\Users\pereg\scoop                       Analyzed Directory    2.78 GB   2.90 GB    51611    9365    20    1989 NTFS
+C:\Users\pereg\go                          Analyzed SymbolicLink 1.78 GB   1.96 GB    71550   18449    19    1230 NTFS
+C:\Users\pereg\.rustup                     Analyzed Directory    1.20 GB   1.34 GB    51894    1939    16    6661 NTFS
+C:\Users\pereg\.pulsar                     Missing  n/a          n/a       n/a                                    
+C:\Users\pereg\.gradle                     Missing  n/a          n/a       n/a                                    
+C:\Users\pereg\.copilot                    Analyzed Directory    3.03 GB   3.06 GB     9144    5259     9    1151 NTFS
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\FbSoftware
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\FbSoftware
+Size: 3.48 GB (3740827567 bytes)
+Size on disk: 3.53 GB (3788587008 bytes)
+Creation time: 2025-04-18 13:23:22
+Last modified: 2025-04-18 13:23:22
+Last accessed: 2025-04-18 13:23:22
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 17552
+Subdirectories: 764
+Distinct file types: 60
+Structure metrics: max depth=10, max breadth=3480, max subdirectory breadth=43, average breadth=23.94, visited directories=765
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.7642%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 15712
+  - .pak: 292
+  - .png: 222
+  - .xpi: 187
+  - .json: 133
+  - .old: 116
+  - .js: 111
+  - .hyb: 104
+  - .dll: 91
+  - .log: 77
+  - .dmp: 51
+  - .html: 49
+  - .fingerprint: 47
+  - .ldb: 40
+  - .css: 34
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Google
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.23 GB (1318110059 bytes)
+Size on disk: 1.25 GB (1338232832 bytes)
+Creation time: 2023-07-21 13:16:18
+Last modified: 2025-09-15 23:54:34
+Last accessed: 2026-03-27 19:05:31
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 8002
+Subdirectories: 914
+Distinct file types: 65
+Structure metrics: max depth=11, max breadth=3715, max subdirectory breadth=256, average breadth=9.74, visited directories=915
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6232%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 6925
+  - .json: 294
+  - .png: 159
+  - .map: 77
+  - .js: 74
+  - .svg: 70
+  - .hyb: 52
+  - .old: 50
+  - .log: 39
+  - .ldb: 38
+  - .html: 32
+  - .pb: 25
+  - .css: 20
+  - .txt: 19
+  - .tflite: 14
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\JetBrains
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 7.24 GB (7778163970 bytes)
+Size on disk: 7.31 GB (7848230912 bytes)
+Creation time: 2025-09-14 20:59:48
+Last modified: 2026-03-27 19:09:34
+Last accessed: 2026-03-28 10:40:25
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 29526
+Subdirectories: 7122
+Distinct file types: 606
+Structure metrics: max depth=14, max breadth=1324, max subdirectory breadth=535, average breadth=5.15, visited directories=7123
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 3.6546%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 5065
+  - .len: 4316
+  - .rs: 4122
+  - [no extension]: 3158
+  - .json: 1423
+  - .js: 994
+  - .xml: 937
+  - .at: 884
+  - .html: 742
+  - .keystream: 730
+  - .etag: 563
+  - .storage: 560
+  - .svg: 527
+  - .ver: 403
+  - .dat: 398
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\JianyingPro
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\Users\pereg\AppData\Local\JianyingPro
+Size: 6.78 GB (7276411192 bytes)
+Size on disk: 6.93 GB (7438049280 bytes)
+Creation time: 2024-10-18 17:46:10
+Last modified: 2024-10-18 17:46:10
+Last accessed: 2024-10-18 17:46:10
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 64341
+Subdirectories: 12510
+Distinct file types: 101
+Structure metrics: max depth=13, max breadth=13937, max subdirectory breadth=680, average breadth=6.14, visited directories=12511
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 3.4636%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 17017
+  - .png: 12398
+  - .material: 4354
+  - .meta: 4189
+  - .frag: 3696
+  - .vert: 3460
+  - .json: 3435
+  - .xshader: 3382
+  - .mesh: 2613
+  - .wavedatav2: 1957
+  - .lua: 1779
+  - .rt: 1457
+  - .config: 824
+  - .svg: 627
+  - .scene: 580
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\kingsoft
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 2.74 GB (2937902537 bytes)
+Size on disk: 2.76 GB (2964787200 bytes)
+Creation time: 2023-05-13 21:35:08
+Last modified: 2025-04-18 13:35:10
+Last accessed: 2026-03-27 19:11:06
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 11148
+Subdirectories: 3494
+Distinct file types: 94
+Structure metrics: max depth=14, max breadth=267, max subdirectory breadth=225, average breadth=4.19, visited directories=3495
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.3806%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .svg: 2024
+  - .js: 1371
+  - .png: 1097
+  - .dll: 970
+  - .xml: 949
+  - .kuip: 654
+  - .prog: 534
+  - .html: 464
+  - .qm: 455
+  - .css: 424
+  - .ico: 269
+  - .ini: 219
+  - .bmp: 216
+  - .gif: 185
+  - .data: 171
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Microsoft
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 4.19 GB (4495096120 bytes)
+Size on disk: 4.25 GB (4559577088 bytes)
+Creation time: 2025-07-14 14:17:30
+Last modified: 2026-01-10 23:03:55
+Last accessed: 2026-03-28 11:16:47
+Owner: ALTAIR\pereg
+Group: NT AUTHORITY\SYSTEM
+Files: 25436
+Subdirectories: 2739
+Distinct file types: 162
+Structure metrics: max depth=13, max breadth=4160, max subdirectory breadth=126, average breadth=10.29, visited directories=2738
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 2.1232%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 9328
+  - .js: 4050
+  - .xml: 3228
+  - .ts: 1596
+  - .png: 1381
+  - .json: 1218
+  - .odl: 669
+  - .svg: 487
+  - .resjson: 321
+  - .bin: 280
+  - .html: 185
+  - .md: 184
+  - .dll: 181
+  - .map: 175
+  - .log: 125
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\ms-playwright
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.12 GB (1205331536 bytes)
+Size on disk: 1.13 GB (1208389632 bytes)
+Creation time: 2025-05-11 17:05:27
+Last modified: 2026-03-02 01:34:23
+Last accessed: 2026-03-27 19:07:50
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 1009
+Subdirectories: 75
+Distinct file types: 25
+Structure metrics: max depth=8, max breadth=220, max subdirectory breadth=16, average breadth=14.26, visited directories=76
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.5627%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .pak: 446
+  - .svg: 219
+  - .hyb: 104
+  - .dll: 91
+  - .js: 50
+  - .png: 26
+  - .exe: 22
+  - [no extension]: 13
+  - .json: 11
+  - .dat: 4
+  - .ini: 4
+  - .bin: 2
+  - .css: 2
+  - .ja: 2
+  - .pb: 2
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\npm-cache
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\npm-cache
+Size: 11.32 GB (12150550538 bytes)
+Size on disk: 11.49 GB (12336709632 bytes)
+Creation time: 2025-04-18 13:24:15
+Last modified: 2025-04-18 13:24:15
+Last accessed: 2025-04-18 13:24:15
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 70573
+Subdirectories: 28320
+Distinct file types: 55
+Structure metrics: max depth=12, max breadth=19871, max subdirectory breadth=256, average breadth=3.49, visited directories=28319
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 5.7447%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - [no extension]: 47821
+  - .js: 11892
+  - .ts: 3819
+  - .map: 1693
+  - .json: 1336
+  - .md: 1335
+  - .mjs: 707
+  - .mts: 563
+  - .yml: 211
+  - .eslintrc: 204
+  - .nycrc: 151
+  - .html: 122
+  - .ps1: 119
+  - .cmd: 88
+  - .cjs: 62
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\pypoetry
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.31 GB (1401381378 bytes)
+Size on disk: 1.36 GB (1459216384 bytes)
+Creation time: 2025-07-04 14:39:51
+Last modified: 2025-07-04 14:39:51
+Last accessed: 2026-03-27 19:09:19
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 23077
+Subdirectories: 11472
+Distinct file types: 79
+Structure metrics: max depth=16, max breadth=406, max subdirectory breadth=402, average breadth=3.01, visited directories=11473
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6795%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 9502
+  - .pyi: 4344
+  - [no extension]: 2988
+  - .json: 1819
+  - .gz: 1754
+  - .txt: 422
+  - .whl: 405
+  - .pyc: 227
+  - .typed: 212
+  - .pyd: 186
+  - .exe: 134
+  - .f90: 122
+  - .afm: 120
+  - .ttf: 76
+  - .csv: 66
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\ShadowBot
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.32 GB (1414036436 bytes)
+Size on disk: 1.35 GB (1446178816 bytes)
+Creation time: 2023-11-01 17:43:49
+Last modified: 2025-03-15 16:41:13
+Last accessed: 2026-03-27 19:09:30
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 13848
+Subdirectories: 1300
+Distinct file types: 73
+Structure metrics: max depth=14, max breadth=629, max subdirectory breadth=53, average breadth=11.64, visited directories=1301
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6734%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 4872
+  - .pyc: 4813
+  - [no extension]: 2804
+  - .dll: 381
+  - .can_deleted: 152
+  - .log: 109
+  - .pyi: 95
+  - .pyd: 67
+  - .txt: 64
+  - .c: 50
+  - .pyx: 46
+  - .h: 44
+  - .exe: 39
+  - .pxd: 28
+  - .json: 27
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\Temp
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 8.48 GB (9106872349 bytes)
+Size on disk: 8.49 GB (9115127808 bytes)
+Creation time: 2025-07-14 14:17:30
+Last modified: 2026-03-28 11:20:47
+Last accessed: 2026-03-28 11:20:47
+Owner: ALTAIR\pereg
+Group: NT AUTHORITY\SYSTEM
+Files: 4324
+Subdirectories: 1197
+Distinct file types: 41
+Structure metrics: max depth=11, max breadth=635, max subdirectory breadth=500, average breadth=4.61, visited directories=1198
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 4.2446%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .dll: 1941
+  - .cjs: 635
+  - .vsix: 463
+  - .cab: 350
+  - .msi: 202
+  - .png: 121
+  - .exe: 107
+  - .config: 95
+  - .log: 88
+  - [no extension]: 80
+  - .xml: 50
+  - .tmp: 38
+  - .json: 30
+  - .etl: 22
+  - .pri: 15
+
+================================================================================
+Path: C:\Users\pereg\AppData\Local\uv
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\uv
+Size: 1.96 GB (2109683930 bytes)
+Size on disk: 2.05 GB (2198290432 bytes)
+Creation time: 2025-04-18 13:25:12
+Last modified: 2025-04-18 13:25:12
+Last accessed: 2025-04-18 13:25:12
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 35770
+Subdirectories: 5017
+Distinct file types: 168
+Structure metrics: max depth=14, max breadth=6951, max subdirectory breadth=404, average breadth=8.13, visited directories=5018
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.0237%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .py: 16739
+  - .h: 9349
+  - [no extension]: 2405
+  - .json: 992
+  - .gz: 896
+  - .pyc: 729
+  - .pyi: 456
+  - .pyd: 357
+  - .lock: 345
+  - .txt: 309
+  - .js: 291
+  - .msgpack: 189
+  - .typed: 184
+  - .http: 183
+  - .rkyv: 160
+
+================================================================================
+Path: C:\Users\pereg\.browser4
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 194.58 MB (204032448 bytes)
+Size on disk: 200.36 MB (210096128 bytes)
+Creation time: 2026-01-18 01:20:22
+Last modified: 2026-03-27 22:41:46
+Last accessed: 2026-03-28 10:40:25
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 2489
+Subdirectories: 7846
+Distinct file types: 19
+Structure metrics: max depth=8, max breadth=330, max subdirectory breadth=330, average breadth=1.32, visited directories=7846
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.0978%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .md: 833
+  - .log: 515
+  - .json: 449
+  - .txt: 359
+  - .jsonl: 115
+  - .xsd: 78
+  - .ttf: 54
+  - .py: 45
+  - .xml: 13
+  - .crc: 8
+  - [no extension]: 7
+  - .sh: 4
+  - .js: 2
+  - .parquet: 2
+  - .gz: 1
+
+================================================================================
+Path: C:\Users\pereg\scoop
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 2.78 GB (2985083280 bytes)
+Size on disk: 2.90 GB (3117826048 bytes)
+Creation time: 2025-07-04 01:19:54
+Last modified: 2025-07-04 01:29:27
+Last accessed: 2026-03-28 09:45:22
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 51611
+Subdirectories: 9365
+Distinct file types: 172
+Structure metrics: max depth=20, max breadth=1989, max subdirectory breadth=231, average breadth=6.52, visited directories=9350
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.4519%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .java: 17793
+  - .html: 13322
+  - .go: 10372
+  - .json: 1523
+  - .txt: 1474
+  - .jar: 1327
+  - .kt: 1027
+  - .s: 617
+  - .png: 442
+  - [no extension]: 424
+  - .crt: 407
+  - .bin: 352
+  - .lock: 229
+  - .class: 216
+  - .c: 133
+
+================================================================================
+Path: C:\Users\pereg\go
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: SymbolicLink
+Target: D:\MovedFolders\go
+Size: 1.78 GB (1912892879 bytes)
+Size on disk: 1.96 GB (2102091776 bytes)
+Creation time: 2025-07-18 20:21:49
+Last modified: 2025-07-18 20:21:49
+Last accessed: 2025-07-18 20:21:49
+Owner: BUILTIN\Administrators
+Group: ALTAIR\pereg
+Files: 71550
+Subdirectories: 18449
+Distinct file types: 462
+Structure metrics: max depth=19, max breadth=1230, max subdirectory breadth=766, average breadth=4.88, visited directories=18450
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.9789%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=True
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .go: 44833
+  - .json: 3773
+  - [no extension]: 2695
+  - .mod: 2551
+  - .h: 2272
+  - .md: 1614
+  - .test: 1441
+  - .txt: 1191
+  - .info: 1016
+  - .yml: 868
+  - .golden: 643
+  - .c: 594
+  - .toml: 573
+  - .lock: 553
+  - .zip: 510
+
+================================================================================
+Path: C:\Users\pereg\.rustup
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 1.20 GB (1290549828 bytes)
+Size on disk: 1.34 GB (1443672064 bytes)
+Creation time: 2026-03-23 22:34:44
+Last modified: 2026-03-23 22:41:39
+Last accessed: 2026-03-28 10:40:25
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 51894
+Subdirectories: 1939
+Distinct file types: 46
+Structure metrics: max depth=16, max breadth=6661, max subdirectory breadth=78, average breadth=27.75, visited directories=1940
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 0.6723%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .html: 46266
+  - .js: 2584
+  - .rs: 1944
+  - .woff2: 223
+  - .css: 170
+  - [no extension]: 94
+  - .svg: 72
+  - .txt: 70
+  - .md: 60
+  - .toml: 56
+  - .png: 51
+  - .1: 38
+  - .s: 28
+  - .sh: 22
+  - .rlib: 21
+
+================================================================================
+Path: C:\Users\pereg\.pulsar
+Status: Missing
+  Error: Directory not found: C:\Users\pereg\.pulsar
+
+================================================================================
+Path: C:\Users\pereg\.gradle
+Status: Missing
+  Error: Directory not found: C:\Users\pereg\.gradle
+
+================================================================================
+Path: C:\Users\pereg\.copilot
+Status: Analyzed
+Type: Directory
+Link/Reparse Type: Directory
+Target: n/a
+Size: 3.03 GB (3255613610 bytes)
+Size on disk: 3.06 GB (3280982016 bytes)
+Creation time: 2026-01-10 23:04:30
+Last modified: 2026-03-13 14:47:03
+Last accessed: 2026-03-28 11:14:26
+Owner: ALTAIR\pereg
+Group: ALTAIR\pereg
+Files: 9144
+Subdirectories: 5259
+Distinct file types: 27
+Structure metrics: max depth=9, max breadth=1151, max subdirectory breadth=1131, average breadth=2.74, visited directories=5260
+File system: NTFS
+Volume: drive=C:, label=Windows, total=200.00 GB, free=25.98 GB, allocation unit=4.00 KB
+Disk usage on volume: 1.5278%
+Attributes: hidden=False, readOnly=False, system=False, archive=False, compressed=False, encrypted=False, reparsePoint=False
+Access rules:
+  - NT AUTHORITY\SYSTEM | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - BUILTIN\Administrators | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+  - altair\pereg | Allow | rights=FullControl | inherited=True | read=True write=True execute=True | inheritance=ContainerInherit, ObjectInherit | propagation=None
+File types:
+  - .md: 1596
+  - .json: 1464
+  - .jsonl: 1249
+  - .yaml: 1183
+  - .log: 1080
+  - [no extension]: 638
+  - .node: 501
+  - .js: 405
+  - .db: 186
+  - .ts: 159
+  - .pdb: 149
+  - .wasm: 148
+  - .exe: 115
+  - .dll: 66
+  - .mjs: 60
