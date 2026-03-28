@@ -22,3 +22,13 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo state first so I can commit everything safely, including any submodule work, before syncing with remote.
+
+● Inspect repo and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULES---'; git submodule status; Write-Host '---SUBMODULE STATUS---'; git submodule
+  │ foreach --recursive "git --no-pager status --short --branch"
+  └ 25 lines...
+
+I found only root-repo changes; the `submodules/Browser4` submodule itself is clean, so I’m committing the root workspace updates and then I’ll pull with automatic conflict preference before pushing.
+
