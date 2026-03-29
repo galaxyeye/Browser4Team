@@ -24,3 +24,54 @@ Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
 I’m checking the repo state first so I can sync everything safely, including any dirty submodules before updating the parent pointer.
 
+● Check repo and submodule status (shell)
+  │ git --no-pager status --short --branch && git submodule status --recursive
+  └ 19 lines...
+
+I found a dirty `submodules/Browser4`, so I’m syncing that first, then I’ll commit the parent repo and update its submodule pointer.
+
+● Check Browser4 submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch
+  └ 6 lines...
+
+I’m committing the dirty submodule first so the parent repo can record a clean, pushable submodule pointer.
+
+● Commit Browser4 submodule changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "Sync
+  │ local changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 4 lines...
+
+The submodule commit is in place. Next I’m bringing it up to date with remote and pushing it before updating the parent repo.
+
+● Pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git pull --no-rebase -X ours &&
+  │ git push
+  └ 15 lines...
+
+The submodule is synced. I’m updating the parent repo now, including the new submodule pointer and the existing workspace changes.
+
+● Check parent repo status before commit (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch
+  └ 18 lines...
+
+● Commit parent repo changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "Sync local changes" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+  └ 22 lines...
+
+The parent repo commit is done. I’m pulling with automatic conflict preference now, then I’ll push the result.
+
+● Pull push and verify parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git pull --no-rebase -X ours && git push && git
+  │ --no-pager status --short --branch && git --no-pager log -1 --decorate --oneline
+  └ 14 lines...
+
+A scheduler log changed again during the push, so I’m doing one quick follow-up sync to leave the repo clean on `origin/main`.
+
+● Inspect remaining dirty log file (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager diff --
+  │ coworker/tasks/300logs/scheduler/2026/03/29/155149-coworker.stdout.log && Start-Sleep -Seconds 2
+  │ && git --no-pager status --short --branch
+  └ 63 lines...
+
