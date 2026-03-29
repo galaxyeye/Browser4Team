@@ -23,3 +23,52 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’ll quickly inspect the repo and any submodules first, then I’ll commit, pull with automatic conflict resolution, and push the result.
+
+● Check git and submodule status (shell)
+  │ git --no-pager status --short --branch && git --no-pager submodule status --recursive
+  └ 23 lines...
+
+I found a dirty submodule, so I’m syncing that first before updating the parent repo pointer. After that I’ll commit the parent repo, pull with `-X ours`, and push everything.
+
+● Inspect Browser4 submodule state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch && git --no-pager remote -v && git --no-pager log -1 --decorate --oneline
+  └ 7 lines...
+
+The submodule has local code changes on `4.6.x`. I’m checking the exact diff, then I’ll commit and push it before syncing the parent repo.
+
+● Show submodule diff (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --
+  │ sdks/browser4-cli/Cargo.toml sdks/browser4-cli/tests/e2e.rs
+  └ 187 lines...
+
+I’ve got the submodule diff. Next I’m committing and pushing `submodules/Browser4`, then I’ll do the same pull/push flow at the parent repo level.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; if (-not (git diff
+  │ --cached --quiet)) { $msg = @"
+  │ Fix browser4-cli e2e harness
+  │
+  │ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>…
+  └ 26 lines...
+
+The submodule is synced upstream. I’m now committing the parent repo, pulling with automatic conflict preference, and pushing the updated pointer plus the rest of the workspace changes.
+
+● Commit pull and push parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "Sync workspace changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours origin main; git
+  │ push origin main; git --no-pager status --short --branch; git --no-pager log -1 --decorate
+  │ --oneline
+  └ 34 lines...
+
+A scheduler log changed during the push, so the repo isn’t quite clean yet. I’m capturing that last generated change and pushing one final sync commit so everything requested is included.
+
+● Inspect remaining root change (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ --no-pager diff -- coworker/tasks/300logs/scheduler/2026/03/29/123620-coworker.stdout.log
+  └ 63 lines...
+
+That remaining change is just the live scheduler stdout log capturing this session. I’m doing one last commit/push cycle immediately before handoff to get the repo as close to clean as the running logger allows.
+
