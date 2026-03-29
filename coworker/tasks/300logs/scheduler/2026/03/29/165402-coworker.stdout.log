@@ -72,3 +72,11 @@ The parent repo moved again after the first commit because the submodule SHA and
   │ 4.6.x; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin HEAD
   └ 17 lines...
 
+● Inspect remaining parent changes (shell)
+  │ Set-Location D:\workspace\Browser4Team; git --no-pager status --short --branch; git --no-pager
+  │ diff --submodule=short -- submodules/Browser4
+  │ coworker/tasks/300logs/scheduler/2026/03/29/165402-coworker.stdout.log
+  └ 79 lines...
+
+The scheduler log is actively appending while I work, so I’m doing the parent sync in a single chained pass: commit current drift, pull with automatic conflict preference, then immediately recommit any post-pull log/submodule updates before pushing.
+
