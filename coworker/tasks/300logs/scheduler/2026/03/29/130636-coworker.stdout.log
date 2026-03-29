@@ -1,0 +1,200 @@
+Starting Coworker Task Runner...
+[2026-03-29 13:06:37] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-03-29 13:06:37] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-29 13:06:37] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-29 13:06:37] [INFO] ===========================================================================
+[2026-03-29 13:06:37] [INFO] Coworker Task Runner - PowerShell Version
+[2026-03-29 13:06:37] [INFO] Started at: 03/29/2026 13:06:37
+[2026-03-29 13:06:37] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\130637-coworker.log
+[2026-03-29 13:06:37] [INFO] ==========================================================================
+[2026-03-29 13:06:37] [INFO] Created missing draft placeholder: D:\workspace\Browser4Team\coworker\tasks\0draft\1.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: 1.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: 2.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: 3.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: 4.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: 5.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: README.md
+[2026-03-29 13:06:37] [INFO] [PREPARE] Task: README.zh.md
+[2026-03-29 13:06:37] [INFO] [COMPLETE] Task waiting for review: fix-rust-e2e-test-bugs.md
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: create-missing-draft-files.md (updated 03/28/2026 21:40:24)
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: always-run-e2e-tests.md (updated 03/28/2026 23:54:03)
+[2026-03-29 13:06:37] [INFO] [PUSHED] Task: correct-cargo-toml.md (updated 03/29/2026 10:43:45)
+DEBUG: GH Stderr:  Total usage est:        1 Premium request API time spent:         6s Total session time:     16s Total code changes:     +0 -0 Breakdown by AI model:  gpt-5.4                  18.9k in, 89 out, 0 cached (Est. 1 Premium request)
+[2026-03-29 13:06:56] [INFO] Renamed in created: 1.md -> restart-backend-between-e2e-tests.md
+[2026-03-29 13:06:56] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\restart-backend-between-e2e-tests.md
+[2026-03-29T13:06:56.7773981Z] [WARN] [memory-generator] Daily memory length is 3328 chars (>3000); starting compression.
+[2026-03-29T13:06:56.7933768Z] [WARN] [memory-generator] Backed up original daily memory to: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\MEMORY.20260329.long.md
+[2026-03-29 13:10:19] [ERROR] Failed to initialize memory context: The script failed due to call depth overflow.
+[2026-03-29 13:10:19] [INFO] Executing Copilot for task: restart-backend-between-e2e-tests
+[2026-03-29 13:10:19] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-03-29 13:10:19] [INFO] === Starting Copilot execution ===
+● Read restart-backend-between-e2e-tests.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\restart-backend-between-e2e-tests.md
+  └ 23 lines read
+● Check repo status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+I’ve got the failing scenario and I’m digging into the Rust CLI E2E harness plus server lifecycle so I can make a focused fix and verify it with the smallest relevant test scope.
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ 1 line read
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ 1 line read
+● Search (grep)
+  │ "ensure_server_running|kill-all|close-all|3301|mcp/call-tool|drag" in **/*.{rs,toml}
+  │ (sdks\browser4-cli)
+  └ 36 lines found
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ 186 lines read
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (260 lines read)
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L780:930 (151 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L760:980 (220 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L980:1180 (191 lines read)
+I found the current harness already runs scenarios sequentially, so the likely leak is the shared backend process across scenarios. Next I’m checking how the tests start/stop the server and where to insert a per-scenario restart safely.
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ 368 lines read
+● Search (grep)
+  │ "struct E2ECtx|create_e2e_test_resources|run_command\(|reset_cli_artifacts|server|Child|kill|clo
+  │ se-all|kill-all|BROWSER4_E2E_JAR_PATH|base_url" (sdks\browser4-cli\tests\e2e.rs)
+  └ 88 lines found
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L360:720 (360 lines read)
+● Read state.rs
+  │ sdks\browser4-cli\src\state.rs
+  └ 200 lines read
+I’ve confirmed the harness keeps one `Browser4` JVM alive for all browser-backed scenarios. I’m going to validate that failure path once, then change the harness to recycle the backend between scenarios and rerun the E2E suite.
+● Run browser4-cli e2e tests baseline (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e -- --nocapture
+  └ 6 lines...
+● Read shell output Waiting up to 10 seconds for command output
+  └ 7 lines...
+● Read shell output Waiting up to 10 seconds for command output
+  └ 7 lines...
+● Read shell output Waiting up to 20 seconds for command output
+  └ 7 lines...
+● Read shell output Waiting up to 20 seconds for command output
+  └ 14 lines...
+● Read shell output Waiting up to 5 seconds for command output
+  └ 1 line...
+I reproduced the
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+● Format and rerun browser4-cli e2e tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt --test
+  │ e2e.rs && cargo test --test e2e -- --nocapture
+  └ 2 lines...
+Small det
+● Format and rerun browser4-cli e2e tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test --test e2e -- --nocapture
+  └ 7 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 8 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 8 lines...
+● Read shell output Waiting up to 20 seconds for command output
+  └ 8 lines...
+● Read shell output Waiting up to 25 seconds for command output
+  └ 15 lines...
+Restarting just the JVM wasn’t enough, which suggests the leak is probably in the browser subprocesses/resources, not only the Java process. I’m checking existing cleanup hooks and then I’ll tighten the E2E restart to fully recycle the backend stack.
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L230:330 (101 lines read)
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L330:380 (51 lines read)
+● Search (grep)
+  │ "kill_all_browsers|PULSAR_CHROME|close-all|kill-all|browser4-cli e2e|E2E" in
+  │ **/*.{rs,kt,kts,properties,md,sh,ps1}
+  └ 5 lines found
+● Search (grep)
+  │ "taskkill|Stop-Process -Id|VM.exit|chrome" (sdks\browser4-cli\tests\e2e.rs)
+  └ No matches found
+● Search (grep)
+  │ "PULSAR_CHROME" in **/*.{kt,rs,java,properties}
+  └ 5 lines found
+I found a flaw in my first pass: I was “restarting
+✗ Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L460:500 (41 lines read)
+● Search (grep)
+  │ "impl E2ETestResources|restart_browser4|browser4_base_url = format!"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 1 line found
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1128:1168 (41 lines read)
+● Show current diff for e2e.rs (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --
+  │ sdks/browser4-cli/tests/e2e.rs
+  └ 110 lines...
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+● Format and rerun browser4-cli e2e tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test --test e2e -- --nocapture
+  └ 7 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 8 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 9 lines...
+● Read shell output Waiting up to 20 seconds for command output
+  └ 10 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 10 lines...
+● Read shell output Waiting up to 15 seconds for command output
+  └ 11 lines...
+The fix is in and the focused E2E target
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L460:500 (41 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L680:705 (26 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1180:1215 (31 lines read)
+● Show final diff for e2e test file (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --
+  │ sdks/browser4-cli/tests/e2e.rs
+  └ 180 lines...
+Done — I updated `sdks/browser4-cli/tests/e
+Why this fixed it: the old harness kept reusing one backend URL/process across scenarios, so
+I validated it with:
+`cd sdks/browser
+Result: all 5 E2E tests passed.
+
+[STDERR OUTPUT]
+Total usage est:        1 Premium request
+API time spent:         8m 6s
+Total session time:     13m 15s
+Total code changes:     +44 -23
+Breakdown by AI model:
+ gpt-5.4                  1.6m in, 8.6k out, 1.6m cached (Est. 1 Premium request)
+[2026-03-29 13:23:38] [INFO] Copilot execution finished with exit code 0
+[2026-03-29 13:23:38] [INFO] === Copilot execution completed ===
+[2026-03-29 13:23:38] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0329\restart-backend-between-e2e-tests.md
+[2026-03-29 13:23:38] [INFO] ---
+[2026-03-29 13:23:38] [INFO] ===========================================================================
+[2026-03-29 13:23:38] [INFO] All tasks completed
+[2026-03-29 13:23:38] [INFO] Ended at: 03/29/2026 13:23:38
+[2026-03-29 13:23:38] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\130637-coworker.log
+[2026-03-29 13:23:38] [INFO] ==========================================================================
