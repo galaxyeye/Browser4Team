@@ -52,3 +52,46 @@ I’ve confirmed the submodule has its own pending CLI changes, so I’m syncing
 
 The submodule is synced upstream now. I’m committing the parent repo next, including the updated submodule pointer, then I’ll pull with automatic conflict resolution and push.
 
+● Commit pull and push parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git add -A;
+  │ git commit -m "Sync pending workspace changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { if ((git status
+  │ --porcelain).Trim()) { exit $LASTEXITCODE } else { Write-Host 'No parent repo changes to
+  │ commit.' } }; git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; …
+  └ 57 lines...
+
+A scheduler log changed during the first push, so I’m doing one quick follow-up sync to capture that trailing modification and leave the branch aligned with remote.
+
+● Commit and push trailing root changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git add -A;
+  │ git commit -m "Capture trailing scheduler log update" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { if ((git status
+  │ --porcelain).Trim()) { exit $LASTEXITCODE } else { Write-Host 'No trailing changes to commit.'
+  │ } }; git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push;…
+  └ 24 lines...
+
+Done.
+
+I committed, pulled, and pushed both repos in the safe order:
+
+- `submodules/Browser4`: committed and pushed `84b6514` on `4.6.x`
+- parent repo `D:\workspace\Browser4Team`: committed and pushed `2e6e044`, then a follow-up `1be134e` on `main`
+
+Both pulls were `git pull --no-rebase -X ours`; no manual conflict resolution was needed.
+
+One caveat: `coworker\tasks\300logs\scheduler\2026\03\29\132849-coworker.stdout.log` is being actively rewritten, so the working tree becomes dirty again immediately after push. Remote is up to date; only that live log keeps changing.
+
+[2026-03-29 13:31:34] [INFO] Git sync executed successfully.
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: create-missing-draft-files.md (updated 03/28/2026 21:40:24)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: always-run-e2e-tests.md (updated 03/28/2026 23:54:03)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: correct-cargo-toml.md (updated 03/29/2026 10:43:45)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: fix-rust-e2e-test-bugs.md (updated 03/29/2026 20:08:32)
+[2026-03-29 13:31:34] [INFO] [PUSHED] Task: restart-backend-between-e2e-tests.md (updated 03/29/2026 20:45:33)
+[2026-03-29 13:31:34] [INFO] ===========================================================================
+[2026-03-29 13:31:34] [INFO] All tasks completed
+[2026-03-29 13:31:34] [INFO] Ended at: 03/29/2026 13:31:34
+[2026-03-29 13:31:34] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\132849-coworker.log
+[2026-03-29 13:31:34] [INFO] ==========================================================================
