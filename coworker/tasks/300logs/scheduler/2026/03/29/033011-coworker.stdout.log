@@ -61,3 +61,34 @@ A scheduler log changed again right after the push, so I’m checking whether it
   │ '---DIFFSTAT2---'; git --no-pager diff --stat -- …
   └ 18 lines...
 
+The log file looks stable now, so I’m folding that last change into one final commit and re-verifying the repo is clean afterward.
+
+● Commit remaining log change and verify clean state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; $msg = @"
+  │ chore: sync scheduler logs
+  │
+  │ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+  │ "@; git commit -m $msg; if ($LASTEXITCODE -ne 0) { if ((git --no-pager status --short).Length …
+  └ 26 lines...
+
+Done: I committed and pushed both the dirty submodule and the parent repo.
+
+Pushed commits:
+- `submodules\Browser4`: `bcdf08858` on `4.6.x`
+- `D:\workspace\Browser4Team`: `706f544`, then `5409f5d` on `main`
+
+`git pull --no-rebase -X ours` reported `Already up to date` both times, so no merge conflicts needed resolution.
+
+One caveat: after the final push, `coworker\tasks\300logs\scheduler\2026\03\29\033011-coworker.stdout.log` was modified again by a live process, so the repo is immediately dirty again. Everything present at commit time was pushed, but that tracked log is still being appended.
+
+[2026-03-29 03:31:50] [INFO] Git sync executed successfully.
+[2026-03-29 03:31:50] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-29 03:31:50] [INFO] [PUSHED] Task: create-missing-draft-files.md (updated 03/28/2026 21:40:24)
+[2026-03-29 03:31:50] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-29 03:31:50] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-29 03:31:50] [INFO] [PUSHED] Task: always-run-e2e-tests.md (updated 03/28/2026 23:54:03)
+[2026-03-29 03:31:50] [INFO] ===========================================================================
+[2026-03-29 03:31:50] [INFO] All tasks completed
+[2026-03-29 03:31:50] [INFO] Ended at: 03/29/2026 03:31:50
+[2026-03-29 03:31:50] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\033012-coworker.log
+[2026-03-29 03:31:50] [INFO] ==========================================================================
