@@ -12,6 +12,4 @@ The test plan will cover the following areas:
 
 4. **Error Handling Tests**: Simulate failure scenarios such as invalid commands, network interruptions, and unavailable browser instances. The goal is to confirm that `browser4-cli` fails gracefully and provides clear, actionable error messages.
 
-5. **Security Tests**: Assess the tool for security risks, including command injection, cross-site scripting (XSS), and other common vulnerabilities relevant to CLI-driven browser automation.
-
 For faster feedback and a shorter iteration cycle, consider designing the initial test system in Kotlin and focusing first on REST API coverage. This would provide a simpler foundation for early validation before expanding into broader end-to-end and platform-level testing.

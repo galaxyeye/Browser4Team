@@ -75,3 +75,39 @@ A scheduler log changed again during the push, so I’m doing one quick follow-u
   │ && git --no-pager status --short --branch
   └ 63 lines...
 
+That remaining change is just the live scheduler log capturing this sync run. I’m folding it into one last commit/push and then re-checking status immediately.
+
+● Commit final log update and verify status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "Sync log updates" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -eq 0)
+  │ { git pull --no-rebase -X ours && git push }; git --no-pager status --short --branch && git
+  │ --no-pager log -2 --decorate --oneline
+  └ 12 lines...
+
+● Retry pushing latest parent commit (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git push
+  └ 10 lines...
+
+Done.
+
+I synced the dirty `submodules/Browser4` first, committed and pushed it (`aca3dda17` on `4.6.x`), then committed the parent repo and pushed `main` to `origin/main` (`840f986`).
+
+`git pull --no-rebase -X ours` reported both repos were already up to date, so no conflicts needed resolution this time.
+
+One note: a tracked scheduler stdout log is actively updated during this session, so the working tree may become dirty again immediately after the push. The remote is updated successfully.
+
+[2026-03-29 15:54:44] [INFO] Git sync executed successfully.
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: create-missing-draft-files.md (updated 03/28/2026 21:40:24)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: always-run-e2e-tests.md (updated 03/28/2026 23:54:03)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: assert-rust-e2e-tests.md (updated 03/29/2026 22:22:26)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: correct-cargo-toml.md (updated 03/29/2026 10:43:45)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: fix-rust-e2e-test-bugs.md (updated 03/29/2026 20:08:32)
+[2026-03-29 15:54:44] [INFO] [PUSHED] Task: restart-backend-between-e2e-tests.md (updated 03/29/2026 20:45:33)
+[2026-03-29 15:54:44] [INFO] ===========================================================================
+[2026-03-29 15:54:44] [INFO] All tasks completed
+[2026-03-29 15:54:44] [INFO] Ended at: 03/29/2026 15:54:44
+[2026-03-29 15:54:44] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\155150-coworker.log
+[2026-03-29 15:54:44] [INFO] ==========================================================================
