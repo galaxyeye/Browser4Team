@@ -24,3 +24,31 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo state first so I can safely sync everything, including any dirty submodules, before I commit and push.
+
+● Inspect git status and submodules (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULES---'; git submodule status --recursive; Write-Host '---ROOT DIFF STAT---'; git
+  │ --no-pager diff --stat
+  └ 33 lines...
+
+The parent repo is dirty and the `submodules/Browser4` submodule is also dirty, so I’m checking the submodule first and then I’ll commit/pull/push in the right order.
+
+● Inspect Browser4 submodule state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch; Write-Host '---DIFF STAT---'; git --no-pager diff --stat; Write-Host '---RECENT
+  │ COMMITS---'; git --no-pager log -5 --decorate --oneline
+  └ 37 lines...
+
+I’ve confirmed the submodule has its own pending CLI changes, so I’m syncing that repo first and then I’ll update the parent repo pointer afterward.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "Sync
+  │ pending Browser4 changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { if ((git status
+  │ --porcelain).Trim()) { exit $LASTEXITCODE } else { Write-Host 'No submodule changes to
+  │ commit.' } }; git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; …
+  └ 26 lines...
+
+The submodule is synced upstream now. I’m committing the parent repo next, including the updated submodule pointer, then I’ll pull with automatic conflict resolution and push.
+
