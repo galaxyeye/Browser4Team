@@ -80,3 +80,47 @@ The parent repo moved again after the first commit because the submodule SHA and
 
 The scheduler log is actively appending while I work, so I’m doing the parent sync in a single chained pass: commit current drift, pull with automatic conflict preference, then immediately recommit any post-pull log/submodule updates before pushing.
 
+● Commit, pull, and push parent repo (shell)
+  │ Set-Location D:\workspace\Browser4Team; git add -A; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "Update submodule pointer and scheduler logs" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" } else { Write-Host 'No pre-pull parent changes
+  │ to commit.' }; git pull --no-rebase -X ours origin main; if ($LASTEXITCODE -ne 0) { exit
+  │ $LASTEXITCODE }; git add -A; if (-not (git diff --cached --quiet)) { git commit -m "Capture …
+  └ 22 lines...
+
+● Verify parent sync state (shell)
+  │ Set-Location D:\workspace\Browser4Team; git --no-pager status --short --branch; git --no-pager
+  │ log -1 --decorate --oneline
+  └ 3 lines...
+
+● Verify submodule sync state (shell)
+  │ Set-Location D:\workspace\Browser4Team\submodules\Browser4; git --no-pager status --short
+  │ --branch; git --no-pager log -1 --decorate --oneline
+  └ 3 lines...
+
+Done — everything is committed, pulled, and pushed.
+
+In `submodules\Browser4`, I committed the local changes as `559565b9e` on `4.6.x`, pulled with automatic conflict preference, and pushed to `origin/4.6.x`.
+
+In `D:\workspace\Browser4Team`, I committed the parent repo changes, then captured the updated submodule pointer and live scheduler log drift, pulled `origin\main`, and pushed `333f5d0` to `origin/main`.
+
+Final verification shows both repos are clean and fully synced:
+`main == origin/main`
+`4.6.x == origin/4.6.x`
+
+[2026-03-29 16:56:35] [INFO] Git sync executed successfully.
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: analyze-directory-metadata.md (updated 03/28/2026 11:09:35)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: create-missing-draft-files.md (updated 03/28/2026 21:40:24)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: fix-cli-e2e-close-failure.md (updated 03/28/2026 13:51:44)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: make-subdirectory-scan-optional.md (updated 03/28/2026 13:13:57)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: always-run-e2e-tests.md (updated 03/28/2026 23:54:03)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: assert-rust-e2e-tests.md (updated 03/29/2026 22:22:26)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: browser4-cli-agent-collective-tests.md (updated 03/30/2026 00:07:08)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: correct-cargo-toml.md (updated 03/29/2026 10:43:45)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: fix-rust-e2e-test-bugs.md (updated 03/29/2026 20:08:32)
+[2026-03-29 16:56:36] [INFO] [PUSHED] Task: restart-backend-between-e2e-tests.md (updated 03/29/2026 20:45:33)
+[2026-03-29 16:56:36] [INFO] ===========================================================================
+[2026-03-29 16:56:36] [INFO] All tasks completed
+[2026-03-29 16:56:36] [INFO] Ended at: 03/29/2026 16:56:36
+[2026-03-29 16:56:36] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\29\165404-coworker.log
+[2026-03-29 16:56:36] [INFO] ==========================================================================
