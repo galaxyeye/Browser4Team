@@ -1,0 +1,50 @@
+Task: 1
+Description: Task from 1.md
+Original File: 1.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-01 11:43:40
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\1.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\MEMORY.20260401.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\MEMORY.20260401.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+
+[Daily Memory (2026-04-01)]:
+## Fix agent history status E2E timeout
+
+- **Context**: CommandControllerE2ETest.testExecuteAgentCommandSetsAgentHistoryOnStatus() was failing with 503 SERVICE_UNAVAILABLE after the HTTP client timed out while waiting for a slow agent-backed /api/commands/plain?async=false response.
+- **Action**:
+    - Updated pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/controller/CommandControllerE2ETest.kt.
+    - Added a per-test RestTestClient built with JdkClientHttpRequestFactory and a 3-minute read timeout.
+    - Scoped the timeout increase only to the slow agent-history assertion test so the rest of the suite keeps the default client behavior.
+    - Attempted focused Maven validation; local Surefire execution stalled in this environment, so validation was reduced to targeted source compilation/build progress inspection plus diff verification.
+- **Outcome**: The flaky agent-history E2E now uses a longer HTTP timeout that matches the expected runtime of the agent execution path, reducing timeout-driven false failures without broadening timeouts across unrelated tests.
+- **Lessons Learned**:
+    - For slow Browser4/Spring E2E flows, prefer per-test client timeout overrides instead of changing shared test infrastructure.
+    - RestTestClient.bindToServer(requestFactory) is a clean way to tune HTTP behavior for just one scenario.
+    - Local Maven/Surefire environment issues can obscure test validation, so keep the code change minimal and easy to reason about when full execution is unreliable.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\114235-1.copilot.log
