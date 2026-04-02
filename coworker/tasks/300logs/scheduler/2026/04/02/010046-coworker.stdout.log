@@ -26,3 +26,101 @@ gh copilot --model gpt-5.4 --no-ask-user --log-level info --allow-all -- -p 'Com
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Inspect repo and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule status --recursive && git --no-pager diff --submodule=short --stat
+  └ 13 lines...
+
+I found root changes plus a dirty `submodules\Browser4` pointer, so I’m checking the submodule first and then I’ll commit/pull/push in the right order.
+
+● Inspect root git log (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager log --oneline --decorate -3
+  └ 4 lines...
+
+● Inspect Browser4 submodule git state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch && git --no-pager log --oneline --decorate -3
+  └ 15 lines...
+
+● Inspect root diff summary (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager diff --stat && git --no-pager diff --
+  │ coworker/tasks/0draft/1.md coworker/tasks/1created/1.md
+  └ 65 lines...
+
+● Inspect submodule diff summary (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --stat &&
+  │ git --no-pager diff -- application.properties
+  │ pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/model/Models.kt
+  │ pulsar-core/pulsar-resources/src/main/resources/code-mirror/agent-tool-call-specs.json
+  │ pulsar-core/pulsar-resources/src/main/resources/code-mirror/driver-tool-call-specs.json …
+  └ 11 lines...
+
+I’ve narrowed it down: the root repo has task/log updates, while the `Browser4` submodule has a real code change set. I’m capturing a clean summary now so I can commit both with sensible messages and then sync them safely.
+
+● Get submodule diff stat (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --stat
+  └ 15 lines...
+
+● List new root files (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; Get-ChildItem -Recurse -File 'coworker\tasks\300logs\2
+  │ 026\04','coworker\tasks\300logs\scheduler\2026\04','coworker\tasks\6git-pushed\2026\0402' |
+  │ Select-Object -ExpandProperty FullName
+  └ 25 lines...
+
+● List modified submodule files (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --name-only
+  └ 14 lines...
+
+● List untracked submodule files (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; Get-ChildItem -Recurse -File
+  │ 'pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\entities' |
+  │ Select-Object -ExpandProperty FullName
+  └ 2 lines...
+
+The `Browser4` submodule has one new test plus coordinated model/spec updates, so I’m syncing that first. After it’s clean and pushed, I’ll commit the parent repo pointer and the coworker task/log changes, then pull/push the root repo.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "Update
+  │ command status models and serialization" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE };
+  │ git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push
+  └ 23 lines...
+
+● Check root status after submodule sync (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule status --recursive
+  └ 9 lines...
+
+● Commit pull and push root repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "Update coworker task logs
+  │ and Browser4 submodule" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE };
+  │ git pull --no-rebase -X ours; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push
+  └ 46 lines...
+
+Everything has been committed and pushed; I’m doing one last cleanliness check on both the parent repo and the submodule so I can hand back a precise status.
+
+● Verify submodule clean and latest commit (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch && git --no-pager log -1 --decorate --oneline
+  └ 3 lines...
+
+● Memory stored git workflow
+  └ Repository sync work succeeded with git add -A, git commit, git pull --no-rebase…
+
+● Verify root repo clean (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule status --recursive
+  └ 4 lines...
+
+One scheduler log changed after the main push, so I’m checking whether it’s a one-off write or an actively moving file. If it’s stable, I’ll roll that last change into a final sync pass.
+
+● Inspect remaining modified log file (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager diff --
+  │ coworker/tasks/300logs/scheduler/2026/04/02/010046-coworker.stdout.log && Get-Item
+  │ 'coworker\tasks\300logs\scheduler\2026\04\02\010046-coworker.stdout.log' | Select-Object
+  │ FullName,Length,LastWriteTime
+  └ 102 lines...
+
+That remaining diff is the live scheduler stdout log for this session, so I’m doing one last root sync pass and then stopping tool activity to avoid dirtying it again myself.
+
