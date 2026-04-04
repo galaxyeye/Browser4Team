@@ -1,3 +1,37 @@
+Task: remove-nodejs-sdk-test-references
+Description: Task from remove-nodejs-sdk-test-references.md
+Original File: remove-nodejs-sdk-test-references.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-04 13:34:58
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\remove-nodejs-sdk-test-references.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+### Daily Rollup Update (through 2026-04-03)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` after an initial timeout-focused mitigation proved incomplete. The final fix exposed `CommandStatus.agentHistory` in REST JSON, added serialization coverage, and reworked the E2E to submit asynchronously and poll the status endpoint until agent history appears. Focused `pulsar-rest-tests` validation passed. Key lesson: for slow agent-backed flows, prefer polling async status APIs over long synchronous HTTP waits, and verify DTO serialization explicitly at the REST boundary.
+
+
+
+[Daily Memory (2026-04-04)]:
 # MEMORY.20260404.md
 
 ## Support external Browser4 service in browser4-cli e2e
@@ -27,18 +61,9 @@
     - Once the test harness supports a service URL override, the workflow should stop carrying stale local-startup assumptions or they can still fail the job before tests begin.
     - Removing obsolete setup from CI is as important as adding the new env var; otherwise the pipeline can remain coupled to an older execution path.
 
-## Remove deprecated nodejs-sdk test-script references
 
-- **Context**: `bin/test.ps1` and `bin/test.sh` still exposed a `nodejs-sdk` test type and tried to run `sdks/browser4-cli` tests with Node/npm even though the Node SDK is gone and `sdks/browser4-cli` is now a Rust crate.
-- **Action**:
-    - Updated `bin/test.ps1` and `bin/test.sh` to replace the stale `nodejs-sdk` test type with `browser4-cli`.
-    - Switched the Browser4 CLI test runner in both scripts from Node/npm-specific checks to `cargo test`, while keeping the shared test-type parsing and pass-through argument behavior.
-    - Tightened argument parsing so unknown positional test types fail fast instead of leaking into Maven arguments.
-    - Updated `bin/README.md` and `AGENTS.md` so the documented scoped test commands match the new `browser4-cli` test type.
-    - Normalized `bin/test.sh` to LF line endings after Bash validation exposed a CRLF parsing failure on this checkout.
-    - Validated with `cargo test --quiet` in `sdks/browser4-cli`, `.\bin\test.ps1 browser4-cli`, and `bash -n ./bin/test.sh`.
-- **Outcome**: The shared test wrappers no longer reference the removed `nodejs-sdk` path and now invoke the Rust Browser4 CLI tests with the correct cargo-based workflow.
-- **Lessons Learned**:
-    - When an SDK is replaced, wrapper scripts must be updated at both the naming layer and the toolchain layer; a simple label rename can still leave dead runtime assumptions behind.
-    - Shared test runners should reject unknown positional test types early, otherwise stale aliases can silently turn into confusing downstream tool arguments.
-    - Line-ending hygiene matters for cross-platform shell entrypoints; a logic change can look broken if Bash cannot parse the file first.
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\133422-remove-nodejs-sdk-test-references.copilot.log
