@@ -51,3 +51,33 @@ The submodule is synced upstream. I'm committing the root repo now, then pulling
   │ push origin main; git --no-pager status --short --branch
   └ 30 lines...
 
+The root push succeeded, but the scheduler wrote two log files immediately afterward. I'm capturing that trailing write in one last sync so the repo ends in the latest pushed state.
+
+● Commit any trailing root changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; Start-Sleep -Seconds 2; git --no-pager status --short
+  │ --branch && Write-Host '---' && git add -A; $status = git status --porcelain; if ($status) { git
+  │ commit -m "Sync trailing log updates`n`nCo-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase -X ours origin main; git
+  │ push origin main }; git --no-pager status --short --branch
+  └ 23 lines...
+
+● Check whether log file is still changing (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; Start-Sleep -Seconds 5; git --no-pager status --short
+  │ --branch && Write-Host '---TAIL---' && Get-Content 'D:\workspace\Browser4Team\coworker\tasks\300
+  │ logs\scheduler\2026\04\04\112223-coworker.stdout.log' -Tail 5
+  └ 8 lines...
+
+**Done:** I committed, pulled, and pushed both the dirty submodule and the top-level repo.
+
+- **Submodule `submodules\Browser4`**: committed and pushed to `origin/pre-release` at `e2e7fe469`
+- **Top-level repo `D:\workspace\Browser4Team`**: committed, pulled, and pushed to `origin/main` at `b437ce3`
+
+No merge conflicts occurred during pull, so no conflict resolution was needed. One live scheduler log file under `coworker\tasks\300logs\scheduler\2026\04\04\112223-coworker.stdout.log` was modified again immediately afterward by the running scheduler, so the working tree may not remain clean while that process keeps writing.
+
+[2026-04-04 11:24:02] [INFO] Git sync executed successfully.
+[2026-04-04 11:24:02] [INFO] [PUSHED] Task: support-external-browser4-service.md (updated 04/04/2026 19:05:27)
+[2026-04-04 11:24:02] [INFO] ===========================================================================
+[2026-04-04 11:24:02] [INFO] All tasks completed
+[2026-04-04 11:24:02] [INFO] Ended at: 04/04/2026 11:24:02
+[2026-04-04 11:24:02] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\112224-coworker.log
+[2026-04-04 11:24:02] [INFO] ==========================================================================

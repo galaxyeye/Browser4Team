@@ -14,3 +14,15 @@
     - For test harness infrastructure, an env-driven override is the safest way to support remote services without changing production CLI behavior.
     - Normalizing configured base URLs up front avoids subtle trailing-slash and whitespace mismatches in health checks and command invocation.
     - Preserving the local default path keeps E2E workflows backward compatible for contributors who still run everything on one machine.
+
+## Point CI browser4-cli e2e at dockerized Browser4 service
+
+- **Context**: `.github/workflows/ci.yml` still made the `browser4-cli` E2E step look up a local Browser4 jar and prepare for a self-started backend, even after the Rust harness learned how to prefer `BROWSER4_E2E_SERVICE_URL`.
+- **Action**:
+    - Updated the `Run browser4-cli E2E Tests` step in `.github/workflows/ci.yml` to export `BROWSER4_E2E_SERVICE_URL=http://localhost:8182`.
+    - Removed the local jar discovery/check and the host-side Chrome installation logic from that step because CI already starts the Browser4 server in Docker before the E2E run.
+    - Re-ran `cargo test --quiet` from `sdks/browser4-cli` after the workflow edit to confirm the Rust CLI test suite still passes.
+- **Outcome**: CI now runs the `browser4-cli` E2E suite against the Browser4 instance started earlier in the workflow, keeping the environment consistent with the Dockerized service under test and avoiding an unnecessary fallback to local jar startup logic.
+- **Lessons Learned**:
+    - Once the test harness supports a service URL override, the workflow should stop carrying stale local-startup assumptions or they can still fail the job before tests begin.
+    - Removing obsolete setup from CI is as important as adding the new env var; otherwise the pipeline can remain coupled to an older execution path.

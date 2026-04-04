@@ -1,0 +1,82 @@
+● Read set-browser4-e2e-service-url.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\set-browser4-e2e-service-url.md
+  └ 10 lines read
+
+● Check working tree status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I found the task: wire the CLI E2E workflow step to the Docker-backed Browser4 service instead of letting the harness launch its own backend. I’m checking the existing workflow and the related E2E notes before patching it.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:120 (120 lines read)
+
+● Read ci.yml
+  │ .github\workflows\ci.yml
+  └ 211 lines read
+
+The workflow is still forcing the old local-jar path even though the Rust harness now prefers `BROWSER4_E2E_SERVICE_URL`. I’m trimming that step so CI actually uses the Docker-started service on `http://localhost:8182`.
+
+● Run browser4-cli baseline tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 7 lines...
+
+● Edit
+  └ Edit .github\workflows\ci.yml
+
+● Read ci.yml
+  │ .github\workflows\ci.yml
+  └ L140:170 (31 lines read)
+
+● Run browser4-cli tests after change (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 7 lines...
+
+● Show workflow diff (shell)
+  │ git --no-pager diff -- .github/workflows/ci.yml
+  └ 1 line...
+
+The code change is done; I’m doing the required bookkeeping now. I’m checking the memory files so I can append the task summary cleanly without disturbing the existing monthly rollup.
+
+● Read MEMORY.20260404.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+  └ 16 lines read
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 8 lines read
+
+● Memory stored testing
+  └ CI browser4-cli E2E tests in .github/workflows/ci.yml now target the Docker-star…
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+
+● Read MEMORY.20260404.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+  └ L18:120 (11 lines read)
+
+● Show final status and diffs (shell)
+  │ git --no-pager status --short && git --no-pager diff -- .github/workflows/ci.yml
+  │ coworker/tasks/300logs/2026/04/04/MEMORY.20260404.md
+  └ 2 lines...
+
+Updated **`.github/workflows/ci.yml`** so the `browser4-cli` E2E step now runs against the Docker-started Browser4 service by exporting `BROWSER4_E2E_SERVICE_URL=http://localhost:8182`. I also removed the stale local-jar lookup and host Chrome setup from that step, since CI already starts the service container earlier in the workflow.
+
+I appended the task summary to **`coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md`**. The monthly memory file already included the **2026-04-03** rollup, so no monthly backfill was needed.
+
+
+=== COPILOT STDERR ===
+
+! 1 MCP server was blocked by policy: 'browser4'
+
+
+Total usage est:        1 Premium request
+API time spent:         1m 18s
+Total session time:     1m 43s
+Total code changes:     +13 -16
+Breakdown by AI model:
+ gpt-5.4                  239.0k in, 3.6k out, 211.7k cached (Est. 1 Premium request)
