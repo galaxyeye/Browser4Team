@@ -38,3 +38,13 @@ I found a dirty `submodules\Browser4`, so I'm syncing that first and then I'll u
   │ git commit -m "Sync submodule changes" -m "Co-authored-by: Copilot …
   └ 29 lines...
 
+The submodule is synced. I’m committing the top-level repo now, then pulling with automatic conflict preference and pushing the result.
+
+● Commit pull and push parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team';
+  │ git add -A;
+  │ $hasStagedChanges = $LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace((git diff
+  │ --cached --name-only));
+  │ if ($hasStagedChanges) {…
+  └ 38 lines...
+
