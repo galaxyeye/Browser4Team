@@ -45,3 +45,14 @@ The submodule commit is in place; now I’m rebasing it against remote with the 
   │ push; git --no-pager status --short --branch
   └ 16 lines...
 
+The submodule is synced, so I’m committing the parent repo’s changes, then pulling with automatic conflict resolution and pushing the result.
+
+● Commit pull and push root repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "Update workspace state" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours; git push; git
+  │ --no-pager status --short --branch; git --no-pager log -1 --decorate --oneline
+  └ 40 lines...
+
+A scheduler log changed while the push was running, so I’m doing one more sync pass to capture the new modification and leave the branch up to date.
+
