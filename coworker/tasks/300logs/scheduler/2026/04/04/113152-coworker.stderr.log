@@ -1,2 +1,9 @@
 ! 1 MCP server was blocked by policy: 'browser4'
 
+
+Total usage est:        1 Premium request
+API time spent:         47s
+Total session time:     1m 23s
+Total code changes:     +0 -0
+Breakdown by AI model:
+ gpt-5.4                  128.2k in, 1.8k out, 121.5k cached (Est. 1 Premium request)

@@ -56,3 +56,23 @@ The submodule is synced, so I’m committing the parent repo’s changes, then p
 
 A scheduler log changed while the push was running, so I’m doing one more sync pass to capture the new modification and leave the branch up to date.
 
+● Capture trailing log changes and resync (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; Start-Sleep -Seconds 2; git --no-pager status --short
+  │ --branch; if (-not (git diff --quiet)) { git add -A; if (-not (git diff --cached --quiet)) { git
+  │ commit -m "Update workspace logs" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase -X ours; git push } }; git
+  │ --no-pager status --short --branch; git --no-pager log -2 --decorate --oneline
+  └ 22 lines...
+
+**Done.** I committed and pushed all changes in `D:\workspace\Browser4Team`, and I also synced the dirty `submodules\Browser4` submodule first so the parent repo points at a pushed submodule commit.
+
+**Result:** `main` is now at `9cfa06c` on `origin/main`, and the submodule `pre-release` branch is at `9048b6f97` on `origin/pre-release`. No merge conflicts occurred, so the automatic conflict strategy wasn’t needed.
+
+[2026-04-04 11:33:29] [INFO] Git sync executed successfully.
+[2026-04-04 11:33:29] [INFO] [PUSHED] Task: set-browser4-e2e-service-url.md (updated 04/04/2026 19:28:24)
+[2026-04-04 11:33:29] [INFO] [PUSHED] Task: support-external-browser4-service.md (updated 04/04/2026 19:05:27)
+[2026-04-04 11:33:29] [INFO] ===========================================================================
+[2026-04-04 11:33:29] [INFO] All tasks completed
+[2026-04-04 11:33:29] [INFO] Ended at: 04/04/2026 11:33:29
+[2026-04-04 11:33:29] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\113152-coworker.log
+[2026-04-04 11:33:29] [INFO] ==========================================================================
