@@ -22,3 +22,32 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check repo and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule status && git submodule foreach --recursive "git --no-pager status --short --branch"
+  └ 16 lines...
+
+I found a dirty submodule, so I'm syncing that first and then I'll update the parent repo pointer before pulling and pushing the top-level repo.
+
+● Inspect remotes and recent commits (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git remote -v && git --no-pager log --oneline -3 &&
+  │ Write-Host '---SUBMODULE---' && Set-Location 'D:\workspace\Browser4Team\submodules\Browser4';
+  │ git remote -v && git --no-pager log --oneline -3
+  └ 12 lines...
+
+● Commit, pull, and push submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; $status = git status
+  │ --porcelain; if ($status) { git commit -m "Sync submodule changes`n`nCo-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours origin
+  │ pre-release; git push origin pre-release; git --no-pager status --short --branch
+  └ 20 lines...
+
+The submodule is synced upstream. I'm committing the root repo now, then pulling with automatic conflict preference and pushing the result.
+
+● Commit, pull, and push main repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; $status = git status --porcelain; if
+  │ ($status) { git commit -m "Sync workspace changes`n`nCo-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours origin main; git
+  │ push origin main; git --no-pager status --short --branch
+  └ 30 lines...
+
