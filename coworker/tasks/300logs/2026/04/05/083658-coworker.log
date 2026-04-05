@@ -1,0 +1,44 @@
+[2026-04-05 08:36:58] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-05 08:36:58] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 08:36:58] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 08:36:58] [INFO] ===========================================================================
+[2026-04-05 08:36:58] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-05 08:36:58] [INFO] Started at: 04/05/2026 08:36:58
+[2026-04-05 08:36:58] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\083658-coworker.log
+[2026-04-05 08:36:58] [INFO] ==========================================================================
+[2026-04-05 08:36:58] [INFO] Created missing draft placeholder: D:\workspace\Browser4Team\coworker\tasks\0draft\1.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: 1.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: 2.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: 3.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: 4.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: 5.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: README.md
+[2026-04-05 08:36:58] [INFO] [PREPARE] Task: README.zh.md
+[2026-04-05 08:36:58] [INFO] [PUSHED] Task: remove-nodejs-sdk-test-references.md (updated 04/04/2026 21:34:21)
+[2026-04-05 08:36:58] [INFO] [PUSHED] Task: set-browser4-e2e-service-url.md (updated 04/04/2026 19:28:24)
+[2026-04-05 08:36:58] [INFO] [PUSHED] Task: support-external-browser4-service.md (updated 04/04/2026 19:05:27)
+[2026-04-05 08:36:58] [DEBUG] renameScript path: D:\workspace\Browser4Team\coworker\scripts\workers\rename.ps1
+[2026-04-05 08:36:58] [DEBUG] Test-Path renameScript: True
+[2026-04-05 08:37:52] [DEBUG] Rename returned invalid name: fix-e2e-interaction-timeout
+[2026-04-05 08:38:21] [DEBUG] Rename returned invalid name: fix-e2e-console-export-timeout
+[2026-04-05 08:38:49] [DEBUG] Rename returned invalid name: fix-e2e-console-export-timeout
+[2026-04-05 08:38:49] [WARN] Renaming failed after 3 attempts. Using fallback safe title.
+[2026-04-05 08:38:49] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\1.md
+[2026-04-05 08:38:49] [INFO] Memory context initialized via generator.
+[2026-04-05 08:38:49] [DEBUG] Task log will be written to: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\083658-1.task.log
+[2026-04-05 08:38:49] [INFO] Executing Copilot for task: 1
+[2026-04-05 08:38:49] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 08:38:49] [DEBUG] Prompt length: 2238 characters
+[2026-04-05 08:38:49] [INFO] === Starting Copilot execution ===
+[2026-04-05 08:38:49] [DEBUG] Task Copilot working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 09:00:45] [INFO] Copilot execution finished with exit code -1073741819
+[2026-04-05 09:00:45] [INFO] === Copilot execution completed ===
+[2026-04-05 09:00:45] [DEBUG] Copilot external tool log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\083658-1.copilot.log
+[2026-04-05 09:00:45] [WARN] Warning: Copilot exited with non-zero code. Check log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\083658-1.copilot.log
+[2026-04-05 09:00:45] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0405\1.md
+[2026-04-05 09:00:45] [INFO] ---
+[2026-04-05 09:00:45] [INFO] ===========================================================================
+[2026-04-05 09:00:45] [INFO] All tasks completed
+[2026-04-05 09:00:45] [INFO] Ended at: 04/05/2026 09:00:45
+[2026-04-05 09:00:45] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\083658-coworker.log
+[2026-04-05 09:00:45] [INFO] ==========================================================================
