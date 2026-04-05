@@ -1,0 +1,24 @@
+Starting Coworker Task Runner...
+[2026-04-05 16:15:52] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-05 16:15:52] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 16:15:52] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-05 16:15:52] [INFO] ===========================================================================
+[2026-04-05 16:15:52] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-05 16:15:52] [INFO] Started at: 04/05/2026 16:15:52
+[2026-04-05 16:15:52] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\161552-coworker.log
+[2026-04-05 16:15:52] [INFO] ==========================================================================
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: 1.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: 2.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: 3.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: 4.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: 5.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: README.md
+[2026-04-05 16:15:52] [INFO] [PREPARE] Task: README.zh.md
+Moving approved task to pushed: D:\workspace\Browser4Team\coworker\tasks\5approved\cleanup-browser-processes.md
+[2026-04-05 16:15:52] [INFO] Task moved to pushed: D:\workspace\Browser4Team\coworker\tasks\6git-pushed\2026\0405\cleanup-browser-processes.md
+[2026-04-05 16:15:52] [INFO] Executing commit script for approved tasks...
+Running:
+gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes in "D:\workspace\Browser4Team".
+Pull from remote.
+Then push to remote.
+If conflicts occur, resolve them automatically.' --allow-all-tools

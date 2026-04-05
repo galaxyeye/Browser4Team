@@ -1,0 +1,61 @@
+Task: cleanup-browser-processes
+Description: Task from cleanup-browser-processes.md
+Original File: cleanup-browser-processes.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-05 15:38:19
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\cleanup-browser-processes.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\MEMORY.20260405.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\MEMORY.20260405.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+### Daily Rollup Update (through 2026-04-03)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` after an initial timeout-focused mitigation proved incomplete. The final fix exposed `CommandStatus.agentHistory` in REST JSON, added serialization coverage, and reworked the E2E to submit asynchronously and poll the status endpoint until agent history appears. Focused `pulsar-rest-tests` validation passed. Key lesson: for slow agent-backed flows, prefer polling async status APIs over long synchronous HTTP waits, and verify DTO serialization explicitly at the REST boundary.
+
+### Daily Rollup Reconciliation (through 2026-04-03)
+- Rechecked the available April daily memory files before the 2026-04-04 update. Only `2026-04-01/MEMORY.20260401.md` existed before today; there were no daily memory files for 2026-04-02 or 2026-04-03, so no additional pre-2026-04-04 summaries were available to append beyond the existing 2026-04-01 rollup.
+
+### Daily Rollup Update (through 2026-04-04)
+- **2026-04-04**: Extended the `browser4-cli` Rust E2E harness and CI flow to support `BROWSER4_E2E_SERVICE_URL`/`BROWSER4_E2E_SERVER_URL`, pointed CI at the Docker-started Browser4 service instead of a self-started local jar, and removed stale `nodejs-sdk` test-script references in favor of the Rust `browser4-cli` cargo workflow. Key lesson: when infrastructure paths change, update the harness, CI wiring, and shared wrapper scripts together so old startup assumptions do not keep breaking otherwise-correct test runs.
+
+
+
+[Daily Memory (2026-04-05)]:
+# MEMORY.20260405.md
+
+## Stabilize browser4-cli interaction E2E focus handling
+
+- **Context**: `sdks/browser4-cli/tests/e2e.rs` intermittently timed out in `test_e2e_interaction_console_and_export` after selector-targeted interactions, especially around the `click` -> `keydown` / `keyup` sequence.
+- **Action**:
+    - Updated `sdks/browser4-cli/src/main.rs` to persist the last selector-targeted element in CLI state and restore focus to that saved selector before bare `keydown`/`keyup` commands run.
+    - Cleared the saved active selector and last mouse position when sessions are created or invalidated so stale state does not leak across sessions.
+    - Routed `keydown` and `keyup` through the new focus-restore handler and added unit coverage for selector tracking.
+    - Reformatted the Rust CLI crate and validated the targeted interaction scenario with `cargo test --test e2e -- --scenario test_interaction_console_and_export`, plus a clean `.\mvnw.cmd -q -D"skipTests"` rebuild.
+- **Outcome**: The interaction E2E no longer relies on fragile carry-over browser focus between CLI invocations; the targeted scenario now passes after the CLI restores focus from persisted state before keyboard-only commands.
+- **Lessons Learned**:
+    - CLI commands that span multiple invocations need explicit persisted UI context; relying on browser focus to survive snapshots or later calls is flaky.
+    - When validating Browser4 CLI E2Es on Windows, avoid overlapping jar rebuilds with jar-backed E2E runs or transient file-lock/startup failures can obscure the actual code-change result.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\153748-cleanup-browser-processes.copilot.log
