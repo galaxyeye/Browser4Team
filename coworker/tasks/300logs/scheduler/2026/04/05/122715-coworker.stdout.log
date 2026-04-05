@@ -40,3 +40,13 @@ I found a dirty `submodules\Browser4`, so I’m syncing that first, then I’ll 
   │ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>…
   └ 23 lines...
 
+● Commit, pull, and push root repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "Sync workspace updates" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" } else { Write-Host 'No root changes to commit.'
+  │ }; git pull --no-rebase -X ours; git push; Write-Host '---FINAL STATUS---'; git --no-pager
+  │ status --short --branch
+  └ 29 lines...
+
+The push succeeded, but two live scheduler log files changed during the sync, so I’m folding those last runtime updates into one final commit.
+
