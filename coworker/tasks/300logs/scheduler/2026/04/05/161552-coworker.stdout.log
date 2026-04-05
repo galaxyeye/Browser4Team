@@ -22,3 +22,93 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Inspect git status and submodules (shell)
+  │ git --no-pager status --short --branch && git submodule status && git --no-pager diff
+  │ --submodule=short --stat
+  └ 23 lines...
+
+I found a dirty submodule plus parent repo changes, so I’m syncing the submodule first and then I’ll update the parent pointer before pulling and pushing the top-level repo.
+
+● Inspect parent repo remote and recent commits (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager remote -v && git --no-pager log
+  │ --oneline --decorate -3
+  └ 6 lines...
+
+● Inspect Browser4 submodule git state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch && git --no-pager remote -v && git --no-pager log --oneline --decorate -5
+  └ 14 lines...
+
+The submodule has its own uncommitted work on `master`, so I’m committing and syncing that first to avoid leaving the parent repo pointing at a local-only SHA.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; if (-not (git diff
+  │ --cached --quiet)) { $msg = @"Sync submodule changes
+  │
+  │ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+  │ "@; git commit -m $msg }; git pull --no-rebase -X ours origin master; git push origin master; …
+  └ 2 lines...
+
+The submodule sync is still running, likely on network operations. I’m waiting for it to finish before updating the parent repo.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 1 line...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 1 line...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 1 line...
+
+● List shells
+  └ Active shell sessions:
+
+● Check git processes while sync hangs (shell)
+  │ Get-Process git -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, CPU, StartTime
+  └ 1 line...
+
+The hang looks like a Git network/auth prompt rather than a local error. I’m checking the submodule state from a separate shell so I can resume with explicit non-interactive flags if needed.
+
+● Inspect submodule state from another shell (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; Test-Path .git\index.lock; git
+  │ --no-pager status --short --branch; git --no-pager log --oneline --decorate -3
+  └ 11 lines...
+
+● Stop shell
+  └ 1 line...
+
+I found the issue: the previous PowerShell command likely got stuck on the multiline commit-message syntax, not on Git itself. I’m rerunning the submodule sync with explicit non-interactive Git settings and a simpler commit command.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ $env:GIT_TERMINAL_PROMPT='0'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4';
+  │ git add -A; git -c commit.gpgsign=false commit -m 'Sync submodule changes' -m 'Co-authored-by:
+  │ Copilot <223556219+Copilot@users.noreply.github.com>'; if ($LASTEXITCODE -ne 0) { if ((git
+  │ status --porcelain).Length -gt 0) { exit $LASTEXITCODE } }; git pull --no-rebase -X ours
+  │ origin master; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin master; if …
+  └ 22 lines...
+
+The submodule is synced now. I’m committing the top-level repo, then I’ll pull with automatic conflict preference and push `main`.
+
+● Inspect parent repo before commit (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule status
+  └ 17 lines...
+
+● Commit pull and push parent repo (shell)
+  │ $env:GIT_TERMINAL_PROMPT='0'; Set-Location 'D:\workspace\Browser4Team'; git add -A; git -c
+  │ commit.gpgsign=false commit -m 'Sync workspace updates' -m 'Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>'; if ($LASTEXITCODE -ne 0) { if ((git status
+  │ --porcelain).Length -gt 0) { exit $LASTEXITCODE } }; git pull --no-rebase -X ours origin main;
+  │ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main; if ($LASTEXITCODE -ne …
+  └ 32 lines...
+
+The push succeeded, but two live scheduler log files changed again during the sync. I’m folding in that trailing delta and checking whether they’re still being actively written.
+
+● Inspect trailing log changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ --no-pager diff -- coworker/tasks/300logs/scheduler/2026/04/05/161552-coworker.stderr.log
+  │ coworker/tasks/300logs/scheduler/2026/04/05/161552-coworker.stdout.log
+  └ 108 lines...
+
+Those two files are this session’s live logs, so they can legitimately keep moving while I work. I’m doing one final commit/pull/push pass to capture the latest state and then checking whether the logger has settled.
+
