@@ -47,3 +47,30 @@ I found a dirty submodule, so I’m syncing that first and then I’ll update th
   └ 22 lines...
 
 The submodule is synced upstream now. I’m committing the parent repo, then pulling with automatic conflict preference and pushing the combined result.
+
+● Commit and sync parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync workspace
+  │ changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; git pull
+  │ --no-rebase -X ours origin main; git push origin main
+  └ 50 lines...
+
+● Memory stored git workflow
+  └ When syncing this repo, commit and push dirty submodules like submodules/Browser…
+
+● Verify parent repo clean and pushed (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; git --no-pager
+  │ log -1 --decorate --oneline
+  └ 4 lines...
+
+● Verify submodule clean and pushed (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch; git --no-pager log -1 --decorate --oneline
+  └ 3 lines...
+
+A scheduler log changed again immediately after the push, so I’m checking whether it’s still actively mutating before I do a final sync pass.
+
+● Inspect changing log file (shell)
+  │ Get-Item 'D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\06\034858-coworker.
+  │ stdout.log' | Select-Object FullName,Length,LastWriteTime
+  └ 4 lines...
+
