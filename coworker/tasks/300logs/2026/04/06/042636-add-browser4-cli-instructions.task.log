@@ -1,0 +1,19 @@
+Task: add-browser4-cli-instructions
+Description: Task from add-browser4-cli-instructions.md
+Original File: add-browser4-cli-instructions.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-06 04:30:23
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\add-browser4-cli-instructions.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\042636-add-browser4-cli-instructions.copilot.log

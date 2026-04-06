@@ -1,16 +1,3 @@
-● Read browser4-cli-external-service-tests.md
-  │ coworker\tasks\0draft\refine\2working\browser4-cli-external-service-tests.md
-  └ 10 lines read
-
-I’ve got the draft context; next I’m tightening the language while keeping the same structure and intent.
-
-● Edit
-  └ Edit coworker\tasks\0draft\refine\2working\browser4-cli-external-service-tests.md
-
-● Read browser4-cli-external-service-tests.md
-  │ coworker\tasks\0draft\refine\2working\browser4-cli-external-service-tests.md
-  └ 10 lines read
-
 # Improved browser4-cli tests
 
 - The Browser4 service should be started externally, and the tests should connect to it.
