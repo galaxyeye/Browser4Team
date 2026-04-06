@@ -22,3 +22,22 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Inspect repo and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && git
+  │ submodule foreach --quiet 'git --no-pager status --short --branch'
+  └ 22 lines...
+
+I found a dirty `submodules\Browser4`, so I'm syncing that first before updating the parent repo pointer. After that I'll commit and push the top-level repo the same way.
+
+● Commit pull and push submodule changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; if (-not (git diff
+  │ --cached --quiet)) { git commit -m "chore: sync Browser4 changes`n`nCo-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours; git push
+  └ 18 lines...
+
+● Commit pull and push parent repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "chore: sync Browser4Team changes`n`nCo-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X ours; git push
+  └ 30 lines...
+
