@@ -1,0 +1,197 @@
+● Read fix-refine-drafts-logging.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-refine-drafts-logging.md
+  └ 7 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I found the task: `refine-drafts.ps1` is contaminating the output draft file with its own log lines. I’m reading the script and its call sites now so I can make a surgical fix and keep the final file output clean.
+
+✗ Read refine-drafts.ps1
+  │ scripts\workers\refine-drafts.ps1
+  └ Path does not exist
+
+● Search (glob)
+  │ "**\refine-drafts.ps1"
+  └ 1 file found
+
+● Search (grep)
+  │ "refine-drafts"
+  └ 15 lines found
+
+● Read refine-drafts.ps1
+  │ coworker\scripts\workers\refine-drafts.ps1
+  └ 146 lines read
+
+● Read process-draft-refinement-queue.ps1
+  │ coworker\scripts\process-draft-refinement-queue.ps1
+  └ 59 lines read
+
+● Read README.md
+  │ coworker\README.md
+  └ L135:165 (22 lines read)
+
+The likely root cause is in how the PowerShell wrapper captures Copilot output, not in the file move logic. I’m checking the shared helper and the shell variant so the fix lands at the right layer and doesn’t leave the same bug elsewhere.
+
+● Read gh-copilot.ps1
+  │ coworker\scripts\workers\gh-copilot.ps1
+  └ 254 lines read
+
+● Search (glob)
+  │ "**\gh-copilot.ps1"
+  └ 1 file found
+
+● Search (grep)
+  │ "Invoke-GHCopilot|CaptureOutput|gh copilot|copilot" in *.ps1 (coworker\scripts)
+  └ 83 lines found
+
+● Search (glob)
+  │ "**\refine-drafts.sh"
+  └ No matches found
+
+● Read 052527-draft-refinement.stdout.log
+  │ coworker\tasks\300logs\scheduler\2026\03\15\052527-draft-refinement.stdout.log
+  └ 5 lines read
+
+● Read 052557-draft-refinement.stdout.log
+  │ coworker\tasks\300logs\scheduler\2026\03\15\052557-draft-refinement.stdout.log
+  └ 5 lines read
+
+● Search (glob)
+  │ "**/*.sh" in coworker\scripts\workers
+  └ No matches found
+
+I’ve confirmed the worker itself isn’t echoing into the file; the contamination is almost certainly coming back from the Copilot capture path. Next I’m checking how the CLI behaves and whether there’s already a non-logging invocation mode I can reuse instead of inventing a filter.
+
+✗ Search (grep)
+  │ "--markdown|--quiet|--json|no surrounding code fences|Return only" in *.ps1 (coworker\scripts)
+  └ rg: unrecognized flag --markdown|--quiet|--json|no surrounding code fences|Return only
+
+● Inspect gh copilot help (shell)
+  │ gh copilot --help
+  └ 24 lines...
+
+● Inspect gh copilot suggest help (shell)
+  │ gh copilot suggest --help
+  └ 24 lines...
+
+● Search (grep)
+  │ "Return only the complete refined document content|CaptureOutput" in *.ps1 (coworker\scripts)
+  └ 10 lines found
+
+● Inspect Copilot CLI help (shell)
+  │ gh copilot -- --help
+  └ 156 lines...
+
+● Read coworker-memory-generator.ps1
+  │ coworker\scripts\workers\coworker-memory-generator.ps1
+  └ L1:320 (298 lines read)
+
+● Read coworker-daily-memory-generator.ps1
+  │ coworker\scripts\workers\coworker-daily-memory-generator.ps1
+  └ L190:240 (29 lines read)
+
+I found a promising flag: the Copilot CLI supports `--silent`, which is meant for scripting and emits only the agent response. I’m verifying that behavior directly before I wire it into the shared capture helper.
+
+● Check normal Copilot prompt output (shell)
+  │ gh copilot -- -p "Reply with exactly: SAMPLE_RESPONSE" --allow-all-tools --allow-all-paths
+  └ 8 lines...
+
+● Check silent Copilot prompt output (shell)
+  │ gh copilot -- -p "Reply with exactly: SAMPLE_RESPONSE" --allow-all-tools --allow-all-paths
+  │ --silent
+  └ 2 lines...
+
+● Edit
+  └ Edit coworker\scripts\workers\gh-copilot.ps1
+
+The fix is in: capture-mode Copilot calls now force `--silent`, so scripts that write the captured text back to disk only get the model response instead of the CLI footer/progress lines. I’m doing a quick validation pass now and then I’ll update the required memory files.
+
+● Review script diff (shell)
+  │ git --no-pager diff -- coworker\scripts\workers\gh-copilot.ps1
+  └ 22 lines...
+
+● Validate captured Copilot output is silent (shell)
+  │ . .\coworker\scripts\workers\gh-copilot.ps1; $result = Invoke-GHCopilot -Prompt 'Reply with
+  │ exactly: SAMPLE_RESPONSE' -AdditionalArguments @('--allow-all-tools','--allow-all-paths')
+  │ -RepoRoot (Get-Location).Path -WorkingDirectory (Get-Location).Path -CaptureOutput; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Write-Output "RESULT<<$result>>"
+  └ 2 lines...
+
+✗ Read MEMORY.20260406.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+  └ Path does not exist
+
+● Search (glob)
+  │ "2026\04\*\MEMORY.202604*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  └ No matches found
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 14 lines read
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 6 files found
+
+The daily memory file for today doesn’t exist yet, and the monthly rollup currently stops at 2026-04-04. I’m reading the April daily entries now so I can append today’s note and backfill the monthly summary with any missing pre-today days, especially 2026-04-05.
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\02
+  └ 1 file found
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06
+  └ 4 files found
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05
+  └ 9 files found
+
+● Read MEMORY.20260404.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+  └ 44 lines read
+
+● Read MEMORY.20260401.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\MEMORY.20260401.md
+  └ 27 lines read
+
+● Read MEMORY.20260405.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\MEMORY.20260405.md
+  └ 27 lines read
+
+● Edit
+  │ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+The code fix is done and the required memory updates are appended. I’m doing one last read-back of the changed helper and the new memory entries so I can hand off a precise result.
+
+● Read gh-copilot.ps1
+  │ coworker\scripts\workers\gh-copilot.ps1
+  └ L184:225 (42 lines read)
+
+● Read MEMORY.20260406.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+  └ 13 lines read
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:40 (17 lines read)
+
+● Check final git status (shell)
+  │ git --no-pager status --short
+  └ 3 lines...
+
+Fixed: `refine-drafts.ps1` will no longer save Copilot CLI log/footer text into refined draft files.
+
+The change is in `coworker/scripts/workers/gh-copilot.ps1`: when `Invoke-GHCopilot` runs in `-CaptureOutput` mode, it now adds `--silent` automatically, so capture-based callers receive only the model response. That keeps the fix scoped to scripted output capture and leaves normal console runs unchanged. I also appended the required task note to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md` and backfilled the April monthly rollup in `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md` with the missing 2026-04-05 summary.
+
+
+=== COPILOT STDERR ===
+
+! 1 MCP server was blocked by policy: 'browser4'
+
+
+Total usage est:        1 Premium request
+API time spent:         2m 39s
+Total session time:     3m 52s
+Total code changes:     +23 -1
+Breakdown by AI model:
+ gpt-5.4                  592.0k in, 5.8k out, 544.0k cached (Est. 1 Premium request)

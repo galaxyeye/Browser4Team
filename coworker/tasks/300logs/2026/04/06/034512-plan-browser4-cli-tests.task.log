@@ -1,0 +1,63 @@
+Task: plan-browser4-cli-tests
+Description: Task from plan-browser4-cli-tests.md
+Original File: plan-browser4-cli-tests.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-06 03:45:29
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\plan-browser4-cli-tests.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+### Daily Rollup Update (through 2026-04-03)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` after an initial timeout-focused mitigation proved incomplete. The final fix exposed `CommandStatus.agentHistory` in REST JSON, added serialization coverage, and reworked the E2E to submit asynchronously and poll the status endpoint until agent history appears. Focused `pulsar-rest-tests` validation passed. Key lesson: for slow agent-backed flows, prefer polling async status APIs over long synchronous HTTP waits, and verify DTO serialization explicitly at the REST boundary.
+
+### Daily Rollup Reconciliation (through 2026-04-03)
+- Rechecked the available April daily memory files before the 2026-04-04 update. Only `2026-04-01/MEMORY.20260401.md` existed before today; there were no daily memory files for 2026-04-02 or 2026-04-03, so no additional pre-2026-04-04 summaries were available to append beyond the existing 2026-04-01 rollup.
+
+### Daily Rollup Update (through 2026-04-04)
+- **2026-04-04**: Extended the `browser4-cli` Rust E2E harness and CI flow to support `BROWSER4_E2E_SERVICE_URL`/`BROWSER4_E2E_SERVER_URL`, pointed CI at the Docker-started Browser4 service instead of a self-started local jar, and removed stale `nodejs-sdk` test-script references in favor of the Rust `browser4-cli` cargo workflow. Key lesson: when infrastructure paths change, update the harness, CI wiring, and shared wrapper scripts together so old startup assumptions do not keep breaking otherwise-correct test runs.
+
+### Daily Rollup Update (through 2026-04-05)
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by persisting and restoring the last selector-targeted focus before bare `keydown`/`keyup` calls, then cleaned up global CLI shutdown so `close-all` and `kill-all` both remove named session state files via one shared helper. Key lessons: cross-invocation browser actions need explicit persisted UI context instead of relying on ambient focus, and parallel global teardown paths should share one cleanup implementation so forced and graceful shutdown behavior does not drift.
+
+
+
+[Daily Memory (2026-04-06)]:
+# MEMORY.20260406.md
+
+## Fix refine-drafts logging contamination
+
+- **Context**: `coworker\scripts\workers\refine-drafts.ps1` writes the captured Copilot response back into the refined draft file, but the shared `Invoke-GHCopilot -CaptureOutput` path was also returning Copilot CLI policy/status/footer text. That caused refined drafts to include logging noise instead of only the final rewritten document.
+- **Action**:
+    - Updated `coworker\scripts\workers\gh-copilot.ps1` so capture-output invocations automatically include `--silent` unless the caller already passed it.
+    - Kept the change scoped to capture mode, so interactive/non-captured Copilot runs still preserve their normal console behavior.
+    - Validated the helper by invoking a prompt that should return exactly `SAMPLE_RESPONSE` and confirming the captured result contains only that text.
+- **Outcome**: Draft refinement now receives only the model response when it saves the refined document, so `refine-drafts.ps1` stops writing Copilot CLI logs and usage summaries into the draft file.
+- **Lessons Learned**:
+    - For script-driven Copilot flows that persist stdout to disk, `--silent` is required to keep CLI metadata out of the captured content.
+    - Fixing the shared capture helper is safer than post-processing individual script outputs because it protects every caller that expects clean generated text.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\034512-plan-browser4-cli-tests.copilot.log
