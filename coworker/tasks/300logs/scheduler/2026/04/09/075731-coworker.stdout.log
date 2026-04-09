@@ -65,3 +65,52 @@ I’m checking whether this is a repo-specific remote issue or a broader outboun
 
 GitHub itself is reachable, so I’m probing Git’s HTTPS path directly and then retrying the sync flow with that information.
 
+● Test git remote access (shell)
+  │ $ErrorActionPreference='Continue'; Write-Host 'ROOT LS-REMOTE'; git ls-remote origin HEAD;
+  │ Write-Host 'SUBMODULE LS-REMOTE'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4';
+  │ git ls-remote origin HEAD
+  └ 4 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 5 lines...
+
+Git’s own network path is failing even though plain HTTPS works, so I’m checking for a Git-specific proxy or transport setting that I can bypass automatically.
+
+● Inspect git proxy and HTTP config (shell)
+  │ $ErrorActionPreference='Continue'; Write-Host 'GIT VERSION'; git --version; Write-Host 'GLOBAL
+  │ HTTP PROXY'; git config --global --get http.proxy; Write-Host 'SYSTEM HTTP PROXY'; git config
+  │ --system --get http.proxy; Write-Host 'ENV PROXIES'; Get-ChildItem Env: | Where-Object {
+  │ $_.Name -match '^(HTTP|HTTPS|ALL)_PROXY$|^NO_PROXY$' } | Sort-Object Name | ForEach-Object {
+  │ "{0}={1}" -f $_.Name, $_.Value }; Write-Host 'GLOBAL URL SETTINGS'; git config --global …
+  └ 10 lines...
+
+I didn’t find a proxy override, so I’m trying a transport-level workaround through Git itself before I give up on the remote steps.
+
+● Retry git remote with alternate HTTP settings (shell)
+  │ $ErrorActionPreference='Continue'; Write-Host 'ROOT'; git -c http.sslBackend=schannel -c
+  │ http.version=HTTP/1.1 ls-remote origin HEAD; Write-Host 'SUBMODULE'; Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4'; git -c http.sslBackend=schannel -c
+  │ http.version=HTTP/1.1 ls-remote origin HEAD
+  └ 4 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 5 lines...
+
+I can’t reach Git remotes through Git itself from this environment, but I can still finish the local commit so nothing is left unrecorded before making the final pull/push attempts.
+
+● Commit all root repository changes (shell)
+  │ $ErrorActionPreference='Stop'; Set-Location 'D:\workspace\Browser4Team'; git add -A; if (-not
+  │ [string]::IsNullOrWhiteSpace((git status --short))) { git commit -m "chore: sync repository
+  │ changes`n`nCo-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" }; git
+  │ --no-pager status --short --branch; git --no-pager log --oneline --decorate -3
+  └ 20 lines...
+
+A scheduler log updated during the commit, so I’m checking whether it stabilized or is still being actively written before I make one last local cleanup commit.
+
+● Check whether new changes are still appearing (shell)
+  │ $ErrorActionPreference='Stop'; Start-Sleep -Seconds 3; Set-Location 'D:\workspace\Browser4Team';
+  │ git --no-pager status --short --branch
+  └ 3 lines...
+
+One scheduler log is still the only dirty path, so I’m folding that into a final local commit before the remote sync attempts.
+
