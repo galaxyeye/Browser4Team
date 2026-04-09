@@ -1,0 +1,74 @@
+Task: unify-command-tool-execution
+Description: Task from unify-command-tool-execution.md
+Original File: unify-command-tool-execution.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-09 05:42:40
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\unify-command-tool-execution.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+### Daily Rollup Update (through 2026-04-03)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` after an initial timeout-focused mitigation proved incomplete. The final fix exposed `CommandStatus.agentHistory` in REST JSON, added serialization coverage, and reworked the E2E to submit asynchronously and poll the status endpoint until agent history appears. Focused `pulsar-rest-tests` validation passed. Key lesson: for slow agent-backed flows, prefer polling async status APIs over long synchronous HTTP waits, and verify DTO serialization explicitly at the REST boundary.
+
+### Daily Rollup Reconciliation (through 2026-04-03)
+- Rechecked the available April daily memory files before the 2026-04-04 update. Only `2026-04-01/MEMORY.20260401.md` existed before today; there were no daily memory files for 2026-04-02 or 2026-04-03, so no additional pre-2026-04-04 summaries were available to append beyond the existing 2026-04-01 rollup.
+
+### Daily Rollup Update (through 2026-04-04)
+- **2026-04-04**: Extended the `browser4-cli` Rust E2E harness and CI flow to support `BROWSER4_E2E_SERVICE_URL`/`BROWSER4_E2E_SERVER_URL`, pointed CI at the Docker-started Browser4 service instead of a self-started local jar, and removed stale `nodejs-sdk` test-script references in favor of the Rust `browser4-cli` cargo workflow. Key lesson: when infrastructure paths change, update the harness, CI wiring, and shared wrapper scripts together so old startup assumptions do not keep breaking otherwise-correct test runs.
+
+### Daily Rollup Update (through 2026-04-05)
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by persisting and restoring the last selector-targeted focus before bare `keydown`/`keyup` calls, then cleaned up global CLI shutdown so `close-all` and `kill-all` both remove named session state files via one shared helper. Key lessons: cross-invocation browser actions need explicit persisted UI context instead of relying on ambient focus, and parallel global teardown paths should share one cleanup implementation so forced and graceful shutdown behavior does not drift.
+
+### Daily Rollup Reconciliation (through 2026-04-07)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` by exposing `CommandStatus.agentHistory` in REST JSON, adding serialization coverage, and polling the async status endpoint in the E2E instead of holding a long sync HTTP call open. Key lesson: for slow agent-backed REST flows, prefer async polling and verify DTO serialization at the HTTP boundary.
+- **2026-04-04**: Extended the Rust `browser4-cli` E2E harness and CI wiring to support external Browser4 service URLs, point CI at the Docker-started service, and remove stale `nodejs-sdk` test-script assumptions. Key lesson: infrastructure-path changes must update the harness, workflow wiring, and shared wrapper scripts together.
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by restoring selector-targeted focus before standalone `keydown`/`keyup` commands, then unified `close-all` and `kill-all` state cleanup behind one helper. Key lessons: cross-invocation browser actions need persisted UI context, and parallel teardown paths should share one cleanup implementation.
+- **2026-04-06**: Fixed `gh-copilot.ps1` capture mode so script-driven Copilot output uses `--silent` and no longer writes CLI metadata into refined drafts, and produced an implementation-only plan for `browser4-cli` external-service E2E support after reconciling the current harness and workflow behavior. Key lessons: any Copilot stdout persisted to disk must suppress CLI framing at the shared helper, and Dockerized service test planning must account for both host/container networking and workflow order.
+- No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
+
+### Daily Rollup Update (through 2026-04-08)
+- **2026-04-08**: Reworked `pulsar-rest` `MCPToolController.listTools()` to derive the advertised MCP surface from live `AgentToolExecutor` specs, reuse an existing session when available, and create a temporary discovery session when none exist, while filtering browser4-cli aliases and legacy helper names so only truly callable tools are listed. Key lessons: MCP discovery endpoints should share the same runtime registry and alias logic as execution, and session-scoped tool catalogs are safer to discover from a short-lived session than from a duplicated static list.
+
+
+
+[Daily Memory (2026-04-09)]:
+# MEMORY.20260409.md
+
+## Refactor high-level agent tools
+
+- **Context**: The high-level agent tool packages still lived directly under `ai.platon.pulsar.agentic.tools.{command,agent,crawl}` even though the target structure was `tools.high.{command,agent,crawl}`. The move needed to stay consistent across both `pulsar-agentic` and `pulsar-tools`, plus every REST/controller/test import that depends on those types.
+- **Action**:
+    - Moved the command, agent, and crawl Kotlin sources into `pulsar-agentic/.../tools/high/...` and moved the shared crawl models/common helpers into `pulsar-tools/.../tools/high/crawl/...`, updating package declarations and all downstream imports/typealiases.
+    - Removed the empty legacy package directories after the move so the source tree now reflects the requested `tools/high/*` layout.
+    - While validating, fixed `pulsar-rest` `MCPToolController.listTools()` so it again derives advertised tools from live `AgentToolExecutor` specs, including temporary-session fallback plus frontend/legacy alias filtering; this was required because the targeted MCP test slice exposed stale hard-coded listing behavior.
+    - Validated with `.\mvnw.cmd -q -D"skipTests" compile`, `.\mvnw.cmd -q -pl pulsar-rest -am -D"test=MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false" test`, and `.\mvnw.cmd -q -P pulsar-tests -pl pulsar-tests/pulsar-rest-tests -am -D"test=CommandStatusConversionTest,CommandServiceTest,ScrapeServiceTests,ScrapeAPITests" -D"surefire.failIfNoSpecifiedTests=false" test`.
+- **Outcome**: High-level tool packages now live under `tools.high`, all Kotlin consumers resolve the new namespaces, and the MCP tools endpoint stays aligned with the runtime registry instead of a stale static list.
+- **Lessons Learned**:
+    - Namespace refactors that cross module boundaries should be validated with both compile-time consumers and runtime discovery surfaces, because registry/listing endpoints can drift even when imports compile cleanly.
+    - For MCP/CLI compatibility layers, advertise tool names from the same live registry and alias-normalization rules used for execution rather than maintaining a separate hard-coded catalog.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\054221-unify-command-tool-execution.copilot.log

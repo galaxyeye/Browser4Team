@@ -1,0 +1,386 @@
+I’m pulling in the task details and current repo state first so I can implement the requested change cleanly instead of guessing.
+
+● Read unify-command-tool-execution.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\unify-command-tool-execution.md
+  └ 13 lines read
+
+● Check repo status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I’ve got the task statement; now I’m tracing the execution path so I can wire command tools into the existing agent-tool flow without disturbing unrelated changes.
+
+● Search (grep)
+  │ "class AgentToolExecutor|fun execute\(|interface AgentToolExecutor|object AgentToolExecutor" in
+  │ **/*.kt
+  └ 37 lines found
+
+● Search (grep)
+  │ "class
+  │ MCPToolController|dispatchToCommandToolExecutor|command_run|command_status|command_result" in
+  │ **/*.kt
+  └ 17 lines found
+
+● Search (grep)
+  │ "class CommandToolExecutor|object CommandToolExecutor|fun run\(|fun status\(|fun result\(" in
+  │ **/*.kt
+  └ 47 lines found
+
+✗ Read AbstractToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AbstractToolExecutor.kt
+  └ Path does not exist
+
+✗ Read ToolCall.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\ToolCall.kt
+  └ Path does not exist
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L1:260 (260 lines read)
+
+● Read CommandToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\CommandToolExecutor.kt
+  └ L1:260 (117 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L1:420 (420 lines read)
+
+● Read CommandService.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\high\command\CommandService.kt
+  └ L1:260 (211 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L420:520 (101 lines read)
+
+● Search (glob)
+  │ "**\*AbstractToolExecutor.kt"
+  └ 1 file found
+
+● Search (glob)
+  │ "**\*ToolCall.kt"
+  └ No matches found
+
+● Search (grep)
+  │ "class AbstractToolExecutor|interface ToolExecutor|data class ToolCallResult|data class
+  │ TcEvaluate|class BasicToolCallExecutor" in **/*.kt
+  └ 5 lines found
+
+● Read AbstractToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\AbstractToolExecutor.kt
+  └ L1:260 (179 lines read)
+
+● Read BasicToolCallExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\BasicToolCallExecutor.kt
+  └ L1:260 (41 lines read)
+
+● Read Models.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt
+  └ L150:240 (91 lines read)
+
+● Search (grep)
+  │ "CommandService\(" in **/*.kt
+  └ 2 lines found
+
+● Search (grep)
+  │ "commandService\b|CommandToolExecutor\b" in **/*.kt (pulsar-rest)
+  └ 29 lines found
+
+I found the split point: command tools already have an executor spec, but `AgentToolExecutor` never routes a `command` domain receiver, so MCP had to keep a separate command-only path. I’m checking how agent sessions and tests can provide the `CommandService` target before I patch that gap.
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L1:820 (512 lines read)
+
+● Read CommandServiceConfig.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\config\CommandServiceConfig.kt
+  └ L1:120 (22 lines read)
+
+● Search (grep)
+  │ "companionAgent|toolExtractor" in **/*.kt (pulsar-agentic)
+  └ 14 lines found
+
+● Search (grep)
+  │ "registerCustomTarget\(|custom target|toolExtractor\.registerCustomTarget|CommandService" in
+  │ **/*.kt
+  └ 31 lines found
+
+● Read AgentToolExecutorNormalizeToolCallTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutorNormalizeToolCall
+  │ Test.kt
+  └ L1:260 (39 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L620:760 (131 lines read)
+
+● Search (grep)
+  │ "registerCustomTarget\(|Unsupported domain: command|CommandToolExecutor|normalizeToolCall" in
+  │ **/*.kt (pulsar-agentic\src\test\kotlin)
+  └ 4 lines found
+
+● Read CalculatorToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\examples\CalculatorToolExecutor.kt
+  └ L1:220 (158 lines read)
+
+● Read AgenticSession.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\AgenticSession.kt
+  └ L1:120 (78 lines read)
+
+● Read BasicBrowserAgent.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt
+  └ L1:120 (119 lines read)
+
+● Search (grep)
+  │ "CommandNormalizer|normalizePlainCommand" in **/*.kt
+  └ 14 lines found
+
+● Search (grep)
+  │ "registerClosable\(|close\(\)|implements Closeable|: Closeable|override fun close" in **/*.kt
+  │ (pulsar-agentic)
+  └ 18 lines found
+
+● Search (grep)
+  │ "companionAgent as\? BasicBrowserAgent|createSession\(null\)|deleteSession\(" in **/*.kt
+  │ (pulsar-rest\src\main\kotlin)
+  └ 9 lines found
+
+● Search (grep)
+  │ "toolExtractor\.execute\(ToolCall\("command"" in **/*.kt
+  └ No matches found
+
+● Read BasicBrowserAgent.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\agents\BasicBrowserAgent.kt
+  └ L650:710 (25 lines read)
+
+● Read SessionManager.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\service\SessionManager.kt
+  └ L1:240 (181 lines read)
+
+● Search (grep)
+  │ "createSession\(\)|getOrCreateSession\(|AgenticSession" in **/*.kt
+  │ (pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\config)
+  └ 2 lines found
+
+● Search (grep)
+  │ "@Bean\s+fun .*AgenticSession|fun .*AgenticSession\(|class .*AgenticSession|AgenticContext" in
+  │ **/*.kt (pulsar-rest\src\main\kotlin)
+  └ 5 lines found
+
+● Search (grep)
+  │ "@Bean[\s\S]{0,200}AgenticSession|fun .*AgenticSession\s*\(" in **/*.kt
+  └ 5 lines found
+
+● Search (grep)
+  │ "AgenticContext\)|AgenticSession\)" in **/*.kt
+  └ 8 lines found
+
+● Read Models.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt
+  └ L60:130 (71 lines read)
+
+● Search (grep)
+  │ "data class ToolCall" in **/*.kt (pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model)
+  └ 2 lines found
+
+I’ve got enough context now: the change is narrow but cross-cutting, so I’m writing a small plan and then patching the executor/controller/tests together in one pass.
+
+✗ Read plan.md
+  │ ~\.copilot\session-state\4d32c8b4-444e-4194-b69e-5e6ed3915eda\plan.md
+  └ Path does not exist
+
+● Edit
+  └ Create ~\.copilot\session-state\4d32c8b4-444e-4194-b69e-5e6ed3915eda\plan.md
+
+I’ve pinned down the clean integration point: keep `CommandService` as the runtime target, but make both agent execution and MCP dispatch go through the same `AgentToolExecutor.execute(...)` path. Now I’m patching the executor branch and swapping the controller/tests over to that path.
+
+● Edit
+  │ Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  │ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  │ Edit pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutorNormalizeToo
+  │ lCallTest.kt
+  └ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L1:360 (360 lines read)
+
+● Read AgentToolExecutorNormalizeToolCallTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutorNormalizeToolCall
+  │ Test.kt
+  └ L1:120 (57 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L1:760 (511 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L620:760 (141 lines read)
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L160:195 (36 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L758:792 (34 lines read)
+
+The code path is patched. I’m running a tight validation slice now: full compile plus the exact agentic and REST tests that cover the new unified command execution path.
+
+● Compile and run targeted tests (shell)
+  │ .\mvnw.cmd -q -D"skipTests" compile && .\mvnw.cmd -q -pl pulsar-agentic -am
+  │ -D"test=AgentToolExecutorNormalizeToolCallTest" -D"surefire.failIfNoSpecifiedTests=false" test
+  │ && .\mvnw.cmd -q -pl pulsar-rest -am -D"test=MCPToolControllerTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+The Maven run is still active with quiet output, so I’m letting it finish instead of interrupting a likely compile/test pass.
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 3 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 3 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 3 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 7 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 7 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 7 lines...
+
+The agentic test already exercised the new command registration path. I’m waiting on the REST slice now; if it stalls much longer, I’ll inspect the surefire output directly instead of guessing.
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 84 lines...
+
+The validation passed, but one negative-path unit test was only succeeding because the mock returned `null` and triggered a noisy NPE. I’m tightening that test so it exercises the intended validation failure instead.
+
+● Edit
+  └ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+
+● Re-run targeted tests (shell)
+  │ .\mvnw.cmd -q -pl pulsar-agentic -am -D"test=AgentToolExecutorNormalizeToolCallTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false" test && .\mvnw.cmd -q -pl pulsar-rest -am
+  │ -D"test=MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 2 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 6 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 6 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 6 lines...
+
+The rerun is down to the REST test pass again; I’m waiting for completion rather than restarting it mid-suite.
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 83 lines...
+
+The tests are green. I’m doing one last pass over the diff and then I’ll update the task memory files with the exact outcome and lessons learned.
+
+● Review final git diff (shell)
+  │ git --no-pager status --short && git --no-pager diff --
+  │ pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/tools/AgentToolExecutor.kt pulsar-agenti
+  │ c/src/test/kotlin/ai/platon/pulsar/agentic/tools/AgentToolExecutorNormalizeToolCallTest.kt
+  │ pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolController.kt
+  │ pulsar-rest/src/test/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolControllerTest.kt
+  └ 298 lines...
+
+● Read Models.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\model\Models.kt
+  └ L130:175 (46 lines read)
+
+● Edit
+  └ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+
+● Run MCP controller tests (shell)
+  │ .\mvnw.cmd -q -pl pulsar-rest -am -D"test=MCPToolControllerTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 5 lines...
+
+The implementation is done and the focused validation is clean now. I’m recording the outcome and the new execution-path detail in memory so future command-tool changes start from the right integration point.
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L166:186 (21 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L313:336 (24 lines read)
+
+● Read MEMORY.20260409.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+  └ L1:end (14 lines read)
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (27 lines read)
+
+● Memory stored command routing
+  └ MCP command_* calls now execute through commandService.session.companionAgent.to…
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+
+Implemented the command-tool unification.
+
+`AgentToolExecutor.execute()` now handles the `command` domain, and `MCPToolController` no longer calls `CommandToolExecutor` directly for `command_run` / `command_status` / `command_result`. Instead, it resolves the agent from `commandService.session`, registers `commandService` as the `command` target, and dispatches through `agent.toolExtractor.execute(toolCall)`. I also updated the focused agentic and REST unit tests to cover that path.
+
+The daily memory file at `coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md` has been appended with this task’s summary and lessons. The monthly memory already contained the 2026-04-08 rollup, so no monthly reconciliation update was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         15m 37s
+Total session time:     24m 24s
+Total code changes:     +121 -21
+Breakdown by AI model:
+ gpt-5.4                  4.6m in, 18.3k out, 4.5m cached (Est. 1 Premium request)

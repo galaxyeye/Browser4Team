@@ -12,3 +12,15 @@
 - **Lessons Learned**:
     - Namespace refactors that cross module boundaries should be validated with both compile-time consumers and runtime discovery surfaces, because registry/listing endpoints can drift even when imports compile cleanly.
     - For MCP/CLI compatibility layers, advertise tool names from the same live registry and alias-normalization rules used for execution rather than maintaining a separate hard-coded catalog.
+
+## Unify command tool execution
+
+- **Context**: `AgentToolExecutor` advertised the `command` tool domain through its built-in specs, but `execute()` had no `command` branch, so MCP had to bypass the unified agent-tool path and invoke `CommandToolExecutor` directly in `MCPToolController`.
+- **Action**:
+    - Added explicit `command`-domain dispatch in `AgentToolExecutor.execute()` so a registered `CommandService` target can be executed through the same `agent.toolExtractor.execute(toolCall)` path used by other tool domains.
+    - Refactored `pulsar-rest` `MCPToolController` command handlers to resolve the agent from `commandService.session`, register `commandService` as the `command` target, and execute `command_run` / `command_status` / `command_result` through `AgentToolExecutor` instead of a controller-owned `CommandToolExecutor`.
+    - Updated focused unit coverage in `AgentToolExecutorNormalizeToolCallTest` and `MCPToolControllerTest`, then validated with `.\mvnw.cmd -q -D"skipTests" compile`, `.\mvnw.cmd -q -pl pulsar-agentic -am -D"test=AgentToolExecutorNormalizeToolCallTest" -D"surefire.failIfNoSpecifiedTests=false" test`, and `.\mvnw.cmd -q -pl pulsar-rest -am -D"test=MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false" test`.
+- **Outcome**: Command tools now share the unified agent-tool execution flow, and the MCP controller no longer depends on a separate direct `CommandToolExecutor` path for `command_*` tools.
+- **Lessons Learned**:
+    - If a tool domain is advertised from the shared agent-tool spec registry, `AgentToolExecutor.execute()` needs a matching dispatch branch or higher layers will drift into duplicate execution code.
+    - For cross-module service-backed tools, registering the runtime service instance as the agent tool target preserves one execution surface without forcing the agentic module to own REST-specific wiring.
