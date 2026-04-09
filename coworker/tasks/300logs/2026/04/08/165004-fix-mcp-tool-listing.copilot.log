@@ -1,0 +1,343 @@
+● Read fix-mcp-tool-listing.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-mcp-tool-listing.md
+  └ 9 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I’ve got the scope: `listTools` is incomplete, so I’m tracing how `callTools` discovers tools and lining up the controller tests around that path.
+
+● Search (grep)
+  │ "listTools|getAvailableTools|available tools|tool list" in **/*Test*.kt (pulsar-rest)
+  └ No matches found
+
+● Search (grep)
+  │ "class MCPToolController|fun listTools|fun callTools|listTools\(|callTools\(" in **/*.kt
+  └ 11 lines found
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L1:320 (320 lines read)
+
+● Read Browser4MCPServerE2ETest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServerE2ETest.kt
+  └ L130:230 (101 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L1:260 (260 lines read)
+
+● Read MCPToolControllerE2ETest.kt
+  │ pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolContr
+  │ ollerE2ETest.kt
+  └ L1:260 (260 lines read)
+
+I found the likely root cause: `listTools()` is a hard-coded list, while execution resolves through the live tool registry and alias normalization. I’m checking the executor/spec APIs now so the listing can be derived from the same source of truth.
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L278:520 (211 lines read)
+
+● Search (grep)
+  │ "browser_click|browser_handle_dialog|browser_tabs|page_title|page_url|current_url|title" in
+  │ **/*.rs (sdks\browser4-cli)
+  └ 39 lines found
+
+● Search (grep)
+  │ "getToolSpecs\(|toolSpecs|ToolSpec\(" in **/*.kt
+  └ 97 lines found
+
+● Read Browser4MCPServer.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\mcp\server\Browser4MCPServer.kt
+  └ L90:180 (91 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L520:620 (42 lines read)
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L120:170 (51 lines read)
+
+● Read SessionManager.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\service\SessionManager.kt
+  └ L1:260 (181 lines read)
+
+● Search (grep)
+  │ "MCPToolController\(|listTools\(" in **/*.kt
+  └ 7 lines found
+
+● Search (grep)
+  │ "\/mcp\/tools|list tools|tools endpoint|GET /mcp/tools" in **/*.rs (sdks\browser4-cli)
+  └ 4 lines found
+
+● Search (grep)
+  │ "browser_tabs|browser_handle_dialog|page_url|page_title|open_session|close_session|close_all_ses
+  │ sions|delete_session_data" (sdks\browser4-cli\src\commands.rs)
+  └ 6 lines found
+
+● Search (grep)
+  │ "dialog_accept|dialog_dismiss|dblclick|tab_list|tab_new|tab_close|tab_select" in **/*.{kt,rs}
+  └ 57 lines found
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L280:360 (81 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L730:790 (61 lines read)
+
+I’ve narrowed it down to a source-of-truth mismatch, so I’m running the focused controller test first and then I’ll switch the listing logic over to the same dynamic registry path used for execution.
+
+● Run MCPToolController unit tests (shell)
+  │ .\mvnw.cmd -pl pulsar-rest -Dtest=MCPToolControllerTest
+  │ -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 21 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 14 lines...
+
+The first targeted Maven run failed before the controller test itself became useful, likely because `pulsar-rest` wasn’t built in reactor with its local modules. I’m fixing the code now and will rerun with the right reactor scope afterward.
+
+● Read copilot-tool-output-1775667205062-3pt7ft.txt
+  │ ~\AppData\Local\Temp\copilot-tool-output-1775667205062-3pt7ft.txt
+  └ L1:120 (120 lines read)
+
+● Read copilot-tool-output-1775667205062-3pt7ft.txt
+  │ ~\AppData\Local\Temp\copilot-tool-output-1775667205062-3pt7ft.txt
+  └ L121:260 (140 lines read)
+
+I’ve got the change path: build the tools list from the live executor specs, then layer only the aliases and legacy names that actually resolve through this controller. I’m adding focused tests for both the dynamic list and the temporary-session fallback.
+
+● Edit
+  └ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+
+● Edit
+  └ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+
+The fix is in. I’m rerunning the controller tests with `-am` so Maven brings the dependent modules into the reactor instead of trying—and failing—to resolve local snapshots from Central.
+
+● Run MCPToolController tests with reactor (shell)
+  │ .\mvnw.cmd -pl pulsar-rest -am -Dtest=MCPToolControllerTest
+  │ -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 66 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 66 lines...
+
+While Maven churns through the reactor, I’m doing a quick pass on the diff itself so I can catch anything obvious before the test result comes back.
+
+● Show MCPToolController diff (shell)
+  │ git --no-pager diff --
+  │ pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolController.kt
+  │ pulsar-rest/src/test/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolControllerTest.kt
+  └ 228 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 159 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 274 lines...
+
+I’m moving the bookkeeping in parallel with the long Maven run so the repo change and the required memory updates land together.
+
+✗ Read MEMORY.20260408.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\08\MEMORY.20260408.md
+  └ Path does not exist
+
+● Search (glob)
+  │ "2026\04\*\MEMORY.202604*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  └ No matches found
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 17 lines read
+
+● List April day directories (shell)
+  │ Get-ChildItem -Path 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04' -Directory |
+  │ Select-Object -ExpandProperty Name
+  └ 7 lines...
+
+● List April memory files (shell)
+  │ Get-ChildItem -Path 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04' -Recurse -Filter
+  │ 'MEMORY.202604*.md' | Select-Object -ExpandProperty FullName
+  └ 8 lines...
+
+● Read MEMORY.20260406.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+  └ 25 lines read
+
+● Read MEMORY.20260401.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\MEMORY.20260401.md
+  └ 27 lines read
+
+● Read MEMORY.20260404.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+  └ 44 lines read
+
+● Read MEMORY.20260405.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\MEMORY.20260405.md
+  └ 27 lines read
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+The unit run is still chewing through upstream modules, so I’m using the time to plan the final validation pass: once this clears, I’ll hit the REST E2E coverage for `/mcp/tools` specifically rather than the whole suite.
+
+● List shells
+  └ Active shell sessions:
+
+● Edit
+  └ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+I caught a subtle aliasing bug in my own first pass: some frontend names normalize through legacy names like `keydown` and `tab_list`, not directly to the canonical registry names. I’m fixing that lookup chain so `/mcp/tools` reflects the full controller surface, not just the raw executor names.
+
+● Edit
+  └ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+
+● Edit
+  └ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+I’ve finished the functional change; the remaining time is just Maven’s reactor build. Once that returns, I’ll write the daily/monthly memory entries with the actual validation outcome rather than guessing.
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 14 lines...
+
+The focused controller suite came back green. I’m pulling just the tail of the Maven output now, then I’ll run the REST E2E coverage for the `/mcp/tools` endpoint and finish the required memory rollups.
+
+● Read copilot-tool-output-1775667427095-hjtdtq.txt
+  │ ~\AppData\Local\Temp\copilot-tool-output-1775667427095-hjtdtq.txt
+  └ L-80:end (371 lines read)
+
+● Search (grep)
+  │ "MCPToolControllerTest|BUILD SUCCESS|Tests run:"
+  │ (~\AppData\Local\Temp\copilot-tool-output-1775667427095-hjtdtq.txt)
+  └ 6 lines found
+
+The unit suite is green, and I’ve got a clean proof point for the dynamic listing path. I’m doing one more narrow E2E now: just the REST `/mcp/tools` coverage that exercises the browser4-cli-facing endpoint.
+
+● Run MCP tools endpoint E2E (shell)
+  │ .\mvnw.cmd -P pulsar-tests -pl pulsar-tests/pulsar-rest-tests -am
+  │ -D"test=MCPToolControllerE2ETest#testToolsEndpointCoversAllCliCommands"
+  │ -D"surefire.failIfNoSpecifiedTests=false" -D"surefire.excludedGroups=None" test
+  └ 117 lines...
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+The E2E run is the slow part now because it spins the full test reactor, but it’s the right check for this endpoint change—`GET /mcp/tools` under the real REST stack instead of just the mocked controller.
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+I’m past the risky part—the code and unit coverage are in place. This last wait is just the slower full-stack REST test path finishing so I can close the task with the endpoint validated, not just compiled.
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+● List shells
+  └ Active shell sessions:
+
+This is still just build time, not a debugging loop. I’m sticking with the narrow E2E because it directly covers the user-facing symptom—what `/mcp/tools` returns—under the real Spring test module.
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L430:520 (90 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L70:260 (191 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L160:280 (121 lines read)
+
+● List shells
+  └ Active shell sessions:
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+I’m landing the required memory updates now instead of leaving them to the very end. If the long E2E finishes before I wrap, I’ll fold that into the handoff too; otherwise the recorded outcome already includes the controller fix and the green focused unit validation.
+
+● Edit
+  │ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\08\MEMORY.20260408.md
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+The REST endpoint check finished green too. I’m pulling the summary lines now, then I’ll do a final status/diff pass and close this out.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 14 lines...
+
+● Search (grep)
+  │ "MCPToolControllerE2ETest|BUILD SUCCESS|Tests run:" in **/*
+  │ (pulsar-tests\pulsar-rest-tests\target\surefire-reports)
+  └ 6 lines found
+
+● Read ai.platon.pulsar.rest.api.controller.MCPToolControllerE2ETest.txt
+  │ pulsar-tests\pulsar-rest-tests\target\surefire-reports\ai.platon.pulsar.rest.api.controller.MCPT
+  │ oolControllerE2ETest.txt
+  └ 4 lines read
+
+● Read copilot-tool-output-1775667678212-w4ct17.txt
+  │ ~\AppData\Local\Temp\copilot-tool-output-1775667678212-w4ct17.txt
+  └ L1230:1295 (66 lines read)
+
+● Check final git status (shell)
+  │ git --no-pager status --short
+  └ 5 lines...
+
+I’ve got the final verification I wanted: the focused REST E2E passed for `GET /mcp/tools`. I’m just updating the daily memory entry to include that validation and then I’m done.
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\08\MEMORY.20260408.md
+
+**Done.** `GET /mcp/tools` now derives its results from the same live tool registry and normalization flow that `MCPToolController.callTool()` uses, so it returns the real callable surface instead of a stale hard-coded list. The change is in `pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolController.kt`, and I added focused coverage in `pulsar-rest/src/test/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolControllerTest.kt` for alias filtering and the temporary-session discovery fallback.
+
+**Validation:** `MCPToolControllerTest` passed (`24` tests), and the focused REST E2E `MCPToolControllerE2ETest#testToolsEndpointCoversAllCliCommands` passed. I also appended `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\08\MEMORY.20260408.md` and updated `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md`. I left the pre-existing modified `pulsar-core\pulsar-resources\src\main\resources\code-mirror\agent-tool-call-specs.json` and `driver-tool-call-specs.json` files untouched.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         9m 10s
+Total session time:     15m 0s
+Total code changes:     +188 -26
+Breakdown by AI model:
+ gpt-5.4                  4.5m in, 21.7k out, 4.4m cached (Est. 1 Premium request)
