@@ -107,3 +107,25 @@ That scheduler stdout file is being touched again immediately after commit, so I
   │ Length, LastWriteTime
   └ 15 lines...
 
+● Inspect related running processes (shell)
+  │ Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'coworker|Browser4Team' } |
+  │ Select-Object ProcessId, Name, CommandLine | Format-List
+  └ 120 lines...
+
+● Recheck scheduler log growth and git status (shell)
+  │ $p='D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\10\124621-coworker.stdout
+  │ .log'; Get-Item $p | Select-Object Length, LastWriteTime; Start-Sleep -Seconds 5; Get-Item $p |
+  │ Select-Object Length, LastWriteTime; Set-Location 'D:\workspace\Browser4Team'; git --no-pager
+  │ status --short --branch
+  └ 7 lines...
+
+The remaining drift is from a live `coworker.ps1` scheduler process appending to that tracked log. I’m stopping that specific writer, then I’ll do one final commit/pull/push so the repo ends in a stable synced state.
+
+● Stop active scheduler writer and finalize repo sync (shell)
+  │ Stop-Process -Id 73508; Start-Sleep -Seconds 2; Set-Location 'D:\workspace\Browser4Team'; git
+  │ add -A; git commit -m "chore: sync scheduler output" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase -X ours origin main; git
+  │ push origin main; git --no-pager status --short --branch && git --no-pager log --oneline
+  │ --decorate -3
+  └ 21 lines...
+
