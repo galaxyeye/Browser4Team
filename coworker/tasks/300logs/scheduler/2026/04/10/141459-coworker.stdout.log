@@ -24,3 +24,36 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo and any submodules first so I can sync everything in the right order and absorb conflicts if they show up.
+
+● Check submodule statuses (shell)
+  │ Get-ChildItem -Directory submodules | ForEach-Object { $p=$_.FullName; if (Test-Path (Join-Path
+  │ $p '.git')) { Write-Host "---SUBMODULE $($_.Name)---"; git -C $p --no-pager status --short
+  │ --branch } }
+  └ 4 lines...
+
+● Check root status and gitmodules (shell)
+  │ git --no-pager status --short --branch && if (Test-Path .gitmodules) { Write-Host
+  │ '---GITMODULES---'; Get-Content .gitmodules }
+  └ 25 lines...
+
+I found a dirty submodule, so I’m syncing that first before updating the parent repo pointer. Then I’ll commit and sync the top-level repo.
+
+● Commit, pull, and push Browser4 submodule (shell)
+  │ $ErrorActionPreference='Stop'
+  │ $p='D:\workspace\Browser4Team\submodules\Browser4'
+  │ Set-Location $p
+  │ Write-Host "[Browser4] status before:"
+  │ git --no-pager status --short --branch…
+  └ 38 lines...
+
+● Commit, pull, and push root repository (shell)
+  │ $ErrorActionPreference='Stop'
+  │ $p='D:\workspace\Browser4Team'
+  │ Set-Location $p
+  │ Write-Host "[root] status before:"
+  │ git --no-pager status --short --branch…
+  └ 64 lines...
+
+One scheduler log changed during the push itself, so I’m checking whether it settled or is still being written before I do a final sync pass.
+
