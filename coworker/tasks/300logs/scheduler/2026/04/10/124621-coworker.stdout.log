@@ -76,3 +76,34 @@ The submodule is synced now. I'm updating the parent repo next so the new submod
 
 A scheduler log changed again right after the push, so I'm doing one more sync pass to leave the parent repo fully clean instead of stopping at the first push.
 
+● Inspect remaining parent repo changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch && Get-Item 'D:
+  │ \workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\10\124621-coworker.stdout.log'
+  │ | Select-Object FullName, Length, LastWriteTime
+  └ 7 lines...
+
+● Check if parent repo keeps changing (shell)
+  │ Start-Sleep -Seconds 3; Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short
+  │ --branch
+  └ 3 lines...
+
+● Commit final parent log update and sync (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync scheduler log"
+  │ -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase
+  │ -X ours origin main; git push origin main; git --no-pager status --short --branch && git
+  │ --no-pager log --oneline --decorate -2
+  └ 20 lines...
+
+That scheduler stdout file is being touched again immediately after commit, so I’m checking whether it’s an active writer versus a line-ending artifact before deciding the safest final step.
+
+● Show diff for dirty scheduler log (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager diff --
+  │ coworker/tasks/300logs/scheduler/2026/04/10/124621-coworker.stdout.log
+  └ 31 lines...
+
+● Check if scheduler log content keeps changing (shell)
+  │ $p='D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\10\124621-coworker.stdout
+  │ .log'; Get-FileHash $p; Start-Sleep -Seconds 5; Get-FileHash $p; Get-Item $p | Select-Object
+  │ Length, LastWriteTime
+  └ 15 lines...
+
