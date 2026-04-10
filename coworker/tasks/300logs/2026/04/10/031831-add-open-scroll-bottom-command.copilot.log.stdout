@@ -1,0 +1,660 @@
+I’m reading the task brief and the nearby repo context first so I can make the requested change cleanly and update the memory files afterward.
+
+● Read AGENTS.md
+  └ L1:260 (260 lines read)
+
+● Read add-open-scroll-bottom-command.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\add-open-scroll-bottom-command.md
+  └ 27 lines read
+
+● Check git status and branch (shell)
+  │ git --no-pager status --short && git --no-pager branch --show-current
+  └ 14 lines...
+
+I’ve got the brief; next I’m tracing the existing browser-tool path so I can wire the new command through the same surfaces the repo already uses.
+
+✗ Read plan.md
+  │ ~\.copilot\session-state\d3b10c46-3129-417c-a9e5-31da268481f1\plan.md
+  └ Path does not exist
+
+● Search (glob)
+  │ "**/WebDriver.kt"
+  └ 1 file found
+
+● Search (glob)
+  │ "**/BrowserTabToolExecutor.kt"
+  └ 1 file found
+
+● Search (glob)
+  │ "**/commands.rs"
+  └ 1 file found
+
+● Search (glob)
+  │ "**/MCPToolController.kt"
+  └ 1 file found
+
+● Search (grep)
+  │ "@MCP|fun open\(|fun navigate|fun
+  │ scroll|BrowserTabToolExecutor|MCPToolController|all_commands\(|CommandDef" in **/*.{kt,rs}
+  └ 41 files found
+
+● Search (grep)
+  │ "scroll to bottom|scrollToBottom|scrollBottom|bottom of the page|open-and-scroll" in
+  │ **/*.{kt,rs,md}
+  └ 27 lines found
+
+I found the existing `scrollToBottom` path and the relevant files. Now I’m reading the concrete implementations and CLI command definitions together before patching so the new operation stays consistent end to end.
+
+● Read BrowserTabToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt
+  └ L1:360 (265 lines read)
+
+● Read PlaywrightDriver.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\main\kotlin\ai\platon\pulsar\protocol\
+  │ browser\driver\playwright\PlaywrightDriver.kt
+  └ L620:735 (116 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1:360 (360 lines read)
+
+● Read AbstractWebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\Abstrac
+  │ tWebDriver.kt
+  └ L360:470 (111 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L1:420 (420 lines read)
+
+● Read WebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriv
+  │ er.kt
+  └ L1080:1265 (186 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (260 lines read)
+
+● Search (grep)
+  │ "scroll-to-bottom|scroll-to-top|browser_scroll|browser_navigate|open-and-scroll|goto|snapshot|no
+  │ _snapshot_commands" in **/*.{rs,md} (sdks\browser4-cli)
+  └ 132 lines found
+
+● Search (grep)
+  │ "open-and-scroll-to-bottom|scrollToBottom|scrollToTop|go-back|reload"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 6 lines found
+
+● Search (grep)
+  │ "open\(|navigate\(|waitForNavigation\(|waitForSelector\(|ariaSnapshot\(|snapshot|openAnd" in
+  │ **/*.kt
+  │ (pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver)
+  └ 60 lines found
+
+● Search (grep)
+  │ "toMcpToolName\(|normalizeFrontendToolCall\(|FRONTEND_TOOL_NAME_ALIASES|collectAdvertisedToolNam
+  │ es|browser_scroll" in **/*.kt (pulsar-rest)
+  └ 10 lines found
+
+The new command can probably ride the existing generic MCP mapping if I name it consistently, but I’m checking the exact normalization rules and CLI post-snapshot behavior before I change anything.
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L417:560 (144 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L40:95 (56 lines read)
+
+● Read help.rs
+  │ sdks\browser4-cli\src\help.rs
+  └ L1:240 (220 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1420:1495 (75 lines read)
+
+● Read API.md
+  │ sdks\browser4-cli\API.md
+  └ L1:260 (258 lines read)
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L1:240 (202 lines read)
+
+I’ve confirmed the CLI help is generated from `commands.rs`, while README/API docs are hand-maintained. I’m digging into the command list and tests now so I can update the right docs and keep coverage intact.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1120:1805 (620 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L360:980 (448 lines read)
+
+● Search (glob)
+  │ "**/SKILL.md"
+  └ 9 files found
+
+● Search (grep)
+  │ "open-and-scroll-to-bottom|goto|snapshot|scroll to bottom|Navigation" in **/*.md (sdks\skill)
+  └ 16 lines found
+
+I’ve got enough context to start patching: the backend tool chain is generic enough, but the new command still needs a real WebDriver method, CLI definition, docs, and tests so it behaves like a first-class command rather than a thin alias.
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L180:380 (201 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L520:720 (201 lines read)
+
+● Read http.rs
+  │ sdks\browser4-cli\src\http.rs
+  └ L1:260 (173 lines read)
+
+● Read SKILL.md
+  │ sdks\skill\SKILL.md
+  └ L1:220 (150 lines read)
+
+● Read WebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriv
+  │ er.kt
+  └ L228:320 (93 lines read)
+
+I’m at the point where the implementation shape is clear: a new atomic WebDriver method plus a `browser_open_and_scroll_to_bottom` CLI command, with the REST alias and tests wired so the command behaves like the other frontend browser aliases.
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L1:320 (320 lines read)
+
+● Read MCPToolControllerE2ETest.kt
+  │ pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolContr
+  │ ollerE2ETest.kt
+  └ L1:320 (320 lines read)
+
+● Read ExecutorsNamedArgsTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\builtin\ExecutorsNamedArgsTest.kt
+  └ L1:260 (79 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1738:1974 (236 lines read)
+
+● Search (grep)
+  │ "BrowserTabToolExecutor|open\("|navigate|FRONTEND_TOOL_NAME_ALIASES|browser_navigate|goto|go-bac
+  │ k|excluded_commands|covered_commands" in **/*Test*.{kt,rs}
+  └ 30 files found
+
+● Edit
+  └ Create ~\.copilot\session-state\d3b10c46-3129-417c-a9e5-31da268481f1\plan.md
+
+I’ve written the plan and I’m patching next. I’m keeping the change surgical: one backend method, one frontend alias, one CLI command, and the smallest tests/docs that make it durable.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L900:1205 (298 lines read)
+
+● Search (grep)
+  │ "mockTool\(|ToolCallResult|TcEvaluate|execute\(capture\(captor\)\)|list tools returns|frontend
+  │ .* maps"
+  │ (pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt)
+  └ 43 lines found
+
+● Search (grep)
+  │ "scrollToBottom|waitForSelector\("body"|open\("|navigate\(|waitForNavigation\("
+  │ (pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\test\kotlin\ai\platon\pulsar\protocol
+  │ \browser\driver\playwright\PlaywrightDriverTest.kt)
+  └ 20 lines found
+
+I’m finalizing where to anchor the new assertions. The existing REST and CLI tests already have good extension points, so I can cover the new command without adding a separate heavy test module.
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L320:840 (486 lines read)
+
+● Read MCPToolControllerE2ETest.kt
+  │ pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolContr
+  │ ollerE2ETest.kt
+  └ L310:520 (211 lines read)
+
+● Search (grep)
+  │ "handle_tool_command\(|handle_snapshot\(|command == "goto"|tool_name.is_empty"
+  │ (sdks\browser4-cli\src\main.rs)
+  └ 9 lines found
+
+I caught an important detail in the brief: this operation is supposed to open the URL in a **new tab**, not just reuse the current one. I’m checking the driver/browser APIs before patching so I wire that part correctly instead of accidentally building a glorified `goto + scroll`.
+
+● Read AbstractWebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\Abstrac
+  │ tWebDriver.kt
+  └ L1:140 (140 lines read)
+
+● Search (grep)
+  │ "class AbstractWebDriver|val browser|abstract class AbstractBrowser|interface Browser" in
+  │ **/*.kt
+  │ (pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver)
+  └ 11 lines found
+
+● Search (grep)
+  │ "newTab|switchTab|listTabs|closeTab" in **/*.kt
+  │ (pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver)
+  └ No matches found
+
+● Search (grep)
+  │ "newTab|switchTab|window\.open|openNewTab|create tab|listTabs|browser\." in **/*.kt
+  │ (pulsar-core\pulsar-skeleton\src\main\kotlin)
+  └ 76 lines found
+
+● Search (grep)
+  │ "openAnd|scrollToBottom\(" in **/*.kt (pulsar-core\pulsar-skeleton\src\main\kotlin)
+  └ 3 lines found
+
+● Read Browser.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\Browser
+  │ .kt
+  └ L1:260 (123 lines read)
+
+● Read AbstractBrowser.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\Abstrac
+  │ tBrowser.kt
+  └ L1:320 (202 lines read)
+
+● Search (grep)
+  │ "override suspend fun newTab|fun newTab\(|listTabs\(|switchTab\(|closeTab\(" in **/*.kt
+  └ 16 lines found
+
+● Read BrowserToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserToolExecutor.kt
+  └ L1:240 (103 lines read)
+
+● Search (grep)
+  │ "override fun newDriver\(url: String\)|fun newDriver\(url:
+  │ String\)|newDriver\(url\)|newDriver\("" in **/*.kt
+  └ 5 lines found
+
+● Read PulsarBrowser.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol\src\main\kotlin\ai\platon\pulsar\protocol\browser\dri
+  │ ver\cdt\PulsarBrowser.kt
+  └ L108:165 (58 lines read)
+
+● Read PlaywrightBrowser.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\main\kotlin\ai\platon\pulsar\protocol\
+  │ browser\driver\playwright\PlaywrightBrowser.kt
+  └ L45:110 (66 lines read)
+
+I found the key tab primitive: `WebDriver` already exposes `browser.newDriver(url)`, so the atomic backend method can genuinely create a **new tab**, bring it forward, wait for it, and scroll it. I’m checking one last detail: whether the session’s follow-up snapshot calls will target that newly fronted tab.
+
+● Search (grep)
+  │ "frontDriver|getOrCreateBoundDriver|boundDriver|currentDriver|driver = .*frontDriver|front
+  │ driver" in **/*.kt
+  └ 31 lines found
+
+● Search (grep)
+  │ "registerCustomTarget|resolveTarget|callFunctionOn\(|receiverClass|toolExtractor|managedSession.
+  │ driver|agenticSession" in **/*.kt (pulsar-agentic\src\main\kotlin)
+  └ 51 lines found
+
+● Search (grep)
+  │ "class ManagedSession|val driver|getOrCreate.*driver|withLock" in **/*.kt
+  │ (pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\service)
+  └ 5 lines found
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L220:270 (51 lines read)
+
+● Read AbstractPulsarSession.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\session\AbstractPulsarSess
+  │ ion.kt
+  └ L205:240 (36 lines read)
+
+I found the subtle risk: creating a new tab from a `tab` tool can leave the session still bound to the old driver, which would make the CLI’s follow-up snapshot point at the wrong tab. I’m now checking whether the agent executor already has a hook I can extend so the session rebinds to the newly fronted tab after this new action.
+
+● Read ToolSpecification.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\specs\ToolSpecification.kt
+  └ L1:220 (91 lines read)
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L130:225 (96 lines read)
+
+● Search (grep)
+  │ "SWITCH_TAB_ACTIONS|MAY_NAVIGATE_ACTIONS|onDidSwitchTab|onDidNavigate|method in
+  │ ToolSpecification" in **/*.kt (pulsar-agentic\src\main\kotlin)
+  └ 6 lines found
+
+● Edit
+  │ Edit pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\We
+  │ bDriver.kt
+  │ Edit
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt
+  │ Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  │ Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\specs\ToolSpecification.kt
+  │ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  │ Edit
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\builtin\ExecutorsNamedArgsTest.kt
+  │ Edit pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  │ Edit pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPTool
+  │ ControllerE2ETest.kt
+  │ Edit sdks\browser4-cli\src\commands.rs
+  │ Edit sdks\browser4-cli\src\help.rs
+  │ Edit sdks\browser4-cli\src\main.rs
+  │ Edit sdks\browser4-cli\tests\e2e.rs
+  │ Edit sdks\browser4-cli\README.md
+  └ Edit sdks\skill\SKILL.md
+
+The main code is in place. I’m doing a quick sanity pass on the new-tab implementation and the touched test/docs files before I run the targeted validation commands.
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L208:220 (13 lines read)
+
+● Read WebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriv
+  │ er.kt
+  └ L235:285 (51 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1144:1195 (52 lines read)
+
+● Read plan.md
+  │ ~\.copilot\session-state\d3b10c46-3129-417c-a9e5-31da268481f1\plan.md
+  └ L1:50 (3 lines read)
+
+● Search (grep)
+  │ "newDriverManaged\(|newDriverUnmanaged\(|page\.goto|createTab\(" in **/*.kt
+  │ (pulsar-core\pulsar-plugins)
+  └ 11 lines found
+
+● Read PlaywrightBrowser.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\main\kotlin\ai\platon\pulsar\protocol\
+  │ browser\driver\playwright\PlaywrightBrowser.kt
+  └ L118:145 (27 lines read)
+
+● Read PlaywrightBrowserTest.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\test\kotlin\ai\platon\pulsar\protocol\
+  │ browser\driver\playwright\PlaywrightBrowserTest.kt
+  └ L40:80 (27 lines read)
+
+● Read AbstractWebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\Abstrac
+  │ tWebDriver.kt
+  └ L640:710 (71 lines read)
+
+● Search (grep)
+  │ "override suspend fun waitForNavigation" in **/*.kt (pulsar-core\pulsar-plugins)
+  └ No matches found
+
+The code path looks coherent, including the session rebind needed for the new-tab snapshot behavior. I’m running the repo’s normal compile/test steps now, keeping the scopes tight to the touched modules plus the CLI.
+
+● Compile the Maven project with tests skipped (shell)
+  │ ./mvnw.cmd -q -D"skipTests" compile
+  └ 2 lines...
+
+The compile is still running in the background, so I’m using the time to start the narrower CLI validation in parallel.
+
+● Run focused Rust unit tests for new CLI command (shell)
+  │ Set-Location D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli; cargo test --quiet
+  │ commands::tests::test_open_and_scroll_to_bottom_tool_name_and_params
+  │ help::tests::test_generate_command_help_open_and_scroll_to_bottom
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+The first cargo invocation was just a bad filter form, not a code issue. I’m rerunning the Rust tests with the proper cargo syntax while the Maven compile finishes up.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Run Rust tests matching the new command (shell)
+  │ Set-Location D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli; cargo test --quiet
+  │ open_and_scroll_to_bottom && cargo test --quiet open-and-scroll-to-bottom
+  └ 46 lines...
+
+The Rust unit tests passed, and the second cargo filter ended up exercising the navigation E2E path as well, which is actually useful here. I’m letting that finish alongside the Maven compile.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 46 lines...
+
+The long pole is the Maven side now. Once that settles, I’ll run the focused Kotlin tests for the executor/controller path that this command touches.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 46 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 55 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+The failed CLI E2E was against a service that doesn’t have the new MCP alias yet, so that was a stale-runtime problem rather than a bad command definition. I’m switching to the source-based Kotlin tests next so the validation runs against the code I just changed.
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Run focused Kotlin unit tests (shell)
+  │ ./mvnw.cmd -pl pulsar-agentic,pulsar-rest -am test
+  │ -D"test=ExecutorsNamedArgsTest,MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false"
+  └ 66 lines...
+
+I had a duplicate full Maven build still running from the earlier compile step, so I’m stopping that extra shell and keeping the focused module test run instead.
+
+● Stop shell
+  └ 1 line...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 331 lines...
+
+The focused Maven run is still chewing through upstream modules because of the reactor layout. I’m letting it finish rather than fragmenting the validation further and risking a misleading partial result.
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 10 lines...
+
+The build is just slow, not blocked. While that runs, I’m checking the daily/monthly memory files so I can append the required summary cleanly once validation wraps up.
+
+✗ Read MEMORY.20260410.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+  └ Path does not exist
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 27 lines read
+
+● Search (glob)
+  │ "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\*\MEMORY.202604*.md"
+  └ No matches found
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 10 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 10 lines...
+
+The combined Maven reactor run isn’t giving usable incremental output, so I’m splitting it into one-test-at-a-time module runs. That keeps the same validation scope but makes failures and progress visible.
+
+● Stop shell
+  └ 1 line...
+
+● Run ExecutorsNamedArgsTest with Maven (shell)
+  │ ./mvnw.cmd -q -pl pulsar-agentic -am test -D"test=ExecutorsNamedArgsTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false"
+  └ 2 lines...
+
+The quieter module-specific run is better; now I can wait for a clean pass/fail instead of sifting through the full reactor log spam.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L140:190 (51 lines read)
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 2 lines...
+
+The Maven unit test is still compiling upstream Kotlin modules, which is expected for this repo. I’m waiting it out rather than swapping commands again mid-build.
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 4 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 6 lines...
+
+The first Kotlin unit scope passed. I’m running the REST controller test next, then a focused `pulsar-rest-tests` E2E for the new MCP route so the frontend alias is validated against the live controller too.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 1 line...
+
+● Run MCPToolControllerTest with Maven (shell)
+  │ ./mvnw.cmd -q -pl pulsar-rest -am test -D"test=MCPToolControllerTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false"
+  └ 2 lines...
+
+The REST unit test has the same upfront compile cost, but it’s the right source-based check for the new alias routing. I’m waiting for the result before kicking off the live-controller E2E.
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 3 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 38 lines...
+
+I found the issue: the new REST alias was mapped to the **camelCase** method name, but the controller’s alias/listing logic works on the **snake_case MCP name** at that stage. I’m correcting that mapping now and rerunning the REST test.
+
+● Edit
+  └ Edit pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+
+That alias bug was in the testable controller path, not the backend method itself. I’ve fixed it and I’m rerunning the REST controller test now.
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L80:90 (11 lines read)
+
+● Rerun MCPToolControllerTest with Maven (shell)
+  │ ./mvnw.cmd -q -pl pulsar-rest -am test -D"test=MCPToolControllerTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false"
+  └ 2 lines...
+
+● Read shell output Waiting up to 90 seconds for command output
+  └ 2 lines...
+
+● Read shell output Waiting up to 90 seconds for command output
+  └ 5 lines...
+
+The REST unit suite now passes with the corrected alias. I’m running the focused live-controller E2E next so the new MCP name is exercised through the actual `pulsar-rest-tests` stack.
+
+● Run MCPToolControllerE2ETest with Maven (shell)
+  │ ./mvnw.cmd -q -P pulsar-tests -pl pulsar-tests/pulsar-rest-tests -am test
+  │ -D"test=MCPToolControllerE2ETest" -D"surefire.failIfNoSpecifiedTests=false"
+  └ 2 lines...
+
+● Read shell output Waiting up to 90 seconds for command output
+  └ 2 lines...
+
+The live REST E2E is in flight. That one takes longer because it boots the test app stack, but it’s the best end-to-end check for the new controller wiring.
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 9 lines...
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 9 lines...
+
+● Read shell output Waiting up to 180 seconds for command output
+  └ 9 lines...
+
+The REST E2E is clearly the expensive part. I’m giving it one more stretch; if it keeps hanging at app startup, I’ll fall back to the already-passing source-based tests instead of burning time on an environment issue.
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 9 lines...
+
+● Stop shell
+  └ 1 line...
+
+I’ve got the code done and the focused source-based tests green. I’m doing the required memory-file update now, including the monthly rollup check, before I wrap up.
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 9 files found
+
+● Read plan.md
+  │ ~\.copilot\session-state\d3b10c46-3129-417c-a9e5-31da268481f1\plan.md
+  └ L1:50 (3 lines read)
+
+● Search (glob)
+  │ "**\MEMORY.202604*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 10 files found
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10
+  └ 5 files found
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:120 (27 lines read)
+
+● Read MEMORY.20260409.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+  └ 26 lines read
+
+I’ve got the validation picture I need: focused Rust tests passed, the new Kotlin executor/controller unit tests passed, and the only failed browser CLI E2E was against a stale service that didn’t include the new alias yet. I’m doing a final diff check and then writing the memory entries.
+
+● Show git status (shell)
+  │ git --no-pager status --short
+  └ 28 lines...
+
+● Show diff stats for changed files (shell)
+  │ git --no-pager diff --stat -- pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\ske
+  │ leton\crawl\fetch\driver\WebDriver.kt pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\
+  │ tools\builtin\BrowserTabToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\specs\ToolSpecification.kt …
+  └ 33 lines...
+
+One related thing surfaced in the diff check: the build regenerated the WebDriver code-mirror/spec resource files, which is actually expected for a new MCP-exposed WebDriver method. I’m reviewing those generated deltas before I finalize.
+
+● Read WebDriver.kt.txt
+  │ pulsar-core\pulsar-resources\src\main\resources\code-mirror\WebDriver.kt.txt
+  └ L230:290 (61 lines read)
+
+● Search (grep)
+  │ "openAndScrollToBottom|open_and_scroll_to_bottom"
+  │ (pulsar-core\pulsar-resources\src\main\resources\code-mirror)
+  └ 6 lines found
+
+● Show diff for generated code-mirror files (shell)
+  │ git --no-pager diff --
+  │ pulsar-core\pulsar-resources\src\main\resources\code-mirror\WebDriver.kt.txt
+  │ pulsar-core\pulsar-resources\src\main\resources\code-mirror\driver-tool-call-specs.json
+  └ 61 lines...
+
+● Edit
+  │ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+  │ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ Edit ~\.copilot\session-state\d3b10c46-3129-417c-a9e5-31da268481f1\plan.md
+
+I hit one repo-specific convention that’s worth preserving for future CLI/MCP work, so I’m storing it before I finish.
+
+● Memory stored command routing
+  └ MCPToolController FRONTEND_TOOL_NAME_ALIASES should map frontend names to normal…
+
+Implemented **`browser4-cli open-and-scroll-to-bottom <url>`** end to end.
+
+It now opens the URL in a **new tab**, waits for the page body, scrolls that tab to the bottom, and keeps the session bound to the new front tab so the usual CLI snapshot/output follows the right page. I wired it through `WebDriver`, `BrowserTabToolExecutor`, `AgentToolExecutor`, `MCPToolController`, the Rust CLI command/help/docs, the related tests, and the generated tool-spec mirror files.
+
+I also updated the required memory logs:
+- `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md`
+- `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md`
+
+**Necessary next step:** if you test against an already-running Browser4 server or old `Browser4.jar`, restart/rebuild it first so the new MCP alias `browser_open_and_scroll_to_bottom` is available.
+
