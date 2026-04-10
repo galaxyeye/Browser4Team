@@ -24,3 +24,55 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● List shells
+  └ <no active shell sessions>
+
+● Check parent repo and submodule status (shell)
+  │ git --no-pager status --short --branch && git submodule status --recursive
+  └ 26 lines...
+
+I found local changes in the parent repo and a dirty `submodules\Browser4`, so I'm syncing the submodule first and then the parent repo to keep the submodule pointer consistent.
+
+● Inspect parent git remotes and recent commits (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager remote -v | Select-Object -First 2 &&
+  │ git --no-pager log --oneline --decorate -3
+  └ 6 lines...
+
+● Inspect submodule git state (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch && git --no-pager remote -v | Select-Object -First 2 && git --no-pager log --oneline
+  │ --decorate -1
+  └ 32 lines...
+
+The submodule has its own local work on `4.7.x`, so I'm committing and syncing that first before updating the parent repo pointer.
+
+● Commit and sync submodule changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "chore:
+  │ sync local changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>";
+  │ git pull --no-rebase -X ours origin 4.7.x; git push origin 4.7.x; git --no-pager status --short
+  │ --branch
+  └ 28 lines...
+
+The submodule commit is in place; the only blocker was a transient HTTPS connection failure to GitHub, so I'm retrying the remote sync before moving to the parent repo.
+
+● Retry submodule pull and push (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git pull --no-rebase -X ours
+  │ origin 4.7.x; git push origin 4.7.x; git --no-pager status --short --branch
+  └ 18 lines...
+
+● Check GitHub connectivity (shell)
+  │ Test-NetConnection github.com -Port 443 | Select-Object ComputerName, RemotePort,
+  │ TcpTestSucceeded
+  └ 5 lines...
+
+The submodule is synced now. I'm updating the parent repo next so the new submodule pointer and all remaining workspace changes land together.
+
+● Commit and sync parent repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync local changes"
+  │ -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase
+  │ -X ours origin main; git push origin main; git --no-pager status --short --branch && git
+  │ --no-pager log --oneline --decorate -3
+  └ 51 lines...
+
+A scheduler log changed again right after the push, so I'm doing one more sync pass to leave the parent repo fully clean instead of stopping at the first push.
+
