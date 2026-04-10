@@ -24,3 +24,76 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check parent and submodule git status (shell)
+  │ git -C D:\workspace\Browser4Team --no-pager status --short --branch && if (Test-Path
+  │ D:\workspace\Browser4Team\.gitmodules) { git -C D:\workspace\Browser4Team submodule status
+  │ --recursive } && if (Test-Path D:\workspace\Browser4Team\submodules\Browser4\.git) { git -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 --no-pager status --short --branch }
+  └ 23 lines...
+
+I found a dirty parent repo and a dirty `submodules\Browser4` checkout. I’m handling the submodule first so the parent can record the updated pointer cleanly.
+
+● Inspect parent remotes and gitmodules (shell)
+  │ git -C D:\workspace\Browser4Team --no-pager remote -v ; if (Test-Path
+  │ D:\workspace\Browser4Team\.gitmodules) { Get-Content D:\workspace\Browser4Team\.gitmodules }
+  └ 4 lines...
+
+● Inspect submodule branch and remotes (shell)
+  │ git -C D:\workspace\Browser4Team\submodules\Browser4 --no-pager status --short --branch ; git -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 --no-pager remote -v
+  └ 21 lines...
+
+The submodule has its own source changes, so I’m committing and syncing that branch first, then I’ll commit the parent repo with the updated submodule pointer and the task files.
+
+● Commit all submodule changes (shell)
+  │ git -C D:\workspace\Browser4Team\submodules\Browser4 add -A ; if (-not
+  │ [string]::IsNullOrWhiteSpace((git -C D:\workspace\Browser4Team\submodules\Browser4 status
+  │ --short))) { git -C D:\workspace\Browser4Team\submodules\Browser4 commit -m "Sync Browser4
+  │ changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" } else {
+  │ Write-Output "No submodule changes to commit" }
+  └ 15 lines...
+
+● Pull and push submodule branch (shell)
+  │ git -C D:\workspace\Browser4Team\submodules\Browser4 pull --no-rebase -X ours origin 4.7.x ; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } ; git -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 push origin 4.7.x ; if ($LASTEXITCODE -ne 0) {
+  │ exit $LASTEXITCODE } ; git -C D:\workspace\Browser4Team\submodules\Browser4 --no-pager status
+  │ --short --branch
+  └ 18 lines...
+
+The submodule is synced upstream. I’m committing the parent repository now, which will include the updated submodule pointer plus the task/log file moves already in the worktree.
+
+● Commit all parent repository changes (shell)
+  │ git -C D:\workspace\Browser4Team add -A ; if (-not [string]::IsNullOrWhiteSpace((git -C
+  │ D:\workspace\Browser4Team status --short))) { git -C D:\workspace\Browser4Team commit -m "Sync
+  │ repository changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" }
+  │ else { Write-Output "No parent changes to commit" }
+  └ 14 lines...
+
+● Pull and push parent repository (shell)
+  │ git -C D:\workspace\Browser4Team pull --no-rebase -X ours origin main ; if ($LASTEXITCODE -ne 0)
+  │ { exit $LASTEXITCODE } ; git -C D:\workspace\Browser4Team push origin main ; if ($LASTEXITCODE
+  │ -ne 0) { exit $LASTEXITCODE } ; git -C D:\workspace\Browser4Team --no-pager status --short
+  │ --branch ; git -C D:\workspace\Browser4Team --no-pager log -1 --decorate --oneline
+  └ 16 lines...
+
+One scheduler log changed again after the push, likely from a background worker appending while I was syncing. I’m checking whether it’s still moving; if it’s stable, I’ll roll that final delta into one more commit and push so the worktree ends clean.
+
+● Inspect leftover modified log file (shell)
+  │ git -C D:\workspace\Browser4Team --no-pager status --short --branch ; git -C
+  │ D:\workspace\Browser4Team --no-pager diff --
+  │ coworker/tasks/300logs/scheduler/2026/04/10/135048-coworker.stdout.log ; Get-Item
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\10\135048-coworker.stdout.log
+  │ | Select-Object FullName,Length,LastWriteTime
+  └ 74 lines...
+
+● Check whether log file is still changing (shell)
+  │ $path='D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\10\135048-coworker.std
+  │ out.log'; $a=(Get-Item $path).LastWriteTimeUtc; Start-Sleep -Seconds 12; $b=(Get-Item
+  │ $path).LastWriteTimeUtc; Write-Output "A=$a"; Write-Output "B=$b"; if ($a -eq $b) { Write-Output
+  │ 'STABLE' } else { Write-Output 'CHANGED' }; git -C D:\workspace\Browser4Team --no-pager status
+  │ --short --branch
+  └ 6 lines...
+
+The remaining file is stable now, so I’m folding in that last log update and doing one final pull/push pass to leave `main` clean.
+
