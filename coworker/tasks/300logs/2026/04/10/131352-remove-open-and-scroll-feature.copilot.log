@@ -1,0 +1,288 @@
+I’m opening the task brief and locating the related code paths so I can implement the requested removal cleanly.
+
+● Read remove-open-and-scroll-feature.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\remove-open-and-scroll-feature.md
+  └ 9 lines read
+
+● Search (grep)
+  │ "openAndScrollToBottom|open-and-scroll-to-bottom|browser_open_and_scroll_to_bottom" in **/*
+  └ 50 lines found
+
+● Check working tree status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I found the feature wired through the CLI, tab tool execution, REST aliases, generated tool specs, and multiple tests. I’m reading those spots together, then I’ll remove the feature end to end and trim the now-stale coverage/docs.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L140:220 (81 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1435:1470 (36 lines read)
+
+● Read help.rs
+  │ sdks\browser4-cli\src\help.rs
+  └ L120:180 (61 lines read)
+
+● Read ToolSpecification.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\specs\ToolSpecification.kt
+  └ L1:60 (59 lines read)
+
+● Read BrowserTabToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt
+  └ L1:120 (119 lines read)
+
+● Read AgentToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\AgentToolExecutor.kt
+  └ L200:230 (31 lines read)
+
+● Read MCPToolController.kt
+  │ pulsar-rest\src\main\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolController.kt
+  └ L70:100 (31 lines read)
+
+● Read SKILL.md
+  │ sdks\skill\SKILL.md
+  └ L1:90 (90 lines read)
+
+● Read WebDriver.kt
+  │ pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriv
+  │ er.kt
+  └ L240:285 (46 lines read)
+
+I’ve confirmed the feature is isolated enough to remove surgically. Next I’m reading the affected tests and docs so I can delete the feature without leaving stale references behind.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L900:1010 (110 lines read)
+
+● Read ExecutorsNamedArgsTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\builtin\ExecutorsNamedArgsTest.kt
+  └ L60:100 (35 lines read)
+
+● Read MCPToolControllerTest.kt
+  │ pulsar-rest\src\test\kotlin\ai\platon\pulsar\rest\mcp\controller\MCPToolControllerTest.kt
+  └ L190:325 (135 lines read)
+
+● Read MCPToolControllerE2ETest.kt
+  │ pulsar-tests\pulsar-rest-tests\src\test\kotlin\ai\platon\pulsar\rest\api\controller\MCPToolContr
+  │ ollerE2ETest.kt
+  └ L55:340 (285 lines read)
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L40:175 (135 lines read)
+
+● Read driver-tool-call-specs.json
+  │ pulsar-core\pulsar-resources\src\main\resources\code-mirror\driver-tool-call-specs.json
+  └ L1:40 (40 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1135:1195 (61 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1760:1795 (36 lines read)
+
+I’ve got the full removal surface now. I’m checking which matches are actually tracked source files so I can avoid touching generated outputs or build artifacts.
+
+● Search (glob)
+  │ "**/MEMORY.202604*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 11 files found
+
+● List tracked feature references (shell)
+  │ git --no-pager grep -n
+  │ "open-and-scroll-to-bottom\|openAndScrollToBottom\|browser_open_and_scroll_to_bottom"
+  └ 49 lines...
+
+I’ve mapped the tracked source files. Before editing, I’m running the smallest relevant baseline checks around the feature so the removal stays grounded in current behavior.
+
+● Baseline CLI unit tests (shell)
+  │ Set-Location sdks\browser4-cli; cargo test --quiet
+  │ help::tests::test_generate_help_contains_commands
+  │ commands::tests::test_open_and_scroll_to_bottom_tool_name_and_params
+  └ 2 lines...
+
+● Baseline Maven compile (shell)
+  │ .\mvnw.cmd -q -D"skipTests" compile
+  └ 16 lines...
+
+● Baseline JVM tests (shell)
+  │ .\mvnw.cmd -q -pl pulsar-agentic -am -D"test=ExecutorsNamedArgsTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false" test && .\mvnw.cmd -q -pl pulsar-rest -am
+  │ -D"test=MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 16 lines...
+
+I hit an existing Kotlin daemon issue in the baseline Maven runs, so I’m proceeding with the code removal and will validate with the in-process fallback after the edits.
+
+● Edit
+  │ Edit sdks/browser4-cli/src/commands.rs
+  │ Edit sdks/browser4-cli/src/help.rs
+  │ Edit sdks/browser4-cli/src/main.rs
+  │ Edit sdks/browser4-cli/tests/e2e.rs
+  │ Edit sdks/browser4-cli/README.md
+  │ Edit sdks/skill/SKILL.md
+  │ Edit pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/tools/specs/ToolSpecification.kt
+  │ Edit
+  │ pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/tools/builtin/BrowserTabToolExecutor.kt
+  │ Edit pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/tools/AgentToolExecutor.kt
+  │ Edit
+  │ pulsar-agentic/src/test/kotlin/ai/platon/pulsar/agentic/tools/builtin/ExecutorsNamedArgsTest.kt
+  │ Edit pulsar-core/pulsar-skeleton/src/main/kotlin/ai/platon/pulsar/skeleton/crawl/fetch/driver/We
+  │ bDriver.kt
+  │ Edit pulsar-core/pulsar-resources/src/main/resources/code-mirror/WebDriver.kt.txt
+  │ Edit pulsar-core/pulsar-resources/src/main/resources/code-mirror/driver-tool-call-specs.json
+  │ Edit pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolController.kt
+  │ Edit pulsar-rest/src/test/kotlin/ai/platon/pulsar/rest/mcp/controller/MCPToolControllerTest.kt
+  └ Edit pulsar-tests/pulsar-rest-tests/src/test/kotlin/ai/platon/pulsar/rest/api/controller/MCPTool
+    ControllerE2ETest.kt
+
+The source removal is in. I’m doing a sweep for leftover references before I switch to verification and memory updates.
+
+● Search (grep)
+  │ "open-and-scroll-to-bottom|openAndScrollToBottom|browser_open_and_scroll_to_bottom" in **/*
+  └ 4 lines found
+
+● Review feature removal diff (shell)
+  │ git --no-pager diff -- sdks\browser4-cli\src\commands.rs sdks\browser4-cli\src\help.rs
+  │ sdks\browser4-cli\src\main.rs sdks\browser4-cli\tests\e2e.rs sdks\browser4-cli\README.md
+  │ sdks\skill\SKILL.md
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\specs\ToolSpecification.kt pulsa
+  │ r-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt …
+  └ 17 lines...
+
+The removal sweep is clean in tracked sources. I’m on validation now: Rust unit coverage plus JVM compile/tests with the Kotlin compiler forced in-process to work around the existing daemon problem.
+
+● Compile with in-process Kotlin (shell)
+  │ .\mvnw.cmd -q -D"kotlin.compiler.execution.strategy=in-process" -D"skipTests" compile
+  └ 16 lines...
+
+● Run focused JVM tests (shell)
+  │ .\mvnw.cmd -q -D"kotlin.compiler.execution.strategy=in-process" -pl pulsar-agentic -am
+  │ -D"test=ExecutorsNamedArgsTest" -D"surefire.failIfNoSpecifiedTests=false" test && .\mvnw.cmd -q
+  │ -D"kotlin.compiler.execution.strategy=in-process" -pl pulsar-rest -am
+  │ -D"test=MCPToolControllerTest" -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 16 lines...
+
+● Run CLI library tests (shell)
+  │ Set-Location sdks\browser4-cli; cargo test --quiet --lib
+  └ 4 lines...
+
+The Rust side is green. Maven is still hitting the same pre-existing Kotlin daemon failure, so I’m checking the build config for the exact override this repo/plugin setup expects and retrying with that.
+
+● Search (grep)
+  │ "kotlin\.compiler\.execution\.strategy|kotlin\.daemon|executionStrategy|daemon" in pom.xml
+  └ No matches found
+
+● Search (grep)
+  │ "kotlin\.compiler\.execution\.strategy|kotlin\.daemon|executionStrategy|daemon" in **/pom.xml
+  └ No matches found
+
+● Retry compile with Kotlin daemon disabled (shell)
+  │ .\mvnw.cmd -q -D"kotlin.daemon.enabled=false" -D"skipTests" compile
+  └ 16 lines...
+
+I didn’t find a pom-level override, so I’m checking the repo’s own build/test scripts for the supported Maven flags and using that path if it exists.
+
+● Read build.ps1
+  │ bin\build.ps1
+  └ L1:220 (6 lines read)
+
+● Read test.ps1
+  │ bin\test.ps1
+  └ L1:260 (260 lines read)
+
+● Get verbose Maven failure details (shell)
+  │ .\mvnw.cmd -e -D"skipTests" -pl pulsar-agentic -am -D"test=ExecutorsNamedArgsTest"
+  │ -D"surefire.failIfNoSpecifiedTests=false" test
+  └ 173 lines...
+
+The failure is clearly environmental and happening before our modules compile. I’m checking the underlying build wrapper once more for any repo-specific JVM/Kotlin daemon settings, then I’ll finish with the successful validation we can perform here.
+
+● Read build.ps1
+  │ bin\build\build.ps1
+  └ L1:260 (84 lines read)
+
+● Check modified files (shell)
+  │ git --no-pager status --short
+  └ 17 lines...
+
+The Rust unit tests passed, but I also want the CLI binary itself to compile cleanly after the command removal, so I’m doing a quick Rust compile/format check and one final tracked-reference sweep.
+
+● Confirm tracked references removed (shell)
+  │ git --no-pager grep -n
+  │ "open-and-scroll-to-bottom\|openAndScrollToBottom\|browser_open_and_scroll_to_bottom"
+  └ 1 line...
+
+● Run CLI compile and format checks (shell)
+  │ Set-Location sdks\browser4-cli; cargo check --quiet && cargo fmt --check
+  └ 102 lines...
+
+`cargo fmt --check` is failing on pre-existing unrelated formatting drift, so I’m separating the compile check from formatting to keep the validation signal clean.
+
+● Run CLI compile check (shell)
+  │ Set-Location sdks\browser4-cli; cargo check --quiet
+  └ 38 lines...
+
+● Confirm fmt failure scope (shell)
+  │ Set-Location sdks\browser4-cli; cargo fmt --check
+  └ 66 lines...
+
+The code changes are done, the tracked references are gone, and Rust still compiles/tests. I’m finishing the required memory bookkeeping now and verifying whether the monthly rollup already covers yesterday.
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (31 lines read)
+
+● Read MEMORY.20260410.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+  └ L1:end (14 lines read)
+
+● Read MEMORY.20260409.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+  └ L1:end (26 lines read)
+
+I confirmed the monthly rollup already includes 2026-04-09, so only today’s daily memory needs an append. I’m adding the task record now.
+
+✗ Edit
+  └ Edit ..\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+
+The first append path was off by one directory from the repo root. I’m retrying against the correct sibling `coworker` path so the required log update lands in the right file.
+
+● Edit
+  └ Edit ..\..\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+
+Everything is in place. I’m doing one last status pass so I can hand back the exact outcome cleanly, including the required log update and the one environment issue that blocked Maven validation here.
+
+● Read MEMORY.20260410.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+  └ L1:end (27 lines read)
+
+● Final working tree status (shell)
+  │ git --no-pager status --short
+  └ 17 lines...
+
+● Summarize code changes (shell)
+  │ git --no-pager diff --stat
+  └ 30 lines...
+
+**Done:** the `open-and-scroll-to-bottom` feature is removed end to end from the tracked source.
+
+I deleted the CLI command, help/docs references, Rust E2E coverage entry, the `WebDriver.openAndScrollToBottom()` API, tab-tool/runtime wiring, MCP frontend alias support, generated tool-spec mirrors, and the related Kotlin/REST tests. A tracked-source grep now returns no remaining references to `open-and-scroll-to-bottom`, `openAndScrollToBottom`, or `browser_open_and_scroll_to_bottom`.
+
+**Memory update:** appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md`. The monthly file already included the 2026-04-09 rollup, so no monthly append was needed.
+
+**Validation:** `cargo test --quiet --lib` and `cargo check --quiet` passed in `sdks\browser4-cli`. Maven validation is still blocked by a pre-existing Kotlin compiler daemon failure in `pulsar-common` (`Failed connecting to the daemon in 4 retries`), which occurs before the changed JVM modules compile.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         6m 27s
+Total session time:     7m 47s
+Total code changes:     +15 -187
+Breakdown by AI model:
+ gpt-5.4                  998.7k in, 13.8k out, 863.9k cached (Est. 1 Premium request)
