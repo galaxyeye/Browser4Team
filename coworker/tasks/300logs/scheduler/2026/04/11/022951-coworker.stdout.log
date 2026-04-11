@@ -43,3 +43,20 @@ I found a dirty `submodules\Browser4`, so I'm syncing that first before updating
   └ 27 lines...
 
 I’ve checked the change set and it looks safe to sync as-is. Next I’m committing the submodule, pulling and pushing it, then repeating that at the repo root so the parent pointer lands cleanly.
+
+● Commit, pull, and push submodule and root repo (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ function Sync-Repo {
+  │ param(
+  │ [string]$Path,
+  │ [string]$CommitSubject…
+  └ 83 lines...
+
+The top-level sync worked, but one scheduler log kept changing during the push and immediately dirtied the worktree again. I’m doing one more pass to capture that trailing write and see if it settles cleanly.
+
+● Inspect remaining dirty log file (shell)
+  │ git -C D:\workspace\Browser4Team --no-pager status --short --branch && Write-Host '---DIFF---'
+  │ && git -C D:\workspace\Browser4Team --no-pager diff --
+  │ coworker/tasks/300logs/scheduler/2026/04/11/022951-coworker.stdout.log
+  └ 28 lines...
+
