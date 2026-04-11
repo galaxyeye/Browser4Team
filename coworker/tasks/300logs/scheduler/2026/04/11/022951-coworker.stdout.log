@@ -60,3 +60,35 @@ The top-level sync worked, but one scheduler log kept changing during the push a
   │ coworker/tasks/300logs/scheduler/2026/04/11/022951-coworker.stdout.log
   └ 28 lines...
 
+● Commit and push remaining root changes (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ $path = 'D:\workspace\Browser4Team'
+  │ $branch = (git -C $path rev-parse --abbrev-ref HEAD).Trim()
+  │ git -C $path add -A
+  │ git -C $path diff --cached --quiet…
+  └ 26 lines...
+
+● Memory stored git workflow
+  └ When syncing this repo, commit and push dirty submodules like submodules/Browser…
+
+**Done.** I committed, pulled, and pushed both the dirty submodule and the parent repo successfully.
+
+- `submodules\Browser4` on `4.7.x` synced at `c63dbe546`
+- `D:\workspace\Browser4Team` on `main` synced at `4ca85e3`
+
+No merge conflicts occurred, and the top-level worktree is now clean.
+
+[2026-04-11 02:32:28] [INFO] Git sync executed successfully.
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: simplify-browser4-cli-tests.md (updated 04/09/2026 19:53:58)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: unify-command-tool-execution.md (updated 04/09/2026 13:28:44)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: add-open-scroll-bottom-command.md (updated 04/10/2026 11:18:29)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: remove-open-and-scroll-feature.md (updated 04/10/2026 21:13:51)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: review-find-project-root-dir.md (updated 04/10/2026 21:56:57)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: create-weather-skill.md (updated 04/10/2026 00:54:16)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: fix-last-call-tracking.md (updated 04/11/2026 09:54:49)
+[2026-04-11 02:32:28] [INFO] [PUSHED] Task: fix-skill-runscript-bug.md (updated 04/10/2026 01:19:44)
+[2026-04-11 02:32:28] [INFO] ===========================================================================
+[2026-04-11 02:32:28] [INFO] All tasks completed
+[2026-04-11 02:32:28] [INFO] Ended at: 04/11/2026 02:32:28
+[2026-04-11 02:32:28] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\022951-coworker.log
+[2026-04-11 02:32:28] [INFO] ==========================================================================
