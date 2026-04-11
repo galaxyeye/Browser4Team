@@ -32,3 +32,23 @@ If conflicts occur, resolve them automatically.' --allow-all-tools
 
 I found a dirty `submodules\Browser4`, so I’m syncing that first and then the parent repo so the submodule pointer lands cleanly.
 
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ function Commit-IfNeeded($path, $subject) {
+  │ Set-Location $path
+  │ git add -A
+  │ $status = git status --short…
+  └ 71 lines...
+
+A scheduler log updated while the first push was finishing, so I’m doing one final sync pass to capture that late write and leave the repo clean.
+
+● Commit and push any late parent repo updates (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location 'D:\workspace\Browser4Team'
+  │ git add -A
+  │ if (git status --short) {
+  │ git commit -m 'chore: save late log updates' -m 'Co-authored-by: Copilot …
+  └ 26 lines...
+
+The same scheduler stdout log is still dirty after the second push, so I’m checking whether it’s still being actively written or if this is just a one-off line-ending/state issue.
+
