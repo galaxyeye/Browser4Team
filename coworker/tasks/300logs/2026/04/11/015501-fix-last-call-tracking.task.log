@@ -1,3 +1,25 @@
+Task: fix-last-call-tracking
+Description: Task from fix-last-call-tracking.md
+Original File: fix-last-call-tracking.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-11 01:55:37
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\fix-last-call-tracking.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -30,6 +52,10 @@
 - **2026-04-09**: Moved the high-level `agent`, `command`, and `crawl` tool packages under `tools.high.*` across `pulsar-agentic` and `pulsar-tools`, fixed downstream imports/typealiases, and repaired `MCPToolController.listTools()` so advertised MCP tools again come from live `AgentToolExecutor` specs plus the runtime alias filters. Key lessons: cross-module namespace refactors need both compile-time and runtime-registry validation, and MCP listings should be generated from the same live registry used for execution.
 - **2026-04-09**: Unified `command_*` MCP execution behind `AgentToolExecutor` by adding explicit `command` dispatch and registering `CommandService` as the runtime command target, eliminating the controller-only direct `CommandToolExecutor` path. Key lessons: every advertised tool domain needs a real `AgentToolExecutor.execute()` branch, and shared tool execution stays maintainable when service-backed domains register runtime targets instead of duplicating controller logic.
 
-### Daily Rollup Reconciliation (through 2026-04-10)
-- Checked April daily memory files before the 2026-04-11 update. No pre-2026-04-11 daily memory files were present beyond the entries already reflected above, so there was no additional 2026-04-10-or-earlier summary to append this time.
 
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\015501-fix-last-call-tracking.copilot.log
