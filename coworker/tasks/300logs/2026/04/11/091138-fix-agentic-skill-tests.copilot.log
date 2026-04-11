@@ -1,0 +1,314 @@
+● Read fix-agentic-skill-tests.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-agentic-skill-tests.md
+  └ 7 lines read
+
+● Check repo status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I’ve got the failing test targets. Next I’m checking the affected code and reproducing the failures in the smallest relevant scope.
+
+● Search (glob)
+  │ "**/*{MainSystemPromptCustomSkillInjectionTest,SkillRegistryTest,ExampleSkillsTest,SkillToolExec
+  │ utorTest}.kt"
+  └ 4 files found
+
+● Search (grep)
+  │ "class (MainSystemPromptCustomSkillInjectionTest|SkillRegistryTest|ExampleSkillsTest|SkillToolEx
+  │ ecutorTest)|MainSystemPromptCustomSkillInjectionTest|SkillRegistryTest|ExampleSkillsTest|SkillTo
+  │ olExecutorTest" in **/*.{kt,java}
+  └ 4 lines found
+
+● Run failing agentic tests (shell)
+  │ .\mvnw.cmd -pl pulsar-agentic -am test -D"test=MainSystemPromptCustomSkillInjectionTest,SkillReg
+  │ istryTest,ExampleSkillsTest,SkillToolExecutorTest" -D"surefire.failIfNoSpecifiedTests=false"
+  │ -D"kotlin.compiler.daemon=false"
+  └ 64 lines...
+
+● Read MainSystemPromptCustomSkillInjectionTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\prompts\MainSystemPromptCustomSkillInjec
+  │ tionTest.kt
+  └ 103 lines read
+
+● Read SkillRegistryTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\skills\SkillRegistryTest.kt
+  └ 345 lines read
+
+● Read ExampleSkillsTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\skills\examples\ExampleSkillsTest.kt
+  └ 363 lines read
+
+● Read SkillToolExecutorTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\skills\tools\SkillToolExecutorTest.kt
+  └ 86 lines read
+
+● Search (glob)
+  │ "**/*{SkillRegistry,SkillToolExecutor,SkillToolTarget,WebScrapingSkill,FormFillingSkill,DataVali
+  │ dationSkill,MainSystemPrompt*}.kt" in pulsar-agentic\src\main\kotlin
+  └ 4 files found
+
+● Search (grep)
+  │ "class SkillRegistry|object SkillRegistry|class SkillToolExecutor|class SkillToolTarget|class
+  │ WebScrapingSkill|class FormFillingSkill|class DataValidationSkill|fun
+  │ buildMainSystemPromptV1|Available Skills|Skill Tool Types" in **/*.kt
+  │ (pulsar-agentic\src\main\kotlin)
+  └ 11 lines found
+
+I found the exact test and implementation surface. I’m reading the registry/prompt/tool code now to isolate whether this is a behavior regression or stale tests against a refactor.
+
+● Read SkillToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\tools\SkillToolExecutor.kt
+  └ 322 lines read
+
+● Read ExampleSkills.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\examples\ExampleSkills.kt
+  └ 392 lines read
+
+● Read SkillRegistry.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\SkillRegistry.kt
+  └ 350 lines read
+
+● Read MainSystemPrompt.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\prompts\MainSystemPrompt.kt
+  └ 205 lines read
+
+● Read SkillToolTarget.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\tools\SkillToolTarget.kt
+  └ 22 lines read
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 64 lines...
+
+● Search (grep)
+  │ "already registered|web-scraping|skill.debug.scraping|Skill execution was cancelled|missing
+  │ dependencies" in **/*.kt (pulsar-agentic\src\test\kotlin)
+  └ 46 lines found
+
+● Search (glob)
+  │ "pulsar-agentic\target\surefire-reports\*.txt"
+  └ No matches found
+
+● Search (glob)
+  │ "pulsar-agentic\target\surefire-reports\*.xml"
+  └ No matches found
+
+The likely breakage is pretty focused: the example `WebScrapingSkill` no longer matches the rest of the skill system’s expected ID/dependency shape, and `SkillRegistry.register()` now silently ignores duplicates even though the API/tests expect an error. I’m confirming that against the surrounding skill bootstrap definitions before patching.
+
+● Read SkillBootstrapTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\skills\SkillBootstrapTest.kt
+  └ L1:140 (123 lines read)
+
+● Read SkillProgressiveDisclosureTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\skills\SkillProgressiveDisclosureTest.kt
+  └ 59 lines read
+
+● Read SKILL.md
+  │ pulsar-agentic\src\main\resources\skills\web-scraping\SKILL.md
+  └ 124 lines read
+
+● Search (grep)
+  │ "skill.debug.scraping|web-scraping|form-filling|data-validation" in **/*.kt
+  │ (pulsar-agentic\src\main\kotlin)
+  └ 23 lines found
+
+● Read SkillBootstrap.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\SkillBootstrap.kt
+  └ 167 lines read
+
+● Search (grep)
+  │ "register\(WebScrapingSkill|register\(FormFillingSkill|register\(DataValidationSkill|clear\(" in
+  │ **/*.kt (pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills)
+  └ 3 lines found
+
+● Read CustomToolRegistryTest.kt
+  │ pulsar-agentic\src\test\kotlin\ai\platon\pulsar\agentic\tools\CustomToolRegistryTest.kt
+  └ 207 lines read
+
+● Search (grep)
+  │ "register\(.*SkillRegistry|SkillRegistry\.instance\.register|registry\.register\(" in **/*.kt
+  └ 102 lines found
+
+I’ve narrowed it down to two concrete regressions to restore: `WebScrapingSkill` should keep the stable skill ID `web-scraping` while still advertising the `skill.debug.scraping` tool domain, and `SkillRegistry.register()` should reject duplicate IDs again instead of silently no-oping. I’m patching those now.
+
+● Edit
+  │ Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\examples\ExampleSkills.kt
+  └ Edit pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\skills\SkillRegistry.kt
+
+● Stop shell
+  └ 1 line...
+
+● Run targeted agentic tests (shell)
+  │ .\mvnw.cmd -pl pulsar-agentic -am test -D"test=MainSystemPromptCustomSkillInjectionTest,SkillReg
+  │ istryTest,ExampleSkillsTest,SkillToolExecutorTest" -D"surefire.failIfNoSpecifiedTests=false"
+  │ -D"kotlin.compiler.daemon=false"
+  └ 64 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 64 lines...
+
+The fix is in; Maven is still chewing through the reactor because `-am` pulls the module graph. Once that clears I’ll either have the green result or the exact remaining failure surface.
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 112 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 164 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 164 lines...
+
+● Read shell output Waiting up to 15 seconds for command output
+  └ 187 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 198 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 271 lines...
+
+I’ve confirmed the fix path; the only slow part left is Maven’s dependency graph. I’m keeping the test run alive until it reaches the `pulsar-agentic` module so I can verify the four originally failing classes directly.
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 327 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 10 lines...
+
+The direct PowerShell run is spending most of its time replaying the reactor, so I’m switching validation to a dedicated task runner to get a cleaner pass/fail signal on the exact test scope.
+
+● Stop shell
+  └ 1 line...
+
+● Task Run agentic tests
+  │ Search (glob)
+  │   │ "**/pom.xml"
+  │   └ 44 files found
+  └ Run targeted Maven tests in pulsar-agentic (shell)
+      │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -pl pulsar-agentic
+      │ "-Dkotlin.compiler.execution.strategy=in-process"
+      "-Dtest=MainSystemPromptCustomSkillInjectionTe
+      │ st,SkillRegistryTest,ExampleSkillsTest,SkillToolExecutorTest" test
+      └ 47 lines...
+
+● Search (grep)
+  │ "kotlin\.compiler\.daemon|compiler\.execution\.strategy|kotlin\.daemon" in **/*.{xml,ps1,sh,md}
+  └ No matches found
+
+● Retry targeted tests without Kotlin daemon (shell)
+  │ .\mvnw.cmd -pl pulsar-agentic -D"kotlin.compiler.daemon=false"
+  │ -D"kotlin.compiler.execution.strategy=in-process" -D"test=MainSystemPromptCustomSkillInjectionTe
+  │ st,SkillRegistryTest,ExampleSkillsTest,SkillToolExecutorTest" test
+  └ 23 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 23 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 61 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 61 lines...
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 61 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 17 lines...
+
+The targeted module-only run completed cleanly, so I’m pulling the tail of the Maven output now and then I’ll update the required memory files with the finished task notes.
+
+● Read shell output Waiting up to 5 seconds for command output
+  └ 1 line...
+
+● Search (glob)
+  │ "pulsar-agentic\target\surefire-reports\*"
+  └ No matches found
+
+● Show code diff (shell)
+  │ git --no-pager diff --
+  │ pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/skills/SkillRegistry.kt
+  │ pulsar-agentic/src/main/kotlin/ai/platon/pulsar/agentic/skills/examples/ExampleSkills.kt
+  └ 29 lines...
+
+● List directory pulsar-agentic\target
+  └ 8 files found
+
+● Read copilot-tool-output-1775899297237-0dw41m.txt
+  │ ~\AppData\Local\Temp\copilot-tool-output-1775899297237-0dw41m.txt
+  └ L330:420 (62 lines read)
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 10 files found
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 34 lines read
+
+● Read MEMORY.20260411.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md
+  └ 4 lines read
+
+● Read MEMORY.20260410.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\10\MEMORY.20260410.md
+  └ 27 lines read
+
+● Read MEMORY.20260409.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\09\MEMORY.20260409.md
+  └ 26 lines read
+
+● Read MEMORY.20260408.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\08\MEMORY.20260408.md
+  └ 14 lines read
+
+✗ Read MEMORY.20260402.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\02\MEMORY.20260402.md
+  └ Path does not exist
+
+● Read MEMORY.20260404.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\04\MEMORY.20260404.md
+  └ 44 lines read
+
+● Read MEMORY.20260401.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\01\MEMORY.20260401.md
+  └ 27 lines read
+
+● Read MEMORY.20260406.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\06\MEMORY.20260406.md
+  └ 25 lines read
+
+● Read MEMORY.20260405.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\05\MEMORY.20260405.md
+  └ 27 lines read
+
+I’ve verified the fix and checked the real April memory files. The monthly rollup was missing the 2026-04-10 day, so I’m appending a full through-04-10 reconciliation plus today’s task note to the daily log.
+
+● Edit
+  │ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L30:end (15 lines read)
+
+● Read MEMORY.20260411.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md
+  └ 5 lines read
+
+● Check final status (shell)
+  │ git --no-pager status --short
+  └ 3 lines...
+
+Fixed the agentic skill-test regressions. `WebScrapingSkill` now again registers under the stable skill ID `web-scraping` while still advertising the `skill.debug.scraping` tool domain, and `SkillRegistry.register()` now throws on duplicate skill IDs instead of silently ignoring them.
+
+That brings `MainSystemPromptCustomSkillInjectionTest`, `SkillRegistryTest`, `ExampleSkillsTest`, and `SkillToolExecutorTest` back in line with the registry/bootstrap contract; the focused `pulsar-agentic` Maven run completed successfully with **44 tests passed**. I also appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11\MEMORY.20260411.md` and added the missing through-`2026-04-10` monthly rollup to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md`.
+
+
+=== COPILOT STDERR ===
+
+
+Total usage est:        1 Premium request
+API time spent:         3m 58s
+Total session time:     10m 55s
+Total code changes:     +13 -2
+Breakdown by AI model:
+ gpt-5.4                  2.8m in, 10.1k out, 2.7m cached (Est. 1 Premium request)
