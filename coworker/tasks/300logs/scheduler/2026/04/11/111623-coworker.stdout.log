@@ -22,3 +22,13 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Inspect repo and submodule git status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULES---'; git submodule status; if (Test-Path
+  │ 'D:\workspace\Browser4Team\submodules\Browser4') { Write-Host '---BROWSER4-STATUS---';
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch }
+  └ 22 lines...
+
+I found a dirty `submodules\Browser4`, so I’m syncing that first and then the parent repo so the submodule pointer lands cleanly.
+
