@@ -1,3 +1,25 @@
+Task: report-ci-test-failures
+Description: Task from report-ci-test-failures.md
+Original File: report-ci-test-failures.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-12 07:15:51
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\report-ci-test-failures.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\12\MEMORY.20260412.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\12\MEMORY.20260412.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -43,6 +65,10 @@
 - **2026-04-10**: Added then fully removed the temporary end-to-end `open-and-scroll-to-bottom` browser command after confirming it duplicated existing primitives and created disproportionate CLI/MCP/spec/test maintenance. Key lesson: one-off browser actions exposed through CLI, MCP aliases, generated specs, and tests are expensive to maintain, so short-lived test helpers should not become end-to-end product surface.
 - No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
 
-### Daily Rollup Update (through 2026-04-11)
-- **2026-04-11**: Fixed `RobustBrowserAgent` step logging so `lastCall` comes from the previous step's executed tool call instead of the newly created step state, and repaired agentic skill regressions by restoring the stable `web-scraping` skill ID plus duplicate-ID enforcement in `SkillRegistry.register()`. Focused Maven validation passed with the Kotlin daemon disabled and in-process compilation where needed. Key lessons: cross-step diagnostics must read inherited execution state, skill IDs must stay stable across programmatic and resource-backed implementations, and targeted Maven verification in this environment is more reliable when the Kotlin daemon is disabled.
 
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\12\071517-report-ci-test-failures.copilot.log
