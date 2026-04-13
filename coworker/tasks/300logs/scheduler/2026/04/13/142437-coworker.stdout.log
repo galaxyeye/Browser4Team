@@ -53,3 +53,26 @@ The submodule is pushed. I’m updating the parent repo now so it records the ne
   │ '---LAST COMMIT---'; git --no-pager log -1 --decorate --oneline
   └ 20 lines...
 
+● Commit pull and push parent repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: sync repository
+  │ changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git pull --no-rebase -X ours origin main; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main; if ($LASTEXITCODE -ne 0) {
+  │ exit $LASTEXITCODE }; git --no-pager status --short --branch; Write-Host '---LAST COMMIT---';…
+  └ 36 lines...
+
+One scheduler log changed as a side effect of the sync itself after the first push, so I’m folding that final generated change into one last commit to leave the repo fully pushed and clean.
+
+● Confirm remaining parent repo changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch
+  └ 3 lines...
+
+● Commit and push final generated log change (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: finalize
+  │ repository sync" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git pull --no-rebase -X ours origin main; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main; if ($LASTEXITCODE -ne 0) {
+  │ exit $LASTEXITCODE }; git --no-pager status --short --branch; Write-Host '---LAST COMMIT---';…
+  └ 21 lines...
+
+The only remaining change is the session’s own live scheduler stdout log, which keeps updating while I work. I’m doing one final silent commit/push for that file and then stopping so nothing else in-repo gets generated from additional commands.
