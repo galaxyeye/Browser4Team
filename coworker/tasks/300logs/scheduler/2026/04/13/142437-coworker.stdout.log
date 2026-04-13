@@ -22,3 +22,34 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo state first so I can sync it safely, including any dirty submodules that need to be committed before the parent repo pointer moves.
+
+● Check repo and submodule config (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULES---'; if (Test-Path '.gitmodules') { Get-Content '.gitmodules' }
+  └ 20 lines...
+
+The parent repo is dirty and the Browser4 submodule pointer is dirty too, so I’m syncing the submodule first before I commit the parent repository.
+
+● Inspect Browser4 submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  │ --branch; Write-Host '---LAST COMMIT---'; git --no-pager log -1 --decorate --oneline
+  └ 9 lines...
+
+I found real changes inside `submodules\Browser4`, not just a pointer update, so I’m committing and syncing that branch before I touch the parent repo.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "chore:
+  │ sync Browser4 changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE };
+  │ git pull --no-rebase -X ours origin 4.7.x; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git
+  │ push origin 4.7.x
+  └ 22 lines...
+
+The submodule is pushed. I’m updating the parent repo now so it records the new submodule pointer along with the other working tree changes, then I’ll pull and push `main`.
+
+● Inspect parent repo before commit (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---LAST COMMIT---'; git --no-pager log -1 --decorate --oneline
+  └ 20 lines...
+
