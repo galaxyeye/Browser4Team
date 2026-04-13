@@ -1,0 +1,4 @@
+# MEMORY.20260413.md
+## Daily Memory - 2026-04-13
+
+- Fixed the `browser4-cli` Rust E2E HTTP-request flake that was failing `goto` with `error sending request for url (.../mcp/call-tool)` by hardening local Browser4 readiness checks in `daemon.rs`, waiting for Chrome teardown in `kill_all_browsers()`, updating the E2E mock Browser4 server to handle the current MCP `command_run` / `command_status` / `command_result` flow, and widening the E2E retry window for transient startup errors. Targeted `test_e2e_interaction_console_and_export` and `test_e2e_agent_and_collective_commands` now pass, and `test_e2e_mouse_and_dialog` advances past the original HTTP failure before exposing a separate later `mousedown` issue. Lesson: for Browser4 CLI E2Es, service health alone is not a strong enough readiness signal—MCP tool availability, browser-process teardown, and mock/test harness protocol parity all need to stay aligned or transport flakes will mask the next real failure.

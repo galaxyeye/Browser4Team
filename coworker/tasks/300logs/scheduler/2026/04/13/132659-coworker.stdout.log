@@ -1,0 +1,303 @@
+Starting Coworker Task Runner...
+[2026-04-13 13:27:00] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-13 13:27:00] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-13 13:27:00] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-13 13:27:00] [INFO] ===========================================================================
+[2026-04-13 13:27:00] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-13 13:27:00] [INFO] Started at: 04/13/2026 13:27:00
+[2026-04-13 13:27:00] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\132700-coworker.log
+[2026-04-13 13:27:00] [INFO] ==========================================================================
+[2026-04-13 13:27:00] [INFO] Created missing draft placeholder: D:\workspace\Browser4Team\coworker\tasks\0draft\1.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: 1.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: 2.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: 3.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: 4.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: 5.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: README.md
+[2026-04-13 13:27:00] [INFO] [PREPARE] Task: README.zh.md
+[2026-04-13 13:27:00] [INFO] [PUSHED] Task: report-ci-test-failures.md (updated 04/12/2026 15:15:16)
+DEBUG: GH Stderr:  Changes   +0 -0 Requests  1 Premium (40s) Tokens    ↑ 18.9k • ↓ 100 • 1.5k (cached) • 86 (reasoning)
+[2026-04-13 13:27:50] [INFO] Renamed in created: 1.md -> fix-e2e-http-request-bug.md
+[2026-04-13 13:27:50] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\fix-e2e-http-request-bug.md
+[2026-04-13 13:27:50] [INFO] Memory context initialized via generator.
+[2026-04-13 13:27:50] [INFO] Executing Copilot for task: fix-e2e-http-request-bug
+[2026-04-13 13:27:50] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-13 13:27:50] [INFO] === Starting Copilot execution ===
+I’m pulling in the task details
+● Read fix-e2e-http-request-bug.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-e2e-http-request-bug.md
+  └ 20 lines read
+● Check working tree status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+I found an existing
+● Read http.rs
+  │ sdks\browser4-cli\src\http.rs
+  └ 173 lines read
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L820:930 (111 lines read)
+● Search (grep)
+  │ "call-tool|mcp/call-tool|HTTP request failed|error sending request" in **/*.{rs,toml}
+  │ (sdks\browser4-cli)
+  └ 6 lines found
+● Search (grep)
+  │ "interactive|fixture|127\.0\.0\.1|localhost" in **/*.rs (sdks\browser4-cli\tests)
+  └ 72 lines found
+The failure looks like a transient connection to the
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:220 (220 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L560:820 (261 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L220:560 (341 lines read)
+● Search (grep)
+  │ "run_cli_process_with_retry|is_transient_transport_failure|Browser4Server::start|ensure_server_r
+  │ unning|server_url|make_client\(|submit_plain_command|get_command_status|get_command_result" in
+  │ **/*.rs (sdks\browser4-cli\src)
+  └ 29 lines found
+I’ve narrowed it to the CLI’s server-start path
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ 186 lines read
+● Read state.rs
+  │ sdks\browser4-cli\src\state.rs
+  └ 272 lines read
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1200:1325 (126 lines read)
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ 34 lines read
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1120:1315 (196 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1450:1605 (156 lines read)
+● Search (grep)
+  │ "restart_browser4\(|external_service|run_cli_process_with_retry\(|run_command\(|test_e2e_interac
+  │ tion_console_and_export|test_e2e_session_and_navigation" (sdks\browser4-cli\tests\e2e.rs)
+  └ 69 lines found
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1840:1925 (86 lines read)
+● Search (grep)
+  │ "kill_all_browsers|close-all|kill-all|reset_cli_artifacts" (sdks\browser4-cli\tests\e2e.rs)
+  └ 12 lines found
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1036:1080 (45 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1948:1985 (25 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1080:1120 (41 lines read)
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ 366 lines read
+● Search (grep)
+  │ "kill_all_browsers|register_managed_server_process|ManagedServerProcess" in **/*.rs
+  │ (sdks\browser4-cli\src)
+  └ 22 lines found
+There’s already a local edit in the E2E file, so I’m diffing just that file before changing anything to avoid trampling work that may already be part of this task.
+● Show diff for e2e.rs (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/tests/e2e.rs
+  └ 13 lines...
+● Reproduce failing e2e scenario (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_interaction_console_and_export
+  └ 40 lines...
+The isolated scenario passes, so this is likely a cross-scenario startup race. I’m running the full Rust CLI test scope and looking at how the same server port is restarted between scenarios.
+● Run full e2e suite (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e
+  └ 47 lines...
+● Run browser4-cli cargo test (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet
+  └ 56 lines...
+The failures are pointing at leftover browser/session state between sequential scenarios, so I’m checking for existing shutdown/wait patterns before deciding whether to harden the harness or the shared browser-process cleanup.
+● Search (grep)
+  │ "force_stop\(|graceful_stop\(|is_process_running\(" in **/*.rs (sdks\browser4-cli\src)
+  └ 10 lines found
+● Search (grep)
+  │ "Failed to launch browser|createTab|PULSAR_CHROME|wait_for_exit\(|shutdown_managed_server_proces
+  │ ses\(|kill_all_browsers\(" in **/*.{kt,rs}
+  └ 9 lines found
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L380:430 (51 lines read)
+I’ve got a likely root fix: harden CLI server readiness checks so a freshly started Browser4 service isn’t considered ready before MCP is callable, and make browser cleanup wait for Chrome exits
+● Edit
+  └ Edit sdks\browser4-cli\src\daemon.rs
+● Edit
+  └ Edit sdks\browser4-cli\src\managed_processes.rs
+I’ve made the readiness and cleanup changes; next I’m formatting and running the Rust CLI suite again to see whether the cross-scenario flake is actually gone.
+● Format and run browser4-cli e2e tests (shell)
+  │ cd sdks\browser4-cli; cargo fmt && cargo test --quiet --test e2e
+  └ 68 lines...
+● Run browser4-cli test suite (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet
+  └ 49 lines...
+One validation run collided with the other
+● Read shell output Waiting up to 120 seconds for command output
+  └ 57 lines...
+The transport/browser startup fl
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L900:1210 (311 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1608:1710 (103 lines read)
+● Search (grep)
+  │ "command_run|command_status|command_result|agent-task-|collective-job-|Task submitted:"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 13 lines found
+The last failing case is
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+I’ve aligned the mock E2E
+● Run agent collective e2e scenario (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_agent_and_collective_commands
+  └ 46 lines...
+● Run browser4-cli tests after mock fix (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet
+  └ 75 lines...
+Those last failures came from me validating two Cargo invocations in parallel against the same target dir and shared local Browser4/Chrome resources. I’m rerunning the Rust suite serially now so we only measure the actual code change.
+● Run browser4-cli tests serially (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet
+  └ 76 lines...
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1410:1495 (86 lines read)
+The suite now gets
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1:260 (260 lines read)
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1:260 (260 lines read)
+● Search (grep)
+  │ "last_mouse_position|MousePosition|mousemove|mousedown|mouseup|mousewheel" in **/*.rs
+  │ (sdks\browser4-cli\src)
+  └ 30 lines found
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1378:1410 (33 lines read)
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L660:770 (111 lines read)
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L257:320 (64 lines read)
+The mouse command path is already trying to restore pointer
+✗ Search (grep)
+  │ "@MCP.*mouse|fun .*mouse|mouseDown|mouseUp|mouseWheel" in **/*.kt (pulsar-*)
+  └ rg: D:\workspace\Browser4Team\submodules\Browser4\pulsar-*: IO error for operation on
+    D:\workspace\Browser4Team\submodules\Browser4\pulsar-*: 文件名、目录名或卷标语法不正确。 (os
+    error 123)
+● Search (grep)
+  │ "browser_mouse_down|browser_mouse_up|browser_mouse_wheel|mouse_down|mouse_up|mouse_wheel" in
+  │ **/*.{kt,rs}
+  └ 18 lines found
+● Search (grep)
+  │ "mouseDown\(|mouseUp\(|mouseWheel\(|browser_mouse_down|browser_mouse_up|browser_mouse_wheel" in
+  │ **/*.kt
+  └ 39 lines found
+● Search (grep)
+  │ "@MCP[\s\S]*mouse|fun mouseDown|fun mouseUp|fun mouseWheel" in **/*.kt
+  └ 6 lines found
+● Read BrowserTabToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt
+  └ L160:210 (51 lines read)
+● Read BrowserTabToolExecutor.kt
+  │ pulsar-agentic\src\main\kotlin\ai\platon\pulsar\agentic\tools\builtin\BrowserTabToolExecutor.kt
+  └ L236:260 (25 lines read)
+● Read PlaywrightDriver.kt
+  │ pulsar-core\pulsar-plugins\pulsar-protocol-playwright\src\main\kotlin\ai\platon\pulsar\protocol\
+  │ browser\driver\playwright\PlaywrightDriver.kt
+  └ L772:808 (37 lines read)
+I want to separate a genuine regression from suite
+● Run agent collective e2e scenario (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_agent_and_collective_commands
+  └ 40 lines...
+● Run interaction e2e scenario (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_interaction_console_and_export
+  └ 40 lines...
+● Run mouse dialog e2e scenario (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e -- --scenario=test_e2e_mouse_and_dialog
+  └ 46 lines...
+● Search (grep)
+  │ "async fn handle_open|handle_open\(" (sdks\browser4-cli\src\main.rs)
+  └ 2 lines found
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L300:375 (76 lines read)
+The remaining failures
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+I’ve
+● Run mouse dialog scenario after retry tuning (shell)
+  │ cd sdks\browser4-cli; cargo fmt && cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_mouse_and_dialog
+  └ 67 lines...
+The HTTP-request failure is fixed now — the original repro gets
+✗ Read MEMORY.20260413.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\MEMORY.20260413.md
+  └ Path does not exist
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 47 lines read
+● Search (glob)
+  │ "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\*\MEMORY.202604*.md"
+  └ No matches found
+I’ve confirmed today’s daily memory
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 12 files found
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\12
+  └ 5 files found
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\11
+  └ 9 files found
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13
+  └ 4 files found
+● Read MEMORY.20260412.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\12\MEMORY.20260412.md
+  └ 4 lines read
+I
+● Edit
+  └ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\MEMORY.20260413.md
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+I
+● Inspect final changes (shell)
+  │ git --no-pager status --short && git --no-pager diff -- sdks/browser4-cli/src/daemon.rs
+  │ sdks/browser4-cli/src/managed_processes.rs sdks/browser4-cli/tests/e2e.rs
+  └ 308 lines...
+● Run affected e2e scenarios serially (shell)
+  │ cd sdks\browser4-cli; cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_interaction_console_and_export && cargo test --quiet --test e2e --
+  │ --scenario=test_e2e_agent_and_collective_commands
+  └ 91 lines...
+**Fixed the `browser4-cli` E2E HTTP request bug.
+The original failure path now gets past `goto`: `test_e2e_interaction_console
+I left
+
+[STDERR OUTPUT]
+Changes   +146 -30
+Requests  1 Premium (49m 26s)
+Tokens    ↑ 3.2m • ↓ 22.6k • 3.1m (cached) • 13.6k (reasoning)
+[2026-04-13 14:17:22] [INFO] Copilot execution finished with exit code 0
+[2026-04-13 14:17:22] [INFO] === Copilot execution completed ===
+[2026-04-13 14:17:22] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0413\fix-e2e-http-request-bug.md
+[2026-04-13 14:17:22] [INFO] ---
+[2026-04-13 14:17:22] [INFO] ===========================================================================
+[2026-04-13 14:17:22] [INFO] All tasks completed
+[2026-04-13 14:17:22] [INFO] Ended at: 04/13/2026 14:17:22
+[2026-04-13 14:17:22] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\132700-coworker.log
+[2026-04-13 14:17:22] [INFO] ==========================================================================

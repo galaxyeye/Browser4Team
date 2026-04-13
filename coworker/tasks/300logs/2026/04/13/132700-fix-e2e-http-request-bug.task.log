@@ -1,3 +1,25 @@
+Task: fix-e2e-http-request-bug
+Description: Task from fix-e2e-http-request-bug.md
+Original File: fix-e2e-http-request-bug.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-13 13:27:50
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\fix-e2e-http-request-bug.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\MEMORY.20260413.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\MEMORY.20260413.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -46,6 +68,10 @@
 ### Daily Rollup Update (through 2026-04-11)
 - **2026-04-11**: Fixed `RobustBrowserAgent` step logging so `lastCall` comes from the previous step's executed tool call instead of the newly created step state, and repaired agentic skill regressions by restoring the stable `web-scraping` skill ID plus duplicate-ID enforcement in `SkillRegistry.register()`. Focused Maven validation passed with the Kotlin daemon disabled and in-process compilation where needed. Key lessons: cross-step diagnostics must read inherited execution state, skill IDs must stay stable across programmatic and resource-backed implementations, and targeted Maven verification in this environment is more reliable when the Kotlin daemon is disabled.
 
-### Daily Rollup Update (through 2026-04-12)
-- **2026-04-12**: Improved `.github/workflows/ci.yml` so the `Check Test Status` stage always runs after the reusable test action, defaults a missing test status to `failed`, parses `TEST-*.xml` reports to print individual failing test cases, emits GitHub `::error` annotations for each failure, and appends a failed-test section to `$GITHUB_STEP_SUMMARY`. Key lesson: aggregate test counts are not enough for fast CI triage; surfacing per-test Surefire failures directly in the workflow makes failing runs immediately actionable.
 
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\13\132700-fix-e2e-http-request-bug.copilot.log
