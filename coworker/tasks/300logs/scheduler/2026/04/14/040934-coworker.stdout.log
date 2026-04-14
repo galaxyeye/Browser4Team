@@ -55,3 +55,27 @@ Both repos are pushed; I’m doing a quick final status pass so I only leave it 
   │ --no-pager status --short --branch
   └ 5 lines...
 
+One scheduler log advanced during the sync, so I’m rolling that last generated change into a final commit and repushing to leave the branch clean.
+
+● Commit final log update and push (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: update scheduler
+  │ logs" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git pull --no-rebase -X ours origin main; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main
+  └ 16 lines...
+
+● Confirm parent and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULE STATUS---'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git
+  │ --no-pager status --short --branch
+  └ 5 lines...
+
+The repo is syncing correctly, but an active scheduler process is still appending to one tracked log file between commits. I’m checking whether it’s still live or has settled so I can determine if a fully clean working tree is achievable without interrupting another running process.
+
+● Check whether scheduler log is still changing (shell)
+  │ $path='D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\14\040934-coworker.std
+  │ out.log'; Get-Item $path | Select-Object FullName,Length,LastWriteTime; Write-Host '---TAIL---';
+  │ Get-Content $path -Tail 20; Start-Sleep -Seconds 12; Write-Host '---AFTER 12S---'; Get-Item
+  │ $path | Select-Object FullName,Length,LastWriteTime;
+  └ 17 lines...
+
