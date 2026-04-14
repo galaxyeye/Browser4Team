@@ -37,3 +37,21 @@ I found a dirty submodule, so I’m syncing that first to keep the parent repo p
   │ push origin 4.7.x
   └ 23 lines...
 
+● Commit pull and push parent repo (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git add -A; git commit -m "chore: update workspace
+  │ state" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git pull --no-rebase -X ours origin main; if
+  │ ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git push origin main
+  └ 36 lines...
+
+Both repos are pushed; I’m doing a quick final status pass so I only leave it once the parent repo and submodule are clean.
+
+● Memory stored git workflow
+  └ When syncing this repo, commit and push dirty submodules like submodules/Browser…
+
+● Verify parent and submodule are clean (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULE STATUS---'; Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git
+  │ --no-pager status --short --branch
+  └ 5 lines...
+
