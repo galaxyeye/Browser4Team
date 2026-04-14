@@ -1,0 +1,66 @@
+I’m pulling the task details first and checking the current repo state so I can execute it end to end without disturbing unrelated work.
+
+● Read run-cli-tests-first.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\run-cli-tests-first.md
+  └ 4 lines read
+
+● Check working tree status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I found the task: reorder CI so CLI tests run before the rest. Next I’m reading the workflow and related test wiring to make the change without affecting unrelated jobs.
+
+● Read action.yml
+  │ .github\actions\run-tests\action.yml
+  └ 312 lines read
+
+● Read ci.yml
+  │ .github\workflows\ci.yml
+  └ 202 lines read
+
+● Search (grep)
+  │ "browser4-cli|cli|run-tests|Check Test Status" in **/*.{yml,yaml} (.github)
+  └ 81 lines found
+
+I’ve got the minimal fix: keep the existing build/startup path for the CLI E2E, but defer the Maven test action until after that step so a CLI failure short-circuits the rest of the test work.
+
+● Edit
+  └ Edit .github\workflows\ci.yml
+
+The workflow edit is in place. I’m checking the final YAML ordering and then I’ll append the task outcome to today’s memory, only touching the monthly rollup if it’s missing yesterday’s entry.
+
+● Read ci.yml
+  │ .github\workflows\ci.yml
+  └ L64:185 (122 lines read)
+
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 8 lines read
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:260 (63 lines read)
+
+● Review ci workflow diff (shell)
+  │ git --no-pager diff -- .github/workflows/ci.yml
+  └ 90 lines...
+
+The monthly rollup is already current through 2026-04-13, so I’m only appending today’s task entry and preserving the rest of the log as-is.
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+
+● Memory stored testing
+  └ ci.yml now runs browser4-cli E2E after health check and before the reusable Mave…
+
+Done: `.github/workflows/ci.yml` now runs the Docker-backed `browser4-cli` E2E step **before** the reusable Maven `run-tests` stage, so a CLI failure stops the pipeline before the broader test suite starts. I moved the existing `Run Tests` / `Check Test Status` block to after the health-checked CLI step and updated the pipeline summary order to match.
+
+I also appended today’s task note to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md`. The monthly memory file already included the 2026-04-13 rollup, so no monthly append was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +31 -29
+Requests  1 Premium (2m 55s)
+Tokens    ↑ 259.7k • ↓ 4.3k • 226.2k (cached) • 1.9k (reasoning)

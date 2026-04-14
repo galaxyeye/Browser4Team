@@ -1,0 +1,325 @@
+● Create todo tables (sql)
+  │ CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, title TEXT NOT NULL, desc…
+  └ Executed 2 statement(s)
+
+● Read refactor-e2e-test-cases.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\refactor-e2e-test-cases.md
+  └ 22 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I’ve got the scope: the Rust CLI E2E harness needs to be split into smaller tests and report per-test timing. Next I’m reading the current harness and running the smallest relevant baseline checks before changing it.
+
+● Insert task todos (sql)
+  │ INSERT OR REPLACE INTO todos (id, title, description, status, updated_at) VALUES
+  └ 4 row(s) inserted. Last inserted row ID: 4.
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ 34 lines read
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:400 (400 lines read)
+
+● Run baseline Maven compile (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -q -D"skipTests"
+  └ 2 lines...
+
+● Run baseline Rust tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 47 lines...
+
+The baseline Rust run confirms the existing E2E target is the long pole; I’m drilling into the harness structure now so I can split it cleanly without changing behavior.
+
+✗ Read plan.md
+  │ ~\.copilot\session-state\028b033d-5732-4b09-9a1c-ca828acb2eb2\plan.md
+  └ Path does not exist
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L801:1200 (400 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L401:800 (400 lines read)
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 48 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+● Todo started inspect-e2e
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1181:1600 (420 lines read)
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 48 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 2 lines...
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1601:1900 (300 lines read)
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 49 lines...
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1901:2100 (127 lines read)
+
+● Read shell output Waiting up to 20 seconds for command output
+  └ 49 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 12 lines...
+
+I’ve mapped the current harness. The cleanest path is to keep the sequential custom runner, split the oversized scenarios into narrower ones, and teach the runner to print per-test durations while avoiding unnecessary Browser4 restarts for mock-only cases.
+
+● Edit
+  └ Create ~\.copilot\session-state\028b033d-5732-4b09-9a1c-ca828acb2eb2\plan.md
+
+I found one extra cleanup worth folding in: the file still carries a runtime `covered_commands` tracker even though coverage is enforced by the static `tested_commands`/`excluded_commands` sets. I’m removing that dead bookkeeping while splitting the scenarios.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+The refactor is in place; I’m doing a quick structural pass before rerunning the Rust target because the old long-running baseline shell finished after the file changed underneath it.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 58 lines...
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:120 (120 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L840:1220 (381 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1221:1720 (500 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1721:2070 (349 lines read)
+
+✗ Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1490:1555 (66 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1882:2040 (159 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1794:1814 (21 lines read)
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+The only real logic bug I found in the split was a stale mock expectation left over from the old combined agent/collective case; that’s fixed. I’m formatting and running the full Rust E2E target now, then I’ll rerun the compile step after the jar is no longer in use.
+
+● Todo started validate-e2e
+
+● Format and run Rust E2E tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test --test e2e -- --nocapture
+  └ 48 lines...
+
+The refactor itself compiled, but the first real Browser4-backed case hit an environment-side startup timeout before the app came healthy. I’m checking the jar/process state directly so I can get the validation run unstuck instead of treating that as a test-code failure.
+
+● Start Browser4 jar for diagnostics (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; java -jar
+  │ '.\browser4\browser4-agents\target\Browser4.jar' --server.port=8199
+  └ 1 line...
+
+● List Java processes (shell)
+  │ Get-Process java -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, StartTime, Path
+  │ | Format-Table -AutoSize
+  └ 4 lines...
+
+● Inspect Browser4 jar (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; Get-Item
+  │ '.\browser4\browser4-agents\target\Browser4.jar' | Select-Object FullName, Length, LastWriteTime
+  │ | Format-List
+  └ 4 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 3 lines...
+
+The timeout wasn’t from the refactor: `browser4\browser4-agents\target\Browser4.jar` is currently an invalid 19 KB artifact with no main manifest, so the E2E backend can’t boot. I’m rebuilding that jar cleanly now and then I’ll rerun the Rust E2E target against the repaired backend.
+
+● Inspect Java command lines (shell)
+  │ Get-CimInstance Win32_Process -Filter "name = 'java.exe'" | Select-Object ProcessId, CommandLine
+  │ | Format-List
+  └ 49 lines...
+
+● Rebuild Browser4 jar (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -q -pl
+  │ browser4/browser4-agents -am package -D"skipTests"
+  └ 2 lines...
+
+✗ Read Browser4.jar
+  │ browser4\browser4-agents\target\Browser4.jar
+  └ File too large
+
+● Re-run Rust E2E tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e -- --nocapture
+  └ 46 lines...
+
+The rebuilt jar is healthy again. The rerun is making steady progress and already shows the new per-test timing output working, so I’m just waiting for the rest of the split scenarios to finish.
+
+● Confirm rebuilt jar metadata (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; Get-Item
+  │ '.\browser4\browser4-agents\target\Browser4.jar' | Select-Object Length, LastWriteTime |
+  │ Format-List
+  └ 3 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 47 lines...
+
+● Read shell output Waiting up to 90 seconds for command output
+  └ 47 lines...
+
+One split case is much slower than the others, which is exactly the sort of bottleneck the new timing output is meant to surface. I’m letting it finish once to see whether it’s just legitimately slow or actually wedged before deciding if I need to narrow it further.
+
+● Inspect Chrome processes during E2E (shell)
+  │ Get-Process chrome -ErrorAction SilentlyContinue | Select-Object Id, StartTime, MainWindowTitle
+  │ | Format-Table -AutoSize
+  └ 13 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 47 lines...
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 54 lines...
+
+The failure pattern points to the cost of restarting Browser4 for every new split case, not to the split assertions themselves. I’m switching the harness to keep one Browser4 backend alive across the browser-backed cases and only drop it when moving to the mock-only scenarios.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Refresh refactor todo timestamp (sql)
+  │ UPDATE todos SET updated_at = CURRENT_TIMESTAMP WHERE id IN ('refactor-e2e','val…
+  └ 2 row(s) updated.
+
+● Run Rust E2E suite again (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e -- --nocapture
+  └ 77 lines...
+
+I’m seeing one backend-state-sensitive case now: the shared Browser4 server fixed startup churn, but low-level mouse commands appear to need a fresh backend instance. I’m adding selective restarts per scenario so the suite keeps the smaller tests without paying a full restart penalty everywhere.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Refresh validation timestamp (sql)
+  │ UPDATE todos SET updated_at = CURRENT_TIMESTAMP WHERE id = 'validate-e2e';
+  └ 1 row(s) updated.
+
+● Run Rust E2E tests after restart tuning (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e -- --nocapture
+  └ 74 lines...
+
+The instability is concentrated in the ultra-fine-grained input splits. I’m collapsing those back to the stable boundaries we already know work well—still more focused than the original file, but without isolating the keyboard and mouse primitives so far that backend/browser state starts leaking into the results.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Refresh validation timestamp again (sql)
+  │ UPDATE todos SET updated_at = CURRENT_TIMESTAMP WHERE id IN ('refactor-e2e','val…
+  └ 2 row(s) updated.
+
+● Format and run final Rust E2E suite (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test --test e2e -- --nocapture
+  └ 74 lines...
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Refresh timestamps once more (sql)
+  │ UPDATE todos SET updated_at = CURRENT_TIMESTAMP WHERE id IN ('refactor-e2e','val…
+  └ 2 row(s) updated.
+
+● Run Rust E2E suite after interaction restart tweak (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e -- --nocapture
+  └ 48 lines...
+
+The tuned restart boundaries look right now: the previously flaky interaction and mouse/dialog groups are both passing, and the timing output is clearly surfacing where the expensive paths are. I’m just waiting for the remaining cases to finish.
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 64 lines...
+
+The code change is done and the suite is green. I’m doing the final housekeeping now: diff review plus the required daily-memory update, and I’ll only touch the monthly rollup if it’s actually missing the 2026-04-13 summary.
+
+● Todo started update-memory
+
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 6 lines read
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 63 lines read
+
+● Review final diff (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short &&
+  │ git --no-pager diff -- sdks/browser4-cli/tests/e2e.rs
+  └ 16 lines...
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+
+I’ve made the required daily-memory update. The monthly rollup already includes the 2026-04-13 summary, so there wasn’t anything missing to append there.
+
+✔ Todo completed update-memory
+
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ L1:end (8 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1170:1605 (435 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:40 (40 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1820:2095 (276 lines read)
+
+● Check final git status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  └ 2 lines...
+
+Done: `sdks/browser4-cli/tests/e2e.rs` is now split into **9 smaller scenario-focused E2E cases plus coverage**, and the custom `harness = false` runner now prints **per-test durations**. I also extracted shared setup helpers and added **selective Browser4 restarts** so the split suite stays stable for the fragile keyboard/mouse flows while mock-only agent/collective cases skip unnecessary backend startup.
+
+I appended the task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md`. The monthly rollup already included the **2026-04-13** summary, so no monthly append was needed. Validation completed with the rebuilt `Browser4.jar` and a passing `cargo test --test e2e -- --nocapture` run showing **10 passed** with timing output for each case.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +312 -196
+Requests  1 Premium (47m 15s)
+Tokens    ↑ 2.7m • ↓ 25.1k • 2.6m (cached) • 10.6k (reasoning)
