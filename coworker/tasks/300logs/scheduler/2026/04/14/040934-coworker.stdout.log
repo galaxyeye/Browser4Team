@@ -1,0 +1,39 @@
+Starting Coworker Task Runner...
+[2026-04-14 04:09:35] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-14 04:09:35] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-14 04:09:35] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-14 04:09:35] [INFO] ===========================================================================
+[2026-04-14 04:09:35] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-14 04:09:35] [INFO] Started at: 04/14/2026 04:09:35
+[2026-04-14 04:09:35] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\040935-coworker.log
+[2026-04-14 04:09:35] [INFO] ==========================================================================
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: 1.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: 2.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: 3.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: 4.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: 5.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: README.md
+[2026-04-14 04:09:35] [INFO] [PREPARE] Task: README.zh.md
+Moving approved task to pushed: D:\workspace\Browser4Team\coworker\tasks\5approved\create-browser4-cli-installer.md
+[2026-04-14 04:09:35] [INFO] Task moved to pushed: D:\workspace\Browser4Team\coworker\tasks\6git-pushed\2026\0414\create-browser4-cli-installer.md
+[2026-04-14 04:09:35] [INFO] Executing commit script for approved tasks...
+Running:
+gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes in "D:\workspace\Browser4Team".
+Pull from remote.
+Then push to remote.
+If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check repo and submodule status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short --branch; Write-Host
+  │ '---SUBMODULES---'; git submodule foreach --recursive "git --no-pager status --short --branch"
+  └ 22 lines...
+
+I found a dirty submodule, so I’m syncing that first to keep the parent repo pull/push clean. After that I’ll commit the parent repo and update it against remote with automatic conflict preference to local changes.
+
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "chore:
+  │ update browser4 cli installer docs" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE };
+  │ git pull --no-rebase -X ours origin 4.7.x; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git
+  │ push origin 4.7.x
+  └ 23 lines...
+

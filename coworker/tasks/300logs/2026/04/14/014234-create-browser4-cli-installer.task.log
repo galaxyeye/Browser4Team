@@ -1,3 +1,25 @@
+Task: create-browser4-cli-installer
+Description: Task from create-browser4-cli-installer.md
+Original File: create-browser4-cli-installer.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-14 01:43:00
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\create-browser4-cli-installer.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -49,16 +71,10 @@
 ### Daily Rollup Update (through 2026-04-12)
 - **2026-04-12**: Improved `.github/workflows/ci.yml` so the `Check Test Status` stage always runs after the reusable test action, defaults a missing test status to `failed`, parses `TEST-*.xml` reports to print individual failing test cases, emits GitHub `::error` annotations for each failure, and appends a failed-test section to `$GITHUB_STEP_SUMMARY`. Key lesson: aggregate test counts are not enough for fast CI triage; surfacing per-test Surefire failures directly in the workflow makes failing runs immediately actionable.
 
-### Daily Rollup Reconciliation (through 2026-04-13)
-- **2026-04-01**: Repaired the agent-history REST coverage by exposing `CommandStatus.agentHistory` in JSON, adding serialization coverage, and polling async status instead of waiting on a long sync request. Key lesson: for slow agent-backed HTTP flows, prefer async polling and verify DTO serialization at the REST boundary.
-- **2026-04-04**: Added external-service support to the Rust `browser4-cli` E2E harness, pointed CI at the Docker-started Browser4 service, and removed stale `nodejs-sdk` wrapper-script assumptions in favor of cargo-based CLI testing. Key lesson: infrastructure-path changes need the harness, workflow wiring, and shared test scripts updated together.
-- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by restoring persisted selector focus before bare keyboard commands, then unified `close-all` and `kill-all` state cleanup behind one helper. Key lessons: cross-invocation browser actions need explicit persisted UI context, and parallel teardown paths should share one cleanup implementation.
-- **2026-04-06**: Fixed captured Copilot output in `gh-copilot.ps1` so `--silent` is applied for saved output, and created the implementation plan for external-service `browser4-cli` E2Es after reconciling the current harness/workflow behavior. Key lessons: persisted Copilot stdout must suppress CLI framing, and Dockerized test planning must account for host/container networking plus workflow order.
-- **2026-04-08**: Reworked `pulsar-rest` MCP tool listing to derive from live `AgentToolExecutor` specs, reuse an existing session when possible, and create a temporary discovery session otherwise, while filtering aliases and legacy helper names to only callable tools. Key lesson: discovery endpoints should use the same runtime registry and normalization path as execution.
-- **2026-04-09**: Moved high-level `agent`, `command`, and `crawl` tool packages under `tools.high.*`, fixed downstream imports/runtime listing behavior, and unified `command_*` MCP execution behind `AgentToolExecutor` with `CommandService` registered as the runtime target. Key lessons: cross-module namespace refactors need both compile-time and runtime-registry validation, and every advertised tool domain needs a real unified execution branch.
-- **2026-04-10**: Added then fully removed the temporary end-to-end `open-and-scroll-to-bottom` browser command after confirming it duplicated existing primitives and created disproportionate CLI/MCP/spec/test maintenance. Key lesson: one-off browser actions exposed through CLI, MCP aliases, generated specs, and tests are expensive to maintain, so short-lived test helpers should not become end-to-end product surface.
-- **2026-04-11**: Fixed `RobustBrowserAgent` step logging so `lastCall` comes from the previous step's executed tool call instead of the newly created step state, and repaired agentic skill regressions by restoring the stable `web-scraping` skill ID plus duplicate-ID enforcement in `SkillRegistry.register()`. Key lessons: cross-step diagnostics must read inherited execution state, skill IDs must stay stable across programmatic and resource-backed implementations, and targeted Maven verification in this environment is more reliable when the Kotlin daemon is disabled.
-- **2026-04-12**: Improved `.github/workflows/ci.yml` so the `Check Test Status` stage always runs after the reusable test action, defaults a missing test status to `failed`, parses `TEST-*.xml` reports to print individual failing test cases, emits GitHub `::error` annotations for each failure, and appends a failed-test section to `$GITHUB_STEP_SUMMARY`. Key lesson: aggregate test counts are not enough for fast CI triage; surfacing per-test Surefire failures directly in the workflow makes failing runs immediately actionable.
-- **2026-04-13**: Hardened `browser4-cli` Rust E2E readiness by improving local Browser4 startup checks, waiting for Chrome teardown in `kill_all_browsers()`, updating the E2E mock server for the current MCP command flow, and widening the retry window for transient startup errors. Key lesson: Browser4 CLI E2Es need MCP tool readiness, browser teardown, and harness protocol parity checked together or transport flakes will hide the next real failure.
-- No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
 
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\014234-create-browser4-cli-installer.copilot.log
