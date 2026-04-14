@@ -1,0 +1,179 @@
+Starting Coworker Task Runner...
+[2026-04-14 06:08:10] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-14 06:08:10] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-14 06:08:10] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-14 06:08:10] [INFO] ===========================================================================
+[2026-04-14 06:08:10] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-14 06:08:10] [INFO] Started at: 04/14/2026 06:08:10
+[2026-04-14 06:08:10] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\060810-coworker.log
+[2026-04-14 06:08:10] [INFO] ==========================================================================
+[2026-04-14 06:08:10] [INFO] Created missing draft placeholder: D:\workspace\Browser4Team\coworker\tasks\0draft\1.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: 1.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: 2.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: 3.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: 4.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: 5.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: README.md
+[2026-04-14 06:08:10] [INFO] [PREPARE] Task: README.zh.md
+[2026-04-14 06:08:10] [INFO] [PUSHED] Task: report-ci-test-failures.md (updated 04/12/2026 15:15:16)
+[2026-04-14 06:08:10] [INFO] [PUSHED] Task: fix-e2e-http-request-bug.md (updated 04/13/2026 21:25:34)
+[2026-04-14 06:08:10] [INFO] [PUSHED] Task: create-browser4-cli-installer.md (updated 04/14/2026 09:32:37)
+DEBUG: GH Stderr:  Changes   +0 -0 Requests  1 Premium (12s) Tokens    ↑ 18.9k • ↓ 56 • 1.5k (cached) • 43 (reasoning)
+[2026-04-14 06:08:36] [INFO] Renamed in created: 1.md -> remove-install-ps1-references.md
+[2026-04-14 06:08:36] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\remove-install-ps1-references.md
+[2026-04-14 06:08:36] [INFO] Memory context initialized via generator.
+[2026-04-14 06:08:36] [INFO] Executing Copilot for task: remove-install-ps1-references
+[2026-04-14 06:08:36] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-14 06:08:36] [INFO] === Starting Copilot execution ===
+I’m
+● Read remove-install-ps1-references.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\remove-install-ps1-references.md
+  └ 5 lines read
+● Check worktree status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+I found the task: remove `
+● Read install.ps1
+  │ sdks\browser4-cli\install.ps1
+  └ 539 lines read
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ 252 lines read
+● Read README.md
+  └ 398 lines read
+● Search (grep)
+  │ "install\.ps1|browser4-cli/install\.ps1"
+  └ 5 lines found
+The explicit `install.ps1` references are
+● Read install.sh
+  │ sdks\browser4-cli\install.sh
+  └ L1:220 (220 lines read)
+● Read README.md
+  │ browser4\browser4-agents\README.md
+  └ L1:220 (169 lines read)
+● Search (grep)
+  │ "Browser4\.jar|release asset|Windows installer|browser4-cli\.exe|install\.sh" in *.md
+  └ 42 lines found
+I’ve confirmed
+✗ Read MEMORY.20260414.md
+  │ coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ Path does not exist
+● Search (grep)
+  │ "release-asset fallback|Windows fallback|latest
+  │ release|browser4-cli\.exe|\.cargo\\bin|\.browser4\\lib" in *.md
+  └ 5 lines found
+● Search (grep)
+  │ "install\.ps1" in *
+  └ 5 lines found
+I didn’t find any alternate Windows installer already documented, so I’m switching the docs to a manual Windows path: download the release `
+● Edit
+  │ Edit sdks\browser4-cli\README.md
+  │ Edit README.md
+  │ Edit sdks\browser4-cli\install.sh
+  └ Delete sdks\browser4-cli\install.ps1
+The references are patched and the script is deleted. I’m doing a quick pass for any
+● Read README.md
+  └ L130:146 (17 lines read)
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L24:55 (32 lines read)
+● Search (grep)
+  │ "install\.ps1|browser4-cli-install\.ps1"
+  └ No matches found
+● Validate shell script and CLI tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; bash -n
+  │ sdks/browser4-cli/install.sh; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test --quiet
+  └ 3 lines...
+The Unix installer check tripped on Windows line endings in `install.sh`, so I’m
+● Inspect install.sh diff (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff --
+  │ sdks/browser4-cli/install.sh
+  └ 15 lines...
+● Check install.sh line endings (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; $bytes =
+  │ [System.IO.File]::ReadAllBytes('sdks\browser4-cli\install.sh'); $hasCRLF = $false; for ($i = 0;
+  │ $i -lt $bytes.Length - 1; $i++) { if ($bytes[$i] -eq 13 -and $bytes[$i+1] -eq 10) { $hasCRLF =
+  │ $true; break } }; if ($hasCRLF) { 'CRLF' } else { 'LF-or-other' }
+  └ 2 lines...
+● Edit
+  └ Edit README.md
+I’ve only got
+● Normalize install.sh to LF (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; $path =
+  │ 'sdks\browser4-cli\install.sh'; $content = Get-Content -Raw -Path $path; $content = $content
+  │ -replace "`r`n", "`n"; [System.IO.File]::WriteAllText((Resolve-Path $path), $content,
+  │ (New-Object System.Text.UTF8Encoding($false)))
+  └ 1 line...
+● Recheck install.sh line endings (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; $bytes =
+  │ [System.IO.File]::ReadAllBytes('sdks\browser4-cli\install.sh'); $hasCRLF = $false; for ($i = 0;
+  │ $i -lt $bytes.Length - 1; $i++) { if ($bytes[$i] -eq 13 -and $bytes[$i+1] -eq 10) { $hasCRLF =
+  │ $true; break } }; if ($hasCRLF) { 'CRLF' } else { 'LF-or-other' }
+  └ 2 lines...
+● Read README.md
+  └ L133:143 (10 lines read)
+● Check final worktree status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  └ 5 lines...
+● Re-run shell syntax check and CLI tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; bash -n
+  │ sdks/browser4-cli/install.sh; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test --quiet
+  └ 75 lines...
+The codebase cleanup is done. I’m updating the required daily memory entry now, and
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 4 lines read
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 63 lines read
+● Search (grep)
+  │ "2026-04-13|2026-04-14" in MEMORY.202604*.md
+  │ (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04)
+  └ 4 lines found
+The monthly rollup already includes the 2026
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 4 lines read
+● Append daily memory entry (shell)
+  │ $path = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md';
+  │ Add-Content -Path $path -Value "`r`n- Removed the obsolete \\`sdks/browser4-cli/install.ps1\\`
+  │ installer, deleted all remaining code/docs references to it, and rewrote the Windows CLI
+  │ installation guidance to use the latest released \\`Browser4.jar\\` plus manual \\`cargo
+  │ install --path . --locked\\` setup. Also updated the Unix installer error message so Windows …
+  └ 4 lines...
+I’ve written the daily memory entry; I’m just verifying the
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 6 lines read
+● Inspect final diff (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager diff -- README.md
+  │ sdks/browser4-cli/README.md sdks/browser4-cli/install.sh sdks/browser4-cli/install.ps1
+  └ 14 lines...
+The memory append landed with escaped slashes from PowerShell quoting, so I’m fixing that formatting and then
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 6 lines read
+● Search (grep)
+  │ "install\.ps1|browser4-cli-install\.ps1"
+  └ No matches found
+Completed: `sdks/browser4-cli/install.ps1` was removed, every in-repo reference to it was deleted, and the install docs now point Windows
+The required memory update is
+One validation caveat: the CLI unit/integration tests passed, but `cargo test --quiet` still hits
+
+[STDERR OUTPUT]
+Changes   +20 -565
+Requests  1 Premium (8m 44s)
+Tokens    ↑ 780.0k • ↓ 7.2k • 726.0k (cached) • 2.4k (reasoning)
+[2026-04-14 06:17:33] [INFO] Copilot execution finished with exit code 0
+[2026-04-14 06:17:33] [INFO] === Copilot execution completed ===
+[2026-04-14 06:17:33] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0414\remove-install-ps1-references.md
+[2026-04-14 06:17:33] [INFO] ---
+[2026-04-14 06:17:33] [INFO] ===========================================================================
+[2026-04-14 06:17:33] [INFO] All tasks completed
+[2026-04-14 06:17:33] [INFO] Ended at: 04/14/2026 06:17:33
+[2026-04-14 06:17:33] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\060810-coworker.log
+[2026-04-14 06:17:33] [INFO] ==========================================================================
