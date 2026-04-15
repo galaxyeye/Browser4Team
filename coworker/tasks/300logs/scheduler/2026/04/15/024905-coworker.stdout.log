@@ -52,3 +52,14 @@ The submodule is synced; I’m updating the parent repo now so its submodule poi
   │ git add -A;…
   └ 49 lines...
 
+One scheduler log changed during the push itself, so I’m folding that trailing update into one last sync pass to leave the remote current.
+
+● Commit and push any trailing repo changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team';
+  │ $branch = git rev-parse --abbrev-ref HEAD;
+  │ Start-Sleep -Seconds 2;
+  │ $changes = git status --porcelain;
+  │ if ($changes) {…
+  └ 32 lines...
+
+The only remaining drift is the live scheduler stdout log generated while I’m working. I’m doing one quiet final pass so that file’s latest contents are also pushed.
