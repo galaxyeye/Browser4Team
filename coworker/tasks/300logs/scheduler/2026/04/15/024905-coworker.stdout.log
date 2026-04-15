@@ -42,3 +42,13 @@ I found local changes in both the parent repo and `submodules\Browser4`, so I’
   │ git add -A;…
   └ 34 lines...
 
+The submodule is synced; I’m updating the parent repo now so its submodule pointer and other local changes land together.
+
+● Commit, pull, and push parent repository (shell)
+  │ Set-Location 'D:\workspace\Browser4Team';
+  │ $branch = git rev-parse --abbrev-ref HEAD;
+  │ $hasChanges = (git status --porcelain | Measure-Object -Line).Lines -gt 0;
+  │ if ($hasChanges) {
+  │ git add -A;…
+  └ 49 lines...
+
