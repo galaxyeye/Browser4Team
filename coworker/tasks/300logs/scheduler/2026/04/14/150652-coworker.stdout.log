@@ -65,3 +65,29 @@ The submodule is synced. I’m committing the parent repo now, then pulling with
 
 A scheduler log changed after the first push, so I’m folding that last generated file into one final sync to leave the repo fully up to date.
 
+● Commit and push any final generated changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; if (-not (git diff --quiet) -or -not (git diff
+  │ --cached --quiet) -or -not [string]::IsNullOrWhiteSpace((git ls-files --others
+  │ --exclude-standard))) { git add -A; if (-not (git diff --cached --quiet)) { git commit -m
+  │ "Update generated logs" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"; git pull --no-rebase -X ours origin main; git …
+  └ 21 lines...
+
+● Memory stored git workflow
+  └ When syncing this repo, commit and push dirty submodules like submodules/Browser…
+
+Done: everything in `D:\workspace\Browser4Team` is committed, pulled, and pushed, and the repo is now aligned with `origin/main`.
+
+**Synced commits:** parent repo `550c9b4` on `main`; dirty submodule `submodules\Browser4` was committed and pushed first at `29b33a9f6` on `4.7.x`. No manual conflict resolution was needed; pulls completed cleanly with automatic local-preference conflict handling enabled.
+
+[2026-04-14 15:09:52] [INFO] Git sync executed successfully.
+[2026-04-14 15:09:52] [INFO] [PUSHED] Task: fix-e2e-http-request-bug.md (updated 04/13/2026 21:25:34)
+[2026-04-14 15:09:52] [INFO] [PUSHED] Task: create-browser4-cli-installer.md (updated 04/14/2026 09:32:37)
+[2026-04-14 15:09:52] [INFO] [PUSHED] Task: refactor-e2e-test-cases.md (updated 04/14/2026 21:57:41)
+[2026-04-14 15:09:52] [INFO] [PUSHED] Task: remove-install-ps1-references.md (updated 04/14/2026 14:08:09)
+[2026-04-14 15:09:52] [INFO] [PUSHED] Task: run-cli-tests-first.md (updated 04/14/2026 22:03:49)
+[2026-04-14 15:09:52] [INFO] ===========================================================================
+[2026-04-14 15:09:52] [INFO] All tasks completed
+[2026-04-14 15:09:52] [INFO] Ended at: 04/14/2026 15:09:52
+[2026-04-14 15:09:52] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\150652-coworker.log
+[2026-04-14 15:09:52] [INFO] ==========================================================================

@@ -1,0 +1,282 @@
+I’m pulling in the task details and checking the current tree so I can implement it cleanly without trampling unrelated work.
+
+● Read implement-batch-command-execution.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\implement-batch-command-execution.md
+  └ 21 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I have the task surface now. Next I’m tracing how `browser4-cli` defines commands, dispatches them, and handles stdin/JSON so the new batch path fits the existing CLI patterns.
+
+● Create task todos (sql)
+  │ CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, title TEXT NOT NULL, desc…
+  └ Executed 3 statement(s)
+
+● Search (grep)
+  │ "batch|stdin|json|all_commands|CommandDef|no_snapshot_commands|tool_params_fn|ensure_server_runn
+  │ ing|dispatch" in **/*.{rs,md} (sdks\browser4-cli)
+  └ 10 files found
+
+● Search (glob)
+  │ "sdks/browser4-cli/src/*"
+  └ 10 files found
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1:320 (320 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1:420 (420 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L420:980 (561 lines read)
+
+● Read args.rs
+  │ sdks\browser4-cli\src\args.rs
+  └ L1:360 (226 lines read)
+
+● Read help.rs
+  │ sdks\browser4-cli\src\help.rs
+  └ L1:260 (220 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (260 lines read)
+
+I’ve confirmed the CLI is table-driven and already has centralized dispatch/state helpers, so the cleanest change is to add a synthetic `batch` command plus one execution path that reuses existing per-command handlers.
+
+● Search (grep)
+  │ "pub fn commands_map|HashMap<.*CommandDef|commands_map\(" (sdks\browser4-cli\src\commands.rs)
+  └ 23 lines found
+
+● Search (grep)
+  │ "commands_map|match command_name|no_snapshot_commands\(|handle_.*\(|build_command_args\(|parse_r
+  │ aw_args\(|generate_command_help|submit_plain_command" (sdks\browser4-cli\src\main.rs)
+  └ 58 lines found
+
+● Search (grep)
+  │ "COMMANDS_COVERED|EXCLUDED_COMMANDS|all_commands\(|scenario|run_cli|browser4-cli batch"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 31 lines found
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1280:1508 (229 lines read)
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L860:1188 (329 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L880:980 (101 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1180:1935 (637 lines read)
+
+I’ve got enough context to implement this without guessing. Before editing, I’m taking a quick baseline on the CLI crate so any failures after the change are attributable.
+
+● Todo started inspect-batch-surface
+
+● Baseline Maven compile (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -q -D"skipTests"
+  │ compile
+  └ 2 lines...
+
+● Baseline browser4-cli tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --quiet
+  └ 50 lines...
+
+The baseline is clean so far; while those longer checks finish, I’m reading the remaining CLI edges that affect a multi-command runner: server startup gating, help text, and how the test harness could exercise stdin.
+
+✗ Read plan.md
+  │ ~\.copilot\session-state\c199bbfd-559a-4056-8e97-999de6e4c63b\plan.md
+  └ Path does not exist
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L1:260 (246 lines read)
+
+● Search (grep)
+  │ "stdin|Stdio::null|output\(|ensure_server_running|should_ensure_server_running|help|Usage:
+  │ browser4-cli" in **/*.rs (sdks\browser4-cli\src)
+  └ 91 lines found
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1813:1935 (122 lines read)
+
+The CLI baseline finished cleanly. I’m checking the remaining parsing surface now so the batch mode can accept both quoted command strings and JSON stdin without introducing ad-hoc parsing.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 2 lines...
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ L1:220 (34 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1200:1288 (89 lines read)
+
+● Search (grep)
+  │ "serde_json::from_str::<Value>|std::io::stdin|stdin\(|shell_words|split" in **/*.rs
+  │ (sdks\browser4-cli\src)
+  └ 5 lines found
+
+● Read shell output Waiting up to 1 second for command output
+  └ 50 lines...
+
+I’ve settled the implementation shape: make `batch` a first-class CLI command for help/coverage, but handle it in `run()` so each subcommand still flows through the existing handlers, session recovery, and snapshot rules.
+
+● Todo started validate-batch-command
+
+● Read lib.rs
+  │ sdks\browser4-cli\src\lib.rs
+  └ L1:80 (5 lines read)
+
+● Edit
+  └ Create ~\.copilot\session-state\c199bbfd-559a-4056-8e97-999de6e4c63b\plan.md
+
+● Edit
+  └ Edit sdks\browser4-cli\src\args.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\src\commands.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\src\main.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\src\help.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\README.md
+
+I caught one subtle mismatch while wiring docs and tests: the task’s JSON example treats batch entries as normal CLI argv, so I’m checking whether any existing commands need compatibility handling in batch mode rather than just string-splitting and recursion.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 61 lines...
+
+● Search (grep)
+  │ "name: "screenshot"|name: "snapshot"|filename|ArgDef \{ name: "ref""
+  │ (sdks\browser4-cli\src\commands.rs)
+  └ 20 lines found
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1936:2145 (200 lines read)
+
+● Search (grep)
+  │ "SCENARIOS|ScenarioDef|test_e2e_batch|test_batch_commands" (sdks\browser4-cli\tests\e2e.rs)
+  └ 17 lines found
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\README.md
+
+● Edit
+  └ Edit sdks\browser4-cli\src\args.rs
+
+The code path is in place. I’m formatting and running focused Rust tests next, then a scoped E2E scenario for the new batch flow before I do the broader crate pass.
+
+● Todo started validate-batch-command
+
+● Format browser4-cli Rust code (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt
+  └ 149 lines...
+
+● Edit
+  └ Edit sdks\browser4-cli\src\args.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Format and run browser4-cli tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test --quiet
+  └ 49 lines...
+
+Unit coverage is green and the new batch E2E has started; I’m waiting on the long-running browser-backed portion now, then I’ll do the final repository pass and memory update.
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 51 lines...
+
+● Post-change Maven compile (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -q -D"skipTests"
+  │ compile
+  └ 2 lines...
+
+The new batch scenario passed; the remaining existing browser-backed scenarios are still finishing, and the Maven post-change compile already came back clean.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 1 line...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 72 lines...
+
+Validation is done. I’m doing the final housekeeping now: checking the exact diff, then appending today’s memory entry and confirming the monthly rollup is already current through yesterday.
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 63 lines read
+
+● Read MEMORY.20260414.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+  └ 10 lines read
+
+● Search (glob)
+  │ "2026\04\*\MEMORY.202604*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  └ No matches found
+
+● Review final diff (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short &&
+  │ git --no-pager diff -- sdks/browser4-cli/src/args.rs sdks/browser4-cli/src/commands.rs
+  │ sdks/browser4-cli/src/help.rs sdks/browser4-cli/src/main.rs sdks/browser4-cli/tests/e2e.rs
+  │ sdks/browser4-cli/README.md
+  └ 14 lines...
+
+The monthly memory is already rolled up through 2026-04-13, so only today’s daily entry needs an append. I’m writing that and closing out the task state.
+
+✔ Todo completed 2 items
+  │ implement-batch-command
+  └ validate-batch-command
+
+● Read plan.md
+  │ ~\.copilot\session-state\c199bbfd-559a-4056-8e97-999de6e4c63b\plan.md
+  └ 5 lines read
+
+● Edit
+  └ Edit ~\.copilot\session-state\c199bbfd-559a-4056-8e97-999de6e4c63b\plan.md
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md
+
+I’ve written the daily memory append. I’m just pulling a concise final status of the changed files, then I’ll hand back the completed result.
+
+● Summarize final changes (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short &&
+  │ git --no-pager diff --stat -- sdks/browser4-cli/README.md sdks/browser4-cli/src/args.rs
+  │ sdks/browser4-cli/src/commands.rs sdks/browser4-cli/src/help.rs sdks/browser4-cli/src/main.rs
+  │ sdks/browser4-cli/tests/e2e.rs
+  └ 18 lines...
+
+Implemented `browser4-cli batch` in `sdks/browser4-cli` with both requested input modes: quoted full-command arguments and `--json` stdin arrays. The new path reuses normal CLI dispatch, inherits top-level `--server` / `-s` into nested commands, supports `--bail` fail-fast behavior, and is wired into the command catalog, help output, README usage, parsing tests, and the browser-backed E2E suite.
+
+I also appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md`. The monthly memory file already included the 2026-04-13 rollup, so no monthly append was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +638 -32
+Requests  1 Premium (22m 18s)
+Tokens    ↑ 2.7m • ↓ 22.9k • 2.6m (cached) • 10.3k (reasoning)
