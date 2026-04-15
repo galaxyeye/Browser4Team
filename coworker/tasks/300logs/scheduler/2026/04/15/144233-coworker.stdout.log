@@ -22,3 +22,28 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+● Check repo and submodule status (shell)
+  │ git --no-pager status --short --branch && git submodule foreach --recursive "git --no-pager
+  │ status --short --branch"
+  └ 27 lines...
+
+I found a dirty parent repo and a dirty `submodules\Browser4`, so I'm syncing the submodule first, then I'll commit and sync the parent pointer and remaining changes.
+
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ function Commit-IfNeeded($repoPath, $message) {
+  │ git -C $repoPath add -A
+  │ $status = git -C $repoPath status --porcelain
+  │ if ($status) {…
+  └ 71 lines...
+
+A scheduler log changed during the push, so the repo isn't clean yet. I'm checking whether it's still moving and then I'll do one final sync pass.
+
+● Check if log file is still changing (shell)
+  │ $path = 'D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\15\144233-coworker.s
+  │ tdout.log'; if (Test-Path $path) { $a = Get-Item $path | Select-Object Length, LastWriteTimeUtc;
+  │ Start-Sleep -Seconds 5; $b = Get-Item $path | Select-Object Length, LastWriteTimeUtc;
+  │ Write-Output 'FIRST'; $a; Write-Output 'SECOND'; $b }; git -C 'D:\workspace\Browser4Team'
+  │ --no-pager status --short --branch
+  └ 10 lines...
+
