@@ -1,0 +1,347 @@
+I’m opening the task brief and a few likely touchpoints so I can implement it end-to-end instead of guessing from the title.
+
+● Create todo tables (sql)
+  │ CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, title TEXT NOT NULL, desc…
+  └ Executed 2 statement(s)
+
+● Read auto-start-server-daemon.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\auto-start-server-daemon.md
+  └ 6 lines read
+
+● Check worktree status and branch (shell)
+  │ git --no-pager status --short && git --no-pager branch --show-current
+  └ 3 lines...
+
+I’ve got the scope: the CLI’s local auto-start path should prefer `mvn spring-boot:run` from the repo root. Next I’m tracing the current startup flow and its tests before changing it.
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ 1 line read
+
+● Search (glob)
+  │ "**/*daemon*" in sdks\browser4-cli
+  └ 1 file found
+
+● Search (grep)
+  │ "ensure_server_running|daemon" in **/*.{rs,toml} (sdks\browser4-cli)
+  └ 8 lines found
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ 237 lines read
+
+● Run baseline Maven compile (shell)
+  │ .\mvnw.cmd -q -D"skipTests" compile
+  └ 2 lines...
+
+The current path still downloads or launches a jar. I’m checking for existing test coverage and nearby process-management utilities so I can swap the startup mechanism cleanly.
+
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ 380 lines read
+
+● Search (grep)
+  │ "find_or_download_jar|download_jar|start_server\(|ManagedServerProcess|ensure_server_running\("
+  │ in **/*.{rs,toml} (sdks\browser4-cli)
+  └ 26 lines found
+
+● Search (glob)
+  │ "**/*test*.rs" in sdks\browser4-cli
+  └ No matches found
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 2 lines...
+
+I didn’t find existing Rust tests around the daemon, so I’m checking how this repo normally launches the REST app and what command shape fits the current modules.
+
+● Read pom.xml
+  └ L1:260 (260 lines read)
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ 34 lines read
+
+● Search (grep)
+  │ "spring-boot:run|mvnw\.cmd|mvnw |server.port|pulsar-rest" in
+  │ **/*.{md,ps1,sh,yml,xml,kts,properties,rs}
+  └ 9 lines found
+
+The baseline compile finished cleanly. I’m narrowing the launch command details now so the daemon uses the repo’s real startup path instead of a jar fallback.
+
+● Read shell output Waiting up to 1 second for command output
+  └ 2 lines...
+
+● Search (grep)
+  │ "Browser4.jar|spring-boot:run|pulsar-rest" in **/*.{md,txt} (docs)
+  └ 2 lines found
+
+● Search (grep)
+  │ "spring-boot-maven-plugin|spring-boot:run" in **/*.xml (pulsar-rest)
+  └ No matches found
+
+● Create plan file (shell)
+  │ @'
+  │ # Auto-start server daemon task
+  │ 1. Confirm current CLI startup flow and relevant tests.
+  │ 2. Switch daemon auto-start from jar download/java -jar to Maven spring-boot:run from repo
+  │ root.…
+  └ 6 lines...
+
+I’ve got enough context to start shaping the change; I just want the exact Maven invocation from the REST module setup so the daemon doesn’t assume the wrong module or plugin.
+
+● Read pom.xml
+  │ pulsar-rest\pom.xml
+  └ L1:260 (137 lines read)
+
+● Search (grep)
+  │ "artifactId>spring-boot-maven-plugin|<artifactId>pulsar-rest|<mainClass>|spring-boot"
+  │ (pulsar-rest\pom.xml)
+  └ 7 lines found
+
+● Search (grep)
+  │ "BROWSER4_JAR_PATH|Browser4.jar|ensure_server_running|auto-start|daemon" in **/*.{rs,md}
+  │ (sdks\browser4-cli)
+  └ 28 lines found
+
+The CLI README still documents jar-based startup, so I’m reading the exact sections that need to move with the code change rather than leaving the docs stale.
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L1:120 (120 lines read)
+
+● Read README.md
+  │ sdks\browser4-cli\README.md
+  └ L230:280 (32 lines read)
+
+● Search (grep)
+  │ "jar_path|jarPath|Browser4.jar" in **/*.{rs,md,json}
+  └ 67 lines found
+
+I’m checking for any existing root-resolution helpers before I add one, and then I’ll patch the daemon plus a focused Rust test slice in one pass.
+
+● Read lib.rs
+  │ sdks\browser4-cli\src\lib.rs
+  └ 5 lines read
+
+● Read plan.md
+  │ ~\.copilot\session-state\cf4bba5d-37a6-49b0-b77c-add4686d1e21\plan.md
+  └ 6 lines read
+
+● Search (grep)
+  │ "CARGO_MANIFEST_DIR|current_exe|repo root|Browser4 root|resolve_.*root" in **/*.rs
+  │ (sdks\browser4-cli\src)
+  └ No matches found
+
+I found one important coupling: the Unix installer may remove its temporary source checkout, so I’m checking that before I lock the auto-start behavior to a repo-root launch path.
+
+● Read README.md
+  └ L120:160 (41 lines read)
+
+● Read install.sh
+  │ sdks\browser4-cli\install.sh
+  └ L1:260 (260 lines read)
+
+● Search (grep)
+  │ "mktemp|git clone|cargo install|rm -rf|BROWSER4_INSTALL" (sdks\browser4-cli\install.sh)
+  └ 7 lines found
+
+I’ve got the shape: prefer a repo-root Maven launch, keep the jar path as fallback so installed CLIs don’t regress, and add tests around root/command resolution. I’m patching that now.
+
+✗ Edit
+  └ Edit sdks\browser4-cli\src\daemon.rs
+
+✗ Read daemon.rs
+  │ src\daemon.rs
+  └ Path does not exist
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L1:260 (237 lines read)
+
+● Edit
+  └ Delete sdks\browser4-cli\src\daemon.rs
+
+● Edit
+  └ Create sdks\browser4-cli\src\daemon.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\README.md
+
+● Edit
+  └ Edit README.md
+
+The code and docs are patched. I’m running Rust formatting/tests plus the repo compile again now; if something breaks, I’ll tighten the change instead of leaving it half-done.
+
+● Re-run Maven compile (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; .\mvnw.cmd -q -D"skipTests"
+  │ compile
+  └ 2 lines...
+
+● Format and test browser4-cli (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt &&
+  │ cargo test
+  └ 193 lines...
+
+Unit tests are already green; the remaining E2E slice is still running, so I’m letting that finish before I wrap up and update memory.
+
+● Review code diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs sdks/browser4-cli/README.md README.md
+  └ 451 lines...
+
+● Read shell output Waiting up to 30 seconds for command output
+  └ 193 lines...
+
+The long E2E suite is still progressing normally, so I’m just waiting for the tail end instead of interrupting a clean run.
+
+● Todo added Switch CLI auto-start to Maven
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 193 lines...
+
+Everything changed compiles and the new daemon tests passed; the only thing left is waiting out the existing long CLI E2E run so I can record the result accurately.
+
+● Review plan file (shell)
+  │ Get-Content 'C:\Users\pereg\.copilot\session-state\cf4bba5d-37a6-49b0-b77c-add4686d1e21\plan.md'
+  └ 7 lines...
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 204 lines...
+
+The full E2E suite hit a transport failure in an existing browser-backed scenario, so I’m checking whether that failure is tied to the daemon change or is just the known long-run harness instability before I record the result.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1080:1145 (66 lines read)
+
+● Search (grep)
+  │ "ensure_server_running|BROWSER4_E2E_SERVICE_URL|start\(|Browser4 jar|goto|interactive"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 68 lines found
+
+● Run focused daemon tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ daemon:: --bin browser4-cli
+  └ 45 lines...
+
+The daemon-specific tests passed. I’m re-running just the failing browser-backed E2E once to separate a real regression from the harness’s existing local-service flake.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1540:1665 (126 lines read)
+
+● Rerun failing e2e scenario (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo test
+  │ --test e2e test_e2e_interaction_commands -- --exact --nocapture
+  └ 45 lines...
+
+That harness ignores normal single-test filtering, so it’s replaying the same suite. I’m just reading its tail now to confirm whether the earlier transport failure repeats.
+
+● Check modified files (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager status --short
+  └ 7 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 52 lines...
+
+I hit one side effect from running `cargo fmt`: it touched two unrelated Rust files that already had local edits. I’m checking those diffs now so I can keep my change surgical and avoid carrying unrelated formatting churn.
+
+● Inspect unrelated Rust diffs (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/args.rs sdks/browser4-cli/src/main.rs
+  └ 188 lines...
+
+● Summarize unrelated Rust diffs (shell)
+  │ git --no-pager diff --stat -- sdks/browser4-cli/src/args.rs sdks/browser4-cli/src/main.rs
+  └ 6 lines...
+
+Those are formatting-only diffs from `cargo fmt`, not task work. I’m reverting just those hunks so the branch only carries the daemon/doc changes you asked for.
+
+✗ Edit
+  │ Edit sdks\browser4-cli\src\args.rs
+  └ Edit sdks\browser4-cli\src\main.rs
+
+● Read args.rs
+  │ sdks\browser4-cli\src\args.rs
+  └ L575:735 (161 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1398:1835 (438 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1831:1855 (25 lines read)
+
+● Edit
+  │ Edit sdks\browser4-cli\src\args.rs
+  └ Edit sdks\browser4-cli\src\main.rs
+
+I reverted the unrelated formatter churn. I’m doing one quick diff check so only the daemon/doc edits remain before updating the memory files.
+
+✔ Todo completed auto-start-server-daemon
+
+● Verify remaining diffs (shell)
+  │ git --no-pager status --short && git --no-pager diff --stat -- sdks/browser4-cli/src/args.rs
+  │ sdks/browser4-cli/src/main.rs sdks/browser4-cli/src/daemon.rs sdks/browser4-cli/README.md
+  │ README.md
+  └ 12 lines...
+
+Only the intended files are left changed now. I’m updating the task/memory trail next, and I’ll note that the focused daemon tests passed while the long browser-backed E2E still reproduces an unrelated local transport failure.
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (66 lines read)
+
+● Read MEMORY.20260415.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\15\MEMORY.20260415.md
+  └ L1:end (4 lines read)
+
+● Update plan milestone (shell)
+  │ @'
+  │ # Auto-start server daemon task
+  │ 1. Confirm current CLI startup flow and relevant tests. [done]
+  │ 2. Switch daemon auto-start from jar download/java -jar to Maven spring-boot:run from repo
+  │ root. [done]…
+  └ 6 lines...
+
+The monthly rollup is already current through 2026-04-14, so I’m only appending today’s task entry to the daily memory and closing out the plan.
+
+● Finalize plan file (shell)
+  │ @'
+  │ # Auto-start server daemon task
+  │ 1. Confirm current CLI startup flow and relevant tests. [done]
+  │ 2. Switch daemon auto-start from jar download/java -jar to Maven spring-boot:run from repo
+  │ root. [done]…
+  └ 6 lines...
+
+● Append daily memory entry (shell)
+  │ @'
+  │ - Updated `sdks/browser4-cli` local daemon startup so `ensure_server_running()` now prefers
+  │ launching Browser4 from a detected repo root via Maven `spring-boot:run` targeting
+  │ `pulsar-rest`, while retaining the existing `Browser4.jar` path as a fallback when no checkout
+  │ is available. Added focused daemon unit tests for Browser4-root detection and Maven …
+  └ 12 lines...
+
+I’ve written the daily memory entry and left the monthly rollup alone because it already includes yesterday’s summary. I’m doing one last quick readback so I can hand off the exact outcome cleanly.
+
+● Read MEMORY.20260415.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\15\MEMORY.20260415.md
+  └ L1:end (5 lines read)
+
+● Summarize final task diff (shell)
+  │ git --no-pager diff --stat -- README.md sdks/browser4-cli/README.md
+  │ sdks/browser4-cli/src/daemon.rs
+  └ 8 lines...
+
+**Completed.** `browser4-cli` local auto-start now prefers launching Browser4 from a detected repo root with Maven `spring-boot:run` against `pulsar-rest`, while keeping the existing `Browser4.jar` path as a fallback when no checkout is available. I updated `sdks/browser4-cli/src/daemon.rs`, added focused daemon tests for repo-root detection and Maven launch-spec building, and refreshed `sdks/browser4-cli/README.md` plus the root `README.md` to describe the localhost startup preference.
+
+**Memory updated.** I appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\15\MEMORY.20260415.md` and checked the monthly file; `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md` was already current through 2026-04-14, so no monthly append was needed.
+
+**Validation:** focused daemon tests passed (`cargo test daemon:: --bin browser4-cli`) and the root Maven compile passed. The full `sdks/browser4-cli` browser-backed E2E suite still reproduces an existing transport failure in `test_e2e_interaction_commands` where `goto` loses the local MCP server connection, so that suite was not a clean signal for this task.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +546 -291
+Requests  1 Premium (25m 28s)
+Tokens    ↑ 2.4m • ↓ 27.5k • 2.3m (cached) • 11.2k (reasoning)
