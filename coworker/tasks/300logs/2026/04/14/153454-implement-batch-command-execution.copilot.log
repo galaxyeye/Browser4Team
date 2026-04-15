@@ -269,9 +269,13 @@ I’ve written the daily memory append. I’m just pulling a concise final statu
   │ sdks/browser4-cli/tests/e2e.rs
   └ 18 lines...
 
-Implemented `browser4-cli batch` in `sdks/browser4-cli` with both requested input modes: quoted full-command arguments and `--json` stdin arrays. The new path reuses normal CLI dispatch, inherits top-level `--server` / `-s` into nested commands, supports `--bail` fail-fast behavior, and is wired into the command catalog, help output, README usage, parsing tests, and the browser-backed E2E suite.
+Implemented `browser4-cli batch` in `sdks/browser4-cli` with both requested input modes: quoted full-command arguments
+and `--json` stdin arrays. The new path reuses normal CLI dispatch, inherits top-level `--server` / `-s` into nested commands,
+supports `--bail` fail-fast behavior, and is wired into the command catalog, help output, README usage, parsing tests,
+and the browser-backed E2E suite.
 
-I also appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md`. The monthly memory file already included the 2026-04-13 rollup, so no monthly append was needed.
+I also appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\14\MEMORY.20260414.md`.
+The monthly memory file already included the 2026-04-13 rollup, so no monthly append was needed.
 
 
 === COPILOT STDERR ===
