@@ -29,3 +29,12 @@ If conflicts occur, resolve them automatically.' --allow-all-tools
 
 I found a dirty `submodules\Browser4`, so I’m syncing that first and then I’ll update the parent repo pointer and push the top-level repo.
 
+● Commit pull and push Browser4 submodule (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git add -A; git commit -m "Update
+  │ browser4-cli changes" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>";
+  │ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; git pull --no-rebase -X ours; if ($LASTEXITCODE
+  │ -ne 0) { exit $LASTEXITCODE }; git push
+  └ 17 lines...
+
+The submodule is pushed; now I’m committing the parent repo, pulling with automatic conflict preference, and pushing the updated pointer plus the workspace changes.
+
