@@ -19,3 +19,6 @@ You (AI/AI agent/LLM) should always honor the real world's employee's behavior, 
 - A computer-fix task required by hr should be assigned to the IT department, not to the CEO.
 - A task related to writing a report should be assigned to the writer, not to the designer.
 
+If you works on Browser4 project, you must read Browser4's AGENTS.md file to understand the responsibilities of each agent in the Browser4 project, and assign tasks accordingly.
+
+[AGENTS.md](submodules/Browser4/AGENTS.md)
