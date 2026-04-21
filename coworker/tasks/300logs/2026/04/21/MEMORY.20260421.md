@@ -1,0 +1,4 @@
+# MEMORY.20260421.md
+## Daily Memory - 2026-04-21
+
+- Added more `browser4-cli` Rust E2E coverage inside `test_batch_commands` for batch `--json` input. The main batch scenario now covers a full JSON-driven open/type/fill/click flow plus a follow-up JSON string-only batch against the active session, so stdin JSON is exercised in the core happy-path test instead of only after a separately opened session. Lesson: the primary batch E2E should prove both JSON array entries and string-form stdin commands end-to-end, not leave full JSON-open coverage only to edge-case helpers. Validation note: root Maven compile passed and the updated Rust E2E compiled, but browser-backed runtime confirmation remained blocked by an existing local Browser4 startup/transport failure during the test's original first batch call.

@@ -1,3 +1,25 @@
+Task: add-batch-json-input-tests
+Description: Task from add-batch-json-input-tests.md
+Original File: add-batch-json-input-tests.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-21 15:44:19
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\add-batch-json-input-tests.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21\MEMORY.20260421.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21\MEMORY.20260421.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -65,6 +87,10 @@
 ### Daily Rollup Update (through 2026-04-14)
 - **2026-04-14**: Added a Unix `sdks/browser4-cli/install.sh` installer for Java/Chrome/Rust plus the latest Browser4 release artifacts, removed the obsolete Windows `install.ps1` path in favor of explicit manual setup guidance, refactored the Rust `browser4-cli` E2E harness into smaller scenario-focused runs with timing output and stable restart boundaries, reordered CI so the Docker-backed CLI E2E runs before the broader Maven test stage, and initially implemented `browser4-cli batch` as a frontend-dispatched multi-command flow with argument mode, JSON stdin mode, and `--bail` coverage. Key lessons: keep release-tagged install artifacts aligned across mixed binary/source surfaces, remove retired install paths and their documentation together, preserve stable browser-state boundaries when splitting large E2E suites, run the most predictive end-to-end suite early in CI, and when introducing a meta-command reuse the normal CLI dispatch path first so its existing state and alias semantics stay coherent.
 
-### Daily Rollup Update (through 2026-04-20)
-- **2026-04-15**: Reworked `browser4-cli batch` into a real backend-executed flow by compiling CLI batch commands into one `command_batch` request, preserving local session/selector/mouse state around the response, saving snapshot/screenshot artifacts from structured per-step results, and updating localhost daemon startup to prefer launching the in-repo Browser4 server via Maven with the packaged JAR retained as fallback. Key lessons: keep the CLI as the syntax/state adapter while moving batched execution to one backend request, model composite commands like `open <url>` as one logical CLI command backed by multiple internal steps, and prefer the matching repo checkout for localhost startup without regressing installed-binary fallback behavior.
-- No daily memory files were present for 2026-04-16 through 2026-04-20.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21\154338-add-batch-json-input-tests.copilot.log
