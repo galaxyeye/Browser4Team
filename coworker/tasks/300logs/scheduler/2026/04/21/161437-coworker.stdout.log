@@ -22,3 +22,47 @@ gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes 
 Pull from remote.
 Then push to remote.
 If conflicts occur, resolve them automatically.' --allow-all-tools
+I’m checking the repo state and the Browser4 agent instructions first so I can sync everything cleanly, including any dirty submodules.
+
+● Read AGENTS.md
+  └ 24 lines read
+
+● Read AGENTS.md
+  │ submodules\Browser4\AGENTS.md
+  └ 441 lines read
+
+● Check git status in repo and Browser4 submodule (shell)
+  │ git --no-pager status --short --branch && Write-Host '---SUBMODULES---' &&
+  │ git submodule status && Write-Host '---BROWSER4 STATUS---' && git -C
+  │ submodules\Browser4 --no-pager status --short --branch
+  └ 19 lines...
+
+I found a dirty `submodules\Browser4`, so I’m syncing that first and then updating the parent repo to avoid leaving the submodule pointer behind.
+
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference='Stop'
+  │
+  │ function Commit-IfNeeded([string]$RepoPath, [string]$Message) {
+  │ Push-Location $RepoPath
+  │ try {…
+  └ 108 lines...
+
+The sync script tripped on a PowerShell string interpolation edge case before doing any git work. I’m rerunning it with that fixed and keeping the same submodule-first order.
+
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference='Stop'
+  │
+  │ function Commit-IfNeeded([string]$RepoPath, [string]$Message) {
+  │ Push-Location $RepoPath
+  │ try {…
+  └ 112 lines...
+
+One scheduler log changed while the sync was running, so I’m doing a quick follow-up pass to capture that last write and make sure the parent repo ends clean.
+
+● Check remaining dirty file status (shell)
+  │ Write-Host '---STATUS---' && git --no-pager status --short --branch &&
+  │ Write-Host '---FILE INFO---' && Get-Item 'D:\workspace\Browser4Team\coworker
+  │ \tasks\300logs\scheduler\2026\04\21\161437-coworker.stdout.log' |
+  │ Select-Object FullName,Length,LastWriteTime
+  └ 9 lines...
+
