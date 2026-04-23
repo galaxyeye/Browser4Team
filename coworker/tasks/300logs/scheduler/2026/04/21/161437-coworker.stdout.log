@@ -66,3 +66,26 @@ One scheduler log changed while the sync was running, so I’m doing a quick fol
   │ Select-Object FullName,Length,LastWriteTime
   └ 9 lines...
 
+● Commit final parent repo changes and push (shell)
+  │ $ErrorActionPreference='Stop'
+  │ Push-Location 'D:\workspace\Browser4Team'
+  │ try {
+  │ git add -A
+  │ if (git status --porcelain) {…
+  └ 35 lines...
+
+Done. Both repositories are committed, pulled, and pushed, with the dirty submodule synced first so the parent repo could record the updated pointer cleanly.
+
+**Pushed commits**
+1. `submodules\Browser4` → `4f34a9af3` on `4.8.x`
+2. `D:\workspace\Browser4Team` → `5244aa3`, then a follow-up log capture `76b70b8` on `main`
+
+The parent repo ended clean and aligned with `origin/main`; no unresolved conflicts remained.
+
+[2026-04-21 16:18:51] [INFO] Git sync executed successfully.
+[2026-04-21 16:18:51] [INFO] [PUSHED] Task: add-batch-json-input-tests.md (updated 04/21/2026 23:43:16)
+[2026-04-21 16:18:51] [INFO] ===========================================================================
+[2026-04-21 16:18:51] [INFO] All tasks completed
+[2026-04-21 16:18:51] [INFO] Ended at: 04/21/2026 16:18:51
+[2026-04-21 16:18:51] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21\161438-coworker.log
+[2026-04-21 16:18:51] [INFO] ==========================================================================

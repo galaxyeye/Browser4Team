@@ -1,0 +1,243 @@
+I’m reading the task brief and checking the local state first so I can make the requested change cleanly.
+
+● Read add-json-form-fill-test.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\add-json-form-fill-test.md
+  └ 7 lines read
+
+● Check repo status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I found the task is narrowly scoped to the Rust CLI E2E harness. Next I’m locating the existing batch and form-fill coverage so I can extend the right test path instead of inventing a new pattern.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (260 lines read)
+
+● Search (grep)
+  │ "fill form|form fill|fill-form|fill_form|batch"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 88 lines found
+
+● Search (grep)
+  │ "json file|serde_json|write_temp|NamedTempFile|tempfile|fillJson|fill json"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 16 lines found
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1760:2410 (651 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1030:1765 (581 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L260:520 (261 lines read)
+
+● Search (grep)
+  │ "first-name|agree-terms|submit-btn|lastSubmission|validationError|reset-btn"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 33 lines found
+
+There’s already batch coverage, including form submission, but it only feeds JSON via stdin. I’m checking the CLI surface now so the new test matches the intended “load data from JSON file” workflow rather than relying on an unsupported shortcut.
+
+● Search (grep)
+  │ "batch|--json|stdin|file" (sdks\browser4-cli\src\commands.rs)
+  └ 36 lines found
+
+● Search (grep)
+  │ "command_batch|batch" in *.rs (sdks\browser4-cli\src)
+  └ 120 lines found
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L3200:3310 (111 lines read)
+
+● Search (grep)
+  │ "fs::write\(|fs::read_to_string\(|serde_json::from_str\(|serde_json::from_re
+  │ ader|PathBuf|json!\(" (sdks\browser4-cli\tests\e2e.rs)
+  └ 15 lines found
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2860:2915 (56 lines read)
+
+I’ve confirmed the existing form-batch test is the right home, and the missing piece is a file-backed JSON data path. I’m running that scenario once before editing so I can keep the change surgical and avoid drifting the harness.
+
+● Run current batch form e2e scenario (shell)
+  │ Set-Location
+  │ "D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli"; cargo
+  │ test --test e2e -- --scenario=test_batch_form_submission
+  └ 45 lines...
+
+● Search (grep)
+  │ "effective_test_count|SCENARIOS|coverage|all_commands\(|explicitly-excluded|
+  │ excluded" (sdks\browser4-cli\tests\e2e.rs)
+  └ 26 lines found
+
+● Search (grep)
+  │ "test_count" (sdks\browser4-cli\tests\e2e.rs)
+  └ 23 lines found
+
+I’ve got a clean approach: keep the existing batch-form scenario intact and add a dedicated sibling scenario that writes a JSON fixture file, reads it back into the test, and uses that data to build the batch submission.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+The test change is in: a new file-backed JSON form fixture now drives a dedicated batch E2E path. I’m formatting and running the focused scenario next, then I’ll update the required memory logs.
+
+● Format Rust e2e test (shell)
+  │ Set-Location
+  │ "D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli"; cargo fmt
+  │ --test e2e
+  └ 2 lines...
+
+● Read shell output Waiting up to 10 seconds for command output
+  └ 55 lines...
+
+The only hiccup so far was my formatter invocation, not the code. The server is finally healthy, so I’m rerunning with the correct Rust commands and checking the existing scenario to make sure the new one didn’t disturb it.
+
+● Format Rust crate (shell)
+  │ Set-Location
+  │ "D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli"; cargo fmt
+  │ --all
+  └ 1 line...
+
+● Read shell output Waiting up to 120 seconds for command output
+  └ 77 lines...
+
+The existing batch form scenario still passes after the edit. I’m running the new file-backed JSON scenario directly now so the requested path is validated end to end.
+
+● Run new JSON file batch form e2e scenario (shell)
+  │ Set-Location
+  │ "D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli"; cargo
+  │ test --test e2e -- --scenario=test_batch_form_submission_from_json_file
+  └ 48 lines...
+
+The new scenario exercised the exact requested path and passed; I’m finishing the bookkeeping now by updating today’s memory and reconciling the April monthly rollup with any missing prior daily entries.
+
+✗ Read MEMORY.20260423.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\23\MEMORY.20260423.
+  │ md
+  └ Path does not exist
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 70 lines read
+
+● Search (glob)
+  │ "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\*\MEMORY.202604*.m
+  │ d"
+  └ No matches found
+
+The monthly file is still only rolled up through 04-20, and today’s daily file doesn’t exist yet. I’m checking which April daily memory folders are present so I can append the right backfill instead of duplicating the monthly summary.
+
+✗ Read 22
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\22
+  └ Path does not exist
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 17 files found
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21
+  └ 5 files found
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\19
+
+● List directory D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\02
+  └ 1 file found
+
+● List April daily memory files (shell)
+  │ Get-ChildItem -Path
+  │ "D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04" -Directory |
+  │ ForEach-Object { $mem = Get-ChildItem -Path $_.FullName -Filter
+  │ 'MEMORY.202604*.md' -ErrorAction SilentlyContinue; if ($mem) { $mem.FullName
+  │ } }
+  └ 18 lines...
+
+● Read shell output Waiting up to 60 seconds for command output
+  └ 59 lines...
+
+● Read MEMORY.20260421.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\21\MEMORY.20260421.
+  │ md
+  └ 4 lines read
+
+I’ve got the monthly gap narrowed to a single missing day: 04-21 exists but wasn’t rolled into the April summary yet, and there’s no 04-22 daily file. I’m appending that rollup plus today’s task notes now.
+
+● Edit
+  │ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\23\MEMORY.20
+  │ 260423.md
+  └ Edit
+    D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+The code and memory updates are in place. I’m doing one quick diff/status pass so I can hand back the exact footprint cleanly.
+
+● Show final status and diff (shell)
+  │ git --no-pager status --short && git --no-pager diff --
+  │ sdks/browser4-cli/tests/e2e.rs
+  │ "D:/workspace/Browser4Team/coworker/tasks/300logs/2026/04/MEMORY.202604.md"
+  │ "D:/workspace/Browser4Team/coworker/tasks/300logs/2026/04/23/MEMORY.20260423
+  │ .md"
+  └ 9 lines...
+
+`cargo fmt --all` touched a few unrelated Rust files in the crate, so I’m trimming that back now and keeping only the requested E2E test change.
+
+● Inspect e2e diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/tests/e2e.rs
+  └ 336 lines...
+
+● Inspect unrelated fmt changes (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/args.rs
+  │ sdks/browser4-cli/src/daemon.rs sdks/browser4-cli/src/help.rs
+  │ sdks/browser4-cli/src/main.rs sdks/browser4-cli/src/managed_processes.rs
+  └ 10 lines...
+
+Those extra Rust source changes are just formatter churn from this session, and they weren’t part of the task. I’m restoring those specific files so the final diff stays limited to the new E2E coverage and the required memory logs.
+
+● Restore unrelated formatted files (shell)
+  │ git restore --worktree --source=HEAD -- sdks/browser4-cli/src/args.rs
+  │ sdks/browser4-cli/src/daemon.rs sdks/browser4-cli/src/help.rs
+  │ sdks/browser4-cli/src/main.rs sdks/browser4-cli/src/managed_processes.rs
+  └ 1 line...
+
+I’m tightening the last part too: `e2e.rs` picked up unrelated rustfmt churn, so I’m resetting that file and reapplying only the intentional test additions before one final focused test run.
+
+● Restore e2e test file to HEAD (shell)
+  │ git restore --worktree --source=HEAD -- sdks/browser4-cli/tests/e2e.rs
+  └ 1 line...
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+I trimmed the diff back down to just the intended test additions. I’m rerunning the new scenario once more against that exact final file so the final state is verified, not just the earlier formatted variant.
+
+● Re-run final JSON file batch form e2e scenario (shell)
+  │ Set-Location
+  │ "D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli"; cargo
+  │ test --test e2e -- --scenario=test_batch_form_submission_from_json_file
+  └ 47 lines...
+
+The final-file rerun passed too. I’m just waiting for the harness cleanup to finish and then I’ll do a last status check so the handoff reflects the exact remaining changes.
+
+● Check final repo status and e2e diff (shell)
+  │ git --no-pager status --short && git --no-pager diff --
+  │ sdks/browser4-cli/tests/e2e.rs
+  └ 130 lines...
+
+● Read shell output Waiting up to 90 seconds for command output
+  └ 58 lines...
+
+Done: `sdks/browser4-cli/tests/e2e.rs` now includes a dedicated E2E scenario, `test_batch_form_submission_from_json_file`, that writes a JSON fixture file, reads it back, converts that payload into a `batch --json` submission, and verifies both the live form state and `lastSubmission`. I also added the small `write_json_fixture(...)` helper and registered the new scenario in the E2E runner.
+
+I appended the task outcome to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\23\MEMORY.20260423.md` and updated `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md` with the missing 2026-04-21 rollup plus the 2026-04-22 no-file note.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +218 -0
+Requests  1 Premium (25m 37s)
+Tokens    ↑ 1.8m • ↓ 12.8k • 1.6m (cached) • 5.7k (reasoning)

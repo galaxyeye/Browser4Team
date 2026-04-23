@@ -1,0 +1,44 @@
+Starting Coworker Task Runner...
+[2026-04-23 15:25:08] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-23 15:25:08] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-23 15:25:08] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-23 15:25:08] [INFO] ===========================================================================
+[2026-04-23 15:25:08] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-23 15:25:08] [INFO] Started at: 04/23/2026 15:25:08
+[2026-04-23 15:25:08] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\23\152508-coworker.log
+[2026-04-23 15:25:08] [INFO] ==========================================================================
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: 1.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: 2.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: 3.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: 4.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: 5.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: README.md
+[2026-04-23 15:25:08] [INFO] [PREPARE] Task: README.zh.md
+Moving approved task to pushed: D:\workspace\Browser4Team\coworker\tasks\5approved\add-json-form-fill-test.md
+[2026-04-23 15:25:08] [INFO] Task moved to pushed: D:\workspace\Browser4Team\coworker\tasks\6git-pushed\2026\0423\add-json-form-fill-test.md
+[2026-04-23 15:25:08] [INFO] Executing commit script for approved tasks...
+Running:
+gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes in "D:\workspace\Browser4Team".
+Pull from remote.
+Then push to remote.
+If conflicts occur, resolve them automatically.' --allow-all-tools
+● Read AGENTS.md
+  │ submodules\Browser4\AGENTS.md
+  └ 441 lines read
+
+● Check git status in parent and submodule (shell)
+  │ git --no-pager -C D:\workspace\Browser4Team status --short --branch &&
+  │ Write-Host '---SUBMODULE---' && git --no-pager -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 status --short --branch
+  └ 17 lines...
+
+I found local changes in both the parent repo and `submodules\Browser4`, so I’m syncing the submodule first, then I’ll update the parent repo pointer and push everything upstream.
+
+● Commit, pull, and push submodule changes (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location D:\workspace\Browser4Team\submodules\Browser4
+  │ $branch = (git rev-parse --abbrev-ref HEAD).Trim()
+  │ git add -A
+  │ $commitMessage = @"…
+  └ 37 lines...
+
