@@ -498,7 +498,7 @@ All item page options work identically to their main counterparts but apply only
 - **Type**: Int
 - **Default**: System default
 - **Purpose**: Max immediate retries when RETRY(1601) status returned
-- **AI Note**: Retries during single fetch operation, not across crawl loop
+- **AI Note**: Retries during single fetch operation, not across Main loop
 - **Example**: `-nJitRetry 2`
 
 ---

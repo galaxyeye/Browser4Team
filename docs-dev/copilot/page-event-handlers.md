@@ -188,8 +188,8 @@ Manages events within the crawl iteration, occurring before and after the page l
 
 | Handler | Type | Signature | Description |
 |---------|------|-----------|-------------|
-| `onWillLoad` | `UrlAwareEventHandler` | `(UrlAware) -> UrlAware?` | Fires when URL is about to be loaded in crawl loop |
-| `onLoaded` | `UrlAwareWebPageEventHandler` | `(UrlAware, WebPage?) -> Any?` | Fires when URL has been loaded in crawl loop |
+| `onWillLoad` | `UrlAwareEventHandler` | `(UrlAware) -> UrlAware?` | Fires when URL is about to be loaded in Main loop |
+| `onLoaded` | `UrlAwareWebPageEventHandler` | `(UrlAware, WebPage?) -> Any?` | Fires when URL has been loaded in Main loop |
 
 ### Crawl Event Flow
 
