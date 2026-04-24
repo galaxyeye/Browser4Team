@@ -111,7 +111,7 @@ The memory writes succeeded. I��m doing a quick verification pass on the upd
   �� The core WebDriver API is the interface in pulsar-core/pulsar-skeleton; sdks/bro��
 Done.
 I searched the Browser4 repo for `WebDriver` interface declarations and found these repo-defined interfaces:
-- `ai.platon.pulsar.skeleton.workflow.driver.WebDriver` �� `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt:128`
+- `ai.platon.pulsar.skeleton.workflow.fetch.driver.WebDriver` �� `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt:128`
 - `ai.platon.pulsar.skeleton.workflow.WebDriverFetcher` ��
 I also verified `sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt` is a concrete class, not an interface.
 Required memory updates were appended to:

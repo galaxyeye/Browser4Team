@@ -6,7 +6,7 @@
 
 ## Problem Statement
 
-The requirement stated: "ai.platon.pulsar.skeleton.workflow.driver.WebDriver 的所有方法不得并行操作，只能串行操作" (All methods of WebDriver must not execute in parallel, only serially).
+The requirement stated: "ai.platon.pulsar.skeleton.workflow.fetch.driver.WebDriver 的所有方法不得并行操作，只能串行操作" (All methods of WebDriver must not execute in parallel, only serially).
 
 The REST API controllers in `pulsar-rest/src/main/kotlin/ai/platon/pulsar/rest/openapi` were allowing concurrent HTTP requests to call WebDriver methods in parallel on the same session, violating this constraint.
 
