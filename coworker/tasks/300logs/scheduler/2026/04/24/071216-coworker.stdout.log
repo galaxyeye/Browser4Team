@@ -38,3 +38,36 @@ I’m checking the repo state and the Browser4 agent instructions first so I can
   └ 16 lines...
 
 The parent repo and `submodules\Browser4` both have local changes, so I’m committing the submodule first and then the parent repo pointer before pulling with automatic conflict preference.
+
+● Commit submodule changes (shell)
+  │ git -C D:\workspace\Browser4Team\submodules\Browser4 add -A && git -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 commit -m "chore: sync
+  │ workspace changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"
+  └ 5 lines...
+
+● Commit parent repo changes (shell)
+  │ git -C D:\workspace\Browser4Team add -A && git -C D:\workspace\Browser4Team
+  │ commit -m "chore: sync workspace changes" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>"
+  └ 16 lines...
+
+The commits landed, but because they ran at the same time I’m verifying the parent repo captured the new submodule SHA before pulling.
+
+● Verify parent and submodule commit state (shell)
+  │ git -C D:\workspace\Browser4Team --no-pager status --short --branch &&
+  │ Write-Host '---SUBMODULE---' && git -C
+  │ D:\workspace\Browser4Team\submodules\Browser4 --no-pager status --short
+  │ --branch && Write-Host '---PARENT SUBMODULE SHA---' && git -C
+  │ D:\workspace\Browser4Team ls-tree HEAD submodules/Browser4 && Write-Host …
+  └ 12 lines...
+
+● Check whether parent dirty files keep changing (shell)
+  │ Start-Sleep -Seconds 5; git -C D:\workspace\Browser4Team --no-pager status
+  │ --short --branch && Write-Host '---TAIL---' && Get-Content -Path
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\24\071216
+  │ -coworker.stdout.log -Tail 5
+  └ 9 lines...
+
+I’ve got the sync logic lined up now: submodule first, then the parent repo in a short settle-and-resync loop so the recorded submodule SHA and any last log updates both get pushed.
+
