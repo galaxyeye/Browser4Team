@@ -2,7 +2,7 @@
 
 涉及类：
 
-`ai.platon.pulsar.skeleton.crawl.fetch.driver.WebDriver`
+`ai.platon.pulsar.skeleton.workflow.driver.WebDriver`
 
 同步修改 OpenAPI 定义和后端实现, SDK 定义和测试。
 

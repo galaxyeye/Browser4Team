@@ -46,73 +46,73 @@ DEBUG: GH Stderr:  Total usage est:        1 Premium request API time spent:    
 [2026-03-11 06:33:18] [INFO] Executing Copilot for task: list-webdriver-interfaces
 [2026-03-11 06:33:18] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
 [2026-03-11 06:33:18] [INFO] === Starting Copilot execution ===
-I¡¯m opening the task, checking repo state, and setting up a lightweight plan/todo trail before I implement anything.
-¡ñ SQL: Initialize task todos
-  ©¸ 4 row(s) inserted. Last inserted row ID: 4.
-¡ñ Read D:\workspace\Browser4Team\coworker\tasks\2working\list-webdriver-interfaces.md
-  ©¸ 1 line read
-¡ñ Check git status
+Iï¿½ï¿½m opening the task, checking repo state, and setting up a lightweight plan/todo trail before I implement anything.
+ï¿½ï¿½ SQL: Initialize task todos
+  ï¿½ï¿½ 4 row(s) inserted. Last inserted row ID: 4.
+ï¿½ï¿½ Read D:\workspace\Browser4Team\coworker\tasks\2working\list-webdriver-interfaces.md
+  ï¿½ï¿½ 1 line read
+ï¿½ï¿½ Check git status
   $ git --no-pager status --short
-  ©¸ 1 line...
-¡ñ Create session plan file
+  ï¿½ï¿½ 1 line...
+ï¿½ï¿½ Create session plan file
   $ $plan = @'
   # Plan
   1. Read the assigned task and identify the requested repository changes.
   2. Inspect the relevant code/docs and implement a minimal, complete fix....
-  ©¸ 6 lines...
-The task is an investigation-only one: I¡¯m now tracing `WebDriver` symbols across the repo and collecting the actual interface definitions with file references.
-¡ñ Todo started: inspect-task
-¡ñ Grep "\binterface\s+\w*WebDriver\w*\b" in **/*.{kt,java,ts,js}
+  ï¿½ï¿½ 6 lines...
+The task is an investigation-only one: Iï¿½ï¿½m now tracing `WebDriver` symbols across the repo and collecting the actual interface definitions with file references.
+ï¿½ï¿½ Todo started: inspect-task
+ï¿½ï¿½ Grep "\binterface\s+\w*WebDriver\w*\b" in **/*.{kt,java,ts,js}
 (D:\workspace\Browser4Team\submodules\Browser4)
-  ©¸ 2 lines found
-¡ñ Glob "**/*WebDriver*.{kt,java,md,json}" in D:\workspace\Browser4Team\submodules\Browser4
-  ©¸ 42 files found
-¡ñ Grep "\bWebDriver\b" in **/*.{kt,java,md,json,ts,js}
+  ï¿½ï¿½ 2 lines found
+ï¿½ï¿½ Glob "**/*WebDriver*.{kt,java,md,json}" in D:\workspace\Browser4Team\submodules\Browser4
+  ï¿½ï¿½ 42 files found
+ï¿½ï¿½ Grep "\bWebDriver\b" in **/*.{kt,java,md,json,ts,js}
 (D:\workspace\Browser4Team\submodules\Browser4)
-  ©¸ 6 files found
-I found the two direct `*WebDriver*` interface declarations already; I¡¯m now checking related wrappers/docs so I can give a precise, not over-broad, list.
-¡ñ Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
+  ï¿½ï¿½ 6 files found
+I found the two direct `*WebDriver*` interface declarations already; Iï¿½ï¿½m now checking related wrappers/docs so I can give a precise, not over-broad, list.
+ï¿½ï¿½ Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDr
   iver.kt lines 110-220
-  ©¸ 111 lines read
-¡ñ Read sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt lines 1-120
-  ©¸ 120 lines read
-¡ñ Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\Fetcher.kt
+  ï¿½ï¿½ 111 lines read
+ï¿½ï¿½ Read sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt lines 1-120
+  ï¿½ï¿½ 120 lines read
+ï¿½ï¿½ Read pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\Fetcher.kt
   lines 1-60
-  ©¸ 58 lines read
-¡ñ Grep "\binterface\s+\w+\b" in **/*WebDriver*.kt (D:\workspace\Browser4Team\submodules\Browser4)
-  ©¸ 7 lines found
-I¡¯ve confirmed the repo only defines two `WebDriver`-named interfaces. I¡¯m switching to the required memory-log updates and checking whether March¡¯s monthly rollup is missing the 2026-03-10 summary.
-¡ñ Todo started: implement-task
-¡ñ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 1-end
-  ©¸ 63 lines read
-¡ñ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\MEMORY.20260310.md lines 1-end
-  ©¸ 10 lines read
-¡ñ Glob "2026\03\10\*" in D:\workspace\Browser4Team\coworker\tasks\300logs
-  ©¸ No matches found
-¡ñ Glob "2026\03\*\MEMORY.202603*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
-  ©¸ No matches found
-I confirmed the monthly log stops at the 03-09 rollup, so I¡¯m appending a 03-10-aware monthly update plus today¡¯s task note to the daily memory file.
+  ï¿½ï¿½ 58 lines read
+ï¿½ï¿½ Grep "\binterface\s+\w+\b" in **/*WebDriver*.kt (D:\workspace\Browser4Team\submodules\Browser4)
+  ï¿½ï¿½ 7 lines found
+Iï¿½ï¿½ve confirmed the repo only defines two `WebDriver`-named interfaces. Iï¿½ï¿½m switching to the required memory-log updates and checking whether Marchï¿½ï¿½s monthly rollup is missing the 2026-03-10 summary.
+ï¿½ï¿½ Todo started: implement-task
+ï¿½ï¿½ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 1-end
+  ï¿½ï¿½ 63 lines read
+ï¿½ï¿½ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\10\MEMORY.20260310.md lines 1-end
+  ï¿½ï¿½ 10 lines read
+ï¿½ï¿½ Glob "2026\03\10\*" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  ï¿½ï¿½ No matches found
+ï¿½ï¿½ Glob "2026\03\*\MEMORY.202603*.md" in D:\workspace\Browser4Team\coworker\tasks\300logs
+  ï¿½ï¿½ No matches found
+I confirmed the monthly log stops at the 03-09 rollup, so Iï¿½ï¿½m appending a 03-10-aware monthly update plus todayï¿½ï¿½s task note to the daily memory file.
 ? Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
   Path does not exist
-¡ñ Append daily and monthly memory entries
+ï¿½ï¿½ Append daily and monthly memory entries
   $ $dailyPath = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md'
   $monthlyPath = 'D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md'
   $dailyEntry = @'
   - **WebDriver interface inventory completed:** Searched the Browser4 codebase for `WebDriver`
   interface declarations and confirmed the repo defines two `WebDriver`-named interfaces: ...
-  ©¸ 34 lines...
-The memory writes succeeded. I¡¯m doing a quick verification pass on the updated log files and then I¡¯ll hand back
-¡ñ Todo completed: validate-task, update-memory
-¡ñ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
-  ©¸ 1 line read
-¡ñ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 59-end
-  ©¸ 12 lines read
-¡ñ Memory stored: webdriver api
-  ©¸ The core WebDriver API is the interface in pulsar-core/pulsar-skeleton; sdks/bro¡­
+  ï¿½ï¿½ 34 lines...
+The memory writes succeeded. Iï¿½ï¿½m doing a quick verification pass on the updated log files and then Iï¿½ï¿½ll hand back
+ï¿½ï¿½ Todo completed: validate-task, update-memory
+ï¿½ï¿½ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\11\MEMORY.20260311.md lines 1-end
+  ï¿½ï¿½ 1 line read
+ï¿½ï¿½ Read D:\workspace\Browser4Team\coworker\tasks\300logs\2026\03\MEMORY.202603.md lines 59-end
+  ï¿½ï¿½ 12 lines read
+ï¿½ï¿½ Memory stored: webdriver api
+  ï¿½ï¿½ The core WebDriver API is the interface in pulsar-core/pulsar-skeleton; sdks/broï¿½ï¿½
 Done.
 I searched the Browser4 repo for `WebDriver` interface declarations and found these repo-defined interfaces:
-- `ai.platon.pulsar.skeleton.crawl.fetch.driver.WebDriver` ¡ª `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt:128`
-- `ai.platon.pulsar.skeleton.crawl.fetch.WebDriverFetcher` ¡ª
+- `ai.platon.pulsar.skeleton.workflow.driver.WebDriver` ï¿½ï¿½ `pulsar-core\pulsar-skeleton\src\main\kotlin\ai\platon\pulsar\skeleton\crawl\fetch\driver\WebDriver.kt:128`
+- `ai.platon.pulsar.skeleton.workflow.WebDriverFetcher` ï¿½ï¿½
 I also verified `sdks\browser4-kotlin\src\main\kotlin\ai\platon\pulsar\sdk\v0\WebDriver.kt` is a concrete class, not an interface.
 Required memory updates were appended to:
 - `coworker\tasks\300logs\2026\03\11\M

@@ -93,7 +93,7 @@ After completing the task, you MUST update your daily memory file: D:\workspace\
 
 
 [Daily Memory (2026-03-11)]:
-- **WebDriver interface inventory completed:** Searched the Browser4 codebase for `WebDriver` interface declarations and confirmed the repo defines two `WebDriver`-named interfaces: `ai.platon.pulsar.skeleton.crawl.fetch.driver.WebDriver` in `pulsar-core/pulsar-skeleton/.../WebDriver.kt` and `ai.platon.pulsar.skeleton.crawl.fetch.WebDriverFetcher` in `pulsar-core/pulsar-skeleton/.../Fetcher.kt`. I also verified that `sdks/browser4-kotlin/.../WebDriver.kt` is a concrete facade class, not an interface. **Outcome:** Completed the assigned investigation without changing Browser4 production code. **Learning:** For symbol-inventory tasks, combining a repo-wide `interface ...WebDriver...` search with spot checks of similarly named SDK/docs files avoids overcounting wrapper classes as interfaces.
+- **WebDriver interface inventory completed:** Searched the Browser4 codebase for `WebDriver` interface declarations and confirmed the repo defines two `WebDriver`-named interfaces: `ai.platon.pulsar.skeleton.workflow.driver.WebDriver` in `pulsar-core/pulsar-skeleton/.../WebDriver.kt` and `ai.platon.pulsar.skeleton.workflow.WebDriverFetcher` in `pulsar-core/pulsar-skeleton/.../Fetcher.kt`. I also verified that `sdks/browser4-kotlin/.../WebDriver.kt` is a concrete facade class, not an interface. **Outcome:** Completed the assigned investigation without changing Browser4 production code. **Learning:** For symbol-inventory tasks, combining a repo-wide `interface ...WebDriver...` search with spot checks of similarly named SDK/docs files avoids overcounting wrapper classes as interfaces.
 
 
 ---
