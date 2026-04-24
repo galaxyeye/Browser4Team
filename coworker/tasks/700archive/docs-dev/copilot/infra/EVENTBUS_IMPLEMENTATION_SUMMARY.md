@@ -86,7 +86,7 @@ Fixed a compilation error by removing the deprecated `logInferenceToFile` parame
 ## Quick Usage Example
 
 ```kotlin
-import ai.platon.pulsar.skeleton.crawl.EventBus
+import ai.platon.pulsar.skeleton.workflow.EventBus
 
 // Register a handler to monitor action execution
 DangerousEventBus.register("PerceptiveAgent.onWillAct") { payload ->

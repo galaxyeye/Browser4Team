@@ -341,7 +341,7 @@ baseHandlers.chain(customHandlers)
 ### Global Event Handlers
 
 ```kotlin
-import ai.platon.pulsar.skeleton.crawl.GlobalEventHandlers
+import ai.platon.pulsar.skeleton.workflow.GlobalEventHandlers
 
 // Set global handlers that apply to all pages
 GlobalEventHandlers.pageEventHandlers = DefaultPageEventHandlers().apply {
