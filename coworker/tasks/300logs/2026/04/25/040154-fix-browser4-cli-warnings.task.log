@@ -1,3 +1,25 @@
+Task: fix-browser4-cli-warnings
+Description: Task from fix-browser4-cli-warnings.md
+Original File: fix-browser4-cli-warnings.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-25 04:02:22
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\fix-browser4-cli-warnings.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -76,5 +98,9 @@
 ### Daily Rollup Update (through 2026-04-23)
 - **2026-04-23**: Added a dedicated `browser4-cli` Rust E2E scenario for batch-driven form submission from a JSON file in `sdks/browser4-cli/tests/e2e.rs`, wiring the test to write fixture JSON, load it back through the harness, and verify both final form state and submitted payload after the backend batch completes. Key lesson: when batch E2Es need structured fixture data, keep the source as a JSON file and translate it into `batch --json` commands inside the test so the harness exercises real file loading plus the production batch path without brittle shell-quoting assumptions.
 
-### Daily Rollup Update (through 2026-04-24)
-- **2026-04-24**: Rebuilt `browser4-tests/browser4-tests-common/src/main/resources/static/generated/form-filling.html` into a richer Browser4 form playground while preserving the stable CLI E2E selectors, and added focused `InteractivePagesTest` coverage to lock those selectors plus the new debug outputs in place. Key lesson: fixture pages should preserve canonical selectors and serialized state first, then add richer UI behavior around them; and when validating `TestInfraCheck` coverage here, override the repo’s default Surefire exclusion to avoid zero-test false positives.
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\040154-fix-browser4-cli-warnings.copilot.log

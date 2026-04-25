@@ -10,3 +10,4 @@ logs/scheduled-tasks.status.json
 /logs/
 *-private*
 application-private.properties
+/**/1created/*.md

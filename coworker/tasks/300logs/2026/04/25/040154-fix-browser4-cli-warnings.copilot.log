@@ -1,0 +1,167 @@
+● Read fix-browser4-cli-warnings.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-browser4-cli-warnings.
+  │ md
+  └ 32 lines read
+
+● Check git status (shell)
+  │ git --no-pager status --short
+  └ 2 lines...
+
+I’ve got the task scoped: the warnings are isolated to `sdks/browser4-cli/src/state.rs`, and there’s already an unrelated modified Kotlin file in the worktree that I’ll leave alone. Next I’m tracing how that state helper module is wired so I can fix the dead-code warnings without changing behavior.
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ 34 lines read
+
+● Read state.rs
+  │ sdks\browser4-cli\src\state.rs
+  └ 272 lines read
+
+● Search (grep)
+  │ "\b(write_state|clear_state|clear_all_state|resolve_ref)\b" in
+  │ **/*.{rs,toml} (sdks\browser4-cli)
+  └ 33 lines found
+
+The warning source is a little subtler than the task note suggests: those helpers are used by the binary, but Cargo is also compiling a separate `browser4-cli` library target, and I want to confirm how `state.rs` is included there before changing anything.
+
+● Read lib.rs
+  │ sdks\browser4-cli\src\lib.rs
+  └ 5 lines read
+
+● Read http.rs
+  │ sdks\browser4-cli\src\http.rs
+  └ L1:120 (120 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1:120 (120 lines read)
+
+● Run baseline cargo check (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ check
+  └ 23 lines...
+
+I reproduced the exact warnings with `cargo check`. The key question now is whether `state.rs` belongs in the library target at all, or whether it should be exported there instead of sitting as a private, unused lib-only module.
+
+● Search (grep)
+  │ "browser4_cli::state|browser4_cli::commands|browser4_cli::managed_processes|
+  │ use browser4_cli" in **/*.rs
+  └ 4 lines found
+
+● Search (grep)
+  │ "mod state;|pub mod state;|pub use state::" in **/*.rs
+  │ (sdks\browser4-cli\src)
+  └ 2 lines found
+
+The cleanest fix is looking like a crate-wiring cleanup, not a behavior change: `state.rs` is compiled into both the binary and the library, but only the binary actually uses it. I’m trimming that duplicate library inclusion rather than papering over the warnings.
+
+● Edit
+  └ Edit sdks\browser4-cli\src\lib.rs
+
+● Show lib.rs diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/lib.rs
+  └ 10 lines...
+
+● Run cargo check after fix (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ check
+  └ 11 lines...
+
+● Run browser4-cli unit tests (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ test --bin browser4-cli --quiet
+  └ 9 lines...
+
+The library does use part of `state.rs` through `managed_processes`, so outright removing the module was too aggressive. I’m switching to the right fix now: make the state module part of the library’s public surface so the bin-only helpers are exported instead of being treated as dead private code.
+
+● Edit
+  └ Edit sdks\browser4-cli\src\lib.rs
+
+● Show updated lib.rs diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/lib.rs
+  └ 11 lines...
+
+● Run cargo check after export fix (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ check
+  └ 6 lines...
+
+● Run browser4-cli unit tests again (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ test --bin browser4-cli --quiet
+  └ 5 lines...
+
+The code change is done and validated. I’m updating the task memories now, including checking whether April’s monthly rollup is missing any pre-today daily entries before I append today’s result.
+
+✗ Read MEMORY.20260425.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.
+  │ md
+  └ Path does not exist
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ 77 lines read
+
+● Search (grep)
+  │ "2026-04-24|2026-04-2[0-4]"
+  │ (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md)
+  └ 7 lines found
+
+● Search (glob)
+  │ "**/MEMORY.202604*.md" in
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04
+  └ 20 files found
+
+● Read MEMORY.20260424.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\24\MEMORY.20260424.
+  │ md
+  └ 6 lines read
+
+I found the missing monthly gap: April’s rollup stopped at the 23rd even though a 2026-04-24 daily memory exists. I’m appending that missed summary and today’s CLI warning fix without touching any existing entries.
+
+● Edit
+  │ Create D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20
+  │ 260425.md
+  └ Edit
+    D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+● Memory stored testing
+  └ Use `cargo test --bin browser4-cli` for Rust CLI unit tests so binary-module
+    tes…
+
+● Read MEMORY.20260425.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.
+  │ md
+  └ 6 lines read
+
+● Search (grep)
+  │ "2026-04-24"
+  │ (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md)
+  └ 2 lines found
+
+● Check final git status (shell)
+  │ git --no-pager status --short
+  └ 3 lines...
+
+Done: the `browser4-cli` warning task is finished.
+
+I fixed the Rust dead-code warnings by changing `sdks/browser4-cli/src/lib.rs` from `mod state;` to `pub mod state;`, so the library target now intentionally exports the state helpers that the binary relies on instead of treating them as unused private lib code.
+
+I also updated the required memory logs:
+- appended today’s task summary to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md`
+- appended the missing 2026-04-24 daily rollup to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md`
+
+I left the unrelated existing change in `browser4-core\pulsar-plugins\browser4-protocol\src\main\kotlin\ai\platon\pulsar\protocol\browser\emulator\Types.kt` untouched.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +11 -1
+Requests  1 Premium (2m 9s)
+Tokens    ↑ 531.4k • ↓ 5.7k • 492.2k (cached) • 2.7k (reasoning)
