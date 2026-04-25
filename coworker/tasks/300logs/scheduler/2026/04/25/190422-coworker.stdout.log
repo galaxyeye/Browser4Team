@@ -35,3 +35,19 @@ If conflicts occur, resolve them automatically.' --allow-all-tools
   └ 26 lines...
 
 I’ve got the repo state and am syncing the dirty Browser4 submodule first so the parent repo can record the updated pointer cleanly. After that I’ll commit the parent repo, pull with automatic conflict preference, and push both.
+
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │
+  │ function Commit-IfNeeded($repoPath, $message) {
+  │ git -C $repoPath add -A
+  │ git -C $repoPath diff --cached --quiet…
+  └ 77 lines...
+
+A scheduler log changed while the root push was running, so I’m doing one small follow-up sync to capture that late write and finish with a clean push if the file has settled.
+
+● Check whether remaining root change is stable (shell)
+  │ git --no-pager status --short --branch && Start-Sleep -Seconds 5 &&
+  │ Write-Host '---AFTER-5S---' && git --no-pager status --short --branch
+  └ 6 lines...
+
