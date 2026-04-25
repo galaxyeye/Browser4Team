@@ -36,3 +36,29 @@ If conflicts occur, resolve them automatically.' --allow-all-tools
 
 I found uncommitted work both in the parent repo and in `submodules\Browser4`, so I'm syncing the submodule first and then the parent repo to keep the git state consistent.
 
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference='Stop'
+  │ function Commit-IfNeeded([string]$Path,[string]$Message,[string]$Branch){
+  │ Push-Location $Path
+  │ try {
+  │ git add -A…
+  └ 71 lines...
+
+Done: all changes were committed, pulled, and pushed successfully.
+
+**Pushed commits**
+- `submodules\Browser4` on `4.8.x`: `244618833` — `chore: sync Browser4 changes`
+- `D:\workspace\Browser4Team` on `main`: `480cd86` — `chore: sync workspace changes`
+
+Both repositories were already up to date with their remotes at pull time, so no conflict resolution was needed.
+
+[2026-04-25 17:37:03] [INFO] Git sync executed successfully.
+[2026-04-25 17:37:03] [INFO] [PUSHED] Task: implement-webdriver-dblclick-dialog-resize.md (updated 04/24/2026 09:50:17)
+[2026-04-25 17:37:03] [INFO] [PUSHED] Task: implement-webdriver-dblclick-dialog-resize.md (updated 04/24/2026 09:50:17)
+[2026-04-25 17:37:03] [INFO] [PUSHED] Task: improve-form-filling-page.md (updated 04/24/2026 14:58:51)
+[2026-04-25 17:37:03] [INFO] [PUSHED] Task: fix-browser4-cli-warnings.md (updated 04/25/2026 12:01:47)
+[2026-04-25 17:37:03] [INFO] ===========================================================================
+[2026-04-25 17:37:03] [INFO] All tasks completed
+[2026-04-25 17:37:03] [INFO] Ended at: 04/25/2026 17:37:03
+[2026-04-25 17:37:03] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\173608-coworker.log
+[2026-04-25 17:37:03] [INFO] ==========================================================================

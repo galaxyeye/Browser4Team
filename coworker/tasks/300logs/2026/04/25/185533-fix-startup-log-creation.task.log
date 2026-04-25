@@ -1,3 +1,25 @@
+Task: fix-startup-log-creation
+Description: Task from fix-startup-log-creation.md
+Original File: fix-startup-log-creation.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-25 18:55:55
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\fix-startup-log-creation.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
 # MEMORY.202604.md
 ## Monthly Memory - 2026-04
 
@@ -79,5 +101,18 @@
 ### Daily Rollup Update (through 2026-04-24)
 - **2026-04-24**: Rebuilt `browser4-tests/browser4-tests-common/src/main/resources/static/generated/form-filling.html` into a richer Browser4 form playground while preserving the stable CLI E2E selectors, and added focused `InteractivePagesTest` coverage to lock those selectors plus the new debug outputs in place. Key lesson: fixture pages should preserve canonical selectors and serialized state first, then add richer UI behavior around them; and when validating `TestInfraCheck` coverage here, override the repo’s default Surefire exclusion to avoid zero-test false positives.
 
-### Daily Rollup Update (through 2026-04-25)
-- **2026-04-25**: Fixed `browser4-cli` Rust dead-code warnings by exporting `state` from `sdks/browser4-cli/src/lib.rs` so binary-used state helpers are part of the library surface, then repaired `sdks/browser4-cli/src/daemon.rs` startup-log handling so Browser4 startup logs are created under the per-user temp root `browser4-$USER/tmp/cli`, include explicit daemon-side startup progress/failure lines, and report log-creation/write problems on stderr. Key lessons: in mixed binary/library Cargo packages, library visibility needs to match real cross-target usage to avoid dead-code noise; and startup diagnostics are far more reliable when both the launcher and the child process write into one predictable per-user temp log.
+
+[Daily Memory (2026-04-25)]:
+# MEMORY.20260425.md
+## Daily Memory - 2026-04-25
+
+- Fixed the `browser4-cli` Rust dead-code warnings reported by `cargo run open` by changing `sdks/browser4-cli/src/lib.rs` to export `state` as a public library module instead of keeping it as a private lib-only module. That preserved the existing binary behavior while making the bin-used state helpers part of the library surface so Cargo no longer warns when compiling the separate `browser4-cli` lib target.
+- Confirmed the result with `cargo check` and `cargo test --bin browser4-cli --quiet` in `sdks/browser4-cli`.
+- Key lesson: when a Cargo package builds both a binary and a library, helpers used only by the binary can still trigger dead-code warnings if they live in a private library module; either keep them out of the library target or export them intentionally so the crate boundary matches actual usage.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\185533-fix-startup-log-creation.copilot.log

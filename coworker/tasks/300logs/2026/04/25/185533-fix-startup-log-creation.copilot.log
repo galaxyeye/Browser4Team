@@ -1,0 +1,195 @@
+I’m pulling in the task details and current repo state first so I can make the change cleanly and update the required memory logs afterward.
+
+● Read fix-startup-log-creation.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\fix-startup-log-creation.m
+  │ d
+  └ 10 lines read
+
+● Check git status and branch (shell)
+  │ git --no-pager status --short && git --no-pager branch --show-current
+  └ 3 lines...
+
+I found an existing unstaged change in `sdks/browser4-cli/src/daemon.rs`, so I’m reading the file and diff before touching it to avoid clobbering user work.
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ 1 line read
+
+● Search (grep)
+  │ "startup_log|cli\\b|Temp|temp_dir|browser4-\$USER|browser4-" in *.rs
+  │ (sdks\browser4-cli\src)
+  └ 107 lines found
+
+● Show daemon.rs diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs
+  └ 49 lines...
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L450:640 (191 lines read)
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L870:940 (71 lines read)
+
+● Read state.rs
+  │ sdks\browser4-cli\src\state.rs
+  └ L1:180 (180 lines read)
+
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ L430:520 (91 lines read)
+
+● Search (grep)
+  │ "tmp\\cli|browser4-[A-Za-z0-9_.-]+|resolve_default_state_dir\(|BROWSER4_CLI_
+  │ STATE_DIR|temp_dir\(" in *.rs (sdks\browser4-cli\src)
+  └ 63 lines found
+
+I’ve got the current startup-log implementation; next I’m checking whether the repo already has a shared temp-root convention I should reuse instead of inventing a new path.
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L1:120 (120 lines read)
+
+● Search (grep)
+  │ "browser4-\$|browser4-\{|browser4-[A-Za-z0-9_.-]+\\tmp\\cli|tmp\\cli|resolve
+  │ _.*temp|AppData\\Local\\Temp|std::env::temp_dir\("
+  └ 37 lines found
+
+● Search (grep)
+  │ "browser4-[A-Za-z0-9_.-]+|Temp\\browser4|temp\\browser4|Local\\Temp\\browser
+  │ 4"
+  └ 10 lines found
+
+● Read BrowserSettings.kt
+  │ browser4-core\pulsar-browser\src\main\kotlin\ai\platon\browser4\driver\commo
+  │ n\BrowserSettings.kt
+  └ L360:420 (61 lines read)
+
+● Search (grep)
+  │ "tempDir|temp_dir|System\.getProperty\("java\.io\.tmpdir"\)|browser4-[a-zA-Z
+  │ ]|pulsar-[a-zA-Z]|tmp/cli|tmp\\cli" in *.{kt,java,properties}
+  │ (browser4-core, browser4-rest, browser4-tools, browser4-agentic)
+  └ 90 lines found
+
+I’ve narrowed it down to the CLI daemon code. Before editing, I’m taking a quick baseline on the Rust CLI target that owns this behavior.
+
+● Run browser4-cli baseline check and daemon tests (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ check --quiet; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cargo test
+  │ --bin browser4-cli daemon --quiet
+  └ 21 lines...
+
+I have the implementation shape now: move the default startup log to the temp-based CLI root, append explicit daemon-side startup events, and keep the existing local changes intact. I’m writing that in one patch, then I’ll run just the startup-log-focused Rust checks.
+
+● Edit
+  └ Edit sdks\browser4-cli\src\daemon.rs
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L760:950 (191 lines read)
+
+● Review daemon.rs patch (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs
+  └ 239 lines...
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L934:1065 (132 lines read)
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L1066:1105 (40 lines read)
+
+● Edit
+  └ Edit sdks\browser4-cli\src\daemon.rs
+
+The patch is in. I also updated the local daemon test fixtures to match the current `ROOT.md`-based repo detection already present in the worktree, so I can validate the whole daemon test slice instead of only the new startup-log cases.
+
+● Format and validate browser4-cli daemon changes (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt
+  │ -- src/daemon.rs; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cargo
+  │ check --quiet; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cargo test
+  │ --bin browser4-cli daemon --quiet
+  └ 21 lines...
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L240:310 (71 lines read)
+
+● Search (grep)
+  │ "resolve_default_state_dir" (sdks\browser4-cli\src\daemon.rs)
+  └ 2 lines found
+
+● Edit
+  └ Edit sdks\browser4-cli\src\daemon.rs
+
+I only had one cleanup left: a Windows-only unused import from the existing launcher code path. Re-running the same Rust slice now.
+
+● Re-run browser4-cli daemon validation (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ check --quiet; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; cargo test
+  │ --bin browser4-cli daemon --quiet
+  └ 4 lines...
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L470:710 (241 lines read)
+
+● Inspect final daemon diff and status (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs && git --no-pager
+  │ status --short
+  └ 502 lines...
+
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L995:1035 (41 lines read)
+
+The code side is done. I’m updating the required daily and monthly memory logs now, appending only the new entries so the existing history stays intact.
+
+● Read MEMORY.20260425.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.
+  │ md
+  └ L1:end (6 lines read)
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (80 lines read)
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.2026
+    0425.md
+
+● Edit
+  └ Edit
+    D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+
+I’ve appended both memory files. I’m doing one last readback of the new log entries and the daemon diff so I can hand off the exact outcome cleanly.
+
+● Read MEMORY.20260425.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.
+  │ md
+  └ L1:end (8 lines read)
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L76:end (8 lines read)
+
+● Show final daemon diff (shell)
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs
+  └ 496 lines...
+
+**Done.** `sdks/browser4-cli/src/daemon.rs` now creates startup logs under the per-user temp path (`%TEMP%\browser4-$USER\tmp\cli` on Windows), writes explicit daemon-side startup/progress/failure lines into that same log file, and reports log creation/write failures to stderr instead of failing silently.
+
+I also updated the daemon tests to cover the new log-directory behavior and appended the required entries to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\25\MEMORY.20260425.md` and `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md` without overwriting existing content.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +144 -22
+Requests  1 Premium (3m 30s)
+Tokens    ↑ 1.4m • ↓ 11.0k • 1.3m (cached) • 4.4k (reasoning)
