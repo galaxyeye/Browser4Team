@@ -1,0 +1,46 @@
+Starting Coworker Task Runner...
+[2026-04-26 02:50:16] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-26 02:50:16] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-26 02:50:16] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-26 02:50:16] [INFO] ===========================================================================
+[2026-04-26 02:50:16] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-26 02:50:16] [INFO] Started at: 04/26/2026 02:50:16
+[2026-04-26 02:50:16] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\025016-coworker.log
+[2026-04-26 02:50:16] [INFO] ==========================================================================
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: 1.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: 2.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: 3.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: 4.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: 5.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: README.md
+[2026-04-26 02:50:16] [INFO] [PREPARE] Task: README.zh.md
+Moving approved task to pushed: D:\workspace\Browser4Team\coworker\tasks\5approved\load-html-fixtures-from-files.md
+[2026-04-26 02:50:16] [INFO] Task moved to pushed: D:\workspace\Browser4Team\coworker\tasks\6git-pushed\2026\0426\load-html-fixtures-from-files.md
+[2026-04-26 02:50:16] [INFO] Executing commit script for approved tasks...
+Running:
+gh copilot --no-ask-user --log-level info --allow-all -- -p 'Commit all changes in "D:\workspace\Browser4Team".
+Pull from remote.
+Then push to remote.
+If conflicts occur, resolve them automatically.' --allow-all-tools
+● Read AGENTS.md
+  └ 24 lines read
+
+● Read AGENTS.md
+  │ submodules\Browser4\AGENTS.md
+  └ 441 lines read
+
+● Check git status in repo and submodule (shell)
+  │ git --no-pager status --short --branch && Write-Host '---SUBMODULE---' &&
+  │ git -C submodules\Browser4 --no-pager status --short --branch
+  └ 13 lines...
+
+I found local changes in both the parent repo and `submodules\Browser4`, with the submodule already one commit ahead of origin. I’m syncing the submodule first so the parent repo can safely record the updated pointer.
+
+● Commit, pull, and push Browser4 submodule (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'
+  │ $changes = git status --porcelain
+  │ if ($changes) {
+  │ git add -A…
+  └ 27 lines...
+

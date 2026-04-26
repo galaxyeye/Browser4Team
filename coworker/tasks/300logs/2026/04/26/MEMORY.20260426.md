@@ -1,0 +1,4 @@
+# MEMORY.20260426.md
+## Daily Memory - 2026-04-26
+
+- Reworked `sdks/browser4-cli/tests/e2e.rs` so its local fixture server loads the shared MCP controller HTML fixtures from `browser4-tests/browser4-tests-common/src/main/resources/static/b4` instead of keeping large inline HTML strings in the Rust test file, preloading the interactive, other, and form pages once at server startup. Focused Rust E2E validation passed for `test_navigation_and_storage` and `test_form_controls_and_exports`; repeated `test_mouse_and_dialog` and `test_interaction_commands` reruns still hit existing click/mousedown interaction flakes after the shared page had already loaded, which looked unrelated to fixture sourcing. Key lesson: keep the CLI and REST E2Es on one shared HTML fixture source so selector/state changes stay aligned across suites, and validate shared-fixture refactors with route coverage that isolates the fixture-loading change from unrelated browser-action instability.

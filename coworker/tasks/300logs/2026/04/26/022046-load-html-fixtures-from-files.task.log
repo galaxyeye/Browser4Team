@@ -1,0 +1,112 @@
+Task: load-html-fixtures-from-files
+Description: Task from load-html-fixtures-from-files.md
+Original File: load-html-fixtures-from-files.md
+Control Repo: D:\workspace\Browser4Team
+Target Repo: D:\workspace\Browser4Team\submodules\Browser4
+Copilot Working Directory: D:\workspace\Browser4Team\submodules\Browser4
+Started: 2026-04-26 02:21:00
+Prompt:
+Finish the task described in file: D:\workspace\Browser4Team\coworker\tasks\2working\load-html-fixtures-from-files.md.
+Do not move **this** task file, just execute the task based on its content, the system will move it after you finished the task.
+
+*** MEMORY UPDATE INSTRUCTIONS ***
+You have a memory system to help you learn and improve.
+Your memory files are located in: D:\workspace\Browser4Team\coworker\tasks\300logs
+
+After completing the task, you MUST update your daily memory file: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.md
+1. Append a summary of this task, its outcome, and any lessons learned to D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.md.
+2. Check if the Monthly Memory file (D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md) has been updated with the previous day's summary. If not, summarize all daily memories from this month (excluding today) into the Monthly Memory.
+3. Ensure you do not overwrite existing content, always append.
+
+
+[Monthly Memory (2026-04)]:
+# MEMORY.202604.md
+## Monthly Memory - 2026-04
+
+### Daily Rollup Update (through 2026-03-31)
+- No April daily memories existed before 2026-04-01, so there were no prior in-month entries to roll up yet.
+
+### Daily Rollup Update (through 2026-04-03)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` after an initial timeout-focused mitigation proved incomplete. The final fix exposed `CommandStatus.agentHistory` in REST JSON, added serialization coverage, and reworked the E2E to submit asynchronously and poll the status endpoint until agent history appears. Focused `pulsar-rest-tests` validation passed. Key lesson: for slow agent-backed flows, prefer polling async status APIs over long synchronous HTTP waits, and verify DTO serialization explicitly at the REST boundary.
+
+### Daily Rollup Reconciliation (through 2026-04-03)
+- Rechecked the available April daily memory files before the 2026-04-04 update. Only `2026-04-01/MEMORY.20260401.md` existed before today; there were no daily memory files for 2026-04-02 or 2026-04-03, so no additional pre-2026-04-04 summaries were available to append beyond the existing 2026-04-01 rollup.
+
+### Daily Rollup Update (through 2026-04-04)
+- **2026-04-04**: Extended the `browser4-cli` Rust E2E harness and CI flow to support `BROWSER4_E2E_SERVICE_URL`/`BROWSER4_E2E_SERVER_URL`, pointed CI at the Docker-started Browser4 service instead of a self-started local jar, and removed stale `nodejs-sdk` test-script references in favor of the Rust `browser4-cli` cargo workflow. Key lesson: when infrastructure paths change, update the harness, CI wiring, and shared wrapper scripts together so old startup assumptions do not keep breaking otherwise-correct test runs.
+
+### Daily Rollup Update (through 2026-04-05)
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by persisting and restoring the last selector-targeted focus before bare `keydown`/`keyup` calls, then cleaned up global CLI shutdown so `close-all` and `kill-all` both remove named session state files via one shared helper. Key lessons: cross-invocation browser actions need explicit persisted UI context instead of relying on ambient focus, and parallel global teardown paths should share one cleanup implementation so forced and graceful shutdown behavior does not drift.
+
+### Daily Rollup Reconciliation (through 2026-04-07)
+- **2026-04-01**: Repaired the agent-history status coverage in `pulsar-rest` by exposing `CommandStatus.agentHistory` in REST JSON, adding serialization coverage, and polling the async status endpoint in the E2E instead of holding a long sync HTTP call open. Key lesson: for slow agent-backed REST flows, prefer async polling and verify DTO serialization at the HTTP boundary.
+- **2026-04-04**: Extended the Rust `browser4-cli` E2E harness and CI wiring to support external Browser4 service URLs, point CI at the Docker-started service, and remove stale `nodejs-sdk` test-script assumptions. Key lesson: infrastructure-path changes must update the harness, workflow wiring, and shared wrapper scripts together.
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by restoring selector-targeted focus before standalone `keydown`/`keyup` commands, then unified `close-all` and `kill-all` state cleanup behind one helper. Key lessons: cross-invocation browser actions need persisted UI context, and parallel teardown paths should share one cleanup implementation.
+- **2026-04-06**: Fixed `gh-copilot.ps1` capture mode so script-driven Copilot output uses `--silent` and no longer writes CLI metadata into refined drafts, and produced an implementation-only plan for `browser4-cli` external-service E2E support after reconciling the current harness and workflow behavior. Key lessons: any Copilot stdout persisted to disk must suppress CLI framing at the shared helper, and Dockerized service test planning must account for both host/container networking and workflow order.
+- No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
+
+### Daily Rollup Update (through 2026-04-08)
+- **2026-04-08**: Reworked `pulsar-rest` `MCPToolController.listTools()` to derive the advertised MCP surface from live `AgentToolExecutor` specs, reuse an existing session when available, and create a temporary discovery session when none exist, while filtering browser4-cli aliases and legacy helper names so only truly callable tools are listed. Key lessons: MCP discovery endpoints should share the same runtime registry and alias logic as execution, and session-scoped tool catalogs are safer to discover from a short-lived session than from a duplicated static list.
+
+### Daily Rollup Update (through 2026-04-09)
+- **2026-04-09**: Moved the high-level `agent`, `command`, and `crawl` tool packages under `tools.high.*` across `pulsar-agentic` and `pulsar-tools`, fixed downstream imports/typealiases, and repaired `MCPToolController.listTools()` so advertised MCP tools again come from live `AgentToolExecutor` specs plus the runtime alias filters. Key lessons: cross-module namespace refactors need both compile-time and runtime-registry validation, and MCP listings should be generated from the same live registry used for execution.
+- **2026-04-09**: Unified `command_*` MCP execution behind `AgentToolExecutor` by adding explicit `command` dispatch and registering `CommandService` as the runtime command target, eliminating the controller-only direct `CommandToolExecutor` path. Key lessons: every advertised tool domain needs a real `AgentToolExecutor.execute()` branch, and shared tool execution stays maintainable when service-backed domains register runtime targets instead of duplicating controller logic.
+
+### Daily Rollup Reconciliation (through 2026-04-10)
+- Checked April daily memory files before the 2026-04-11 update. No pre-2026-04-11 daily memory files were present beyond the entries already reflected above, so there was no additional 2026-04-10-or-earlier summary to append this time.
+
+### Daily Rollup Reconciliation (through 2026-04-10)
+- **2026-04-01**: Repaired the agent-history REST coverage by exposing `CommandStatus.agentHistory` in JSON, adding serialization coverage, and polling async status instead of waiting on a long sync request. Key lesson: for slow agent-backed HTTP flows, prefer async polling and verify DTO serialization at the REST boundary.
+- **2026-04-04**: Added external-service support to the Rust `browser4-cli` E2E harness, pointed CI at the Docker-started Browser4 service, and removed stale `nodejs-sdk` wrapper-script assumptions in favor of cargo-based CLI testing. Key lesson: infrastructure-path changes need the harness, workflow wiring, and shared test scripts updated together.
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by restoring persisted selector focus before bare keyboard commands, then unified `close-all` and `kill-all` state cleanup behind one helper. Key lessons: cross-invocation browser actions need explicit persisted UI context, and parallel global teardown paths should share one cleanup implementation.
+- **2026-04-06**: Fixed captured Copilot output in `gh-copilot.ps1` so `--silent` is applied for saved output, and created the implementation plan for external-service `browser4-cli` E2Es after reconciling the current harness/workflow behavior. Key lessons: persisted Copilot stdout must suppress CLI framing, and Dockerized test planning must account for host/container networking plus workflow order.
+- **2026-04-08**: Reworked `pulsar-rest` MCP tool listing to derive from live `AgentToolExecutor` specs, reuse an existing session when possible, and create a temporary discovery session otherwise, while filtering aliases and legacy helper names to only callable tools. Key lesson: discovery endpoints should use the same runtime registry and normalization path as execution.
+- **2026-04-09**: Moved high-level `agent`, `command`, and `crawl` tool packages under `tools.high.*`, fixed downstream imports/runtime listing behavior, and unified `command_*` MCP execution behind `AgentToolExecutor` with `CommandService` registered as the runtime target. Key lessons: cross-module namespace refactors need both compile-time and runtime-registry validation, and every advertised tool domain needs a real unified execution branch.
+- **2026-04-10**: Added then fully removed the temporary end-to-end `open-and-scroll-to-bottom` browser command after confirming it duplicated existing primitives and created disproportionate CLI/MCP/spec/test maintenance. Key lesson: one-off browser actions exposed through CLI, MCP aliases, generated specs, and tests are expensive to maintain, so short-lived test helpers should not become end-to-end product surface.
+- No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
+
+### Daily Rollup Update (through 2026-04-11)
+- **2026-04-11**: Fixed `RobustBrowserAgent` step logging so `lastCall` comes from the previous step's executed tool call instead of the newly created step state, and repaired agentic skill regressions by restoring the stable `web-scraping` skill ID plus duplicate-ID enforcement in `SkillRegistry.register()`. Focused Maven validation passed with the Kotlin daemon disabled and in-process compilation where needed. Key lessons: cross-step diagnostics must read inherited execution state, skill IDs must stay stable across programmatic and resource-backed implementations, and targeted Maven verification in this environment is more reliable when the Kotlin daemon is disabled.
+
+### Daily Rollup Update (through 2026-04-12)
+- **2026-04-12**: Improved `.github/workflows/ci.yml` so the `Check Test Status` stage always runs after the reusable test action, defaults a missing test status to `failed`, parses `TEST-*.xml` reports to print individual failing test cases, emits GitHub `::error` annotations for each failure, and appends a failed-test section to `$GITHUB_STEP_SUMMARY`. Key lesson: aggregate test counts are not enough for fast CI triage; surfacing per-test Surefire failures directly in the workflow makes failing runs immediately actionable.
+
+### Daily Rollup Reconciliation (through 2026-04-13)
+- **2026-04-01**: Repaired the agent-history REST coverage by exposing `CommandStatus.agentHistory` in JSON, adding serialization coverage, and polling async status instead of waiting on a long sync request. Key lesson: for slow agent-backed HTTP flows, prefer async polling and verify DTO serialization at the REST boundary.
+- **2026-04-04**: Added external-service support to the Rust `browser4-cli` E2E harness, pointed CI at the Docker-started Browser4 service, and removed stale `nodejs-sdk` wrapper-script assumptions in favor of cargo-based CLI testing. Key lesson: infrastructure-path changes need the harness, workflow wiring, and shared test scripts updated together.
+- **2026-04-05**: Stabilized `browser4-cli` interaction E2Es by restoring persisted selector focus before bare keyboard commands, then unified `close-all` and `kill-all` state cleanup behind one helper. Key lessons: cross-invocation browser actions need explicit persisted UI context, and parallel teardown paths should share one cleanup implementation.
+- **2026-04-06**: Fixed captured Copilot output in `gh-copilot.ps1` so `--silent` is applied for saved output, and created the implementation plan for external-service `browser4-cli` E2Es after reconciling the current harness/workflow behavior. Key lessons: persisted Copilot stdout must suppress CLI framing, and Dockerized test planning must account for host/container networking plus workflow order.
+- **2026-04-08**: Reworked `pulsar-rest` MCP tool listing to derive from live `AgentToolExecutor` specs, reuse an existing session when possible, and create a temporary discovery session otherwise, while filtering aliases and legacy helper names to only callable tools. Key lesson: discovery endpoints should use the same runtime registry and normalization path as execution.
+- **2026-04-09**: Moved high-level `agent`, `command`, and `crawl` tool packages under `tools.high.*`, fixed downstream imports/runtime listing behavior, and unified `command_*` MCP execution behind `AgentToolExecutor` with `CommandService` registered as the runtime target. Key lessons: cross-module namespace refactors need both compile-time and runtime-registry validation, and every advertised tool domain needs a real unified execution branch.
+- **2026-04-10**: Added then fully removed the temporary end-to-end `open-and-scroll-to-bottom` browser command after confirming it duplicated existing primitives and created disproportionate CLI/MCP/spec/test maintenance. Key lesson: one-off browser actions exposed through CLI, MCP aliases, generated specs, and tests are expensive to maintain, so short-lived test helpers should not become end-to-end product surface.
+- **2026-04-11**: Fixed `RobustBrowserAgent` step logging so `lastCall` comes from the previous step's executed tool call instead of the newly created step state, and repaired agentic skill regressions by restoring the stable `web-scraping` skill ID plus duplicate-ID enforcement in `SkillRegistry.register()`. Key lessons: cross-step diagnostics must read inherited execution state, skill IDs must stay stable across programmatic and resource-backed implementations, and targeted Maven verification in this environment is more reliable when the Kotlin daemon is disabled.
+- **2026-04-12**: Improved `.github/workflows/ci.yml` so the `Check Test Status` stage always runs after the reusable test action, defaults a missing test status to `failed`, parses `TEST-*.xml` reports to print individual failing test cases, emits GitHub `::error` annotations for each failure, and appends a failed-test section to `$GITHUB_STEP_SUMMARY`. Key lesson: aggregate test counts are not enough for fast CI triage; surfacing per-test Surefire failures directly in the workflow makes failing runs immediately actionable.
+- **2026-04-13**: Hardened `browser4-cli` Rust E2E readiness by improving local Browser4 startup checks, waiting for Chrome teardown in `kill_all_browsers()`, updating the E2E mock server for the current MCP command flow, and widening the retry window for transient startup errors. Key lesson: Browser4 CLI E2Es need MCP tool readiness, browser teardown, and harness protocol parity checked together or transport flakes will hide the next real failure.
+- No daily memory files were present for 2026-04-02, 2026-04-03, or 2026-04-07.
+
+### Daily Rollup Update (through 2026-04-14)
+- **2026-04-14**: Added a Unix `sdks/browser4-cli/install.sh` installer for Java/Chrome/Rust plus the latest Browser4 release artifacts, removed the obsolete Windows `install.ps1` path in favor of explicit manual setup guidance, refactored the Rust `browser4-cli` E2E harness into smaller scenario-focused runs with timing output and stable restart boundaries, reordered CI so the Docker-backed CLI E2E runs before the broader Maven test stage, and initially implemented `browser4-cli batch` as a frontend-dispatched multi-command flow with argument mode, JSON stdin mode, and `--bail` coverage. Key lessons: keep release-tagged install artifacts aligned across mixed binary/source surfaces, remove retired install paths and their documentation together, preserve stable browser-state boundaries when splitting large E2E suites, run the most predictive end-to-end suite early in CI, and when introducing a meta-command reuse the normal CLI dispatch path first so its existing state and alias semantics stay coherent.
+
+### Daily Rollup Update (through 2026-04-20)
+- **2026-04-15**: Reworked `browser4-cli batch` into a real backend-executed flow by compiling CLI batch commands into one `command_batch` request, preserving local session/selector/mouse state around the response, saving snapshot/screenshot artifacts from structured per-step results, and updating localhost daemon startup to prefer launching the in-repo Browser4 server via Maven with the packaged JAR retained as fallback. Key lessons: keep the CLI as the syntax/state adapter while moving batched execution to one backend request, model composite commands like `open <url>` as one logical CLI command backed by multiple internal steps, and prefer the matching repo checkout for localhost startup without regressing installed-binary fallback behavior.
+- No daily memory files were present for 2026-04-16 through 2026-04-20.
+
+### Daily Rollup Update (through 2026-04-22)
+- **2026-04-21**: Expanded `browser4-cli` Rust E2E coverage inside `test_batch_commands` for `batch --json` stdin by adding a full JSON-driven open/type/fill/click flow plus string-form JSON commands against the active session, although runtime confirmation on that day was still blocked by an existing local Browser4 startup/transport failure during the first batch call. Key lesson: the main batch E2E should prove both JSON array and string-form stdin commands end to end instead of leaving full JSON-open coverage only to edge-case helpers.
+- No daily memory files were present for 2026-04-22.
+
+### Daily Rollup Update (through 2026-04-23)
+- **2026-04-23**: Added a dedicated `browser4-cli` Rust E2E scenario for batch-driven form submission from a JSON file in `sdks/browser4-cli/tests/e2e.rs`, wiring the test to write fixture JSON, load it back through the harness, and verify both final form state and submitted payload after the backend batch completes. Key lesson: when batch E2Es need structured fixture data, keep the source as a JSON file and translate it into `batch --json` commands inside the test so the harness exercises real file loading plus the production batch path without brittle shell-quoting assumptions.
+
+### Daily Rollup Update (through 2026-04-24)
+- **2026-04-24**: Rebuilt `browser4-tests/browser4-tests-common/src/main/resources/static/generated/form-filling.html` into a richer Browser4 form playground while preserving the stable CLI E2E selectors, and added focused `InteractivePagesTest` coverage to lock those selectors plus the new debug outputs in place. Key lesson: fixture pages should preserve canonical selectors and serialized state first, then add richer UI behavior around them; and when validating `TestInfraCheck` coverage here, override the repo’s default Surefire exclusion to avoid zero-test false positives.
+
+### Daily Rollup Update (through 2026-04-25)
+- **2026-04-25**: Fixed `browser4-cli` Rust dead-code warnings by exporting `state` from `sdks/browser4-cli/src/lib.rs` so binary-used state helpers are part of the library surface, then repaired `sdks/browser4-cli/src/daemon.rs` startup-log handling so Browser4 startup logs are created under the per-user temp root `browser4-$USER/tmp/cli`, include explicit daemon-side startup progress/failure lines, and report log-creation/write problems on stderr. Key lessons: in mixed binary/library Cargo packages, library visibility needs to match real cross-target usage to avoid dead-code noise; and startup diagnostics are far more reliable when both the launcher and the child process write into one predictable per-user temp log.
+
+
+---
+Copilot Execution Output:
+
+Copilot Exit Code: 0
+Copilot Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\022046-load-html-fixtures-from-files.copilot.log
