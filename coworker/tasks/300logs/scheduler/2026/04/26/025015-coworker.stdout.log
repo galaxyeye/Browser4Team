@@ -56,3 +56,31 @@ The submodule is now pushed on `4.8.x`. Next I’m committing the parent repo’
 
 The first parent-repo pull/push hit a transient GitHub connection reset, and one scheduler log changed after the commit. I’m rolling that latest change into a follow-up commit and retrying the sync.
 
+● Retry parent repo sync after transient failure (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location 'D:\workspace\Browser4Team'
+  │ $changes = git status --porcelain
+  │ if ($changes) {
+  │ git add -A…
+  └ 14 lines...
+
+● Check current parent repo status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git --no-pager status --short
+  │ --branch
+  └ 3 lines...
+
+● Inspect remote and test GitHub access over HTTP/1.1 (shell)
+  │ Set-Location 'D:\workspace\Browser4Team'; git remote -v; Write-Host '---';
+  │ git -c http.version=HTTP/1.1 ls-remote origin HEAD
+  └ 5 lines...
+
+GitHub access works when forcing HTTP/1.1, so I’m retrying the parent sync with that setting. The only moving part left is a live scheduler log that has been changing between commands.
+
+● Pull and push parent repo using HTTP/1.1 (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location 'D:\workspace\Browser4Team'
+  │ $changes = git status --porcelain
+  │ if ($changes) {
+  │ git add -A…
+  └ 24 lines...
+
