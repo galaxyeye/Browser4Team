@@ -49,3 +49,110 @@ I found a dirty submodule, so I’m syncing that first and then I’ll update th
 
 The only nested repo with local edits is `submodules\Browser4`, so I’m committing and syncing that first to avoid breaking the parent repo’s submodule pointer on pull.
 
+● Commit, pull, and push Browser4 submodule changes (shell)
+  │ Set-Location submodules\Browser4; git add -A; if (-not (git diff --cached
+  │ --quiet)) { git commit -m "chore: save pending cli e2e updates" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" };
+  │ git pull --no-rebase -X ours origin 4.8.x; git push origin 4.8.x; git
+  │ --no-pager status --short --branch
+  └ 178 lines...
+
+The submodule pull needed a merge commit and dropped into the editor. I’m closing that out with the default merge message so the sync can finish cleanly.
+
+● Write shell input
+  └ 86 lines...
+
+● Inspect root status after submodule push (shell)
+  │ git --no-pager status --short --branch
+  └ 5 lines...
+
+● Inspect post-sync submodule status (shell)
+  │ Set-Location submodules\Browser4; git --no-pager status --short --branch &&
+  │ git --no-pager diff --stat && git --no-pager diff --cached --stat
+  └ 5 lines...
+
+The submodule finished syncing, but the merge left one staged file behind. I’m checking whether that’s a real leftover change or just a normalization artifact before I finalize the parent repo.
+
+● Inspect recent submodule commits (shell)
+  │ Set-Location submodules\Browser4; git --no-pager log --oneline --decorate -n
+  │ 5
+  └ 6 lines...
+
+● Inspect staged daemon diff in submodule (shell)
+  │ Set-Location submodules\Browser4; git --no-pager status && git --no-pager
+  │ diff --cached --name-status && git --no-pager diff --cached --
+  │ sdks/browser4-cli/src/daemon.rs | Select-Object -First 220
+  └ 166 lines...
+
+● Commit leftover staged submodule changes and push (shell)
+  │ Set-Location submodules\Browser4; if (-not (git diff --cached --quiet)) {
+  │ git commit -m "chore: save merged daemon launcher updates" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" };
+  │ git push origin 4.8.x; git --no-pager status --short --branch
+  └ 18 lines...
+
+That file is still dirty after the follow-up commit, which points to a line-ending or worktree normalization issue rather than an unpushed logical change. I’m normalizing the submodule worktree so the parent repo can record a clean pointer.
+
+● Check file EOL metadata in submodule (shell)
+  │ Set-Location submodules\Browser4; git ls-files --eol --
+  │ sdks/browser4-cli/src/daemon.rs
+  └ 2 lines...
+
+● Inspect unstaged submodule diff and git eol config (shell)
+  │ Set-Location submodules\Browser4; git --no-pager status --short --branch &&
+  │ git --no-pager diff -- sdks/browser4-cli/src/daemon.rs | Select-Object
+  │ -First 220 && git config --get core.autocrlf && git config --get core.eol
+  └ 47 lines...
+
+● Restore submodule worktree file from index (shell)
+  │ Set-Location submodules\Browser4; git restore --worktree --
+  │ sdks/browser4-cli/src/daemon.rs; git --no-pager status --short --branch
+  └ 2 lines...
+
+● Inspect recent root commits before sync (shell)
+  │ git --no-pager log --oneline --decorate -n 5
+  └ 6 lines...
+
+● Inspect root repo before commit/pull/push (shell)
+  │ git --no-pager status --short --branch && git --no-pager submodule status
+  └ 6 lines...
+
+The top-level repo just needs one final commit for the submodule pointer and two staged task-file moves, then I can merge remote `main` and push everything up.
+
+● Commit, pull, and push root repository changes (shell)
+  │ git add -A; if (-not (git diff --cached --quiet)) { git commit -m "chore:
+  │ sync pending task and submodule updates" -m "Co-authored-by: Copilot
+  │ <223556219+Copilot@users.noreply.github.com>" }; git pull --no-rebase -X
+  │ ours --no-edit origin main; git push origin main; git --no-pager status
+  │ --short --branch
+  └ 16 lines...
+
+● Memory stored git workflow
+  └ When syncing this repo, commit and push dirty submodules like
+    submodules\Browser…
+
+● Verify root and submodule are clean (shell)
+  │ git --no-pager status --short --branch && Set-Location submodules\Browser4;
+  │ git --no-pager status --short --branch
+  └ 3 lines...
+
+**Done.** All local changes were committed, the repo was pulled from remote, and everything was pushed successfully.
+
+Published commits:
+- **Root repo:** `d7fa601` on `main`
+- **Submodule `submodules\Browser4`:** `a2b9d94ed` on `4.8.x`
+
+Both the parent repo and the `Browser4` submodule are now clean and in sync with their remotes.
+
+[2026-04-26 06:23:19] [INFO] Git sync executed successfully.
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: improve-form-filling-page.md (updated 04/24/2026 14:58:51)
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: fix-browser4-cli-warnings.md (updated 04/25/2026 12:01:47)
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: fix-startup-log-creation.md (updated 04/26/2026 02:55:32)
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: clean-temp-browser-contexts.md (updated 04/26/2026 13:50:47)
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: load-html-fixtures-from-files.md (updated 04/26/2026 10:20:24)
+[2026-04-26 06:23:19] [INFO] [PUSHED] Task: refactor-e2e-cleanup-handling.md (updated 04/26/2026 10:55:53)
+[2026-04-26 06:23:19] [INFO] ===========================================================================
+[2026-04-26 06:23:19] [INFO] All tasks completed
+[2026-04-26 06:23:19] [INFO] Ended at: 04/26/2026 06:23:19
+[2026-04-26 06:23:19] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\061802-coworker.log
+[2026-04-26 06:23:19] [INFO] ==========================================================================
