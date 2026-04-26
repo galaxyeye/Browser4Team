@@ -50,3 +50,33 @@ The only nested repo with local changes is `submodules\Browser4`, so I’m synci
 
 The submodule is on the remote now. I’m committing the top-level repo, then pulling with automatic conflict preference and pushing the updated pointer plus the remaining files.
 
+● Commit pull push parent repo and show status (shell)
+  │ git -C D:\workspace\Browser4Team add -A && git -C
+  │ D:\workspace\Browser4Team commit -m "Sync local changes" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" &&
+  │ git -C D:\workspace\Browser4Team pull --no-rebase -X ours origin main &&
+  │ git -C D:\workspace\Browser4Team push origin HEAD:main && Write-Host …
+  └ 35 lines...
+
+One scheduler log kept changing during the sync, so I’m checking whether it settled; if it has, I’ll do one final commit/pull/push to leave the worktree clean.
+
+● Check whether changing log file has stabilized (shell)
+  │ $p='D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\04\26\
+  │ 113532-coworker.stdout.log'; if (Test-Path $p) { Get-Item $p |
+  │ Select-Object FullName,Length,LastWriteTime }; Write-Host '---STATUS1---';
+  │ git -C D:\workspace\Browser4Team --no-pager status --short --branch;
+  │ Start-Sleep -Seconds 5; if (Test-Path $p) { Get-Item $p | Select-Object …
+  └ 13 lines...
+
+The file stopped changing, so I’m capturing that last log update and pushing once more so the parent repo ends clean.
+
+● Commit final log change and push parent repo (shell)
+  │ git -C D:\workspace\Browser4Team add -A && git -C
+  │ D:\workspace\Browser4Team commit -m "Capture final scheduler log" -m
+  │ "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>" &&
+  │ git -C D:\workspace\Browser4Team pull --no-rebase -X ours origin main &&
+  │ git -C D:\workspace\Browser4Team push origin HEAD:main && Write-Host …
+  └ 25 lines...
+
+That scheduler stdout log is still being updated by a running process, so I’m checking how active it is before deciding the safest way to finish the sync without trampling another process.
+
