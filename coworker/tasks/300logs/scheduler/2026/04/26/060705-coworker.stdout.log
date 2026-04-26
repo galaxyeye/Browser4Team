@@ -1,0 +1,205 @@
+Starting Coworker Task Runner...
+[2026-04-26 06:07:05] [INFO] Control repository root: D:\workspace\Browser4Team
+[2026-04-26 06:07:05] [INFO] Target repository root: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-26 06:07:05] [INFO] Copilot task working directory: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-26 06:07:05] [INFO] ===========================================================================
+[2026-04-26 06:07:05] [INFO] Coworker Task Runner - PowerShell Version
+[2026-04-26 06:07:05] [INFO] Started at: 04/26/2026 06:07:05
+[2026-04-26 06:07:05] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\060705-coworker.log
+[2026-04-26 06:07:05] [INFO] ==========================================================================
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: 1.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: 2.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: 3.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: 4.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: 5.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: README.md
+[2026-04-26 06:07:05] [INFO] [PREPARE] Task: README.zh.md
+[2026-04-26 06:07:05] [INFO] [PUSHED] Task: improve-form-filling-page.md (updated 04/24/2026 14:58:51)
+[2026-04-26 06:07:05] [INFO] [PUSHED] Task: fix-browser4-cli-warnings.md (updated 04/25/2026 12:01:47)
+[2026-04-26 06:07:05] [INFO] [PUSHED] Task: fix-startup-log-creation.md (updated 04/26/2026 02:55:32)
+[2026-04-26 06:07:05] [INFO] [PUSHED] Task: load-html-fixtures-from-files.md (updated 04/26/2026 10:20:24)
+[2026-04-26 06:07:05] [INFO] [PUSHED] Task: refactor-e2e-cleanup-handling.md (updated 04/26/2026 10:55:53)
+DEBUG: GH Stderr:  Changes   +0 -0 Requests  1 Premium (13s) Tokens    ↑ 18.8k • ↓ 116 • 17.9k (cached) • 105 (reasoning)
+[2026-04-26 06:07:22] [INFO] Renamed in created: cleanup-temp-browser-contexts.md -> clean-temp-browser-contexts.md
+[2026-04-26 06:07:22] [INFO] Moved to working: D:\workspace\Browser4Team\coworker\tasks\2working\clean-temp-browser-contexts.md
+[2026-04-26 06:07:22] [INFO] Memory context initialized via generator.
+[2026-04-26 06:07:22] [INFO] Executing Copilot for task: clean-temp-browser-contexts
+[2026-04-26 06:07:22] [INFO] Task repositories -> control: D:\workspace\Browser4Team | target: D:\workspace\Browser4Team\submodules\Browser4 | Copilot cwd: D:\workspace\Browser4Team\submodules\Browser4
+[2026-04-26 06:07:22] [INFO] === Starting Copilot execution ===
+I
+● Read clean-temp-browser-contexts.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\clean-temp-browser-context
+  │ s.md
+  └ 14 lines read
+● Check git status and branch (shell)
+  │ git --no-pager status --short && git --no-pager branch --show-current
+  └ 2 lines...
+I found the concrete ask: clean the temporary Browser4 context directory after CLI E2Es
+✗ Read plan.md
+  │ ~\.copilot\session-state\c20a9843-7120-49b6-9265-d8324146166b\plan.md
+  └ Path does not exist
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (260 lines read)
+● Search (glob)
+  │ "sdks\browser4-cli\tests\e2e{.rs,\**\*.rs}"
+  └ No matches found
+● Search (grep)
+  │ "TEMPORARY|close-all|kill-all|cleanup|context\\tmp\\groups\\rand|profile-mod
+  │ e" in **/*.rs (sdks\browser4-cli\tests)
+  └ 35 lines found
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L820:930 (111 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1710:1815 (106 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1940:2125 (184 lines read)
+● Search (grep)
+  │ "temp_dir|browser4-pereg|context\\tmp|groups\\rand|std::env::temp_dir|TEMPOR
+  │ ARY profile" in **/*.{rs,kt,java,md}
+  └ 17 lines found
+I found the existing panic-safe scenario cleanup in the custom Rust E2E harness. Now I’m checking the CLI
+● Read daemon.rs
+  │ sdks\browser4-cli\src\daemon.rs
+  └ L720:790 (70 lines read)
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ L430:490 (61 lines read)
+● Run baseline browser4-cli unit tests (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo
+  │ test --bin browser4-cli --quiet
+  └ 5 lines...
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L730:820 (91 lines read)
+● Search (grep)
+  │ "CLI_TEMP_DIR_COMPONENTS|current_user_for_temp_dir|sanitize_user_for_temp_di
+  │ r|context\\tmp|groups\\rand|profileMode|TEMPORARY" in **/*.{rs,md}
+  │ (sdks\browser4-cli)
+  └ 32 lines found
+● Search (grep)
+  │ "context\\tmp\\groups|groups/rand|maxBrowserContexts|profileMode.*TEMPORARY|
+  │ tmp\\groups" in **/*.{rs,kt,java,properties,md}
+  └ 39 lines found
+The test harness already
+● Read PulsarBrowserFactoryTest.kt
+  │ browser4-core\pulsar-plugins\browser4-protocol\src\test\kotlin\ai\platon\pul
+  │ sar\protocol\browser\PulsarBrowserFactoryTest.kt
+  └ L70:110 (33 lines read)
+● Search (grep)
+  │ "browser4-\$USER|browser4-\{|context[/\\]tmp[/\\]groups[/\\]rand|current_use
+  │ r_for_temp_dir|sanitize_user_for_temp_dir|tmp/groups/rand" in
+  │ **/*.{kt,java,rs,properties,md}
+  └ 6 lines found
+● Search (grep)
+  │ "browser4-[A-Za-z0-9_.-]+.*context|contextDir|group.*rand|tmp.*groups.*rand"
+  │ in **/*.{kt,java} (browser4-core)
+  └ 70 lines found
+✗ Read AppPaths.kt
+  │ browser4-core\browser4-skeleton\src\main\kotlin\ai\platon\pulsar\common\AppP
+  │ aths.kt
+  └ Path does not exist
+● Search (grep)
+  │ "CONTEXT_TMP_DIR|getTmpContextGroupDir|APP_HOME|browser4-" in **/*.{kt,java}
+  │ (browser4-core)
+  └ 8 lines found
+● Search (glob)
+  │ "**\AppPaths.kt"
+  └ No matches found
+● Search (grep)
+  │ "object AppPaths|class AppPaths" in **/*.kt
+  └ No matches found
+● Search (glob)
+  │ "**\*AppPaths*.*"
+  └ No matches found
+● Search (grep)
+  │ "AppPaths" in **/*.{kt,java}
+  └ 45 files found
+I’ve got enough context to implement this in the harness itself. Before editing, I
+● Read mod.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\mod.rs
+  └ L1:260 (166 lines read)
+● Read batch.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\batch.rs
+  └ L1:120 (120 lines read)
+● Read browser.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\browser.rs
+  └ L1:260 (259 lines read)
+● Search (grep)
+  │ "thread::sleep|Instant::now\(|wait_for_|retry|deadline"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 57 lines found
+I’ve got the implementation approach: add a path-accurate temp-context cleanup helper, call it from scenario cleanup and the suite’s final cleanup, and then validate with a real E2E run plus a seeded temp artifact.
+● Edit
+  └ Create ~\.copilot\session-state\c20a9843-7120-49b6-9265-d8324146166b\plan.md
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L45:110 (66 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1730:1825 (96 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2088:2140 (53 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1824:1888 (65 lines read)
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2170:2235 (66 lines read)
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+● Search (grep)
+  │ "fn run_open_command|open_interactive_page|OPEN_TEMPORARY_PROFILE_ARG"
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 6 lines found
+● Format Rust code (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'; cargo fmt
+  │ --all
+  └ 1 line...
+The change is in place. I’m running the smallest relevant Rust checks plus a
+● Run Rust tests and validate temp context cleanup (shell)
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli';
+  │ function Get-SanitizedUserName {
+  │ foreach ($name in @('BROWSER4_CLI_USER', 'USERNAME', 'USER',
+  │ 'LOGNAME')) {…
+  └ 72 lines...
+The code change is done and the validation hit the real temp path: the seeded `...\\context\\tmp\\groups\\rand` artifacts were removed after
+● Read MEMORY.20260426.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.
+  │ md
+  └ L1:end (5 lines read)
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (83 lines read)
+● Review diff and repo status (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager
+  │ diff -- sdks/browser4-cli/tests/e2e.rs && git --no-pager status --short
+  └ 225 lines...
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.2026
+    0426.md
+**Done.** `sdks\browser4-cli\tests\e2e.rs` now clears `%TEMP%\browser4-$USER\context\tmp
+**Memory updated.** I appended today’s task summary and lesson to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.md`. The monthly memory already included the 2026-04-25 rollup, so no change to `D:\workspace\Browser4Team\cow
+
+[STDERR OUTPUT]
+Changes   +136 -17
+Requests  1 Premium (8m 32s)
+Tokens    ↑ 1.3m • ↓ 12.3k • 1.2m (cached) • 5.7k (reasoning)
+[2026-04-26 06:15:57] [INFO] Copilot execution finished with exit code 0
+[2026-04-26 06:15:57] [INFO] === Copilot execution completed ===
+[2026-04-26 06:15:57] [INFO] Task moved to finished : D:\workspace\Browser4Team\coworker\tasks\3_1complete\2026\0426\clean-temp-browser-contexts.md
+[2026-04-26 06:15:57] [INFO] ---
+[2026-04-26 06:15:57] [INFO] ===========================================================================
+[2026-04-26 06:15:57] [INFO] All tasks completed
+[2026-04-26 06:15:57] [INFO] Ended at: 04/26/2026 06:15:57
+[2026-04-26 06:15:57] [INFO] Script Log: D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\060705-coworker.log
+[2026-04-26 06:15:57] [INFO] ==========================================================================
