@@ -93,8 +93,8 @@ elseif ($Type -eq "monthly") {
         exit 1
     }
 
-    # Gather all daily memories for the month
-    $dailyMemories = Get-ChildItem -Path "$targetDir\*\MEMORY.*.md" -Recurse
+    # Gather all daily memories for the month (stored under day subdirectories)
+    $dailyMemories = Get-ChildItem -Path "$targetDir\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{8}\.md$" }
 
     if ($dailyMemories.Count -eq 0) {
         Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No daily memory files found for $year-$month."
@@ -102,7 +102,7 @@ elseif ($Type -eq "monthly") {
     }
 
     $combinedContent = ""
-    foreach ($file in $dailyMemories) {
+    foreach ($file in ($dailyMemories | Sort-Object Name)) {
         $content = Get-Content $file.FullName -Raw
         $combinedContent += "`n`n=== DAILY MEMORY: $($file.Name) ===`n$content"
     }
@@ -111,30 +111,35 @@ elseif ($Type -eq "monthly") {
 You are an AI assistant helping to generate a MONTHLY memory summary for a developer coworker.
 Based on the following DAILY memories, generate the content for the MONTHLY memory file and save it to the ABSOLUTE path: $targetFile
 
-SPECIFICATION:
+SPECIFICATION (follow this structure exactly):
 # MEMORY.$year$month.md
 ## Monthly Memory - $year-$month
 
 ### Work Themes
-- Major areas of focus this month
+- Dominant task categories this month
 
 ### Recurring Issues
-- Problems that happened multiple times
+- Pattern A (appeared in multiple days)
+- Pattern B
 
 ### Structural Bottlenecks
-- Process or technical limitations slowing progress
+- Persistent constraints affecting efficiency
 
 ### Efficiency Trend
-- Qualitative assessment of speed/quality over the month
+- Improving / Stable / Degrading
+- Brief justification based on daily evidence
 
 ### System Adjustments Proposed
-- Changes to tools/workflow based on this month's experience
+- 1. Concrete change to improve next month
+- 2.
 
 CONSTRAINTS:
 - Use English only.
-- Synthesize, don't just list.
-- Use the `create` tool to write the file directly using the ABSOLUTE path: $targetFile
-- Overwrite if exists.
+- Identify patterns across days, do NOT just list per-day summaries.
+- Each section must reflect synthesis, not raw log repetition.
+- Must include at least one recurring issue and one structural bottleneck.
+- Maximum 2000 words.
+- Use the `create` tool to write the file directly using the ABSOLUTE path: $targetFile (overwrite if exists).
 
 DAILY MEMORIES:
 $combinedContent
@@ -146,9 +151,8 @@ elseif ($Type -eq "yearly") {
     $targetDir = "$logsBaseDir\$year"
     $targetFile = "$targetDir\MEMORY.$year.md"
 
-    # Gather all monthly memories for the year
-    # Monthly memories are at logs/YYYY/MM/MEMORY.YYYYMM.md
-    $monthlyMemories = Get-ChildItem -Path "$logsBaseDir\$year\*\MEMORY.$year*.md"
+    # Gather all monthly memories for the year (stored under month subdirectories)
+    $monthlyMemories = Get-ChildItem -Path "$logsBaseDir\$year\*\MEMORY.$year*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md$" }
 
     if ($monthlyMemories.Count -eq 0) {
         Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message "No monthly memory files found for $year."
@@ -156,7 +160,7 @@ elseif ($Type -eq "yearly") {
     }
 
     $combinedContent = ""
-    foreach ($file in $monthlyMemories) {
+    foreach ($file in ($monthlyMemories | Sort-Object Name)) {
         $content = Get-Content $file.FullName -Raw
         $combinedContent += "`n`n=== MONTHLY MEMORY: $($file.Name) ===`n$content"
     }
@@ -165,39 +169,43 @@ elseif ($Type -eq "yearly") {
 You are an AI assistant helping to generate a YEARLY memory summary for a developer coworker.
 Based on the following MONTHLY memories, generate the content for the YEARLY memory file and save it to the ABSOLUTE path: $targetFile
 
-SPECIFICATION:
+SPECIFICATION (follow this structure exactly):
 # MEMORY.$year.md
 ## Annual Strategic Review - $year
 
 ### Project State Evolution
-- High-level changes in project scope/maturity
+- How the project changed during the year
 
 ### Major Achievements
-- Key milestones reached
+- Key milestones reached this year
 
 ### Major Failures
-- Significant setbacks and lessons
+- Significant setbacks and lessons learned
 
 ### Structural Problems (Solved / Unsolved)
-- Persistent issues
+- Solved: problems resolved during the year
+- Unsolved: persistent issues entering the next year
 
 ### Capability Upgrades
-- New skills/tools acquired
+- Skills or operational improvements gained
 
 ### Strategic Risks
-- Potential future threats
+- Risks entering the next year
 
 ### Project Trajectory Forecast
-- Where the project is heading
+- 1-2 year outlook based on current trends
 
 ### Three Immediate Strategic Actions
-- High-level next steps for next year
+- 1.
+- 2.
+- 3.
 
 CONSTRAINTS:
 - Use English only.
-- Synthesize, don't just list.
-- Use the `create` tool to write the file directly using the ABSOLUTE path: $targetFile
-- Overwrite if exists.
+- Must differentiate solved vs unsolved structural problems.
+- Synthesize monthly patterns into yearly-level strategic insights; do NOT merely repeat monthly content.
+- Maximum 2000 words.
+- Use the `create` tool to write the file directly using the ABSOLUTE path: $targetFile (overwrite if exists).
 
 MONTHLY MEMORIES:
 $combinedContent
@@ -208,26 +216,76 @@ $combinedContent
 elseif ($Type -eq "global") {
     $targetFile = "$logsBaseDir\MEMORY.md"
 
-    # Gather all yearly memories
-    # Yearly memories are at logs/YYYY/MEMORY.YYYY.md
+    # Gather all yearly memories (stored under year subdirectories)
     $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{4}\.md" }
 
     if ($yearlyMemories.Count -eq 0) {
-        # Fallback to monthly if no yearly? Or just warn?
-        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No yearly memory files found; trying monthly memories.'
-        $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md" }
+        # Fallback to monthly memories if no yearly summaries exist yet
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No yearly memory files found; falling back to monthly memories.'
+        $yearlyMemories = Get-ChildItem -Path "$logsBaseDir\*\*\MEMORY.*.md" | Where-Object { $_.Name -match "MEMORY\.\d{6}\.md$" }
     }
 
     if ($yearlyMemories.Count -eq 0) {
-        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No memory files available for summary generation.'
+        Write-CoworkerLog -Component 'memory-generator' -Level 'WARN' -NoColor -Message 'No memory files available for global summary generation.'
         exit 0
     }
 
     $combinedContent = ""
-    foreach ($file in $yearlyMemories) {
+    foreach ($file in ($yearlyMemories | Sort-Object Name)) {
         $content = Get-Content $file.FullName -Raw
         $combinedContent += "`n`n=== MEMORY: $($file.Name) ===`n$content"
     }
+
+    # Also read existing MEMORY.md to preserve Mission & Vision if it exists
+    $existingGlobal = ""
+    if (Test-Path $targetFile) {
+        $existingGlobal = "`n`n=== EXISTING GLOBAL MEMORY (preserve Mission & Vision) ===`n" + (Get-Content $targetFile -Raw)
+    }
+
+    $prompt = @"
+You are an AI assistant helping to generate or update the GLOBAL memory for a developer coworker project.
+Based on the accumulated memory files, generate the content for the global memory file and save it to the ABSOLUTE path: $targetFile
+
+SPECIFICATION (follow this structure exactly):
+# MEMORY.md
+
+## Mission & Vision
+- Why the project exists (preserve from existing if already defined)
+
+## Core Principles
+- Non-negotiable operational rules
+
+## Evolution Phases
+- Phase 1:
+- Phase 2:
+- (add more as needed)
+
+## Major Turning Points
+- Key moments that changed project direction
+
+## Long-Term Structural Challenges
+- Ongoing issues that span multiple years
+
+## Opportunity Landscape
+- Strategic opportunity areas
+
+## Three Strategic Priorities Now
+- 1.
+- 2.
+- 3.
+
+CONSTRAINTS:
+- Use English only.
+- Must summarize all provided yearly/monthly memories.
+- Must identify project phases and turning points.
+- Preserve Mission & Vision from the existing MEMORY.md unless the content clearly indicates it should change.
+- Maximum 2000 words.
+- Use the `create` tool to write the file directly using the ABSOLUTE path: $targetFile (overwrite if exists).
+
+MEMORY FILES:
+$combinedContent
+$existingGlobal
+"@
 
     Invoke-GhCopilot -Prompt $prompt
 }
