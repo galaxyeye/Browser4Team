@@ -68,4 +68,13 @@ Everything has been pushed, but one tracked scheduler log is being rewritten aft
   │ Start-Sleep -Seconds 5…
   └ 12 lines...
 
-The log has stopped changing, so I’m committing that last settled diff now and
+The log has stopped changing, so I’m committing that last settled diff now and leaving the branch clean.
+
+● Commit final settled log change and verify both repos (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ $parentPath = 'D:\workspace\Browser4Team'
+  │
+  │ git -C $parentPath add -A
+  │ git -C $parentPath diff --cached --quiet…
+  └ 28 lines...
+
