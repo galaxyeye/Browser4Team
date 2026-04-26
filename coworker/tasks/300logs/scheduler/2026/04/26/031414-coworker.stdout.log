@@ -40,3 +40,32 @@ I’m checking the repo and submodule state first so I can sync everything in th
 
 The parent repo has its own changes plus a dirty `submodules\Browser4`, so I’m syncing the submodule first and then the parent repo pointer.
 
+● Commit, pull, and push submodule then parent repo (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │
+  │ function Commit-IfNeeded([string]$RepoPath, [string]$Message) {
+  │ git -C $RepoPath add -A
+  │ git -C $RepoPath diff --cached --quiet…
+  └ 73 lines...
+
+One scheduler log changed during the sync itself, so I’m rolling that last parent-side update into a final commit/push to leave the repo clean.
+
+● Commit final parent changes and verify clean status (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ $parentPath = 'D:\workspace\Browser4Team'
+  │
+  │ git -C $parentPath add -A
+  │ git -C $parentPath diff --cached --quiet…
+  └ 24 lines...
+
+Everything has been pushed, but one tracked scheduler log is being rewritten after each sync step. I’m checking whether it’s still actively changing or just got touched at the tail end.
+
+● Check whether scheduler log is still changing (shell)
+  │ $path = 'D:\workspace\Browser4Team\coworker\tasks\300logs\scheduler\2026\0
+  │ 4\26\031414-coworker.stdout.log'
+  │ if (Test-Path $path) {
+  │ $a = Get-Item $path | Select-Object Length, LastWriteTimeUtc
+  │ Start-Sleep -Seconds 5…
+  └ 12 lines...
+
+The log has stopped changing, so I’m committing that last settled diff now and
