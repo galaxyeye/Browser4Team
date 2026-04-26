@@ -1,0 +1,235 @@
+I’m pulling the task brief and the surrounding repo state first so I can implement the cleanup change end to end without stepping on unrelated work.
+
+● Read refactor-e2e-cleanup-handling.md
+  │ D:\workspace\Browser4Team\coworker\tasks\2working\refactor-e2e-cleanup-handl
+  │ ing.md
+  └ 5 lines read
+
+● Check git worktree status (shell)
+  │ git --no-pager status --short
+  └ 1 line...
+
+I’ve got the scope: the Rust CLI E2E harness needs guaranteed per-test shutdown, failure-safe final cleanup, and scenario extraction into separate files. Next I’m mapping the current harness structure before editing.
+
+● Read Cargo.toml
+  │ sdks\browser4-cli\Cargo.toml
+  └ 34 lines read
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1:260 (259 lines read)
+
+● Search (glob)
+  │ "sdks/browser4-cli/tests/**/*"
+  └ 1 file found
+
+● Run baseline browser4-cli unit tests (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; cargo test
+  │ --bin browser4-cli --quiet
+  └ 2 lines...
+
+The harness is still a single monolithic `e2e.rs`; I’m drilling into its runner and cleanup paths now because that’s where the failure-safe teardown needs to land.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L260:760 (500 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L760:1400 (621 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1400:2200 (676 lines read)
+
+● Search (grep)
+  │ "fn test_|fn main|cleanup|close-all|kill-all|Drop for TestContext|struct
+  │ TestContext|run_scenario|Scenario" in e2e.rs (sdks\browser4-cli\tests)
+  └ 8 lines found
+
+I found the scenario layer and the shared helpers. I’m reading the custom runner next so I can refactor the scenarios out cleanly while preserving its timing/reporting behavior.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2058:2850 (648 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2851:3450 (575 lines read)
+
+● Run baseline browser4-cli unit tests from CLI module (shell)
+  │ @'
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'
+  │ cargo test --bin browser4-cli --quiet
+  │ '@ | powershell -NoProfile -Command -
+  └ 5 lines...
+
+I’ve confirmed the current gap: per-scenario `close` is manual and the final forced cleanup only runs on the all-green path. I’m checking the CLI’s `close-all` behavior before wiring it into the harness cleanup.
+
+● Read commands.rs
+  │ sdks\browser4-cli\src\commands.rs
+  └ L1:260 (260 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L1460:1645 (186 lines read)
+
+● Search (grep)
+  │ "close-all|kill-all|close all|kill all" in *.rs (sdks\browser4-cli\src)
+  └ 84 lines found
+
+`close-all` is intentionally global and server-safe, so I can use it in harness cleanup without tripping normal server bootstrap. I’m reading its implementation and then I’ll refactor the E2E harness around a cleanup guard.
+
+● Read managed_processes.rs
+  │ sdks\browser4-cli\src\managed_processes.rs
+  └ L200:280 (81 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L392:440 (49 lines read)
+
+● Read main.rs
+  │ sdks\browser4-cli\src\main.rs
+  └ L2060:2135 (76 lines read)
+
+I’ve got the cleanup direction. I’m pulling the remaining scenario functions so I can split them into grouped modules in one pass instead of churning the file with incremental moves.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L2700:2945 (246 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1382:1705 (324 lines read)
+
+I’ve got enough context now. I’m writing a short plan and then I’m making the harness refactor in one grouped patch: scenario modules plus failure-safe per-test and suite cleanup.
+
+● Edit
+  └ Create C:/Users/pereg/.copilot/session-state/0d31d1f6-cbb0-4594-9fbf-3012499
+    6c77b/plan.md
+
+I’m applying the harness-side changes now: shared scenario modules, per-scenario `close-all` cleanup, and suite-level final cleanup that survives panics.
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Edit
+  └ Create sdks\browser4-cli\tests\e2e\scenarios\mod.rs
+
+● Edit
+  └ Create sdks\browser4-cli\tests\e2e\scenarios\browser.rs
+
+● Edit
+  └ Create sdks\browser4-cli\tests\e2e\scenarios\batch.rs
+
+● Edit
+  └ Create sdks\browser4-cli\tests\e2e\scenarios\mock_server.rs
+
+The split is in place. I’m doing a quick code read now to catch any refactor slips before I run the Rust tests.
+
+● Read browser.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\browser.rs
+  └ L1:260 (260 lines read)
+
+● Read mod.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\mod.rs
+  └ 166 lines read
+
+● Read batch.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\batch.rs
+  └ L1:260 (260 lines read)
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1600:1715 (116 lines read)
+
+● Read e2e.rs
+  └ sdks\browser4-cli\tests\e2e.rs
+
+I caught one refactor slip in the interaction scenario and I want one more pass over the runner totals. I’m fixing both before compiling.
+
+● Read e2e.rs
+  └ sdks\browser4-cli\tests\e2e.rs
+
+● Search (grep)
+  │ "fn main\(|run_named_scenario\(|final service cleanup|total_duration ="
+  │ (sdks\browser4-cli\tests\e2e.rs)
+  └ 45 lines found
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e.rs
+
+● Edit
+  └ Edit sdks\browser4-cli\tests\e2e\scenarios\browser.rs
+
+The refactor is ready for validation. I’m formatting first, then running the CLI unit suite plus one mock-backed and one real-browser E2E scenario to cover both execution paths.
+
+● Format and run Rust unit and focused e2e tests (shell)
+  │ @'
+  │ Set-Location
+  │ 'D:\workspace\Browser4Team\submodules\Browser4\sdks\browser4-cli'
+  │ cargo fmt --all
+  │ cargo test --bin browser4-cli --quiet…
+  └ 72 lines...
+
+The targeted runs passed, including a real Browser4-backed scenario that exercised the new per-test `close-all` cleanup. I’m doing a quick diff review, then I’ll update the memory files.
+
+● Read e2e.rs
+  │ sdks\browser4-cli\tests\e2e.rs
+  └ L1918:2110 (188 lines read)
+
+● Show final diff for e2e refactor (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git
+  │ --no-pager diff -- sdks/browser4-cli/tests/e2e.rs
+  │ sdks/browser4-cli/tests/e2e/scenarios/mod.rs
+  │ sdks/browser4-cli/tests/e2e/scenarios/browser.rs
+  │ sdks/browser4-cli/tests/e2e/scenarios/batch.rs …
+  └ 17 lines...
+
+The runner looks right now: cleanup runs after the caught scenario result, and the suite-level forced cleanup sits outside the outer catch. I’m checking the interaction scenario once more, then I’ll write the memory updates.
+
+● Read browser.rs
+  │ sdks\browser4-cli\tests\e2e\scenarios\browser.rs
+  └ L120:175 (56 lines read)
+
+● Read MEMORY.20260426.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.
+  │ md
+  └ 4 lines read
+
+● Read MEMORY.202604.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\MEMORY.202604.md
+  └ L1:end (83 lines read)
+
+The monthly log is already rolled up through 2026-04-25, so only today’s daily memory needs an append. I’m recording the harness refactor and the cleanup behavior that was validated.
+
+● Edit
+  └ Edit D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.2026
+    0426.md
+
+The code and memory updates are both in place. I’m doing one last status check so I can hand back the exact result cleanly.
+
+● Read MEMORY.20260426.md
+  │ D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.
+  │ md
+  └ L1:12 (5 lines read)
+
+● Check final repo status for e2e files (shell)
+  │ Set-Location 'D:\workspace\Browser4Team\submodules\Browser4'; git --no-pager
+  │ status --short -- sdks/browser4-cli/tests/e2e.rs sdks/browser4-cli/tests/e2e
+  └ 3 lines...
+
+Done: the Rust CLI E2E harness now has **scenario files split out** and **cleanup centralized in the runner**.
+
+`sdks/browser4-cli/tests/e2e.rs` now delegates scenario bodies to `sdks/browser4-cli/tests/e2e/scenarios/{browser,batch,mock_server}.rs`, runs `close-all` after every Browser4-backed scenario, surfaces cleanup failures explicitly, and keeps the final forced cleanup on the outer panic path so it still runs when a scenario aborts early.
+
+I also appended today’s entry to `D:\workspace\Browser4Team\coworker\tasks\300logs\2026\04\26\MEMORY.20260426.md`. The monthly file for `2026-04` was already rolled up through `2026-04-25`, so no monthly append was needed.
+
+
+=== COPILOT STDERR ===
+
+
+Changes   +1503 -1450
+Requests  1 Premium (15m 50s)
+Tokens    ↑ 2.1m • ↓ 38.7k • 2.1m (cached) • 8.2k (reasoning)
