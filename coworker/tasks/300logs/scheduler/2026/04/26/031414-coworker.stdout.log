@@ -39,3 +39,4 @@ I’m checking the repo and submodule state first so I can sync everything in th
   └ 21 lines...
 
 The parent repo has its own changes plus a dirty `submodules\Browser4`, so I’m syncing the submodule first and then the parent repo pointer.
+
