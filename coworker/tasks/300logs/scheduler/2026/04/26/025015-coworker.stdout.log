@@ -46,3 +46,13 @@ I found local changes in both the parent repo and `submodules\Browser4`, with th
 
 The submodule is now pushed on `4.8.x`. Next I’m committing the parent repo’s remaining changes, pulling with automatic merge preference, and pushing the updated submodule pointer plus the workspace changes.
 
+● Commit, pull, and push parent repository (shell)
+  │ $ErrorActionPreference = 'Stop'
+  │ Set-Location 'D:\workspace\Browser4Team'
+  │ $changes = git status --porcelain
+  │ if ($changes) {
+  │ git add -A…
+  └ 29 lines...
+
+The first parent-repo pull/push hit a transient GitHub connection reset, and one scheduler log changed after the commit. I’m rolling that latest change into a follow-up commit and retrying the sync.
+
